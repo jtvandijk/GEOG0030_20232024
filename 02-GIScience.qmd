@@ -206,7 +206,11 @@ knitr::include_graphics('images/w02/find-replace.png')
 10. Save your spreadsheet as a `csv` file into your `data` folder as `LSOA2011_population.csv`.
 
 ::: { .callout-tip}
-After saving the file, Excel might give you a warning along the lines of *Possible data loss*. You can safely ignore this message as the only 'information' you have lost is markup information or formulas native to Excel. In some cases you might also have options to choose in terms of what type of `csv` you would want to save the spreadsheet as. If so, opt for something along the lines of `CSV UTF-8 (Comma-delimited) (.csv)`.
+After saving the file Excel might give you a warning along the lines of *Possible data loss*. You can safely ignore this message as the only 'information' you have lost is markup information (e.g. fonts, colours, items in bold, etc.) or formulas native to Excel (e.g. if you used Excel to calculate *means*, *medians*, etc.). In some cases you might also have options to choose what type of `csv` you would want to save the spreadsheet as. If so, opt for something along the lines of `CSV UTF-8 (Comma-delimited) (.csv)`. 
+:::
+
+::: { .callout-warning}
+Depending on the language settings of your operation system (e.g. Windows, MacOS, Linux) and language settings, `csv` files might look different. It is always a good idea to check your `csv` file in a plain text editor (e.g. **Textedit** on MacOS or **Notepad** on Windows). In case you do not see commas (`,`), but semicolons (`;`) you can apply a quick and dirty fix to your data by *finding and replacing* every `;` with a `,` in the same way we fixed our problematic `white space` characters in Excel.
 :::
 
 #### London population in 2021
