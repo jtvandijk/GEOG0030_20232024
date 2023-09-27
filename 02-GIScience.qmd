@@ -1,0 +1,132 @@
+# GIScience and GIS software
+This week’s lecture introduced you to foundational concepts associated with GIScience and GIS software, with particular emphasis on the representation of spatial data and sample design. Out of all our foundational concepts you will come across in the next four weeks, this is probably the most substantial to get to grips with and has both significant theoretical and practical aspects to its learning. The practical component of the week puts some of these learnings into practice, starting with a short digitisation excercise followed by a simple visualisation of London's population over time.
+
+## Lecture slides {#slides-w01}
+The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var slides.week02 >}})
+
+## Reading list {#reading-w02}
+#### Essential readings { .unnumbered}
+- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 2**: *The Nature of Geographic Data*. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 3**: *Representing Geography*. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 7**: *Geographic Data Modeling*. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+
+#### Suggested readings {-}
+- Goodchild, M. and Haining, R. 2005. GIS and spatial data analysis: Converging perspectives. *Papers in Regional Science* 83(1): 363–385. [[Link]](https://doi.org/10.1007/s10110-003-0190-y)
+- Schurr, C., Müller, M. and Imhof, N. 2020. Who makes geographical knowledge? The gender of Geography’s gatekeepers. *The Professional Geographer* 72(3): 317-331. [[Link]](https://doi.org/10.1080/00330124.2020.1744169)
+- Yuan, M. 2001. Representing complex geographic phenomena in GIS. *Cartography and Geographic Information Science* 28(2): 83-96. [[Link]](https://doi.org/10.1559/152304001782173718)
+
+## Simple digitisation of spatial features
+To get spatial features in a digital form, they need to be digitised. Let’s take what should be a straight-forward example of digitising the river Thames in London.
+
+```{r}
+#| label: fig-digitise
+#| echo: False 
+#| cache: True
+#| fig-cap: "The river Thames."
+knitr::include_graphics('images/w02/river-thames.png')
+```
+
+We are going to use a very simple online tool that allows us to create digital data and export the data we create as raw files.
+
+1. Head to [geojson.io](http://geojson.io/#map=12/51.5170/-0.1030).
+2. In the bottom left-hand corner, select *Satellite Streets* as your map option.
+3. Next, click on the `Draw Linestring` tool which you can find on the right hand side of the screen. You can hover over the icons to get the names of each tool.
+4. Now digitise the river Thames. Simply click from a starting point on the left- or right-hand side of the map, and digitise the river.
+5. Once you are done, double-click your final point to end your line.
+6. You can  click on the line and select *Info* in the pop-up screen to find out how long the line is. 
+7. You can export your data using the *Save* menu.
+
+## Population change in London
+The second part of this practical will introduces you to **attribute joins** followed by creating a [choropleth map](https://en.wikipedia.org/wiki/Choropleth_map). You will be using different types of *joins* throughout this module, and probably the rest of your career, so it is incredibly important that you understand how they work.
+
+::: { .callout-warning}
+The datasets you will create in this practical will be used in next week's practical, so make sure to follow every step and save your data carefully.
+:::
+
+When using spatial data, there is generally a very specific workflow that you will need to go through and, believe it or not, the majority of this is not actually focused on analysing your data. One of the most often-quoted GIS-related unreferenced 'fact' is that anyone working with spatial data will spend 80% of their time simply finding, retrieving, managing and processing the data before any analysis can be done.
+
+One of the reasons behind this need for a substantial amount of processing is that the data you often need to use is almost never  in the format that you require for analysis. For example, for our investigation, there is not a 'ready-made' spatial population dataset (i.e. population `shapefile`) we can download to explore population change across England:
+
+```{r 02}
+#| label: fig-google-shp
+#| echo: False
+#| cache: True
+#| fig-cap: "A quick Google search shows that finding a shapefile of England's population is not straightforward."
+knitr::include_graphics('images/w02/datasearch.png')
+```
+
+Instead, we need to go and find the raw datasets and create the data layers that we want. As a result, before beginning any spatial analysis project, it is best-practice to think through what end product you will ultimately need for your analysis.
+
+A typical spatial analysis workflow usually looks something like this:
+
+| Step        | Action      |
+| :----       | :----------- |
+| `identify`  | Think about the data you need to complete your analysis. |
+| `find`      | Find the data that matches your requirements. |
+| `download`  | Store the data on your computer in the right folder. |
+| `clean`     | Assess whether the data needs pre-processing before moving to QGIS or R. |
+| `load`      | Load the `cleaned` data into QGIS, R, or software of choice. |
+| `process`   | Prepare the data so that they are ready for analysis (e.g. joining, aggregating). |
+| `analyse`   | Execute the actual analysis that you set out to do. |
+| `visualise` | Create graphs and maps where appropriate. |
+
+As you can see, the analysis and visualisation parts only make up the last steps of the workflow and instead, the workflow is very top-heavy with data management. 
+
+::: { .callout-note}
+Very often in GIS-related courses you will be given pre-processed datasets. Because data management is an essential part of your workflow, we will clean (the majority of) our data from the get-go. This will help you understand the processes that you will need to go through in the future as you search for and download your own data as well as deal with the data first-hand before loading it into our GIS software.
+:::
+
+### Setting the scene {#w02-scene}
+For this practical, we will investigate how the population in London has changed over time. Understanding population change - over time and space - is spatial analysis at its most fundamental. We can understand a lot just from where population is growing or decreasing, including thinking through the impacts of these changes on the provision of housing, education, health and transport infrastructure. 
+
+We can also see first-hand the impact of wider socio-economic processes, such as urbanisation. Today we will look at population in London in the Census years of 2011 and 2021 at the **Lower Super Output Area** scale that we can use within our future analysis projects, starting next week. 
+
+::: { .callout-note}
+We will use the population dataset to *normalise* other datasets. Why? When we record events created by humans, there is often a population bias: simply, more people in an area will by probability lead to a higher occurrence of said event, such as crime. We will look at this in greater detail next week.
+:::
+
+### Finding data {#w02-finding}
+In the UK, finding authoritative data on population and *Administrative Geography* boundaries is increasingly straight-forward. Over the last decade, the UK government has opened up many of its datasets as part of an **Open Data** precedent that began in 2010 with the creation of [data.gov.uk](https://www.data.gov.uk) and the Open Government Licence (the terms and conditions for using data).
+
+::: { .callout-warning}
+[Data.gov.uk](https://www.data.gov.uk) is the UK government’s central database that contains open data that the central government, local authorities and public bodies publish. This includes, for example, aggregated census and health data – and even government spending. In addition to this central database, there are other authoritative databases run by the government and/or respective public bodies that contain either a specific type of data (e.g. census data, crime data) or a specific collection of datasets (e.g. health data from the NHS, data about London). Some portals are less up-to-date than others, so it is wise to double-check with the ‘originators’ of the data to see if there are more recent versions.
+::: 
+
+For our practical, we will access data from two portals:
+
+1. For our administrative boundaries, we will download the **spatial** data from the *Open Geography Portal*. 
+2. For population, we will download **attribute** data from the *Office of National Statistics (ONS)*.
+
+### Housekeeping {#w01-housekeeping}
+Before we download our data, it is important to establish an organised file systems that we will use throughout the modul. Create a `GEOG0030` folder in your `Documents` folder on your computer and within your `GEOG0030` folder, create the following subfolders: 
+
+| Folder name | Purpose      |
+| :----       | :----------- |
+| `raw`       | To store all your raw data files that have not yet been cleaned and processed. |
+| `data`      | To store data files that have been cleaned and processed. |
+| `output`    | To store all your final output data files and maps.
+
+### Downloading spatial data {#w02-download-spatial}
+We will start by downloading the administrative geography boundaries for England and Wales:
+
+1. Navigate to the `Open Geography Portal`: [[Link]](https://geoportal.statistics.gov.uk/)
+2. In the main menu go to **Boundaries** -> **Census Boundaries ** -> **Lower Layer Super Output Areas** -> **2011 Boundaries**.
+3. Click on **LSOA (Dec 2011) Boundaries Super Generalised Clipped (BSC) EW V4**.
+4. Click on **Download** -> **Download GeoPackage**.
+
+Repeat the above process to also download the 2021 LSOA boundaries: **Lower Layer Super Output Areas (2021) Boundaries EW BSC**. Make sure you download the **Super generalised (200m)** version.
+
+::: { .callout-warning}
+Administrative geographies are a way of dividing the country into smaller sub-divisions or areas that correspond with the area of responsibility of local authorities and government bodies. These administrative sub-divisions and their associated geography have several important uses, including assigning electoral constituencies and serving as a mechanism for collecting census data. These geographies are updated as populations evolve and as a result the boundaries of the administrative geographies are subject to either periodic or occasional change. This is why we need to download both 2011 and 2021 boundaries. More details on the administrative geographies of the UK can be found on the website of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).
+:::
+
+Now open your `GEOG0030/data/raw/` folder and create a new folder called `boundaries`. Rename the two files you just downloaded to `LSOA2011.gpkg` and `LSOA2021.gpkg`, respectively, and copy these into your `boundaries` folder.
+
+We now have our administrative geography files ready for use. 
+
+::: { .callout-note}
+You may have used spatial data before and noticed that we did not download a `shapefile` but a `geopackage` instead. Whilst `shapefiles` are still being used, and you will most likely come across them at some point in    your career, the more modern, more portable, and open-source `geopackage` should be your spatial data format of choice where possible. Have a look at this article on towardsdatascience.com for an excellent explanation on why one should use `geopackage` files instead of `shapefiles`: [[Link]](https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416)
+:::
+
+### Downloading population data {#w02-download-population}
+

@@ -12,6 +12,10 @@ book:
     - part: "Module overview"
       chapters:
         - index.qmd
+    - part: "Foundational Concepts"
+      chapters:
+        - 01-introduction.qmd
+        - 02-GIScience.qmd
 
 # output
 format:

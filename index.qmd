@@ -46,8 +46,8 @@ If after pursuing all these avenues you still need help, you can book into our o
 ## Acknowledgements { .unnumbered}
 This year's workbook is updated from and compiled using:
 
-* The [GEOG0030: Geocomputation 2022-2023](https://jtvandijk.github.io/GEOG0030_20222023/) workbook by [Justin van Dijk](www.mappingdutchman.com)
-* The [GEOG0030: Geocomputation 2021-2022](https://jtvandijk.github.io/GEOG0030_20212022/) workbook by [Justin van Dijk](www.mappingdutchman.com)
+* The [GEOG0030: Geocomputation 2022-2023](https://jtvandijk.github.io/GEOG0030_20222023/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
+* The [GEOG0030: Geocomputation 2021-2022](https://jtvandijk.github.io/GEOG0030_20212022/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
 * The [GEOG0030: Geocomputation 2021-2021](https://jo-wilkin.github.io/GEOG0030/coursebook/index.html) workbook by [Jo Wilkin](https://github.com/jo-wilkin)
 
 ## Major updates { .unnumbered}
@@ -57,4 +57,5 @@ Compared to previous years the following major changes have been implemented:
 * Full rewrite of the workbook in `Quarto`.
 * Update to using exclusively Census 2021 (spatial) data where possible.
 * Removing dependencies on deprecated packages such as `raster`, `rgdal`, `rgeos`.
+* Move to `geopackage` over `shapefile`.
 :::

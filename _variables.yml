@@ -1,8 +1,8 @@
 # global variables
 
 urls:
-  w01: ""
-  w02: ""
+  w01: "01-introduction.html"
+  w02: "02-GIScience.html"
   w03: ""
   w04: ""
   w05: ""
@@ -11,3 +11,7 @@ urls:
   w08: ""
   w09: ""
   w10: ""
+  
+slides:
+  week01: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w01-geo.pdf"
+  week02: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w02-geo.pdf"
