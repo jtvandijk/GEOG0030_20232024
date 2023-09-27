@@ -1,23 +1,32 @@
+# project
 project:
   type: book
+  output-dir: docs
 
+# front matter
 book:
-  title: "GEOG0030"
-  author: "Norah Jones"
+  title: "GEOG0030 Geocomputation 2023-2024"
+  author: "[Justin van Dijk](https://mappingdutchman.com/)"
   date: "9/27/2023"
   chapters:
-    - index.qmd
-    - intro.qmd
-    - summary.qmd
-    - references.qmd
+    - part: "Module overview"
+      chapters:
+        - index.qmd
 
-bibliography: references.bib
-
+# output
 format:
   html:
-    theme: cosmo
-  pdf:
-    documentclass: scrreprt
+    theme: 
+      flatly
+    code-overflow: scroll
+    code-tools: 
+      source: https://github.com/jtvandijk/GEOG0030
+      toggle: false
+      caption: none
+    code-block-bg: "#f0f0f0"
+    callout-appearance: simple
 
-
+# misc
+title-block-banner: false
+editor: source
 

@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "GEOG0030 Geocomputation 2023-2024",
+    "section": "",
+    "text": "Module Introduction"
+  },
+  {
+    "objectID": "index.html#welcome",
+    "href": "index.html#welcome",
+    "title": "GEOG0030 Geocomputation 2023-2024",
+    "section": "Welcome",
+    "text": "Welcome\nWelcome to Geocomputation. This module will introduce you both to the principles of spatial analysis as well as provide you with a comprehensive introduction to the use of programming. Over the next ten weeks, you will learn about the theory, methods and tools of spatial analysis through relevant case studies. We will start by using QGIS before moving to the R programming language. You will learn how to find, manage and clean spatial, demographic and socioeconomic datasets, and then analyse them using core spatial and statistical analysis techniques."
+  },
+  {
+    "objectID": "index.html#moodle",
+    "href": "index.html#moodle",
+    "title": "GEOG0030 Geocomputation 2023-2024",
+    "section": "Moodle",
+    "text": "Moodle\nMoodle is the central point of contact for GEOG0030 and it is where all important information will be communicated such as key module and assessment information. This workbook contains links to all reading material as well as the content of all computer tutorials"
+  },
+  {
+    "objectID": "index.html#module-overview",
+    "href": "index.html#module-overview",
+    "title": "GEOG0030 Geocomputation 2023-2024",
+    "section": "Module overview",
+    "text": "Module overview\nThe topics covered over the next ten weeks are:\n\n\n\nWeek\nSection\nTopic\n\n\n\n\n1\nFoundational Concepts\nGeocomputation: An Introduction\n\n\n2\nFoundational Concepts\nGIScience and GIS software\n\n\n3\nFoundational Concepts\nCartography and Visualisation\n\n\n4\nFoundational Concepts\nProgramming for Data Analysis\n\n\n5\nFoundational Concepts\nProgramming for Spatial Analysis\n\n\n\nReading week\nReading week\n\n\n6\nCore Spatial Analysis\nAnalysing Spatial Patterns I: Geometric Operations and Spatial Queries\n\n\n7\nCore Spatial Analysis\nAnalysing Spatial Patterns II: Spatial Autocorrelation\n\n\n8\nCore Spatial Analysis\nAnalysing Spatial Patterns III: Point Pattern Analysis\n\n\n9\nAdvanced Spatial Analysis\nRasters, Zonal Statistics and Interpolation\n\n\n10\nAdvanced Spatial Analysis\nTransport Network Analysis"
+  },
+  {
+    "objectID": "index.html#troubleshooting",
+    "href": "index.html#troubleshooting",
+    "title": "GEOG0030 Geocomputation 2023-2024",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\nSpatial analysis can yield fascinating insights into geographical relationships, albeit at times it can be challenging, particularly when we combine this with learning how to program at the same time. You will most likely encounter many error messages, experience software crashes, and spend hours to identify bugs in your code. However, the rewards of learning how to programmatically solve complex spatial problems will be very much worth it in the end.\nIf you need specific assistance with this course please:\n\nAsk a question at the end of a lecture or during the computer practical.\nAttend the Department’s Coding Therapy sessions that are run on a weekly basis.\nAttend the scheduled Geocomputation Additional Support Hours.\nCheck the Moodle assessment tab for queries relating to this module’s assessment.\n\nIf after pursuing all these avenues you still need help, you can book into our office hours. You can use an office hour to discuss a geographical concept in relation to the material, assessment or for any personal matters relevant to the completion of the module."
+  },
+  {
+    "objectID": "index.html#acknowledgements",
+    "href": "index.html#acknowledgements",
+    "title": "GEOG0030 Geocomputation 2023-2024",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nThis year’s workbook is updated from and compiled using:\n\nThe GEOG0030: Geocomputation 2022-2023 workbook by Justin van Dijk\nThe GEOG0030: Geocomputation 2021-2022 workbook by Justin van Dijk\nThe GEOG0030: Geocomputation 2021-2021 workbook by Jo Wilkin"
+  },
+  {
+    "objectID": "index.html#major-updates",
+    "href": "index.html#major-updates",
+    "title": "GEOG0030 Geocomputation 2023-2024",
+    "section": "Major updates",
+    "text": "Major updates\n\n\n\n\n\n\nCompared to previous years the following major changes have been implemented:\n\nFull rewrite of the workbook in Quarto.\nUpdate to using exclusively Census 2021 (spatial) data where possible.\nRemoving dependencies on deprecated packages such as raster, rgdal, rgeos."
+  }
+]

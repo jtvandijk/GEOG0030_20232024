@@ -1,0 +1,60 @@
+# Module Introduction { .unnumbered}
+
+```{r} 
+#| label: 00-welcome
+#| echo: False
+#| cache: True
+#| out.width: "100%"
+knitr::include_graphics('images/w00/geocomputation-welcome.png') 
+```
+
+## Welcome { .unnumbered}
+Welcome to **Geocomputation**. This module will introduce you both to the principles of spatial analysis as well as provide you with a comprehensive introduction to the use of programming. Over the next ten weeks, you will learn about the theory, methods and tools of spatial analysis through relevant case studies. We will start by using QGIS before moving to the R programming language. You will learn how to find, manage and clean spatial, demographic and socioeconomic datasets, and then analyse them using core spatial and statistical analysis techniques. 
+
+## Moodle { .unnumbered}
+[Moodle](https://moodle.ucl.ac.uk/) is the central point of contact for GEOG0030 and it is where all important information will be communicated such as key module and assessment information. This workbook contains links to all reading material as well as the content of all computer tutorials
+
+## Module overview { .unnumbered}
+The topics covered over the next ten weeks are:
+
+| Week | Section  | Topic |
+| :--- |:---------|:------------------ |
+| 1    | Foundational Concepts | [Geocomputation: An Introduction]({{< var urls.w01 >}}) |
+| 2    | Foundational Concepts | [GIScience and GIS software]({{< var urls.w02 >}}) | 
+| 3    | Foundational Concepts | [Cartography and Visualisation]({{< var urls.w03 >}}) | 
+| 4    | Foundational Concepts | [Programming for Data Analysis]({{< var urls.w04 >}}) |
+| 5    | Foundational Concepts | [Programming for Spatial Analysis]({{< var urls.w05 >}}) |
+|      | **Reading week** | **Reading week** |
+| 6    | Core Spatial Analysis | [Analysing Spatial Patterns I: Geometric Operations and Spatial Queries]({{< var urls.w06 >}})|
+| 7    | Core Spatial Analysis | [Analysing Spatial Patterns II: Spatial Autocorrelation]({{< var urls.w07 >}})|
+| 8    | Core Spatial Analysis | [Analysing Spatial Patterns III: Point Pattern Analysis]({{< var urls.w08 >}}) |
+| 9    | Advanced Spatial Analysis | [Rasters, Zonal Statistics and Interpolation]({{< var urls.w09 >}}) | 
+| 10   | Advanced Spatial Analysis | [Transport Network Analysis]({{< var urls.w10 >}}) | 
+
+## Troubleshooting { .unnumbered}
+Spatial analysis can yield fascinating insights into geographical relationships, albeit at times it can be challenging, particularly when we combine this with learning how to program at the same time. You will most likely encounter many error messages, experience software crashes, and spend hours to identify bugs in your code. However, the rewards of learning how to programmatically solve complex spatial problems will be very much worth it in the end.
+
+If you need specific assistance with this course please:
+
+- Ask a question at the end of a lecture or during the computer practical.
+- Attend the Department's **Coding Therapy sessions** that are run on a weekly basis.
+- Attend the scheduled Geocomputation **Additional Support Hours**.
+- Check the [Moodle](https://moodle.ucl.ac.uk/) assessment tab for queries relating to this module's assessment.
+
+If after pursuing all these avenues you still need help, you can book into our office hours. You can use an office hour to discuss a geographical concept in relation to the material, assessment or for any personal matters relevant to the completion of the module.
+
+## Acknowledgements { .unnumbered}
+This year's workbook is updated from and compiled using:
+
+* The [GEOG0030: Geocomputation 2022-2023](https://jtvandijk.github.io/GEOG0030_20222023/) workbook by [Justin van Dijk](www.mappingdutchman.com)
+* The [GEOG0030: Geocomputation 2021-2022](https://jtvandijk.github.io/GEOG0030_20212022/) workbook by [Justin van Dijk](www.mappingdutchman.com)
+* The [GEOG0030: Geocomputation 2021-2021](https://jo-wilkin.github.io/GEOG0030/coursebook/index.html) workbook by [Jo Wilkin](https://github.com/jo-wilkin)
+
+## Major updates { .unnumbered}
+::: { .callout-note}
+Compared to previous years the following major changes have been implemented:
+
+* Full rewrite of the workbook in `Quarto`.
+* Update to using exclusively Census 2021 (spatial) data where possible.
+* Removing dependencies on deprecated packages such as `raster`, `rgdal`, `rgeos`.
+:::
