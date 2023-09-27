@@ -158,6 +158,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#w01-housekeeping" id="toc-w01-housekeeping" class="nav-link" data-scroll-target="#w01-housekeeping"><span class="header-section-number">2.4.3</span> Housekeeping</a></li>
   <li><a href="#w02-download-spatial" id="toc-w02-download-spatial" class="nav-link" data-scroll-target="#w02-download-spatial"><span class="header-section-number">2.4.4</span> Downloading spatial data</a></li>
   <li><a href="#w02-download-population" id="toc-w02-download-population" class="nav-link" data-scroll-target="#w02-download-population"><span class="header-section-number">2.4.5</span> Downloading population data</a></li>
+  <li><a href="#w02-cleaning" id="toc-w02-cleaning" class="nav-link" data-scroll-target="#w02-cleaning"><span class="header-section-number">2.4.6</span> Cleaning data</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -316,7 +317,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="w02-scene" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="w02-scene"><span class="header-section-number">2.4.1</span> Setting the scene</h3>
-<p>For this practical, we will investigate how the population in London has changed over time. Understanding population change - over time and space - is spatial analysis at its most fundamental. We can understand a lot just from where population is growing or decreasing, including thinking through the impacts of these changes on the provision of housing, education, health and transport infrastructure.</p>
+<p>In this part of the practical, we will investigate how the population in London has changed over time. Understanding population change - over time and space - is spatial analysis at its most fundamental. We can understand a lot just from where population is growing or decreasing, including thinking through the impacts of these changes on the provision of housing, education, health and transport infrastructure.</p>
 <p>We can also see first-hand the impact of wider socio-economic processes, such as urbanisation. Today we will look at population in London in the Census years of 2011 and 2021 at the <strong>Lower Super Output Area</strong> scale that we can use within our future analysis projects, starting next week.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -332,7 +333,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="w02-finding" class="level3" data-number="2.4.2">
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="w02-finding"><span class="header-section-number">2.4.2</span> Finding data</h3>
 <p>In the UK, finding authoritative data on population and <em>Administrative Geography</em> boundaries is increasingly straight-forward. Over the last decade, the UK government has opened up many of its datasets as part of an <strong>Open Data</strong> precedent that began in 2010 with the creation of <a href="https://www.data.gov.uk">data.gov.uk</a> and the Open Government Licence (the terms and conditions for using data).</p>
-<div class="callout callout-style-simple callout-warning">
+<div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -343,10 +344,10 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>For our practical, we will access data from two portals:</p>
-<ol type="1">
+<ul>
 <li>For our administrative boundaries, we will download the <strong>spatial</strong> data from the <em>Open Geography Portal</em>.</li>
-<li>For population, we will download <strong>attribute</strong> data from the <em>Office of National Statistics (ONS)</em>.</li>
-</ol>
+<li>For our population data, we will download <strong>attribute</strong> data directly from the <em>Office of National Statistics (ONS)</em>.</li>
+</ul>
 </section>
 <section id="w01-housekeeping" class="level3" data-number="2.4.3">
 <h3 data-number="2.4.3" class="anchored" data-anchor-id="w01-housekeeping"><span class="header-section-number">2.4.3</span> Housekeeping</h3>
@@ -382,7 +383,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="2.4.4" class="anchored" data-anchor-id="w02-download-spatial"><span class="header-section-number">2.4.4</span> Downloading spatial data</h3>
 <p>We will start by downloading the administrative geography boundaries for England and Wales:</p>
 <ol type="1">
-<li>Navigate to the <code>Open Geography Portal</code>: <a href="https://geoportal.statistics.gov.uk/">[Link]</a></li>
+<li>Navigate to the <em>Open Geography Portal</em>: <a href="https://geoportal.statistics.gov.uk/">[Link]</a></li>
 <li>In the main menu go to <strong>Boundaries</strong> -&gt; <strong>Census Boundaries </strong> -&gt; <strong>Lower Layer Super Output Areas</strong> -&gt; <strong>2011 Boundaries</strong>.</li>
 <li>Click on <strong>LSOA (Dec 2011) Boundaries Super Generalised Clipped (BSC) EW V4</strong>.</li>
 <li>Click on <strong>Download</strong> -&gt; <strong>Download GeoPackage</strong>.</li>
@@ -399,20 +400,56 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>Now open your <code>GEOG0030/data/raw/</code> folder and create a new folder called <code>boundaries</code>. Rename the two files you just downloaded to <code>LSOA2011.gpkg</code> and <code>LSOA2021.gpkg</code>, respectively, and copy these into your <code>boundaries</code> folder.</p>
-<p>We now have our administrative geography files ready for use.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>You may have used spatial data before and noticed that we did not download a <code>shapefile</code> but a <code>geopackage</code> instead. Whilst <code>shapefiles</code> are still being used, and you will most likely come across them at some point in your career, the more modern, more portable, and open-source <code>geopackage</code> should be your spatial data format of choice where possible. Have a look at this article on towardsdatascience.com for an excellent explanation on why one should use <code>geopackage</code> files instead of <code>shapefiles</code>: <a href="https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416">[Link]</a></p>
+<p>You may have used spatial data before and noticed that we did not download a collection of files knowns as a <code>shapefile</code> but a <code>geopackage</code> instead. Whilst <code>shapefiles</code> are still being used, and you will most likely come across them at some point in your career, the more modern, more portable, and open-source <code>geopackage</code> should be your spatial data format of choice where possible. Have a look at this article on towardsdatascience.com for an excellent explanation on why one should use <code>geopackage</code> files instead of <code>shapefiles</code>: <a href="https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416">[Link]</a></p>
 </div>
 </div>
 </div>
 </section>
 <section id="w02-download-population" class="level3" data-number="2.4.5">
 <h3 data-number="2.4.5" class="anchored" data-anchor-id="w02-download-population"><span class="header-section-number">2.4.5</span> Downloading population data</h3>
+<p>For our population data, we will use the 2011 and 2021 Census population counts that are made available by the ONS through <a href="https://www.nomisweb.co.uk/">Nomis</a>.</p>
+<ol type="1">
+<li>Navigate to the <em>Nomis</em> portal: <a href="https://www.nomisweb.co.uk/">[Link]</a></li>
+<li>In the main menu go to <strong>Census</strong> -&gt; <strong>2011 Census</strong> -&gt; <strong>Lower Layer Super Output Areas</strong> -&gt; <strong>2011 Boundaries</strong>.</li>
+<li>Click on <strong>Key Statistics</strong>.</li>
+<li>Click on <strong>KS101EW - Usual resident population</strong>.</li>
+<li>Click on <strong>Query data</strong> on the left-hand side of the window.</li>
+<li>Select <strong>Geography</strong> and set <strong>2011 super output areas - lower layer</strong> to <strong>All</strong>.</li>
+<li>Click on <strong>Download data</strong>.</li>
+<li>Once the data is ready for download, download the file to your computer.</li>
+</ol>
+<p>To get the 2011 Census population counts, you should:</p>
+<ol type="1">
+<li>In the main menu go to <strong>Census</strong> -&gt; <strong>2011 Census</strong> -&gt; <strong>Lower Layer Super Output Areas</strong> -&gt; <strong>2021 Boundaries</strong>.</li>
+<li>Click on <strong>Topic Summaries</strong>.</li>
+<li>Click on <strong>TS007A - Age by five-year age bands</strong>.</li>
+<li>Click on <strong>Query data</strong> on the left-hand side of the window.</li>
+<li>Select <strong>Geography</strong> and set <strong>2021 super output areas - lower layer</strong> to <strong>All</strong>.<br>
+</li>
+<li>Click on <strong>Download data</strong>.</li>
+<li>Once the data is ready for download, download the file to your computer.</li>
+</ol>
+<p>In your <code>GEOG0030/data/raw/</code> folder, now create a new folder called <code>population</code> and copy the two spreadsheets to the newly created <code>population</code> folder. Rename the files you downloaded to: <code>LSOA2011_population.xlsx</code> and <code>LSOA2021_population.xlsx</code>, respectively.</p>
+</section>
+<section id="w02-cleaning" class="level3" data-number="2.4.6">
+<h3 data-number="2.4.6" class="anchored" data-anchor-id="w02-cleaning"><span class="header-section-number">2.4.6</span> Cleaning data</h3>
+<p>When you open up any of the LSOA spreadsheets in Excel, you will notice that some additional information is contained at the top of each of the files. This extra information will confuse QGIS and we therefore need to do a bit of data cleaning. We will also save the data in <code>csv</code> format.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><code>csv</code> stands for comma (or character) separated values. A <code>csv</code> file can be thought of as stripped-down Excel spreadsheet in which every column of data is separated by a comma. If you open a <code>csv</code> file within Excel, however, it will look “normal”. The advantage of using <code>csv</code> files is that it (should) make it easier to read data into QGIS and R as less things can go wrong.</p>
+</div>
+</div>
+</div>
 
 
 </section>

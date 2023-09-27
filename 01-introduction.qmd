@@ -29,7 +29,7 @@ Please follow the instructions below to install both [R](https://www.r-project.o
 QGIS is an open-source graphic user interface GIS with many community developed add-on packages (or plugins) that provide additional functionality to the software. You can download and install QGIS on your personal machine by going to the QGIS website: [[Link]](https://qgis.org/en/site/forusers/download.html). 
 
 ::: { .callout-note}
-We recommend installing the **Long Term Release** (*QGIS 3.22 LTR*) as this version should be the most stable version. For Windows users: be aware that the QGIS installation may be a little slow.
+We recommend installing the **Long Term Release** (*QGIS 3.28 LTR*) as this version should be the most stable version. For Windows users: be aware that the QGIS installation can be a little slow.
 :::
 
 After installation, start QGIS to see if the installation was successful.
@@ -40,7 +40,7 @@ R is both a programming language and software environment - in the form of RStud
 Installing R takes a few relatively simple steps involving two programmes. First there is the R programme itself. Follow these steps to get it installed on your computer:
 
 1. Navigate in your browser to your nearest CRAN mirror: [[Link]](https://cran.ma.imperial.ac.uk/)
-2. If you use a Windows computer, click on *Download R for Windows*. Then click on *base*. Download and install **R 4.2.x for Windows**. If you use a Mac computer, click on *Download R for macOS* and download and install **R-4.2.x.pkg**
+2. If you use a Windows computer, click on *Download R for Windows*. Then click on *base*. Download and install **R 4.3.x for Windows**. If you use a Mac computer, click on *Download R for macOS* and download and install **R-4.3.x.arm64.pkg** for Apple silicon Macs and **R-4.3.x.x86_64.pkg** for older Intal Macs.
 
 That is it! You now have installed the latest version of R on your own machine. However, to make working with R a little bit easier we also need to install something called an Integrated Development Environment (IDE). We will use RStudio:
 
@@ -67,7 +67,7 @@ If it is the first time you log on to RStudio server you may only see the RStudi
 :::
 
 ### R package installation 
-Now we have installed or have access to QGIS and R, we need to customise R. Many useful R function come in packages, these are free libraries of code written and made available by other by R users. This includes packages specifically developed for data cleaning, data wrangling, visualisation, mapping, and spatial analysis. To save us some time, we will install all R packages that we will need over the next ten weeks in one go. Now copy and paste the following code into the **console**. You can execute the code by hitting **Enter**. This may take a while.
+Now we have installed or have access to QGIS and R, we need to customise R. Many useful R function come in packages, these are free libraries of code written and made available by other by R users. This includes packages specifically developed for data cleaning, data wrangling, visualisation, mapping, and spatial analysis. To save us some time, we will install all R packages that we will need over the next ten weeks in one go. Now copy and paste the following code into the **console** window. You can execute the code by hitting **Enter**. This may take a while.
 
 ```{r} 
 #| label: 01-install-libaries
@@ -81,10 +81,10 @@ install.packages(c('tidyverse','sf','tmap','terra','dodgr'))
 ```
 
 ::: { .callout-warning}
-Even if you have used R or RStudio Server before and already installed some of the packages in the above list, do re-install all packages by running to code above to make sure you have the latest versions. Legacy installations that have not been updated may lay lead to problems when going through the tutorials.
+Even if you have used R or RStudio Server before and already installed some of the packages in the above list, do re-install all packages by running the code above to make sure you have the latest versions. Legacy installations that have not been updated may lay lead to problems when going through the tutorials.
 :::
 
-Once you have installed the packages, we need to check whether we can in fact load them into our R session. Copy and paste the following code into the **console**, and executed by hitting **Enter** again.
+Once you have installed the packages, we need to check whether we can in fact load them into our R session. Copy and paste the following code into the **console**, and execute by hitting **Enter** again.
 
 ```{r}
 #| label: 01-load-libaries

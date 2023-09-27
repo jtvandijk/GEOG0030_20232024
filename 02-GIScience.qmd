@@ -77,7 +77,7 @@ Very often in GIS-related courses you will be given pre-processed datasets. Beca
 :::
 
 ### Setting the scene {#w02-scene}
-For this practical, we will investigate how the population in London has changed over time. Understanding population change - over time and space - is spatial analysis at its most fundamental. We can understand a lot just from where population is growing or decreasing, including thinking through the impacts of these changes on the provision of housing, education, health and transport infrastructure. 
+In this part of the practical, we will investigate how the population in London has changed over time. Understanding population change - over time and space - is spatial analysis at its most fundamental. We can understand a lot just from where population is growing or decreasing, including thinking through the impacts of these changes on the provision of housing, education, health and transport infrastructure. 
 
 We can also see first-hand the impact of wider socio-economic processes, such as urbanisation. Today we will look at population in London in the Census years of 2011 and 2021 at the **Lower Super Output Area** scale that we can use within our future analysis projects, starting next week. 
 
@@ -88,14 +88,14 @@ We will use the population dataset to *normalise* other datasets. Why? When we r
 ### Finding data {#w02-finding}
 In the UK, finding authoritative data on population and *Administrative Geography* boundaries is increasingly straight-forward. Over the last decade, the UK government has opened up many of its datasets as part of an **Open Data** precedent that began in 2010 with the creation of [data.gov.uk](https://www.data.gov.uk) and the Open Government Licence (the terms and conditions for using data).
 
-::: { .callout-warning}
+::: { .callout-note}
 [Data.gov.uk](https://www.data.gov.uk) is the UK government’s central database that contains open data that the central government, local authorities and public bodies publish. This includes, for example, aggregated census and health data – and even government spending. In addition to this central database, there are other authoritative databases run by the government and/or respective public bodies that contain either a specific type of data (e.g. census data, crime data) or a specific collection of datasets (e.g. health data from the NHS, data about London). Some portals are less up-to-date than others, so it is wise to double-check with the ‘originators’ of the data to see if there are more recent versions.
 ::: 
 
 For our practical, we will access data from two portals:
 
-1. For our administrative boundaries, we will download the **spatial** data from the *Open Geography Portal*. 
-2. For population, we will download **attribute** data from the *Office of National Statistics (ONS)*.
+- For our administrative boundaries, we will download the **spatial** data from the *Open Geography Portal*. 
+- For our population data, we will download **attribute** data directly from the *Office of National Statistics (ONS)*.
 
 ### Housekeeping {#w01-housekeeping}
 Before we download our data, it is important to establish an organised file systems that we will use throughout the modul. Create a `GEOG0030` folder in your `Documents` folder on your computer and within your `GEOG0030` folder, create the following subfolders: 
@@ -109,7 +109,7 @@ Before we download our data, it is important to establish an organised file syst
 ### Downloading spatial data {#w02-download-spatial}
 We will start by downloading the administrative geography boundaries for England and Wales:
 
-1. Navigate to the `Open Geography Portal`: [[Link]](https://geoportal.statistics.gov.uk/)
+1. Navigate to the *Open Geography Portal*: [[Link]](https://geoportal.statistics.gov.uk/)
 2. In the main menu go to **Boundaries** -> **Census Boundaries ** -> **Lower Layer Super Output Areas** -> **2011 Boundaries**.
 3. Click on **LSOA (Dec 2011) Boundaries Super Generalised Clipped (BSC) EW V4**.
 4. Click on **Download** -> **Download GeoPackage**.
@@ -122,11 +122,37 @@ Administrative geographies are a way of dividing the country into smaller sub-di
 
 Now open your `GEOG0030/data/raw/` folder and create a new folder called `boundaries`. Rename the two files you just downloaded to `LSOA2011.gpkg` and `LSOA2021.gpkg`, respectively, and copy these into your `boundaries` folder.
 
-We now have our administrative geography files ready for use. 
-
 ::: { .callout-note}
-You may have used spatial data before and noticed that we did not download a `shapefile` but a `geopackage` instead. Whilst `shapefiles` are still being used, and you will most likely come across them at some point in    your career, the more modern, more portable, and open-source `geopackage` should be your spatial data format of choice where possible. Have a look at this article on towardsdatascience.com for an excellent explanation on why one should use `geopackage` files instead of `shapefiles`: [[Link]](https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416)
+You may have used spatial data before and noticed that we did not download a collection of files knowns as a `shapefile` but a `geopackage` instead. Whilst `shapefiles` are still being used, and you will most likely come across them at some point in    your career, the more modern, more portable, and open-source `geopackage` should be your spatial data format of choice where possible. Have a look at this article on towardsdatascience.com for an excellent explanation on why one should use `geopackage` files instead of `shapefiles`: [[Link]](https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416)
 :::
 
 ### Downloading population data {#w02-download-population}
+For our population data, we will use the 2011 and 2021 Census population counts that are made available by the ONS through [Nomis](https://www.nomisweb.co.uk/).
 
+1. Navigate to the *Nomis* portal: [[Link]](https://www.nomisweb.co.uk/)
+2. In the main menu go to **Census** -> **2011 Census** -> **Lower Layer Super Output Areas** -> **2011 Boundaries**.
+3. Click on **Key Statistics**.
+4. Click on **KS101EW - Usual resident population**.
+5. Click on **Query data** on the left-hand side of the window.
+6. Select **Geography** and set **2011 super output areas - lower layer** to **All**.
+7. Click on **Download data**. 
+8. Once the data is ready for download, download the file to your computer.
+
+To get the 2011 Census population counts, you should:
+
+1. In the main menu go to **Census** -> **2011 Census** -> **Lower Layer Super Output Areas** -> **2021 Boundaries**.
+2. Click on **Topic Summaries**.
+3. Click on **TS007A - Age by five-year age bands**.
+4. Click on **Query data** on the left-hand side of the window.
+5. Select **Geography** and set **2021 super output areas - lower layer** to **All**.\
+6. Click on **Download data**. 
+7. Once the data is ready for download, download the file to your computer.
+
+In your `GEOG0030/data/raw/` folder, now create a new folder called `population` and copy the two spreadsheets to the newly created `population` folder. Rename the files you downloaded to: `LSOA2011_population.xlsx` and `LSOA2021_population.xlsx`, respectively.
+
+### Cleaning data {#w02-cleaning}
+When you open up any of the LSOA spreadsheets in Excel, you will notice that some additional information is contained at the top of each of the files. This extra information will confuse QGIS and we therefore need to do a bit of data cleaning. We will also save the data in `csv` format.
+
+::: {.callout-tip}
+`csv` stands for comma (or character) separated values. A `csv` file can be thought of as stripped-down Excel spreadsheet in which every column of data is separated by a comma. If you open a `csv` file within Excel, however, it will look "normal". The advantage of using `csv` files is that it (should) make it easier to read data into QGIS and R as less things can go wrong.
+:::

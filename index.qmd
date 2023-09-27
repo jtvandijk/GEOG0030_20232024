@@ -37,11 +37,11 @@ Spatial analysis can yield fascinating insights into geographical relationships,
 If you need specific assistance with this course please:
 
 - Ask a question at the end of a lecture or during the computer practical.
+- Check the [Moodle](https://moodle.ucl.ac.uk/) assessment tab for queries relating to this module's assessment.
 - Attend the Department's **Coding Therapy sessions** that are run on a weekly basis.
 - Attend the scheduled Geocomputation **Additional Support Hours**.
-- Check the [Moodle](https://moodle.ucl.ac.uk/) assessment tab for queries relating to this module's assessment.
 
-If after pursuing all these avenues you still need help, you can book into our office hours. You can use an office hour to discuss a geographical concept in relation to the material, assessment or for any personal matters relevant to the completion of the module.
+If after pursuing all these avenues you still need help, you can book a slot in our Academic Support and Feedback hours. You can use this time to discuss a geographical concept in relation to the material, assessment or for any personal matters relevant to the completion of the module.
 
 ## Acknowledgements { .unnumbered}
 This year's workbook is updated from and compiled using:
@@ -52,10 +52,10 @@ This year's workbook is updated from and compiled using:
 
 ## Major updates { .unnumbered}
 ::: { .callout-note}
-Compared to previous years the following major changes have been implemented:
+This year's update features the following **major** updates:
 
-* Full rewrite of the workbook in `Quarto`.
+* Full rewrite of the workbook using `Quarto`.
 * Update to using exclusively Census 2021 (spatial) data where possible.
-* Removing dependencies on deprecated packages such as `raster`, `rgdal`, `rgeos`.
-* Move to `geopackage` over `shapefile`.
+* Rewriting sections relying on deprecated core packages: `raster`, `rgdal`, `rgeos`.
+* Move to `geopackage` over `shapefile` where possible.
 :::
