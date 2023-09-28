@@ -159,7 +159,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#w02-download-spatial" id="toc-w02-download-spatial" class="nav-link" data-scroll-target="#w02-download-spatial"><span class="header-section-number">2.4.4</span> Downloading spatial data</a></li>
   <li><a href="#w02-download-population" id="toc-w02-download-population" class="nav-link" data-scroll-target="#w02-download-population"><span class="header-section-number">2.4.5</span> Downloading population data</a></li>
   <li><a href="#w02-cleaning" id="toc-w02-cleaning" class="nav-link" data-scroll-target="#w02-cleaning"><span class="header-section-number">2.4.6</span> Cleaning data</a></li>
-  <li><a href="#using-qgis-to-map-the-london-population-data" id="toc-using-qgis-to-map-the-london-population-data" class="nav-link" data-scroll-target="#using-qgis-to-map-the-london-population-data"><span class="header-section-number">2.4.7</span> Using QGIS to map the London population data</a></li>
+  <li><a href="#mapping-population-data" id="toc-mapping-population-data" class="nav-link" data-scroll-target="#mapping-population-data"><span class="header-section-number">2.4.7</span> Mapping population data</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -344,9 +344,9 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>For our practical, we will access data from two authoritative data portals:</p>
+<p>For our practical, we will access data from two other authoritative data portals:</p>
 <ul>
-<li>For our administrative boundaries, we will download the <strong>spatial</strong> data from the <em>Open Geography Portal</em>.</li>
+<li>For our administrative boundaries, we will download the <strong>spatial</strong> data through the <em>Open Geography Portal</em>.</li>
 <li>For our population data, we will download <strong>attribute</strong> data directly from the <em>Office of National Statistics (ONS)</em>.</li>
 </ul>
 </section>
@@ -428,7 +428,7 @@ ul.task-list li input[type="checkbox"] {
 <p>To get the 2011 Census population counts, you should:</p>
 <ol type="1">
 <li>Navigate to the <em>Nomis</em> portal: <a href="https://www.nomisweb.co.uk/">[Link]</a></li>
-<li>In the main menu of the <em>Nomis</em> portal go to <strong>Census</strong> -&gt; <strong>2011 Census</strong> -&gt; <strong>Lower Layer Super Output Areas</strong> -&gt; <strong>2021 Boundaries</strong>.</li>
+<li>In the main menu go to <strong>Census</strong> -&gt; <strong>2021 Census</strong> -&gt; <strong>Lower Layer Super Output Areas</strong> -&gt; <strong>2021 Boundaries</strong>.</li>
 <li>Click on <strong>Topic Summaries</strong>.</li>
 <li>Click on <strong>TS007A - Age by five-year age bands</strong>.</li>
 <li>Click on <strong>Query data</strong> on the left-hand side of the window.</li>
@@ -455,13 +455,33 @@ ul.task-list li input[type="checkbox"] {
 <section id="london-population-in-2011" class="level4" data-number="2.4.6.1">
 <h4 data-number="2.4.6.1" class="anchored" data-anchor-id="london-population-in-2011"><span class="header-section-number">2.4.6.1</span> London population in 2011</h4>
 <p>Open the <code>LSOA2011_population.xlsx</code> file in Excel. We have two main columns: one with identifying information that distinguishes each area from one another and one with population counts. In addition, there are some less informative rows at the top of the spreadsheet.</p>
-<p>Looking at this we need to take two steps. First, we need to remove the top rows that we do not need. Second, we need to spread the information in the first column into two columns. Currently, this columns contains unique area codes as well as unique area names. However, to be able to effectively link our population data to our spatial data, the codes are much more reliable and much less likely to cause issues than the area names. Putting area codes and area names into separate columns will help us sorting this out.</p>
+<p>Looking at this we need to take three steps. First, we need to remove the top rows that we do not need. Second, we need to make sure that we extract all the rows with data that are relevant to <a href="https://en.wikipedia.org/wiki/Greater_London">Greater London</a>. Third, we need to spread the information in the first column into two columns. Currently, this columns contains unique area codes as well as unique area names. However, to be able to effectively link our population data to our spatial data, the codes are much more reliable and much less likely to cause issues than the area names. Putting area codes and area names into separate columns will help us sorting this out.</p>
 <ol type="1">
 <li>Open a new Excel spreadsheet. From the <code>LSOA2011_population.xlsx</code> spreadsheet, cut (<strong>Edit</strong> -&gt; <strong>Cut</strong>) all cells from columns <strong>A</strong> to <strong>B</strong> and rows <strong>9 to 4,651</strong> into this new spreadsheet. Row 4,651 denotes the end of the <u>majority</u> of the <em>Greater London</em> LSOAs.</li>
-<li>Now we need to identify the missing LSOAs that were not kept at the top of the file with the other London LSOAs, probably because these LSOAs got introduced at a later point in time. Unfortunately, we can only do this manually by searching for the name of each of the London Boroughs and subsequently cutting the associated LSOAs from the spreadsheet and pasting these into the second spreadsheet.</li>
+<li>Now we need to identify the missing LSOAs that were not kept at the top of the file with the other London LSOAs, probably because these LSOAs got introduced at a later point in time. Unfortunately, we can only do this manually by searching for the name of each of the London Boroughs and subsequently cutting the associated rows of data from the spreadsheet and pasting these into the second spreadsheet.</li>
 <li>Go to <strong>Edit</strong> -&gt; <strong>Find</strong> -&gt; <strong>Find</strong>. Type in <strong>City of London</strong>. Cut (<strong>Edit</strong> -&gt; <strong>Cut</strong>) the two rows of data (<em>City of London 001F</em>, <em>City of London 001G</em>) and paste these at the bottom of the second spreadsheet.</li>
-<li>Repeat this process to find all missing LSOAs for all <strong>32</strong> London Boroughs. ::: { .callout-warning} Not all of the <strong>32</strong> London Boroughs have missing LSOAs (e.g.&nbsp;<em>Kensington and Chelsea</em>) whilst in other cases the missing LSOAs are not grouped together (e.g.&nbsp;<em>Wandsworth</em> and <em>Southwark</em>) so after cutting the data, try <strong>Find</strong> again to make sure you did not miss any LSOAs. Once you are done cutting and pasting, you should have <strong>4,836</strong> rows of data in your second spreadsheet. :::</li>
+<li>Repeat this process to find all missing LSOAs by searching the names of all <strong>32</strong> London Boroughs.</li>
 </ol>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You can make this process much by using keyboard shortcuts. On MacOS you can use: <code>cmd + f</code> to open up the find menu, <code>cmd + x</code> to cut data, and <code>cmd + v</code> to paste data. On Windows you can use: <code>ctrl + f</code> to open up the find menu, <code>ctrl + x</code> to cut data, and <code>ctrl + v</code> to paste date.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Not all of the <strong>32</strong> London Boroughs have missing LSOAs whilst in other cases the missing LSOAs are not grouped together (e.g.&nbsp;<em>Wandsworth</em> and <em>Southwark</em>) so after cutting the data, try <strong>Find</strong> again to make sure you did not miss any LSOAs. Once you are done cutting and pasting, you should have <strong>4,836</strong> rows of data in your second spreadsheet.</p>
+</div>
+</div>
+</div>
 <table class="table">
 <thead>
 <tr class="header">
@@ -564,7 +584,7 @@ ul.task-list li input[type="checkbox"] {
 <ol start="8" type="1">
 <li>In the <strong>Text to Columns</strong> menu, select the <strong>Delimited</strong> radio button and click <strong>Next</strong>.</li>
 <li>Uncheck the checkbox for <strong>Tab</strong> and put <code>:</code> (colon) into the <strong>Other</strong> box. Click <strong>Finish</strong>.</li>
-<li>Change the name of the <code>lsoa</code> column to <code>lsoa11_code</code> and change the name of the new column to <code>lsoa11_name</code>.</li>
+<li>Change the name of the <code>lsoa</code> column to <code>lsoa11_code</code> and change the name of the now populated column <strong>B</strong> to <code>lsoa11_name</code>.</li>
 </ol>
 <div class="cell" data-hash="02-GIScience_cache/html/fig-almost-there_8fefaa2af6941f7fe3704379ff912b39">
 <div class="cell-output-display">
@@ -577,7 +597,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <ol start="11" type="1">
-<li>One thing that might cause problems when we try to link the population data to the spatial data is that there are still spaces contained in the <code>lsoa11_code</code> column. This is not directly noticeable as these spaces are white space characters at the end of the LSOA codes without any other characters following it (i.e.&nbsp;<a href="https://stackoverflow.com/questions/22273233/what-is-meant-by-trailing-space-and-whats-the-difference-between-it-and-a-blank">trailing spaces</a>. This may seem trivial, but computer language is very precise so we need to remove these. We can do this by highlighting the entire <code>lsoa11_code</code> column and in the <strong>Home</strong> menu opting for <strong>Replace</strong> under the <strong>Find &amp; Select</strong> menu.</li>
+<li>One thing that might cause problems when we try to link the population data to the spatial data is that there are still spaces contained in the <code>lsoa11_code</code> column. This is not directly noticeable as these spaces are <code>white space</code> characters at the end of the LSOA codes without any other characters following it (i.e.&nbsp;<a href="https://stackoverflow.com/questions/22273233/what-is-meant-by-trailing-space-and-whats-the-difference-between-it-and-a-blank">trailing spaces</a>). This may seem trivial, but computer language is very precise so we need to remove these. We can do this by highlighting the entire <code>lsoa11_code</code> column and in the <strong>Home</strong> menu opting for <strong>Replace</strong> under the <strong>Find &amp; Select</strong> menu.</li>
 </ol>
 <div class="cell" data-hash="02-GIScience_cache/html/fig-find-replace_fddda475374065c5a634b451c74a62b3">
 <div class="cell-output-display">
@@ -591,7 +611,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <ol start="12" type="1">
 <li>In the <strong>Find what</strong> box put in a singular <code>white space</code>, using the <em>spacebar</em> on your computer, keep the <strong>Replace with</strong> box empty, and click on <strong>Replace all</strong>. You should get a message that <strong>4,835</strong> replacements have been made.</li>
-<li>One further bit of formatting that you must do before saving your data is to format our population field. At the moment, you will see that there are commas separating the thousands within our values. If we leave these commas in our values, QGIS will read them as decimal points, creating decimal values of our population. There are many points at which we could resolve this issue, but the easiest point is now - we will strip our population values of the commas and set them to integer (whole numbers) values. To format the <code>pop2011</code> column, higlight the entire column and right-click on the <code>C</code> cell. Click on <strong>Format Cells</strong> and set the Cells to <strong>Number</strong> with <strong>0</strong> decimal places. You should see that the commas are now removed from your population values.</li>
+<li>One further bit of formatting that you must do before saving your data is to format our population field. At the moment, you will see that there are commas separating the thousands within our values. If we leave these commas in our values, QGIS will read them as decimal points, creating decimal values of our population. There are many points at which we could resolve this issue, but the easiest point is now - we will strip our population values of the commas and set them to integer (whole numbers) values. To format the <code>pop2011</code> column, higlight the entire column and right-click on the <code>C</code> cell. Click on <strong>Format Cells</strong> and set the cells to <strong>Number</strong> with <strong>0</strong> decimal places. You should see that the commas are now removed from your population values.</li>
 <li>Save your spreadsheet as a <code>csv</code> file into your <code>data</code> folder as <code>LSOA2011_population.csv</code>.</li>
 </ol>
 <div class="callout callout-style-simple callout-tip">
@@ -600,7 +620,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>After saving the file Excel might give you a warning along the lines of <em>Possible data loss</em>. You can safely ignore this message as the only ‘information’ you have lost is markup information (e.g.&nbsp;fonts, colours, items in bold, etc.) or formulas native to Excel (e.g.&nbsp;if you used Excel to calculate <em>means</em>, <em>medians</em>, etc.). In some cases you might also have options to choose what type of <code>csv</code> you would want to save the spreadsheet as. If so, opt for something along the lines of <code>CSV UTF-8 (Comma-delimited) (.csv)</code>.</p>
+<p>After saving the file Excel might give you a warning along the lines of <em>Possible data loss</em>. You can safely ignore this message as the only ‘information’ you have lost is markup information (e.g.&nbsp;fonts, colours, items in bold, etc.) or formulas within Excel (e.g.&nbsp;if you used Excel formulas to calculate <em>means</em>, <em>medians</em>, etc.). In some cases you might also have options to choose what type of <code>csv</code> you would want to save the spreadsheet as. If so, opt for something along the lines of <code>CSV UTF-8 (Comma-delimited) (.csv)</code>.</p>
 </div>
 </div>
 </div>
@@ -610,7 +630,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Depending on the language settings of your operation system (e.g.&nbsp;Windows, MacOS, Linux) and language settings, <code>csv</code> files might look different. It is always a good idea to check your <code>csv</code> file in a plain text editor (e.g.&nbsp;<strong>Textedit</strong> on MacOS or <strong>Notepad</strong> on Windows). In case you do not see commas (<code>,</code>), but semicolons (<code>;</code>) you can apply a quick and dirty fix to your data by <em>finding and replacing</em> every <code>;</code> with a <code>,</code> in the same that way we fixed our problematic <code>white space</code> characters in Excel.</p>
+<p>Depending on the language settings of your operating system (e.g.&nbsp;Windows, MacOS, Linux) and language settings, <code>csv</code> files might look different. It is always a good idea to check yo ur <code>csv</code> file in a plain text editor (e.g.&nbsp;<strong>Textedit</strong> on MacOS or <strong>Notepad</strong> on Windows). In case you do not see commas (<code>,</code>), but semicolons (<code>;</code>) you can apply a quick and dirty fix to your data by <em>finding and replacing</em> every <code>;</code> with a <code>,</code> in the same that way we fixed our problematic <code>white space</code> characters in Excel.</p>
 </div>
 </div>
 </div>
@@ -619,8 +639,10 @@ ul.task-list li input[type="checkbox"] {
 <h4 data-number="2.4.6.2" class="anchored" data-anchor-id="london-population-in-2021"><span class="header-section-number">2.4.6.2</span> London population in 2021</h4>
 <p>Now the 2011 data is prepared, we can move to the 2021 data:</p>
 <ol type="1">
-<li>Open the <code>LSOA2021_population.xlsx</code> in Excel. You will notice that the file is formatted largely the same as the <code>LSOA2011_population.xlsx</code> file, although if you were to look closely you will notice that the majority of London data are not at the top this time and that the number of top rows that we need to remove is not the same. To remedy this we can <strong>sort</strong> the data on the <code>lsoa</code> column (use: <strong>Data</strong> -&gt; <strong>Sort</strong>). This procedure <em>should</em> put the majority of London LSOAs at the top again.</li>
-<li>Now carry out the exact same steps you used to clean the 2011 population file to clean the 2021 population file. Save the file as <code>csv</code> into your <code>data</code> folder as <code>LSOA2021_population.csv</code> with the following column names: <code>lsoa21_code</code>, <code>lsoa21_name</code>, and <code>pop2021</code>.</li>
+<li>Open the <code>LSOA2021_population.xlsx</code> in Excel. You will notice that the file is formatted largely the same as the <code>LSOA2011_population.xlsx</code> file, although if you were to look closely you will notice that the majority of London data are not at the top this time but that Local Authority Districts are grouped together - and in fact all data pertaining to Greater London are also grouped together. This makes our lives much easier because we can now simply cut the data for each of the <strong>32</strong> Boroughs and <em>City of London</em> in one go.</li>
+<li>Open a new Excel spreadsheet. From the <code>LSOA2021_population.xlsx</code> spreadsheet, cut (<strong>Edit</strong> -&gt; <strong>Cut</strong>) all cells from columns <strong>A</strong> to <strong>B</strong> and rows <strong>19,790 to 2,4783</strong> and paste these into this new spreadsheet.</li>
+<li>Take the remaining steps to prepare the 2021 population steps: split the <code>lsoa</code> column, remove the trailing <code>white space</code> characters from the LSOA code column, and remove the decimal commas in the population count column.</li>
+<li>Save the file as <code>csv</code> into your <code>data</code> folder as <code>LSOA2021_population.csv</code> with the following column names: <code>lsoa21_code</code>, <code>lsoa21_name</code>, and <code>pop2021</code>.</li>
 </ol>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
@@ -634,8 +656,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </section>
 </section>
-<section id="using-qgis-to-map-the-london-population-data" class="level3" data-number="2.4.7">
-<h3 data-number="2.4.7" class="anchored" data-anchor-id="using-qgis-to-map-the-london-population-data"><span class="header-section-number">2.4.7</span> Using QGIS to map the London population data</h3>
+<section id="mapping-population-data" class="level3" data-number="2.4.7">
+<h3 data-number="2.4.7" class="anchored" data-anchor-id="mapping-population-data"><span class="header-section-number">2.4.7</span> Mapping population data</h3>
 <section id="setting-up-a-project" class="level4" data-number="2.4.7.1">
 <h4 data-number="2.4.7.1" class="anchored" data-anchor-id="setting-up-a-project"><span class="header-section-number">2.4.7.1</span> Setting up a project</h4>
 <p>We will now use QGIS to create population maps for the LSOAs in London for both years. To achieve this, we need to <strong>join our table data to our spatial datasets</strong> and then map our populations for our visual analysis. Because, as we have seen above, we have issues with the number of LSOAs and changes in boundaries between the two Censuses, we will not (for now) complete any quantitative analysis of these population changes - this would require significant additional processing that we do not have time for today.</p>
@@ -665,9 +687,9 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="adding-layers" class="level4" data-number="2.4.7.2">
-<h4 data-number="2.4.7.2" class="anchored" data-anchor-id="adding-layers"><span class="header-section-number">2.4.7.2</span> Adding layers</h4>
-<p>We will first focus on loading and joining the 2011 datasets.</p>
+<section id="adding-spatial-data" class="level4" data-number="2.4.7.2">
+<h4 data-number="2.4.7.2" class="anchored" data-anchor-id="adding-spatial-data"><span class="header-section-number">2.4.7.2</span> Adding spatial data</h4>
+<p>Now are project is set up, we can start by loading our 2011 spatial layer.</p>
 <ol type="1">
 <li>Click on <strong>Layer</strong> -&gt; <strong>Add Layer</strong> -&gt; <strong>Add Vector Layer</strong>.</li>
 <li>With <strong>File</strong> as your source type, click on the small three dots button and navigate to your 2011 boundary files.</li>
@@ -683,10 +705,56 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>With the dataset loaded, we can now explore it in a little more detail. We first want to check out the <strong>Attribute Table</strong> of our dataset to see if we can filter out only the London LSOAs.</p>
+</section>
+<section id="conducting-an-attribute-join" class="level4" data-number="2.4.7.3">
+<h4 data-number="2.4.7.3" class="anchored" data-anchor-id="conducting-an-attribute-join"><span class="header-section-number">2.4.7.3</span> Conducting an attribute join</h4>
+<p>We are now going to join our 2011 population data to our 2011 spatial data file First, we need to add the 2011 population data to our project.</p>
+<ol type="1">
+<li>Click on <strong>Layer</strong> -&gt; <strong>Add Layer</strong> -&gt; <strong>Add Delimited Text Layer</strong>.</li>
+<li>Click on the three dots button again and navigate to your <strong>2011 population data</strong> in your <code>data</code> folder. Your file format should be set to <code>csv</code>. You should have the following boxes clicked under the <strong>Record and Field options</strong> menu: <code>Decimal separator is comma</code>, <code>First record has field names</code>, <code>Detect field types</code> and <code>Discard empty fields</code>. QGIS does many of these by default, but do double-check.</li>
+<li>Set the Geometry to <em>No geometry (attribute only table)</em> under the <strong>Geometry Definition</strong> menu. Then click <strong>Add</strong> and <strong>Close</strong>. You should now see a table added to your <code>Layers</code> pane.</li>
+</ol>
+<p>We can now join this table data to our spatial data using an <strong>Attribute Join</strong>.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>An <strong>Attribute Join* is one of two types of data joins you will use in spatial analysis (the other is a </strong>Spatial join**, which we will look at later on in the module). An attribute join essentially allows you to link two datasets together, as long as they share a common attribute to facilitate the ‘matching’ of rows:</p>
+<div class="cell" data-hash="02-GIScience_cache/html/fig-join-those-attributes_47fe56706ac466a006b9f0f82991a60c">
+<div class="cell-output-display">
+<div id="fig-join-those-attributes" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w02/attribute-joins.png" class="img-fluid figure-img" width="435"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.7: Attribute Joins. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/attribute-joins.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Essentially you need a <strong>single unique identifying ID</strong> field for your records within both datasets: this can be a code, a name or any other string of information. In spatial analysis, we always join our table data to our spatial data. One way to think about it as attaching the table data to the spatial data layer.</p>
+<p>To make a join work, you need to make sure your ID field is correct across both datasets, i.e.&nbsp;no typos or spelling mistakes. Computers can only follow instructions, so they do not know that <em>St.&nbsp;Thomas</em> in one dataset is the same as <em>St Thomas</em> in another.</p>
+<p>As a result, whilst in our datasets we have kept both the name and code for both the boundary data and the population data, when creating the join, we will always prefer to use the code over their names. Unlike names, codes reduce the likelihood of error and mismatch because they do not rely on understanding spelling. Common errors, such as adding in spaces or using <code>0</code> instead <code>O</code> (and vice versa) can still happen but it is less likely.</p>
+</div>
+</div>
+</div>
+<p>To make our join work, we need to check that we have a matching <strong>UID</strong> across both our datasets. We therefore need to look at the tables of both datasets and check what attributes we have that could be used for this possible match.</p>
 <ol start="4" type="1">
-<li>Right-click on the <code>LSOA2011</code> layer and open the <strong>Attribute Table</strong> and look at how the attributes are stored and presented in the table. Explore the different buttons in the Attribute Table and see if you can figure out what they mean.</li>
-<li>Now sort the <strong>Attribute Table</strong> on the <strong>LSOA11CD</strong> column so that all London-based LSOAs are at the top. Select the first <strong>4,4642</strong> rows.</li>
+<li>Open up the <strong>Attribute Tables</strong> of each layer and check what fields we have that could be used for the join. We can see that both our respective ‘code’ fields have the same codes (<code>LSOA11CD</code> and <code>lsoa11_code</code>) which seem to contain the same information.</li>
+<li>Right-click on your <code>LSOA2011</code> spatial layer, click on <strong>Properties</strong> and then click on the <strong>Joins</strong> tab.</li>
+</ol>
+<ul>
+<li>Click on the <strong>+</strong> button. Make sure the <strong>Join Layer</strong> is set to <code>LSOA2011_population</code>.</li>
+<li>Set the <strong>Join field</strong> to <code>lsoa11_code</code>.</li>
+<li>Set the <strong>Target field</strong> to <code>LSOA11CD</code>.</li>
+<li>Click the <strong>Joined Fields</strong> box and click to only select the <code>pop2011</code> field.</li>
+<li>Click on the <strong>Custom Field Name Prefix</strong> and <strong>remove</strong> the pre-entered text to leave it blank.</li>
+<li>Click on <strong>OK</strong>.</li>
+<li>Click on <strong>Apply</strong> in the main Join tab and then click <strong>OK</strong> to return to the main QGIS window.</li>
+</ul>
+<p>We can now check to see if our join has worked by opening up the <strong>Attribute Table</strong> of our <code>LSOA11CD</code> spatial layer and looking to see if our LSOAs now have a <strong>Population</strong> field attached to it.</p>
+<ol start="6" type="1">
+<li>Sort the data in the <strong>Attribute Table</strong> on the <code>pop2011</code> field by clicking on the column name: all LSOAs for which we have population data (i.e.&nbsp;only the London LSOAs) are now grouped at the top of the file. Select the first <strong>4,835</strong> rows of data.</li>
 </ol>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
@@ -694,36 +762,44 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>You can select the first row, scroll down to the last row related to <em>Westminster</em>, hold the <code>shift</code> button on your keyboard, and click on the last row related to <em>Westminster</em> to select all rows that we need in one go.</p>
+<p>You can select the first row, scroll down to the last row that has population data, hold down the <code>shift</code> button on your keyboard, and click on the last row that has population data to select all rows that we need in one go.</p>
 </div>
 </div>
 </div>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-select-london_be3632cab4c77591988e84c540592521">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-select-london_4f7d73f742097a383d8627e91334a251">
 <div class="cell-output-display">
 <div id="fig-select-london" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/w02/select-london.png" class="img-fluid figure-img" width="690"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.7: All <strong>4,4642</strong> London LSOAs selected. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/select-london.png" target="_blank">[Enlarge image]</a></figcaption>
-</figure>
-</div>
-</div>
-</div>
-<ol start="6" type="1">
-<li>Close the <strong>Attribute Table</strong>. Right-click on the <code>LSOA2011</code> layer and select <strong>Export</strong> -&gt; <strong>Save Selected Features As</strong>. Set <strong>Format</strong> to <code>Geopackage</code> and click on the small three dots button next to <strong>File name</strong> and navigate to your <code>data/raw/boundaries</code> folder. Save the file as <code>LSOA2011_London.gpkg</code>.</li>
-</ol>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-export-london_15a474342d35091117bb0483fabe9064">
-<div class="cell-output-display">
-<div id="fig-export-london" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="images/w02/export-london.png" class="img-fluid figure-img" width="352"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.8: Export the London LSOAs to a new file. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/export-london.png" target="_blank">[Enlarge image]</a></figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2.8: All <strong>4,835</strong> London LSOAs selected. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/select-london.png" target="_blank">[Enlarge image]</a></figcaption>
 </figure>
 </div>
 </div>
 </div>
 <ol start="7" type="1">
-<li>You can now untick the <code>LSOA2011</code> containing all the LSOAs for England and Wales. Right-click on the <code>LSOA2011_London</code> layer and click on <strong>Zoom to Layer(s)</strong>.</li>
+<li><p>Close the <strong>Attribute Table</strong>. Right-click on the <code>LSOA2011</code> layer and select <strong>Export</strong> -&gt; <strong>Save Selected Features As</strong>. Set <strong>Format</strong> to <code>Geopackage</code> and click on the small three dots button next to <strong>File name</strong> and navigate to your <code>data/raw/boundaries</code> folder. Save the file as <code>LSOA2011_London.gpkg</code>.</p></li>
+<li><p>You can now untick the <code>LSOA2011</code> containing all the LSOAs for England and Wales. Right-click on the <code>LSOA2011_London</code> layer and click on <strong>Zoom to Layer(s)</strong>.</p></li>
 </ol>
+<div class="cell" data-hash="02-GIScience_cache/html/fig-lsoa-london_e03b0189d26bcf231007cb8a56a59dfc">
+<div class="cell-output-display">
+<div id="fig-lsoa-london" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w02/all-lsoa-london.png" class="img-fluid figure-img" width="776"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.9: All <strong>4,835</strong> London LSOAs. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/all-lsoa-london.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The main strength of a GUI GIS system is that is really helps us understand how we can visualise spatial data. Even with just one two spatial layers loaded, we can understand two key concepts of using spatial data within GIS. The first, and this is only really relevant to GUI GIS systems, is that each layer can either be turned on or off, to make it visible or not. The second concept is the order in which your layers are drawn – and this is relevant for both GUI GIS and when using plotting libraries such as <code>ggplot2</code> or <code>tmap</code> in RStudio. Your layers will be drawn depending on the order in which your layers are either tabled (as in a GUI GIS) or ‘called’ in your function in code. Being aware of this need for ‘order’ is important when we shift to using RStudio and <code>tmap</code> to plot our maps, as if you do not layer your data correctly in your code, your map will end up not looking as you hoped. For us using QGIS right now, the layers will be drawn from bottom to top.</p>
+</div>
+</div>
+</div>
 
 
 </section>
