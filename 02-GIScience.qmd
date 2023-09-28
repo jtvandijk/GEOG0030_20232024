@@ -117,7 +117,7 @@ We will start by downloading the administrative geography boundaries for England
 Repeat the above process to also download the 2021 LSOA boundaries: **Lower Layer Super Output Areas (2021) Boundaries EW BGC**. Make sure you download the **Generalised (20m)** version.
 
 ::: { .callout-warning}
-Administrative geographies are a way of dividing the country into smaller sub-divisions or areas that correspond with the area of responsibility of local authorities and government bodies. These administrative sub-divisions and their associated geography have several important uses, including assigning electoral constituencies and serving as a mechanism for collecting census data. These geographies are updated as populations evolve and as a result the boundaries of the administrative geographies are subject to either periodic or occasional change. This is why we need to download both 2011 and 2021 boundaries. More details on the administrative geographies of the UK can be found on the website of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).
+Administrative geographies are a way of dividing the country into smaller sub-divisions or areas that correspond with the area of responsibility of local authorities and government bodies. These administrative sub-divisions and their associated geography have several important uses, including assigning electoral constituencies and serving as a mechanism for collecting census data. These geographies are updated as populations evolve and as a result the boundaries of the administrative geographies are subject to either periodic or occasional change. <u>This is why we need to download both 2011 and 2021 LSOA boundaries.</u> More details on the administrative geographies of the UK can be found on the website of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).
 :::
 
 Now open your `GEOG0030/data/raw/` folder and create a new folder called `boundaries`. Rename the two files you just downloaded to `LSOA2011.gpkg` and `LSOA2021.gpkg`, respectively, and copy these into your `boundaries` folder.
@@ -140,13 +140,14 @@ For our population data, we will use the 2011 and 2021 Census population counts 
 
 To get the 2011 Census population counts, you should:
 
-1. In the main menu of the *Nomis* portal go to **Census** -> **2011 Census** -> **Lower Layer Super Output Areas** -> **2021 Boundaries**.
-2. Click on **Topic Summaries**.
-3. Click on **TS007A - Age by five-year age bands**.
-4. Click on **Query data** on the left-hand side of the window.
-5. Select **Geography** and set **2021 super output areas - lower layer** to **All**.\
-6. Click on **Download data**. 
-7. Once the data is ready for download, download the file to your computer.
+1. Navigate to the *Nomis* portal: [[Link]](https://www.nomisweb.co.uk/)
+2. In the main menu of the *Nomis* portal go to **Census** -> **2011 Census** -> **Lower Layer Super Output Areas** -> **2021 Boundaries**.
+3. Click on **Topic Summaries**.
+4. Click on **TS007A - Age by five-year age bands**.
+5. Click on **Query data** on the left-hand side of the window.
+6. Select **Geography** and set **2021 super output areas - lower layer** to **All**.\
+7. Click on **Download data**. 
+8. Once the data is ready for download, download the file to your computer.
 
 In your `GEOG0030/data/raw/` folder, now create a new folder called `population` and copy the two Excel files to the newly created `population` folder. Rename the files you downloaded to: `LSOA2011_population.xlsx` and `LSOA2021_population.xlsx`, respectively.
 
@@ -162,10 +163,37 @@ Open the `LSOA2011_population.xlsx` file in Excel. We have two main columns: one
 
 Looking at this we need to take two steps. First, we need to remove the top rows that we do not need. Second, we need to spread the information in the first column into two columns. Currently, this columns contains unique area codes as well as unique area names. However, to be able to effectively link our population data to our spatial data, the codes are much more reliable and much less likely to cause issues than the area names. Putting area codes and area names into separate columns will help us sorting this out.
 
-1. Open a new Excel spreadsheet. From the `LSOA2011_population.xlsx` spreadsheet, copy over all cells from columns **A** to **B** and rows **9 to 4,651** into this new spreadsheet. Row 4,651 denotes the end of the *Greater London* areas which in some cases are kept at the top of the spreadsheet, depending on how the data are sorted.
-2. Rename the columns in the new spreadsheet to `lsoa` and `pop2011`, respectively. 
-3. Cut all the data from the `pop2011` column that is stored in column **B** and paste these into column **C**. You now should have a column *without* any data between the `lsoa` and `pop2011` columns.
-4. Highlight the entire `lsoa` column and in the **Data** menu click on the **Text to Columns** menu button.
+1. Open a new Excel spreadsheet. From the `LSOA2011_population.xlsx` spreadsheet, cut (**Edit** -> **Cut**) all cells from columns **A** to **B** and rows **9 to 4,651** into this new spreadsheet. Row 4,651 denotes the end of the <u>majority</u> of the *Greater London* LSOAs.
+2. Now we need to identify the missing LSOAs that were not kept at the top of the file with the other London LSOAs, probably because these LSOAs got introduced at a later point in time. Unfortunately, we can only do this manually by searching for the name of each of the London Boroughs and subsequently cutting the associated LSOAs from the spreadsheet and pasting these into the second spreadsheet.
+3. Go to **Edit** -> **Find** -> **Find**. Type in **City of London**. Cut (**Edit** -> **Cut**) the two rows of data (*City of London 001F*, *City of London 001G*) and paste these at the bottom of the second spreadsheet. 
+4. Repeat this process to find all missing LSOAs for all **32** London Boroughs. 
+::: { .callout-warning}
+Not all of the **32** London Boroughs have missing LSOAs (e.g. *Kensington and Chelsea*) whilst in other cases the missing LSOAs are not grouped together (e.g. *Wandsworth* and *Southwark*) so after cutting the data, try **Find** again to make sure you did not miss any LSOAs. Once you are done cutting and pasting, you should have **4,836** rows of data in your second spreadsheet.
+:::
+
+
+| London Boroughs                               |
+| :----                   | :----               |
+| Westminster             | Sutton              |
+| Kensington and Chelsea  | Crodyon             |
+| Hammersmith and Fulham  | Bromley             |
+| Wandsworth              | Lewisham            |
+| Lambeth                 | Greenwich           |
+| Southwark               | Bexley              |
+| Tower Hamlets           | Havering            |
+| Hackney                 | Barking and Dagenham|
+| Islington               | Redbridge           |
+| Camden                  | Newham              |
+| Brent                   | Waltham Forest      |
+| Ealing                  | Haringey            |
+| Hounslow                | Enfield             |
+| Richmond upon Thames    | Barnet              |
+| Kingston upon Thames    | Harrow              |
+| Merton                  | Hillingdon          |
+
+5. Once you copied all the rows of data, rename the columns in the new spreadsheet to `lsoa` and `pop2011`, respectively. 
+6. Cut all the data from the `pop2011` column that is stored in column **B** and paste these into column **C**. You now should have a column *without* any data between the `lsoa` and `pop2011` columns.
+7. Highlight the entire `lsoa` column and in the **Data** menu click on the **Text to Columns** menu button.
 
 ```{r}
 #| label: fig-text-to-columns
@@ -179,9 +207,9 @@ knitr::include_graphics('images/w02/text-to-columns.png')
 Note that the **Text to Columns** function might be elsewhere in the menu depending on your version of Excel and/or your operating system.
 :::
 
-4. In the **Text to Columns** menu, select the **Delimited** radio button and click **Next**.
-5. Uncheck the checkbox for **Tab** and put `:` (colon) into the **Other** box. Click **Finish**. 
-6. Change the name of the `lsoa` column to `lsoa11_code` and change the name of the new column to `lsoa11_name`.
+8. In the **Text to Columns** menu, select the **Delimited** radio button and click **Next**.
+9. Uncheck the checkbox for **Tab** and put `:` (colon) into the **Other** box. Click **Finish**. 
+10. Change the name of the `lsoa` column to `lsoa11_code` and change the name of the new column to `lsoa11_name`.
 
 ```{r}
 #| label: fig-almost-there
@@ -191,7 +219,7 @@ Note that the **Text to Columns** function might be elsewhere in the menu depend
 knitr::include_graphics('images/w02/almost-there.png')
 ```
 
-7. One thing that might cause problems when we try to link the population data to the spatial data is that there are still spaces contained in the `lsoa11_code` column. This is not directly noticeable as these spaces are white space characters at the end of the LSOA codes without any other characters following it (i.e. [trailing spaces](https://stackoverflow.com/questions/22273233/what-is-meant-by-trailing-space-and-whats-the-difference-between-it-and-a-blank). This may seem trivial, but computer language is very precise so we need to remove these. We can do this by highlighting the entire `lsoa11_code` column and in the **Home** menu opting for **Replace** under the **Find & Select** menu.
+11. One thing that might cause problems when we try to link the population data to the spatial data is that there are still spaces contained in the `lsoa11_code` column. This is not directly noticeable as these spaces are white space characters at the end of the LSOA codes without any other characters following it (i.e. [trailing spaces](https://stackoverflow.com/questions/22273233/what-is-meant-by-trailing-space-and-whats-the-difference-between-it-and-a-blank). This may seem trivial, but computer language is very precise so we need to remove these. We can do this by highlighting the entire `lsoa11_code` column and in the **Home** menu opting for **Replace** under the **Find & Select** menu.
 
 ```{r}
 #| label: fig-find-replace
@@ -201,9 +229,9 @@ knitr::include_graphics('images/w02/almost-there.png')
 knitr::include_graphics('images/w02/find-replace.png')
 ```
 
-8. In the **Find what** box put in a singular `white space`, using the *spacebar* on your computer, keep the **Replace with** box empty, and click on **Replace all**. You should get a message that **4,642** replacements have been made. 
-9. One further bit of formatting that you must do before saving your data is to format our population field. At the moment, you will see that there are commas separating the thousands within our values. If we leave these commas in our values, QGIS will read them as decimal points, creating decimal values of our population. There are many points at which we could resolve this issue, but the easiest point is now - we will strip our population values of the commas and set them to integer (whole numbers) values. To format the `pop2011` column, higlight the entire column and right-click on the `C` cell.  Click on **Format Cells** and set the Cells to **Number** with **0** decimal places. You should see that the commas are now removed from your population values.
-10. Save your spreadsheet as a `csv` file into your `data` folder as `LSOA2011_population.csv`.
+12. In the **Find what** box put in a singular `white space`, using the *spacebar* on your computer, keep the **Replace with** box empty, and click on **Replace all**. You should get a message that **4,835** replacements have been made. 
+13. One further bit of formatting that you must do before saving your data is to format our population field. At the moment, you will see that there are commas separating the thousands within our values. If we leave these commas in our values, QGIS will read them as decimal points, creating decimal values of our population. There are many points at which we could resolve this issue, but the easiest point is now - we will strip our population values of the commas and set them to integer (whole numbers) values. To format the `pop2011` column, higlight the entire column and right-click on the `C` cell.  Click on **Format Cells** and set the Cells to **Number** with **0** decimal places. You should see that the commas are now removed from your population values.
+14. Save your spreadsheet as a `csv` file into your `data` folder as `LSOA2011_population.csv`.
 
 ::: { .callout-tip}
 After saving the file Excel might give you a warning along the lines of *Possible data loss*. You can safely ignore this message as the only 'information' you have lost is markup information (e.g. fonts, colours, items in bold, etc.) or formulas native to Excel (e.g. if you used Excel to calculate *means*, *medians*, etc.). In some cases you might also have options to choose what type of `csv` you would want to save the spreadsheet as. If so, opt for something along the lines of `CSV UTF-8 (Comma-delimited) (.csv)`. 
@@ -216,12 +244,11 @@ Depending on the language settings of your operation system (e.g. Windows, MacOS
 #### London population in 2021
 Now the 2011 data is prepared, we can move to the 2021 data:
 
-1. Open the `LSOA2021_population.xlsx` in Excel. You will notice that the file is formatted largely the same as the `LSOA2011_population.xlsx` file, although if you were to look closely you will notice that the London data are not at the top this time and that the number of top rows that we need to remove is not the same.
-2. Copy over all cells from columns **A** to **B** and rows **6 to 35,678** into a new spreadsheet. Now **sort** the data on your `lsoa` column (use: **Data** -> **Sort**) and subsequently remove all data below row **4,507**. This procedure *should* put the London LSOAs at the top again.
-3. Now carry out the same steps you used to clean the 2021 population file to clean the 2011 population file. Save the file as `csv` into your `data` folder as `LSOA2021_population.csv` with the following column names: `lsoa21_code`, `lsoa21_name`, and `pop2021`. 
+1. Open the `LSOA2021_population.xlsx` in Excel. You will notice that the file is formatted largely the same as the `LSOA2011_population.xlsx` file, although if you were to look closely you will notice that the majority of London data are not at the top this time and that the number of top rows that we need to remove is not the same. To remedy this we can **sort** the data on the `lsoa` column (use: **Data** -> **Sort**). This procedure *should* put the majority of London LSOAs at the top again.
+2. Now carry out the exact same steps you used to clean the 2011 population file to clean the 2021 population file. Save the file as `csv` into your `data` folder as `LSOA2021_population.csv` with the following column names: `lsoa21_code`, `lsoa21_name`, and `pop2021`. 
 
 ::: { .callout-warning}
-Whilst sorting our data based on the `lsoa` column is a  perfectly fine strategy this time around to effectively extract the London-based LSOAs, this does depend on the data and success is not guaranteed. Make sure to always double-check that you have all the data that you require and your approach actually worked before moving on.
+Again make sure you did not miss any LSOAs. Once you are done cutting and pasting, you should have **4,995** rows of data in your second spreadsheet.
 :::
 
 ### Using QGIS to map the London population data

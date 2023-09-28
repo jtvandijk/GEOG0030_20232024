@@ -396,7 +396,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Administrative geographies are a way of dividing the country into smaller sub-divisions or areas that correspond with the area of responsibility of local authorities and government bodies. These administrative sub-divisions and their associated geography have several important uses, including assigning electoral constituencies and serving as a mechanism for collecting census data. These geographies are updated as populations evolve and as a result the boundaries of the administrative geographies are subject to either periodic or occasional change. This is why we need to download both 2011 and 2021 boundaries. More details on the administrative geographies of the UK can be found on the website of the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography">Office for National Statistics</a>.</p>
+<p>Administrative geographies are a way of dividing the country into smaller sub-divisions or areas that correspond with the area of responsibility of local authorities and government bodies. These administrative sub-divisions and their associated geography have several important uses, including assigning electoral constituencies and serving as a mechanism for collecting census data. These geographies are updated as populations evolve and as a result the boundaries of the administrative geographies are subject to either periodic or occasional change. <u>This is why we need to download both 2011 and 2021 LSOA boundaries.</u> More details on the administrative geographies of the UK can be found on the website of the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography">Office for National Statistics</a>.</p>
 </div>
 </div>
 </div>
@@ -427,6 +427,7 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <p>To get the 2011 Census population counts, you should:</p>
 <ol type="1">
+<li>Navigate to the <em>Nomis</em> portal: <a href="https://www.nomisweb.co.uk/">[Link]</a></li>
 <li>In the main menu of the <em>Nomis</em> portal go to <strong>Census</strong> -&gt; <strong>2011 Census</strong> -&gt; <strong>Lower Layer Super Output Areas</strong> -&gt; <strong>2021 Boundaries</strong>.</li>
 <li>Click on <strong>Topic Summaries</strong>.</li>
 <li>Click on <strong>TS007A - Age by five-year age bands</strong>.</li>
@@ -456,8 +457,87 @@ ul.task-list li input[type="checkbox"] {
 <p>Open the <code>LSOA2011_population.xlsx</code> file in Excel. We have two main columns: one with identifying information that distinguishes each area from one another and one with population counts. In addition, there are some less informative rows at the top of the spreadsheet.</p>
 <p>Looking at this we need to take two steps. First, we need to remove the top rows that we do not need. Second, we need to spread the information in the first column into two columns. Currently, this columns contains unique area codes as well as unique area names. However, to be able to effectively link our population data to our spatial data, the codes are much more reliable and much less likely to cause issues than the area names. Putting area codes and area names into separate columns will help us sorting this out.</p>
 <ol type="1">
-<li>Open a new Excel spreadsheet. From the <code>LSOA2011_population.xlsx</code> spreadsheet, copy over all cells from columns <strong>A</strong> to <strong>B</strong> and rows <strong>9 to 4,651</strong> into this new spreadsheet. Row 4,651 denotes the end of the <em>Greater London</em> areas which in some cases are kept at the top of the spreadsheet, depending on how the data are sorted.</li>
-<li>Rename the columns in the new spreadsheet to <code>lsoa</code> and <code>pop2011</code>, respectively.</li>
+<li>Open a new Excel spreadsheet. From the <code>LSOA2011_population.xlsx</code> spreadsheet, cut (<strong>Edit</strong> -&gt; <strong>Cut</strong>) all cells from columns <strong>A</strong> to <strong>B</strong> and rows <strong>9 to 4,651</strong> into this new spreadsheet. Row 4,651 denotes the end of the <u>majority</u> of the <em>Greater London</em> LSOAs.</li>
+<li>Now we need to identify the missing LSOAs that were not kept at the top of the file with the other London LSOAs, probably because these LSOAs got introduced at a later point in time. Unfortunately, we can only do this manually by searching for the name of each of the London Boroughs and subsequently cutting the associated LSOAs from the spreadsheet and pasting these into the second spreadsheet.</li>
+<li>Go to <strong>Edit</strong> -&gt; <strong>Find</strong> -&gt; <strong>Find</strong>. Type in <strong>City of London</strong>. Cut (<strong>Edit</strong> -&gt; <strong>Cut</strong>) the two rows of data (<em>City of London 001F</em>, <em>City of London 001G</em>) and paste these at the bottom of the second spreadsheet.</li>
+<li>Repeat this process to find all missing LSOAs for all <strong>32</strong> London Boroughs. ::: { .callout-warning} Not all of the <strong>32</strong> London Boroughs have missing LSOAs (e.g.&nbsp;<em>Kensington and Chelsea</em>) whilst in other cases the missing LSOAs are not grouped together (e.g.&nbsp;<em>Wandsworth</em> and <em>Southwark</em>) so after cutting the data, try <strong>Find</strong> again to make sure you did not miss any LSOAs. Once you are done cutting and pasting, you should have <strong>4,836</strong> rows of data in your second spreadsheet. :::</li>
+</ol>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">London Boroughs</th>
+<th style="text-align: left;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Westminster</td>
+<td style="text-align: left;">Sutton</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kensington and Chelsea</td>
+<td style="text-align: left;">Crodyon</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hammersmith and Fulham</td>
+<td style="text-align: left;">Bromley</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wandsworth</td>
+<td style="text-align: left;">Lewisham</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lambeth</td>
+<td style="text-align: left;">Greenwich</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Southwark</td>
+<td style="text-align: left;">Bexley</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tower Hamlets</td>
+<td style="text-align: left;">Havering</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hackney</td>
+<td style="text-align: left;">Barking and Dagenham</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Islington</td>
+<td style="text-align: left;">Redbridge</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Camden</td>
+<td style="text-align: left;">Newham</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Brent</td>
+<td style="text-align: left;">Waltham Forest</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ealing</td>
+<td style="text-align: left;">Haringey</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hounslow</td>
+<td style="text-align: left;">Enfield</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Richmond upon Thames</td>
+<td style="text-align: left;">Barnet</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kingston upon Thames</td>
+<td style="text-align: left;">Harrow</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Merton</td>
+<td style="text-align: left;">Hillingdon</td>
+</tr>
+</tbody>
+</table>
+<ol start="5" type="1">
+<li>Once you copied all the rows of data, rename the columns in the new spreadsheet to <code>lsoa</code> and <code>pop2011</code>, respectively.</li>
 <li>Cut all the data from the <code>pop2011</code> column that is stored in column <strong>B</strong> and paste these into column <strong>C</strong>. You now should have a column <em>without</em> any data between the <code>lsoa</code> and <code>pop2011</code> columns.</li>
 <li>Highlight the entire <code>lsoa</code> column and in the <strong>Data</strong> menu click on the <strong>Text to Columns</strong> menu button.</li>
 </ol>
@@ -481,7 +561,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<ol start="4" type="1">
+<ol start="8" type="1">
 <li>In the <strong>Text to Columns</strong> menu, select the <strong>Delimited</strong> radio button and click <strong>Next</strong>.</li>
 <li>Uncheck the checkbox for <strong>Tab</strong> and put <code>:</code> (colon) into the <strong>Other</strong> box. Click <strong>Finish</strong>.</li>
 <li>Change the name of the <code>lsoa</code> column to <code>lsoa11_code</code> and change the name of the new column to <code>lsoa11_name</code>.</li>
@@ -496,7 +576,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<ol start="7" type="1">
+<ol start="11" type="1">
 <li>One thing that might cause problems when we try to link the population data to the spatial data is that there are still spaces contained in the <code>lsoa11_code</code> column. This is not directly noticeable as these spaces are white space characters at the end of the LSOA codes without any other characters following it (i.e.&nbsp;<a href="https://stackoverflow.com/questions/22273233/what-is-meant-by-trailing-space-and-whats-the-difference-between-it-and-a-blank">trailing spaces</a>. This may seem trivial, but computer language is very precise so we need to remove these. We can do this by highlighting the entire <code>lsoa11_code</code> column and in the <strong>Home</strong> menu opting for <strong>Replace</strong> under the <strong>Find &amp; Select</strong> menu.</li>
 </ol>
 <div class="cell" data-hash="02-GIScience_cache/html/fig-find-replace_fddda475374065c5a634b451c74a62b3">
@@ -509,8 +589,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<ol start="8" type="1">
-<li>In the <strong>Find what</strong> box put in a singular <code>white space</code>, using the <em>spacebar</em> on your computer, keep the <strong>Replace with</strong> box empty, and click on <strong>Replace all</strong>. You should get a message that <strong>4,642</strong> replacements have been made.</li>
+<ol start="12" type="1">
+<li>In the <strong>Find what</strong> box put in a singular <code>white space</code>, using the <em>spacebar</em> on your computer, keep the <strong>Replace with</strong> box empty, and click on <strong>Replace all</strong>. You should get a message that <strong>4,835</strong> replacements have been made.</li>
 <li>One further bit of formatting that you must do before saving your data is to format our population field. At the moment, you will see that there are commas separating the thousands within our values. If we leave these commas in our values, QGIS will read them as decimal points, creating decimal values of our population. There are many points at which we could resolve this issue, but the easiest point is now - we will strip our population values of the commas and set them to integer (whole numbers) values. To format the <code>pop2011</code> column, higlight the entire column and right-click on the <code>C</code> cell. Click on <strong>Format Cells</strong> and set the Cells to <strong>Number</strong> with <strong>0</strong> decimal places. You should see that the commas are now removed from your population values.</li>
 <li>Save your spreadsheet as a <code>csv</code> file into your <code>data</code> folder as <code>LSOA2011_population.csv</code>.</li>
 </ol>
@@ -539,9 +619,8 @@ ul.task-list li input[type="checkbox"] {
 <h4 data-number="2.4.6.2" class="anchored" data-anchor-id="london-population-in-2021"><span class="header-section-number">2.4.6.2</span> London population in 2021</h4>
 <p>Now the 2011 data is prepared, we can move to the 2021 data:</p>
 <ol type="1">
-<li>Open the <code>LSOA2021_population.xlsx</code> in Excel. You will notice that the file is formatted largely the same as the <code>LSOA2011_population.xlsx</code> file, although if you were to look closely you will notice that the London data are not at the top this time and that the number of top rows that we need to remove is not the same.</li>
-<li>Copy over all cells from columns <strong>A</strong> to <strong>B</strong> and rows <strong>6 to 35,678</strong> into a new spreadsheet. Now <strong>sort</strong> the data on your <code>lsoa</code> column (use: <strong>Data</strong> -&gt; <strong>Sort</strong>) and subsequently remove all data below row <strong>4,507</strong>. This procedure <em>should</em> put the London LSOAs at the top again.</li>
-<li>Now carry out the same steps you used to clean the 2021 population file to clean the 2011 population file. Save the file as <code>csv</code> into your <code>data</code> folder as <code>LSOA2021_population.csv</code> with the following column names: <code>lsoa21_code</code>, <code>lsoa21_name</code>, and <code>pop2021</code>.</li>
+<li>Open the <code>LSOA2021_population.xlsx</code> in Excel. You will notice that the file is formatted largely the same as the <code>LSOA2011_population.xlsx</code> file, although if you were to look closely you will notice that the majority of London data are not at the top this time and that the number of top rows that we need to remove is not the same. To remedy this we can <strong>sort</strong> the data on the <code>lsoa</code> column (use: <strong>Data</strong> -&gt; <strong>Sort</strong>). This procedure <em>should</em> put the majority of London LSOAs at the top again.</li>
+<li>Now carry out the exact same steps you used to clean the 2011 population file to clean the 2021 population file. Save the file as <code>csv</code> into your <code>data</code> folder as <code>LSOA2021_population.csv</code> with the following column names: <code>lsoa21_code</code>, <code>lsoa21_name</code>, and <code>pop2021</code>.</li>
 </ol>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
@@ -549,7 +628,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Whilst sorting our data based on the <code>lsoa</code> column is a perfectly fine strategy this time around to effectively extract the London-based LSOAs, this does depend on the data and success is not guaranteed. Make sure to always double-check that you have all the data that you require and your approach actually worked before moving on.</p>
+<p>Again make sure you did not miss any LSOAs. Once you are done cutting and pasting, you should have <strong>4,995</strong> rows of data in your second spreadsheet.</p>
 </div>
 </div>
 </div>
