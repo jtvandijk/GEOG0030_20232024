@@ -160,7 +160,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#w02-download-population" id="toc-w02-download-population" class="nav-link" data-scroll-target="#w02-download-population"><span class="header-section-number">2.4.5</span> Downloading population data</a></li>
   <li><a href="#w02-cleaning" id="toc-w02-cleaning" class="nav-link" data-scroll-target="#w02-cleaning"><span class="header-section-number">2.4.6</span> Cleaning data</a></li>
   <li><a href="#mapping-population-data" id="toc-mapping-population-data" class="nav-link" data-scroll-target="#mapping-population-data"><span class="header-section-number">2.4.7</span> Mapping population data</a></li>
+  <li><a href="#exporting-map-for-visual-analysis" id="toc-exporting-map-for-visual-analysis" class="nav-link" data-scroll-target="#exporting-map-for-visual-analysis"><span class="header-section-number">2.4.8</span> Exporting map for visual analysis</a></li>
   </ul></li>
+  <li><a href="#assignment-w02" id="toc-assignment-w02" class="nav-link" data-scroll-target="#assignment-w02"><span class="header-section-number">2.5</span> Assignment</a></li>
+  <li><a href="#byl-w02" id="toc-byl-w02" class="nav-link" data-scroll-target="#byl-w02"><span class="header-section-number">2.6</span> Before you leave</a></li>
   </ul>
 </nav>
     </div>
@@ -650,7 +653,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Again make sure you did not miss any LSOAs. Once you are done cutting and pasting, you should have <strong>4,995</strong> rows of data in your second spreadsheet.</p>
+<p>Again make sure you did not miss any LSOAs. You should end up with <strong>4,995</strong> rows of data in your second spreadsheet.</p>
 </div>
 </div>
 </div>
@@ -660,7 +663,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 data-number="2.4.7" class="anchored" data-anchor-id="mapping-population-data"><span class="header-section-number">2.4.7</span> Mapping population data</h3>
 <section id="setting-up-a-project" class="level4" data-number="2.4.7.1">
 <h4 data-number="2.4.7.1" class="anchored" data-anchor-id="setting-up-a-project"><span class="header-section-number">2.4.7.1</span> Setting up a project</h4>
-<p>We will now use QGIS to create population maps for the LSOAs in London for both years. To achieve this, we need to <strong>join our table data to our spatial datasets</strong> and then map our populations for our visual analysis. Because, as we have seen above, we have issues with the number of LSOAs and changes in boundaries between the two Censuses, we will not (for now) complete any quantitative analysis of these population changes - this would require significant additional processing that we do not have time for today.</p>
+<p>We will now use QGIS to create population maps for the LSOAs in London for both years. To achieve this, we need to <strong>join our table data to our spatial datasets</strong> and then map our populations for our visual analysis. Because, as we have seen above, we have issues with a different number of LSOAs for each of the Censuses.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -796,14 +799,83 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The main strength of a GUI GIS system is that is really helps us understand how we can visualise spatial data. Even with just one two spatial layers loaded, we can understand two key concepts of using spatial data within GIS. The first, and this is only really relevant to GUI GIS systems, is that each layer can either be turned on or off, to make it visible or not. The second concept is the order in which your layers are drawn – and this is relevant for both GUI GIS and when using plotting libraries such as <code>ggplot2</code> or <code>tmap</code> in RStudio. Your layers will be drawn depending on the order in which your layers are either tabled (as in a GUI GIS) or ‘called’ in your function in code. Being aware of this need for ‘order’ is important when we shift to using RStudio and <code>tmap</code> to plot our maps, as if you do not layer your data correctly in your code, your map will end up not looking as you hoped. For us using QGIS right now, the layers will be drawn from bottom to top.</p>
+<p>The main strength of a GUI GIS system is that is really helps us understand how we can visualise spatial data. Even with just two spatial layers loaded, we can understand two key concepts of using spatial data within GIS. The first, and this is only really relevant to GUI GIS systems, is that each layer can either be turned on or off, to make it visible or not. The second concept is the order in which your layers are drawn – and this is relevant for both GUI GIS and when using plotting libraries such as <code>ggplot2</code> or <code>tmap</code> in RStudio. Your layers will be drawn depending on the order in which your layers are either tabled (as in a GUI GIS) or ‘called’ in your function in code. Being aware of this need for ‘order’ is important when we shift to using RStudio and <code>tmap</code> to plot our maps, as if you do not layer your data correctly in your code, your map will end up not looking as you hoped. For us using QGIS right now, the layers will be drawn from bottom to top.</p>
 </div>
 </div>
 </div>
-
-
+<p>We can now finally map the population distribution of London in 2011.</p>
+<ol start="9" type="1">
+<li>Right-click on the <code>LSOA2011_London</code> layer and click on <strong>Properties</strong> -&gt; <strong>Symbology</strong>.</li>
+</ol>
+<ul>
+<li>In the dropdown menu at the top of the window, select <strong>Graduated</strong> as symbology.</li>
+<li>Under value choose <code>pop2011</code> as your column.</li>
+<li>We can then change the color ramp to suit our aesthetic preferences. In the <strong>Colour ramp</strong> dropdown menu select <em>Magma</em>.</li>
+<li>The final thing we need to do is <strong>classify</strong> our data - what this simply means is to decide how to group the values in our dataset together to create the graduated representation.</li>
+<li>We will be looking at this in later weeks, but for now, we will use the <strong>Natural Breaks</strong> option.</li>
+<li>Click on the drop-down next to <strong>Mode</strong>, select <strong>Natural Breaks</strong>, change it to <strong>7</strong> classes and then click <strong>Classify</strong>.</li>
+<li>Finally click <strong>Apply</strong> to style your dataset.</li>
+</ul>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Understanding what classification is appropriate to visualise your data is an important step within spatial analysis and visualisation, and something you will learn more about in the following weeks. Overall, they should be determined by understanding your data’s distribution and match your visualisation accordingly.</p>
+</div>
+</div>
+</div>
+<p>You should now be looking at something like this:</p>
+<div class="cell" data-hash="02-GIScience_cache/html/fig-lsoa-pop-2011_ff784f882bdce5ffdedf5d98a948dcaa">
+<div class="cell-output-display">
+<div id="fig-lsoa-pop-2011" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w02/lsoa-population-2011.png" class="img-fluid figure-img" width="776"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.10: The population distribution of London in 2011. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/lsoa-population-2011.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
+<section id="exporting-map-for-visual-analysis" class="level3" data-number="2.4.8">
+<h3 data-number="2.4.8" class="anchored" data-anchor-id="exporting-map-for-visual-analysis"><span class="header-section-number">2.4.8</span> Exporting map for visual analysis</h3>
+<p>To export your map select only the map layers you want to export and then opt for <strong>Project</strong> -&gt; <strong>Import/Export</strong> -&gt; <strong>Export to Image</strong> and save your final map in your <code>output</code> folder. Next week, we will look at how to style our maps using the main map conventions (adding North Arrows, Scale Bars and Legends) but for now a simple picture will do.</p>
+</section>
+</section>
+<section id="assignment-w02" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="assignment-w02"><span class="header-section-number">2.5</span> Assignment</h2>
+<p>You now need to <strong>repeat the entire process</strong> to also create a map for the 2021 Census data. Remember, you need to:</p>
+<ul>
+<li>Load the respective spatial layer.</li>
+<li>Load the respective population dataset.</li>
+<li>Join the two datasets together using an <strong>Attribute Join</strong>.</li>
+<li>Export your joined dataset (London only) as a <code>geopackage</code>.</li>
+<li>Style your data appropriately.</li>
+<li>Export your maps as an image to your <code>output</code> folder.</li>
+</ul>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>To make visual comparisons against our two datasets, theoretically we would need to standardise the breaks at which our classification schemes are set at. To set all two datasets to the same breaks, you can do the following:</p>
+<ul>
+<li>Right-click again on the <code>LSOA2011_London</code> dataset and, click on <strong>Styles</strong> -&gt; <strong>Copy Styles</strong> -&gt; <strong>Symbology</strong>.</li>
+<li>Now right-click on the <code>LSOA2021_London</code> file, and click on <strong>Styles</strong> -&gt; <strong>Paste Style</strong> -&gt; <strong>Symbology</strong>. You should now see the classification breaks in the 2021 dataset change to match those in the 2011 data.</li>
+<li>The final thing you need to do is to change the classification column in the <code>Symbology</code> tab for the 2021 dataset to reflect <code>pop2021</code>.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="byl-w02" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="byl-w02"><span class="header-section-number">2.6</span> Before you leave</h2>
+<p>Save your project so you can go back to it if you need to, other than that <a href="https://www.youtube.com/watch?v=Wmc8bQoL-J0">that is it for this week</a>!</p>
+
+
 </section>
 
 </main> <!-- /main -->
