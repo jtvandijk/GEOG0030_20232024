@@ -111,10 +111,10 @@ We will start by downloading the administrative geography boundaries for England
 
 1. Navigate to the *Open Geography Portal*: [[Link]](https://geoportal.statistics.gov.uk/)
 2. In the main menu go to **Boundaries** -> **Census Boundaries ** -> **Lower Layer Super Output Areas** -> **2011 Boundaries**.
-3. Click on **LSOA (Dec 2011) Boundaries Super Generalised Clipped (BSC) EW V4**.
+3. Click on **LSOA (Dec 2011) Boundaries Generalised Clipped BGC EW V3**.
 4. Click on **Download** -> **Download GeoPackage**.
 
-Repeat the above process to also download the 2021 LSOA boundaries: **Lower Layer Super Output Areas (2021) Boundaries EW BSC**. Make sure you download the **Super generalised (200m)** version.
+Repeat the above process to also download the 2021 LSOA boundaries: **Lower Layer Super Output Areas (2021) Boundaries EW BGC**. Make sure you download the **Generalised (20m)** version.
 
 ::: { .callout-warning}
 Administrative geographies are a way of dividing the country into smaller sub-divisions or areas that correspond with the area of responsibility of local authorities and government bodies. These administrative sub-divisions and their associated geography have several important uses, including assigning electoral constituencies and serving as a mechanism for collecting census data. These geographies are updated as populations evolve and as a result the boundaries of the administrative geographies are subject to either periodic or occasional change. This is why we need to download both 2011 and 2021 boundaries. More details on the administrative geographies of the UK can be found on the website of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).
