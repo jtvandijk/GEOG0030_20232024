@@ -22,7 +22,7 @@ To get spatial features in a digital form, they need to be digitised. Let’s ta
 #| label: fig-digitise
 #| echo: False 
 #| cache: True
-#| fig-cap: "The river Thames."
+#| fig-cap: "The river Thames. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w02/river-thames.png){target='_blank'}"
 knitr::include_graphics('images/w02/river-thames.png')
 ```
 
@@ -51,7 +51,7 @@ One of the reasons behind this need for a substantial amount of processing is th
 #| label: fig-google-shp
 #| echo: False
 #| cache: True
-#| fig-cap: "A quick Google search shows that finding a shapefile of England's population is not straightforward."
+#| fig-cap: "A quick Google search shows that finding a shapefile of England's population is not straightforward. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w02/datasearch.png){target='_blank'}"
 knitr::include_graphics('images/w02/datasearch.png')
 ```
 
@@ -171,7 +171,7 @@ Looking at this we need to take two steps. First, we need to remove the top rows
 #| label: fig-text-to-columns
 #| echo: False 
 #| cache: True
-#| fig-cap: "Highlight the `lsoa` columns and find the **Text to Columns** menu option. Note that column **B** does not contain any data."
+#| fig-cap: "Highlight the `lsoa` columns and find the **Text to Columns** menu option. Note that column **B** does not contain any data. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w02/text-to-columns.png){target='_blank'}"
 knitr::include_graphics('images/w02/text-to-columns.png')
 ```
 
@@ -187,7 +187,7 @@ Note that the **Text to Columns** function might be elsewhere in the menu depend
 #| label: fig-almost-there
 #| echo: False 
 #| cache: True
-#| fig-cap: "Your spreadsheet should now look something like this."
+#| fig-cap: "Your spreadsheet should now look something like this. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w02/almost-there.png){target='_blank'}"
 knitr::include_graphics('images/w02/almost-there.png')
 ```
 
@@ -197,7 +197,7 @@ knitr::include_graphics('images/w02/almost-there.png')
 #| label: fig-find-replace
 #| echo: False 
 #| cache: True
-#| fig-cap: "Accessing the **Replace** option."
+#| fig-cap: "Accessing the **Replace** option. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w02/find-replace.png){target='_blank'}"
 knitr::include_graphics('images/w02/find-replace.png')
 ```
 
@@ -210,7 +210,7 @@ After saving the file Excel might give you a warning along the lines of *Possibl
 :::
 
 ::: { .callout-warning}
-Depending on the language settings of your operation system (e.g. Windows, MacOS, Linux) and language settings, `csv` files might look different. It is always a good idea to check your `csv` file in a plain text editor (e.g. **Textedit** on MacOS or **Notepad** on Windows). In case you do not see commas (`,`), but semicolons (`;`) you can apply a quick and dirty fix to your data by *finding and replacing* every `;` with a `,` in the same way we fixed our problematic `white space` characters in Excel.
+Depending on the language settings of your operation system (e.g. Windows, MacOS, Linux) and language settings, `csv` files might look different. It is always a good idea to check your `csv` file in a plain text editor (e.g. **Textedit** on MacOS or **Notepad** on Windows). In case you do not see commas (`,`), but semicolons (`;`) you can apply a quick and dirty fix to your data by *finding and replacing* every `;` with a `,` in the same that way we fixed our problematic `white space` characters in Excel.
 :::
 
 #### London population in 2021
@@ -223,3 +223,67 @@ Now the 2011 data is prepared, we can move to the 2021 data:
 ::: { .callout-warning}
 Whilst sorting our data based on the `lsoa` column is a  perfectly fine strategy this time around to effectively extract the London-based LSOAs, this does depend on the data and success is not guaranteed. Make sure to always double-check that you have all the data that you require and your approach actually worked before moving on.
 :::
+
+### Using QGIS to map the London population data
+
+#### Setting up a project
+We will now use QGIS to create population maps for the LSOAs in London for both years. To achieve this, we need to **join our table data to our spatial datasets** and then map our populations for our visual analysis. Because, as we have seen above, we have issues with the number of LSOAs and changes in boundaries between the two Censuses, we will not (for now) complete any quantitative analysis of these population changes - this would require significant additional processing that we do not have time for today. 
+
+::: { .callout-note}
+Data interoperability is a key issue that you will face in spatial analysis, particularly when it comes to Administrative Geographies. 
+:::
+
+1. Start **QGIS**.
+2. Click on **Project** -> **New**. Save your project as `w2-pop-analysis`. Remember to save your work throughout the practical. 
+3. Before we get started with adding data, we will first set the Coordinate Reference System of our Project. Click on **Project** -> **Properties -- CRS**. In the Filter box, type **British National Grid**. Select **OSGB 1936 / British National Grid - EPSG:27700** and click Apply. Click **OK**.
+
+::: { .callout-note}
+We will explain CRSs and using CRSs in GIS software in more detail next week.
+:::
+
+#### Adding layers
+We will first focus on loading and joining the 2011 datasets. 
+
+1. Click on **Layer** -> **Add Layer** -> **Add Vector Layer**.
+2. With **File** as your source type, click on the small three dots button and navigate to your 2011 boundary files.
+3. Here, we will select the `LSOA2011.gpkg` dataset. Highlight the file and click **Open**. Then click **Add**. You may need to close the box after adding the layer. The 2011 LSOA geography for England and Wales should now be loaded.
+
+```{r}
+#| label: fig-england-wales
+#| echo: False 
+#| cache: True
+#| fig-cap: "2011 LSOAs for England and Wales. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w02/england-wales.png){target='_blank'}"
+knitr::include_graphics('images/w02/england-wales.png')
+```
+
+With the dataset loaded, we can now explore it in a little more detail. We
+first want to check out the **Attribute Table** of our dataset to see if we can filter out only the London LSOAs.
+
+4. Right-click on the `LSOA2011` layer and open the **Attribute Table** and look at how the attributes are stored and presented in the table. Explore the different buttons in the Attribute Table and see if you can figure out what they mean.
+5. Now sort the **Attribute Table** on the **LSOA11CD** column so that all London-based LSOAs are at the top. Select the first **4,4642** rows.
+
+::: { .callout-tip}
+You can select the first row, scroll down to the last row related to *Westminster*, hold the `shift` button on your keyboard, and click on the last row related to *Westminster* to select all rows that we need in one go.
+:::
+
+```{r}
+#| label: fig-select-london
+#| echo: False 
+#| cache: True
+#| fig-width: 12
+#| fig-cap: "All **4,4642** London LSOAs selected. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w02/select-london.png){target='_blank'}"
+knitr::include_graphics('images/w02/select-london.png')
+```
+
+6. Close the **Attribute Table**. Right-click on the `LSOA2011` layer and select **Export** -> **Save Selected Features As**. Set **Format** to `Geopackage` and click on the small three dots button next to **File name** and navigate to your `data/raw/boundaries` folder. Save the file as `LSOA2011_London.gpkg`.
+
+```{r}
+#| label: fig-export-london
+#| echo: False 
+#| cache: True
+#| fig-width: 15
+#| fig-cap: "Export the London LSOAs to a new file. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w02/export-london.png){target='_blank'}"
+knitr::include_graphics('images/w02/export-london.png')
+```
+
+7. You can now untick the `LSOA2011` containing all the LSOAs for England and Wales. Right-click on the `LSOA2011_London` layer and click on **Zoom to Layer(s)**. 

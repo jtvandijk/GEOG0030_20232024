@@ -58,7 +58,7 @@ You should be able to log in with your normal UCL username and password. After l
 #| label: fig-rstudio-interface
 #| echo: False
 #| cache: True
-#| fig-cap: "The RStudio Server interface."
+#| fig-cap: "The RStudio Server interface. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w01/rstudio-interface.png){target='_blank'}"
 knitr::include_graphics('images/w01/rstudio-interface.png')
 ```
 

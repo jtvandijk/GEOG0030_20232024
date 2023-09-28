@@ -159,6 +159,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#w02-download-spatial" id="toc-w02-download-spatial" class="nav-link" data-scroll-target="#w02-download-spatial"><span class="header-section-number">2.4.4</span> Downloading spatial data</a></li>
   <li><a href="#w02-download-population" id="toc-w02-download-population" class="nav-link" data-scroll-target="#w02-download-population"><span class="header-section-number">2.4.5</span> Downloading population data</a></li>
   <li><a href="#w02-cleaning" id="toc-w02-cleaning" class="nav-link" data-scroll-target="#w02-cleaning"><span class="header-section-number">2.4.6</span> Cleaning data</a></li>
+  <li><a href="#using-qgis-to-map-the-london-population-data" id="toc-using-qgis-to-map-the-london-population-data" class="nav-link" data-scroll-target="#using-qgis-to-map-the-london-population-data"><span class="header-section-number">2.4.7</span> Using QGIS to map the London population data</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -210,12 +211,12 @@ ul.task-list li input[type="checkbox"] {
 <section id="simple-digitisation-of-spatial-features" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="simple-digitisation-of-spatial-features"><span class="header-section-number">2.3</span> Simple digitisation of spatial features</h2>
 <p>To get spatial features in a digital form, they need to be digitised. Let’s take a quick look in this first part of the practical at a straight-forward example of digitising the river Thames in London.</p>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-digitise_546df380b55ea42e91ca09d8a9bb2e10">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-digitise_c0afca359cc62c2594d6c338b7e0d6d1">
 <div class="cell-output-display">
 <div id="fig-digitise" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/w02/river-thames.png" class="img-fluid figure-img" width="776"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.1: The river Thames.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2.1: The river Thames. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/river-thames.png" target="_blank">[Enlarge image]</a></figcaption>
 </figure>
 </div>
 </div>
@@ -246,12 +247,12 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>When using spatial data, there is generally a very specific workflow that you will need to go through and, believe it or not, the majority of this is not actually focused on analysing your data. One of the most often-quoted GIS-related unreferenced ‘fact’ is that anyone working with spatial data will spend 80% of their time simply finding, retrieving, managing and processing the data before any analysis can be done.</p>
 <p>One of the reasons behind this need for a substantial amount of processing is that the data you often need to use is almost never in the format that you require for analysis. For example, for our investigation, there is not a ‘ready-made’ spatial population dataset (i.e.&nbsp;population <code>shapefile</code>) we can download to explore population change across England:</p>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-google-shp_8163f27aa0e34da95e9ace7b3a2c6154">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-google-shp_0406c6ea054a770a3b6fe7d40b7bf2bf">
 <div class="cell-output-display">
 <div id="fig-google-shp" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/w02/datasearch.png" class="img-fluid figure-img" width="776"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.2: A quick Google search shows that finding a shapefile of England’s population is not straightforward.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2.2: A quick Google search shows that finding a shapefile of England’s population is not straightforward. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/datasearch.png" target="_blank">[Enlarge image]</a></figcaption>
 </figure>
 </div>
 </div>
@@ -460,12 +461,12 @@ ul.task-list li input[type="checkbox"] {
 <li>Cut all the data from the <code>pop2011</code> column that is stored in column <strong>B</strong> and paste these into column <strong>C</strong>. You now should have a column <em>without</em> any data between the <code>lsoa</code> and <code>pop2011</code> columns.</li>
 <li>Highlight the entire <code>lsoa</code> column and in the <strong>Data</strong> menu click on the <strong>Text to Columns</strong> menu button.</li>
 </ol>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-text-to-columns_df8b1a393159cd060ca5bdfe17a0229f">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-text-to-columns_71503eede84db16bc68b6f0c0bd6a134">
 <div class="cell-output-display">
 <div id="fig-text-to-columns" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/w02/text-to-columns.png" class="img-fluid figure-img" width="1552"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.3: Highlight the <code>lsoa</code> columns and find the <strong>Text to Columns</strong> menu option. Note that column <strong>B</strong> does not contain any data.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2.3: Highlight the <code>lsoa</code> columns and find the <strong>Text to Columns</strong> menu option. Note that column <strong>B</strong> does not contain any data. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/text-to-columns.png" target="_blank">[Enlarge image]</a></figcaption>
 </figure>
 </div>
 </div>
@@ -485,12 +486,12 @@ ul.task-list li input[type="checkbox"] {
 <li>Uncheck the checkbox for <strong>Tab</strong> and put <code>:</code> (colon) into the <strong>Other</strong> box. Click <strong>Finish</strong>.</li>
 <li>Change the name of the <code>lsoa</code> column to <code>lsoa11_code</code> and change the name of the new column to <code>lsoa11_name</code>.</li>
 </ol>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-almost-there_e3df2a6ec905e44d8ce6e692c9ff4f82">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-almost-there_8fefaa2af6941f7fe3704379ff912b39">
 <div class="cell-output-display">
 <div id="fig-almost-there" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/w02/almost-there.png" class="img-fluid figure-img" width="1552"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.4: Your spreadsheet should now look something like this.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2.4: Your spreadsheet should now look something like this. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/almost-there.png" target="_blank">[Enlarge image]</a></figcaption>
 </figure>
 </div>
 </div>
@@ -498,12 +499,12 @@ ul.task-list li input[type="checkbox"] {
 <ol start="7" type="1">
 <li>One thing that might cause problems when we try to link the population data to the spatial data is that there are still spaces contained in the <code>lsoa11_code</code> column. This is not directly noticeable as these spaces are white space characters at the end of the LSOA codes without any other characters following it (i.e.&nbsp;<a href="https://stackoverflow.com/questions/22273233/what-is-meant-by-trailing-space-and-whats-the-difference-between-it-and-a-blank">trailing spaces</a>. This may seem trivial, but computer language is very precise so we need to remove these. We can do this by highlighting the entire <code>lsoa11_code</code> column and in the <strong>Home</strong> menu opting for <strong>Replace</strong> under the <strong>Find &amp; Select</strong> menu.</li>
 </ol>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-find-replace_9f83ba56132e9e9289389ed1c6708ec0">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-find-replace_fddda475374065c5a634b451c74a62b3">
 <div class="cell-output-display">
 <div id="fig-find-replace" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/w02/find-replace.png" class="img-fluid figure-img" width="1552"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.5: Accessing the <strong>Replace</strong> option.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;2.5: Accessing the <strong>Replace</strong> option. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/find-replace.png" target="_blank">[Enlarge image]</a></figcaption>
 </figure>
 </div>
 </div>
@@ -529,7 +530,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Depending on the language settings of your operation system (e.g.&nbsp;Windows, MacOS, Linux) and language settings, <code>csv</code> files might look different. It is always a good idea to check your <code>csv</code> file in a plain text editor (e.g.&nbsp;<strong>Textedit</strong> on MacOS or <strong>Notepad</strong> on Windows). In case you do not see commas (<code>,</code>), but semicolons (<code>;</code>) you can apply a quick and dirty fix to your data by <em>finding and replacing</em> every <code>;</code> with a <code>,</code> in the same way we fixed our problematic <code>white space</code> characters in Excel.</p>
+<p>Depending on the language settings of your operation system (e.g.&nbsp;Windows, MacOS, Linux) and language settings, <code>csv</code> files might look different. It is always a good idea to check your <code>csv</code> file in a plain text editor (e.g.&nbsp;<strong>Textedit</strong> on MacOS or <strong>Notepad</strong> on Windows). In case you do not see commas (<code>,</code>), but semicolons (<code>;</code>) you can apply a quick and dirty fix to your data by <em>finding and replacing</em> every <code>;</code> with a <code>,</code> in the same that way we fixed our problematic <code>white space</code> characters in Excel.</p>
 </div>
 </div>
 </div>
@@ -552,6 +553,98 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="using-qgis-to-map-the-london-population-data" class="level3" data-number="2.4.7">
+<h3 data-number="2.4.7" class="anchored" data-anchor-id="using-qgis-to-map-the-london-population-data"><span class="header-section-number">2.4.7</span> Using QGIS to map the London population data</h3>
+<section id="setting-up-a-project" class="level4" data-number="2.4.7.1">
+<h4 data-number="2.4.7.1" class="anchored" data-anchor-id="setting-up-a-project"><span class="header-section-number">2.4.7.1</span> Setting up a project</h4>
+<p>We will now use QGIS to create population maps for the LSOAs in London for both years. To achieve this, we need to <strong>join our table data to our spatial datasets</strong> and then map our populations for our visual analysis. Because, as we have seen above, we have issues with the number of LSOAs and changes in boundaries between the two Censuses, we will not (for now) complete any quantitative analysis of these population changes - this would require significant additional processing that we do not have time for today.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Data interoperability is a key issue that you will face in spatial analysis, particularly when it comes to Administrative Geographies.</p>
+</div>
+</div>
+</div>
+<ol type="1">
+<li>Start <strong>QGIS</strong>.</li>
+<li>Click on <strong>Project</strong> -&gt; <strong>New</strong>. Save your project as <code>w2-pop-analysis</code>. Remember to save your work throughout the practical.</li>
+<li>Before we get started with adding data, we will first set the Coordinate Reference System of our Project. Click on <strong>Project</strong> -&gt; <strong>Properties – CRS</strong>. In the Filter box, type <strong>British National Grid</strong>. Select <strong>OSGB 1936 / British National Grid - EPSG:27700</strong> and click Apply. Click <strong>OK</strong>.</li>
+</ol>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>We will explain CRSs and using CRSs in GIS software in more detail next week.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-layers" class="level4" data-number="2.4.7.2">
+<h4 data-number="2.4.7.2" class="anchored" data-anchor-id="adding-layers"><span class="header-section-number">2.4.7.2</span> Adding layers</h4>
+<p>We will first focus on loading and joining the 2011 datasets.</p>
+<ol type="1">
+<li>Click on <strong>Layer</strong> -&gt; <strong>Add Layer</strong> -&gt; <strong>Add Vector Layer</strong>.</li>
+<li>With <strong>File</strong> as your source type, click on the small three dots button and navigate to your 2011 boundary files.</li>
+<li>Here, we will select the <code>LSOA2011.gpkg</code> dataset. Highlight the file and click <strong>Open</strong>. Then click <strong>Add</strong>. You may need to close the box after adding the layer. The 2011 LSOA geography for England and Wales should now be loaded.</li>
+</ol>
+<div class="cell" data-hash="02-GIScience_cache/html/fig-england-wales_602fdbd99512fb775c82d626569b80e6">
+<div class="cell-output-display">
+<div id="fig-england-wales" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w02/england-wales.png" class="img-fluid figure-img" width="776"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.6: 2011 LSOAs for England and Wales. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/england-wales.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>With the dataset loaded, we can now explore it in a little more detail. We first want to check out the <strong>Attribute Table</strong> of our dataset to see if we can filter out only the London LSOAs.</p>
+<ol start="4" type="1">
+<li>Right-click on the <code>LSOA2011</code> layer and open the <strong>Attribute Table</strong> and look at how the attributes are stored and presented in the table. Explore the different buttons in the Attribute Table and see if you can figure out what they mean.</li>
+<li>Now sort the <strong>Attribute Table</strong> on the <strong>LSOA11CD</strong> column so that all London-based LSOAs are at the top. Select the first <strong>4,4642</strong> rows.</li>
+</ol>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You can select the first row, scroll down to the last row related to <em>Westminster</em>, hold the <code>shift</code> button on your keyboard, and click on the last row related to <em>Westminster</em> to select all rows that we need in one go.</p>
+</div>
+</div>
+</div>
+<div class="cell" data-hash="02-GIScience_cache/html/fig-select-london_be3632cab4c77591988e84c540592521">
+<div class="cell-output-display">
+<div id="fig-select-london" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w02/select-london.png" class="img-fluid figure-img" width="690"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.7: All <strong>4,4642</strong> London LSOAs selected. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/select-london.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ol start="6" type="1">
+<li>Close the <strong>Attribute Table</strong>. Right-click on the <code>LSOA2011</code> layer and select <strong>Export</strong> -&gt; <strong>Save Selected Features As</strong>. Set <strong>Format</strong> to <code>Geopackage</code> and click on the small three dots button next to <strong>File name</strong> and navigate to your <code>data/raw/boundaries</code> folder. Save the file as <code>LSOA2011_London.gpkg</code>.</li>
+</ol>
+<div class="cell" data-hash="02-GIScience_cache/html/fig-export-london_15a474342d35091117bb0483fabe9064">
+<div class="cell-output-display">
+<div id="fig-export-london" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w02/export-london.png" class="img-fluid figure-img" width="352"></p>
+<figcaption class="figure-caption">Figure&nbsp;2.8: Export the London LSOAs to a new file. <a href="https://jtvandijk.github.io/GEOG0030/images/w02/export-london.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ol start="7" type="1">
+<li>You can now untick the <code>LSOA2011</code> containing all the LSOAs for England and Wales. Right-click on the <code>LSOA2011_London</code> layer and click on <strong>Zoom to Layer(s)</strong>.</li>
+</ol>
 
 
 </section>
