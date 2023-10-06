@@ -54,6 +54,9 @@ This year's workbook is updated from and compiled using:
 * The [GEOG0030: Geocomputation 2021-2022](https://jtvandijk.github.io/GEOG0030_20212022/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
 * The [GEOG0030: Geocomputation 2021-2021](https://jo-wilkin.github.io/GEOG0030/coursebook/index.html) workbook by [Jo Wilkin](https://github.com/jo-wilkin)
 
+This year's workbook also takes inspiration and design elements from:
+* The [Spatial Data Science for Social Geography] course (https://martinfleischmann.net/sds/) by [Martin Fleischmann](https://martinfleischmann.net/)
+
 ## Major updates { .unnumbered}
 ::: { .callout-note}
 This year's update features the following **major** updates:
