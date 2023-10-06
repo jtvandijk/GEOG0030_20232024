@@ -7,7 +7,7 @@ project:
 book:
   title: "GEOG0030 Geocomputation 2023-2024"
   author: "[Justin van Dijk](https://mappingdutchman.com/)"
-  date: "9/27/2023"
+  date: "9/28/2023"
   chapters:
     - part: "Module overview"
       chapters:
@@ -21,14 +21,35 @@ book:
 format:
   html:
     theme: 
-      flatly
+      light: flatly
+      dark: darkly
+    # css: assets/styles.css
+    toc: true
+    highlight-style: atom-one
     code-overflow: scroll
     code-tools: 
       source: https://github.com/jtvandijk/GEOG0030
       toggle: false
-      caption: none
-    code-block-bg: "#f0f0f0"
     callout-appearance: simple
+
+website:
+  repo-url: https://github.com/jtvandijk/GEOG0030
+  # favicon: assets/favicon.png
+  #repo-actions: [issue]
+  # twitter-card: true
+  page-navigation: true
+  page-footer:
+    center: "Course material by [Justin van Dijk](https://www.mappingdutchman.com). Available under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)."
+  search:
+    location: sidebar
+    type: overlay
+  sidebar:
+    style: floating
+    collapse-level: 1
+    #logo: assets/logo.svg
+    tools:
+      - icon: github
+        href: https://github.com/jtvandijk/GEOG0030
 
 # misc
 title-block-banner: false

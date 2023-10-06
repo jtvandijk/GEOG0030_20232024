@@ -224,7 +224,7 @@ Note that the **Text to Columns** function might be elsewhere in the menu depend
 knitr::include_graphics('images/w02/almost-there.png')
 ```
 
-11. One thing that might cause problems when we try to link the population data to the spatial data is that there are still spaces contained in the `lsoa11_code` column. This is not directly noticeable as these spaces are `white space` characters at the end of the LSOA codes without any other characters following it (i.e. [trailing spaces](https://stackoverflow.com/questions/22273233/what-is-meant-by-trailing-space-and-whats-the-difference-between-it-and-a-blank)). This may seem trivial, but computer language is very precise so we need to remove these. We can do this by highlighting the entire `lsoa11_code` column and in the **Home** menu opting for **Replace** under the **Find & Select** menu.
+11. One thing that might cause problems when we try to link the population data to the spatial data is that there are still spaces contained in the `lsoa11_code` column. This is not directly noticeable as these spaces are `white space` characters at the end of the LSOA codes without any other characters following it (i.e. [trailing spaces](https://stackoverflow.com/questions/22273233/what-is-meant-by-trailing-space-and-whats-the-difference-between-it-and-a-blank)). This may seem trivial, but we need this column later and computer language is very precise so we need to remove these. We can do this by highlighting the entire `lsoa11_code` column and in the **Home** menu opting for **Replace** under the **Find & Select** menu.
 
 ```{r}
 #| label: fig-find-replace
@@ -234,16 +234,16 @@ knitr::include_graphics('images/w02/almost-there.png')
 knitr::include_graphics('images/w02/find-replace.png')
 ```
 
-12. In the **Find what** box put in a singular `white space`, using the *spacebar* on your computer, keep the **Replace with** box empty, and click on **Replace all**. You should get a message that **4,835** replacements have been made. 
+12. In the **Find what** box put in a singular `white space`, using the *spacebar* on your keyboard, keep the **Replace with** box empty, and click on **Replace all**. You should get a message that **4,835** replacements have been made. 
 13. One further bit of formatting that you must do before saving your data is to format our population field. At the moment, you will see that there are commas separating the thousands within our values. If we leave these commas in our values, QGIS will read them as decimal points, creating decimal values of our population. There are many points at which we could resolve this issue, but the easiest point is now - we will strip our population values of the commas and set them to integer (whole numbers) values. To format the `pop2011` column, higlight the entire column and right-click on the `C` cell.  Click on **Format Cells** and set the cells to **Number** with **0** decimal places. You should see that the commas are now removed from your population values.
 14. Save your spreadsheet as a `csv` file into your `data` folder as `LSOA2011_population.csv`.
 
 ::: { .callout-tip}
-After saving the file Excel might give you a warning along the lines of *Possible data loss*. You can safely ignore this message as the only 'information' you have lost is markup information (e.g. fonts, colours, items in bold, etc.) or formulas within Excel (e.g. if you used Excel formulas to calculate *means*, *medians*, etc.). In some cases you might also have options to choose what type of `csv` you would want to save the spreadsheet as. If so, opt for something along the lines of `CSV UTF-8 (Comma-delimited) (.csv)`. 
+After saving the file, Excel might give you a warning along the lines of *Possible data loss*. You can safely ignore this message as the only 'information' you have lost is markup information (e.g. fonts, colours, items in bold, etc.) or formulas within Excel (e.g. if you used Excel formulas to calculate *means*, *medians*, etc.). In some cases you might also have options to choose what type of `csv` you would want to save the spreadsheet as. If so, opt for something along the lines of `CSV UTF-8 (Comma-delimited) (.csv)`. 
 :::
 
 ::: { .callout-warning}
-Depending on the language settings of your operating system (e.g. Windows, MacOS, Linux) and language settings, `csv` files might look different. It is always a good idea to check yo    ur `csv` file in a plain text editor (e.g. **Textedit** on MacOS or **Notepad** on Windows). In case you do not see commas (`,`), but semicolons (`;`) you can apply a quick and dirty fix to your data by *finding and replacing* every `;` with a `,` in the same that way we fixed our problematic `white space` characters in Excel.
+Depending on the language settings of your operating system (e.g. Windows, MacOS, Linux) and language settings, `csv` files might use a different character instead of a comma. This may seem trivial, but it can cause issues when reading the data into a different programme. It is therefore always a good idea to check your `csv` file in a plain text editor (e.g. **Textedit** on MacOS or **Notepad** on Windows). In case you do not see commas (`,`), but semicolons (`;`) you can apply a <u>quick and dirty</u> fix to your data by *finding and replacing* every `;` with a `,` in the same that way we fixed our problematic `white space` characters in Excel.
 :::
 
 #### London population in 2021
@@ -365,11 +365,9 @@ We can now finally map the population distribution of London in 2011.
 
 9. Right-click on the `LSOA2011_London` layer and click on **Properties** -> **Symbology**.
 - In the dropdown menu at the top of the window, select **Graduated** as symbology.
-- Under value choose `pop2011` as your column. 
+- Under **Value** choose `pop2011` as your column. 
 - We can then change the color ramp to suit our aesthetic preferences. In the **Colour ramp** dropdown menu select *Magma*. 
-- The final thing we need to do is **classify** our data - what this simply means is to decide how to group the values in our dataset together to create the graduated representation. 
-- We will be looking at this in later weeks, but for now, we will use the **Natural Breaks** option. 
-- Click on the drop-down next to **Mode**, select **Natural Breaks**, change it to **7** classes and then click **Classify**.
+- The final thing we need to do is **classify** our data - what this simply means is to decide how to group the values in our dataset together to create the graduated representation. We will be looking at classification options in later weeks, but for now, we will use the **Natural Breaks** option. Open the drop-down menu next to **Mode**, select **Natural Breaks**, change it to **7** classes and then click **Classify**.
 - Finally click **Apply** to style your dataset.
 
 ::: { .callout-tip}
@@ -385,6 +383,10 @@ You should now be looking at something like this:
 #| fig-cap: "The population distribution of London in 2011. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w02/lsoa-population-2011.png){target='_blank'}"
 knitr::include_graphics('images/w02/lsoa-population-2011.png')
 ```
+
+::: { .callout-warning}
+Whereas the above map is fine for today, it is technically incorrect because we are showing <u>absolute</u> numbers on a choropleth. This is something we should **never** do, unless the spatial units are identical in size (e.g. a hexagonal tessellation of an area), because larger areas will draw attention and affect the visualisation.
+:::
 
 ### Exporting map for visual analysis
 To export your map select only the map layers you want to export and then opt for **Project** -> **Import/Export** -> **Export to Image** and save your final map in your `output` folder. Next week, we will look at how to style our maps using the main map conventions (adding North Arrows, Scale Bars and Legends) but for now a simple picture will do. 
