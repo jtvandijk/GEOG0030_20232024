@@ -16,7 +16,6 @@ format:
     callout-appearance: simple
     css: assets/styles.css
     toc: true
-    number-sections: true
     smooth-scroll: true
     highlight-style: atom-one
 
