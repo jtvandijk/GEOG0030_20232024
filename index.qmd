@@ -1,4 +1,4 @@
-# Module Introduction { .unnumbered}
+# GEOG0030 Geocomputation 2023-2024 { .unnumbered}
 
 ```{r} 
 #| label: 00-welcome
@@ -55,14 +55,17 @@ This year's workbook is updated from and compiled using:
 * The [GEOG0030: Geocomputation 2021-2021](https://jo-wilkin.github.io/GEOG0030/coursebook/index.html) workbook by [Jo Wilkin](https://github.com/jo-wilkin)
 
 This year's workbook also takes inspiration and design elements from:
-* The [Spatial Data Science for Social Geography] course (https://martinfleischmann.net/sds/) by [Martin Fleischmann](https://martinfleischmann.net/)
+
+* The [Spatial Data Science for Social Geography](https://martinfleischmann.net/sds/) course by [Martin Fleischmann](https://martinfleischmann.net/)
 
 ## Major updates { .unnumbered}
 ::: { .callout-note}
-This year's update features the following **major** updates:
+This year's version features the following **major** updates:
 
 * Full rewrite of the workbook using `Quarto`.
 * Update to using exclusively Census 2021 (spatial) data where possible.
 * Rewriting sections relying on deprecated core packages: `raster`, `rgdal`, `rgeos`.
 * Move to `geopackage` over `shapefile` where possible.
+* Update to use native pipe `|>` over `dplyr`'s implementation (`%>%`).
+* Add **dark mode** switch.
 :::

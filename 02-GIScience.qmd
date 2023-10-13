@@ -155,7 +155,7 @@ In your `GEOG0030/data/raw/` folder, now create a new folder called `population`
 When you open up any of the LSOA spreadsheets in Excel, you will notice that some additional rows of information are contained at the top of each of these files. This extra information will confuse QGIS and we therefore need to do a bit of data cleaning. To reduce the chance of errors in later stages, we will also save the data in `csv` format.
 
 ::: {.callout-tip}
-`csv` stands for comma (or character) separated values. A `csv` file can be thought of as stripped-down Excel spreadsheet in which every column of data is separated by a comma. If you open a `csv` file within Excel, however, it will look "normal". The advantage of using `csv` files is that it (should) make it easier to read data into QGIS and R as less things can go wrong.
+`csv` stands for comma (or character) separated values. A `csv` file can be thought of as stripped-down Excel spreadsheet in which every column of data is separated by a comma. If you open a `csv` file within Excel, however, it will look "normal". The advantage of using `csv` files is that it (should) make it easier to read data into QGIS and R as less things can go wrong. `csv` does have its limitations, especially when you are dealing with large datasets. A powerful and modern alternative is the [parquet format](https://parquet.apache.org/). For an introduction on how to use this, refer to Chapter 23 in Hadley Wickham's [R for Data Science (Second Edition)](https://r4ds.hadley.nz/arrow)
 :::
 
 #### London population in 2011

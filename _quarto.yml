@@ -1,42 +1,28 @@
-# project
 project:
-  type: book
+  type: website
   output-dir: docs
 
-# front matter
-book:
-  title: "GEOG0030 Geocomputation 2023-2024"
-  author: "[Justin van Dijk](https://mappingdutchman.com/)"
-  date: "9/28/2023"
-  chapters:
-    - part: "Module overview"
-      chapters:
-        - index.qmd
-    - part: "Foundational Concepts"
-      chapters:
-        - 01-introduction.qmd
-        - 02-GIScience.qmd
+lang: en
 
-# output
+execute:
+  freeze: false
+  cache: true
+
 format:
   html:
-    theme: 
+    theme:
       light: flatly
-      dark: darkly
-    # css: assets/styles.css
-    toc: true
-    highlight-style: atom-one
-    code-overflow: scroll
-    code-tools: 
-      source: https://github.com/jtvandijk/GEOG0030
-      toggle: false
+      dark:  darkly
     callout-appearance: simple
+    css: assets/styles.css
+    toc: true
+    smooth-scroll: true
+    highlight-style: atom-one
 
 website:
   repo-url: https://github.com/jtvandijk/GEOG0030
   # favicon: assets/favicon.png
-  #repo-actions: [issue]
-  # twitter-card: true
+  repo-actions: [issue]
   page-navigation: true
   page-footer:
     center: "Course material by [Justin van Dijk](https://www.mappingdutchman.com). Available under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)."
@@ -45,13 +31,24 @@ website:
     type: overlay
   sidebar:
     style: floating
-    collapse-level: 1
-    #logo: assets/logo.svg
+    collapse-level: 2
+    logo: assets/logo.svg
     tools:
       - icon: github
         href: https://github.com/jtvandijk/GEOG0030
+    contents:
+      - section: "Module overview"
+        contents:
+          text: "Welcome"
+          file: index.qmd
+      - section: "Foundational Concepts"
+        contents:
+          - 01-introduction.qmd
+          - 02-GIScience.qmd
+      - section: "Additional Resources"
+        contents:
+          - 11-data.qmd
 
 # misc
-title-block-banner: false
 editor: source
 
