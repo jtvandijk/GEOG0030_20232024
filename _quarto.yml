@@ -16,6 +16,7 @@ format:
     callout-appearance: simple
     css: assets/styles.css
     toc: true
+    number-sections: true
     smooth-scroll: true
     highlight-style: atom-one
 
@@ -40,7 +41,7 @@ website:
       - section: "Module overview"
         contents:
           text: "Welcome"
-          file: index.qmd
+          file: 00-index.qmd
       - section: "Foundational Concepts"
         contents:
           - 01-introduction.qmd
