@@ -18,6 +18,8 @@ format:
     toc: true
     smooth-scroll: true
     highlight-style: atom-one
+    number-sections: true
+    number-depth: 3
 
 website:
   repo-url: https://github.com/jtvandijk/GEOG0030
@@ -48,6 +50,7 @@ website:
       - section: "Additional Resources"
         contents:
           - 11-data.qmd
+
 
 # misc
 editor: source
