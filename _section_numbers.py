@@ -15,25 +15,35 @@ for f in files:
 
 # only keep chapters
 html_files.remove('docs/index.html')
-html_files.remove('docs/00-index.html')
 html_files.sort()
 
 # set counter
 cnt = 0
 
-# loop html files
+# loop html files: fix headers, fix individual TOC entries
 for htmlf in html_files:
 
     # initialise template
-    with open(htmlf) as file :
+    with open(htmlf) as file:
       html_content = file.read()
 
-    # update TOC
+    # update headers
     html_content = html_content.replace('<span class="header-section-number">1', \
-                                        '<span class="header-section-number">' + str(1 + cnt))
+                                        '<span class="header-section-number">' + str(0 + cnt))
+
     # update counter
     cnt += 1
     
+    # update TOC chapter 1
+    html_content = html_content.replace('<span class="menu-text">Geocomputation: An Introduction</span>', \
+                                        '<span class="menu-text">1 Geocomputation: An Introduction</span>')
+    # update TOC chapter 2
+    html_content = html_content.replace('<span class="menu-text">GIScience and GIS software</span>', \
+                                        '<span class="menu-text">2 GIScience and GIS software</span>')
+    
+    # update TOC chapter 11
+    html_content = html_content.replace('<span class="menu-text">Data Sources</span>', \
+                                        '<span class="menu-text">11 Data Sources</span>')
     # write
     with open(htmlf, 'w') as file:
         file.write(html_content)
