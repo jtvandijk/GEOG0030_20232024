@@ -355,7 +355,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Because the population file that we downloaded does not contain Borough codes, we need to use the Borough names to join the two files together. Whilst it works here and we can easily manually check whether the join was succesful because there are only 33 records, codes are preferred as there is much less room for error and incomplete joins. This means it is often worth it to spend a bit more time and find these codes.</p>
+<p>Because the population file that we downloaded does not contain Borough codes, we need to use the Borough names to join the two files together. Whilst it works here and we can easily manually check whether the join was succesful because there are only 33 records, codes are preferred as there is much less room for error and incomplete joins. This means it is often worth it to spend a bit more time and find these codes over relying on names.</p>
 </div>
 </div>
 </div>
@@ -480,7 +480,34 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <ol start="11" type="1">
-<li>We now have our Borough crime rate dataset ready for mapping. We just now need to repeat this process to have our LSOA dataset. So, repeat the above processes to create a <code>crime-rate</code> and <code>crime-rate-int</code> column within the LSOA dataset as well.</li>
+<li>We now have our Borough crime rate dataset ready for mapping. We just now need to repeat this process to have our <strong>LSOA</strong> dataset. So, add the <code>LSOA2021_London.gpkg</code> file to your project and repeat the above process to create a <code>crime-rate</code> and <code>crime-rate-int</code> column within the <strong>LSOA</strong> dataset as well. After reordering some of the layers, your screen should look something like this:</li>
+</ol>
+<div class="cell" data-hash="03-cartography_cache/html/fig-crime-different-layers_15d29b14dac64f072fe142082a64dc4e">
+<div class="cell-output-display">
+<div id="fig-crime-different-layers" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w03/crime-borough-lsoa.png" class="img-fluid figure-img" width="1552"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: QGIS view containing crime data layers for both the London Boroughs and LSOAs. <a href="https://jtvandijk.github.io/GEOG0030/images/w03/crime-borough-lsoa.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="mapping-crime-data-1" class="level4">
+<h4 class="anchored" data-anchor-id="mapping-crime-data-1">Mapping crime data</h4>
+<p>Now you have both datasets ready, it is time to style the maps. Remember to use the <strong>Properties</strong> box to symbolise your mapss. Think through using an appropriate colour scheme - perhaps <a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">have a look online for some examples</a> if you do not want to use the default settings. Once you are happy with their symbolisation, we can turn them into proper publishable maps using QGIS’s <strong>Print Layout</strong>.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>If you have used ArcMap before, this is similar to switch the view of your map canvas to a print layout within the main window but in QGIS’s case, it loads up a new window.</p>
+</div>
+</div>
+</div>
+<ol type="1">
+<li>From the main QGIS window, click on <strong>Project</strong> -&gt; <strong>New Print Layout</strong>. In the small box that first appears, call your new print layout: <code>crime-map-borough-lsoa</code>. A new window should open up.</li>
 </ol>
 
 

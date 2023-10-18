@@ -101,7 +101,7 @@ We now need to create our Borough population shapefile - and to do so, we need t
 - Remove the original Borough and population data layers.
 
 ::: { .callout-warning}
-Because the population file that we downloaded does not contain Borough codes, we need to use the Borough names to join the two files together. Whilst it works here and we can easily manually check whether the join was succesful because there are only 33 records, codes are preferred as there is much less room for error and incomplete joins. This means it is often worth it to spend a bit more time and find these codes.
+Because the population file that we downloaded does not contain Borough codes, we need to use the Borough names to join the two files together. Whilst it works here and we can easily manually check whether the join was succesful because there are only 33 records, codes are preferred as there is much less room for error and incomplete joins. This means it is often worth it to spend a bit more time and find these codes over relying on names.
 :::
 
 We will now load and map our crime data. We will load this data using the **Delimited Text File Layer** option you would have used just now to load the Borough population, but this time we will be adding point coordinates to map our crime data as points.
@@ -184,4 +184,21 @@ The empty field has *NULL* populated for each row - so we need to find a way to 
 The `crime-rate` is stored as a decimal as this is required for the calculation to succeed, but ultimately you cannot have half a crime. You can transform the decimal number to an `integer` by forcing the `crime-rate` column to a new field using the **Field Calculator** using *Editing mode* again. Instead of ticking the **Update existing field** box you would now keep the **Create a new field** box ticked. Name the new field `crime-rate-int`, make sure the **Output field type** is set to `Whole number (integer)`, and use the following expression to create a new field with an integer value: **to_int("crime-rate")**. Save your changes by clicking on the **Save** button.
 :::
 
-11. We now have our Borough crime rate dataset ready for mapping. We just now need to repeat this process to have our LSOA dataset. So, repeat the above processes to create a `crime-rate` and `crime-rate-int` column within the LSOA dataset as well.
+11. We now have our Borough crime rate dataset ready for mapping. We just now need to repeat this process to have our **LSOA** dataset. So, add the `LSOA2021_London.gpkg` file to your project and repeat the above process to create a `crime-rate` and `crime-rate-int` column within the **LSOA** dataset as well. After reordering some of the layers, your screen should look something like this:
+
+```{r}
+#| label: fig-crime-different-layers
+#| echo: False 
+#| cache: True
+#| fig-cap: "QGIS view containing crime data layers for both the London Boroughs and LSOAs. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w03/crime-borough-lsoa.png){target='_blank'}"
+knitr::include_graphics('images/w03/crime-borough-lsoa.png')
+```
+
+#### Mapping crime data
+Now you have both datasets ready, it is time to style the maps. Remember to use the **Properties** box to symbolise your mapss. Think through using an appropriate colour scheme - perhaps [have a look online for some examples](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) if you do not want to use the default settings. Once you are happy with their symbolisation, we can turn them into proper publishable maps using QGIS's **Print Layout**. 
+
+::: { .callout-tip}
+If you have used ArcMap before, this is similar to switch the view of your map canvas to a print layout within the main window but in QGIS's case, it loads up a new window.
+::: 
+
+1. From the main QGIS window, click on **Project** -> **New Print Layout**. In the small box that first appears, call your new print layout: `crime-map-borough-lsoa`. A new window should open up.
