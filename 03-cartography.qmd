@@ -156,18 +156,32 @@ Whilst it is great that we have got our `theft2021`, what we actually need is a 
 5. With the **Attribute Table** of your `borough-theft2021` layer still open, click on the **pencil** icon at the top left corner. This pencil switches on the **Editing** mode. 
 
 ::: { .callout-note}
-The Editing mode allows you to edit both the **Attribute Table** values and the **geometry** of your data. When it comes to the **Attribute Table**, it means you can directly edit existing values in the table **or** create and add new fields to the table. Whilst you can actually do the latter outside of the Editing mode, this Editing mode means you can reverse any edits you make and they are not permanent just in case you make a mistake.
-Using the Editing mode is the safest approach to editing your table, however, it might not always be the approach you use when generating new fields.
+The *Editing mode* allows you to edit both the **Attribute Table** values and the **geometry** of your data. When it comes to the **Attribute Table**, it means you can directly edit existing values in the table **or** create and add new fields to the table. Whilst you can actually do the latter outside of the *Editing mode*, this *Editing mode* means you can reverse any edits you make and they are not permanent just in case you make a mistake.
+Using the *Editing mode* is the safest approach to editing your table, however, it might not always be the approach you use when generating new fields.
 :::
 
-6. Whilst in the Editing mode, click on **New Field** button and fill in the **Field Parameters** as follows:
+6. Whilst in the *Editing mode*, click on **New Field** button (hotkeys: `ctrl + w` or `cmd + w` and fill in the **Field Parameters** as follows:
     - **Name:** `crime-rate`
     - **Comment:** *leave blank*
     - **Type:** Decimal number
-    - **Length:** 10
-    - **Precision:** 0
 7. Click **OK**. You should now see a new field added to our **Attribute Table**.
 
 ::: { .callout-tip}
-Understanding how to add new fields and their parameters rely on you understanding the different data types we covered last week - and thinking through what sort of data type your field needs to contain. In our case, we will store our data as a decimal to enable our final calculation to produce a decimal (an integer/integer is likely to produce a decimal) but we will set the precision to **0** to have zero places after our decimal place when the data is used. That is because ultimately, you cannot have half a crime.
+Understanding how to add new fields and their parameters rely on you understanding the different data types we covered last week - and thinking through what sort of data type your field needs to contain.
 :::
+
+The empty field has *NULL* populated for each row - so we need to find a way to give our Boroughs some crime rate data. To do this, we will calculate a simple **Crime Rate** using the **Field Calculator** tool provided by QGIS within the **Attribute Table**. We will create a crime rate that details the number of crimes per 10,000 people in the Borough. 
+
+8. Whilst still in the *Editing mode*, click on the **Abacus** button (`ctrl + i` or `cmd + i`), which is known as the **Field Calculator**. 
+9. In the **Field Calculator** window:
+    - Check the **Update existing field** box.
+    - Use the drop-down to select the `crime-rate` field.
+    - In the Expression editor, add the following expression: **( "theft2021" / "pop2021" ) \* 10000**
+    - Once done, click **OK**.
+10. Click on the **Save** button to save these edits. Click again on the **Pencil** button to exit *Editing mode*.
+
+::: { .callout-tip}
+The `crime-rate` is stored as a decimal as this is required for the calculation to succeed, but ultimately you cannot have half a crime. You can transform the decimal number to an `integer` by forcing the `crime-rate` column to a new field using the **Field Calculator** using *Editing mode* again. Instead of ticking the **Update existing field** box you would now keep the **Create a new field** box ticked. Name the new field `crime-rate-int`, make sure the **Output field type** is set to `Whole number (integer)`, and use the following expression to create a new field with an integer value: **to_int("crime-rate")**. Save your changes by clicking on the **Save** button.
+:::
+
+11. We now have our Borough crime rate dataset ready for mapping. We just now need to repeat this process to have our LSOA dataset. So, repeat the above processes to create a `crime-rate` and `crime-rate-int` column within the LSOA dataset as well.

@@ -144,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-cartography.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Cartography and Visualisation</span></a>
+ <span class="menu-text">3 Cartography and Visualisation</span></a>
   </div>
 </li>
       </ul>
@@ -434,18 +434,16 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The Editing mode allows you to edit both the <strong>Attribute Table</strong> values and the <strong>geometry</strong> of your data. When it comes to the <strong>Attribute Table</strong>, it means you can directly edit existing values in the table <strong>or</strong> create and add new fields to the table. Whilst you can actually do the latter outside of the Editing mode, this Editing mode means you can reverse any edits you make and they are not permanent just in case you make a mistake. Using the Editing mode is the safest approach to editing your table, however, it might not always be the approach you use when generating new fields.</p>
+<p>The <em>Editing mode</em> allows you to edit both the <strong>Attribute Table</strong> values and the <strong>geometry</strong> of your data. When it comes to the <strong>Attribute Table</strong>, it means you can directly edit existing values in the table <strong>or</strong> create and add new fields to the table. Whilst you can actually do the latter outside of the <em>Editing mode</em>, this <em>Editing mode</em> means you can reverse any edits you make and they are not permanent just in case you make a mistake. Using the <em>Editing mode</em> is the safest approach to editing your table, however, it might not always be the approach you use when generating new fields.</p>
 </div>
 </div>
 </div>
 <ol start="6" type="1">
-<li>Whilst in the Editing mode, click on <strong>New Field</strong> button and fill in the <strong>Field Parameters</strong> as follows:
+<li>Whilst in the <em>Editing mode</em>, click on <strong>New Field</strong> button (hotkeys: <code>ctrl + w</code> or <code>cmd + w</code> and fill in the <strong>Field Parameters</strong> as follows:
 <ul>
 <li><strong>Name:</strong> <code>crime-rate</code></li>
 <li><strong>Comment:</strong> <em>leave blank</em></li>
 <li><strong>Type:</strong> Decimal number</li>
-<li><strong>Length:</strong> 10</li>
-<li><strong>Precision:</strong> 0</li>
 </ul></li>
 <li>Click <strong>OK</strong>. You should now see a new field added to our <strong>Attribute Table</strong>.</li>
 </ol>
@@ -455,10 +453,35 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Understanding how to add new fields and their parameters rely on you understanding the different data types we covered last week - and thinking through what sort of data type your field needs to contain. In our case, we will store our data as a decimal to enable our final calculation to produce a decimal (an integer/integer is likely to produce a decimal) but we will set the precision to <strong>0</strong> to have zero places after our decimal place when the data is used. That is because ultimately, you cannot have half a crime.</p>
+<p>Understanding how to add new fields and their parameters rely on you understanding the different data types we covered last week - and thinking through what sort of data type your field needs to contain.</p>
 </div>
 </div>
 </div>
+<p>The empty field has <em>NULL</em> populated for each row - so we need to find a way to give our Boroughs some crime rate data. To do this, we will calculate a simple <strong>Crime Rate</strong> using the <strong>Field Calculator</strong> tool provided by QGIS within the <strong>Attribute Table</strong>. We will create a crime rate that details the number of crimes per 10,000 people in the Borough.</p>
+<ol start="8" type="1">
+<li>Whilst still in the <em>Editing mode</em>, click on the <strong>Abacus</strong> button (<code>ctrl + i</code> or <code>cmd + i</code>), which is known as the <strong>Field Calculator</strong>.</li>
+<li>In the <strong>Field Calculator</strong> window:
+<ul>
+<li>Check the <strong>Update existing field</strong> box.</li>
+<li>Use the drop-down to select the <code>crime-rate</code> field.</li>
+<li>In the Expression editor, add the following expression: <strong>( “theft2021” / “pop2021” ) * 10000</strong></li>
+<li>Once done, click <strong>OK</strong>.</li>
+</ul></li>
+<li>Click on the <strong>Save</strong> button to save these edits. Click again on the <strong>Pencil</strong> button to exit <em>Editing mode</em>.</li>
+</ol>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The <code>crime-rate</code> is stored as a decimal as this is required for the calculation to succeed, but ultimately you cannot have half a crime. You can transform the decimal number to an <code>integer</code> by forcing the <code>crime-rate</code> column to a new field using the <strong>Field Calculator</strong> using <em>Editing mode</em> again. Instead of ticking the <strong>Update existing field</strong> box you would now keep the <strong>Create a new field</strong> box ticked. Name the new field <code>crime-rate-int</code>, make sure the <strong>Output field type</strong> is set to <code>Whole number (integer)</code>, and use the following expression to create a new field with an integer value: <strong>to_int(“crime-rate”)</strong>. Save your changes by clicking on the <strong>Save</strong> button.</p>
+</div>
+</div>
+</div>
+<ol start="11" type="1">
+<li>We now have our Borough crime rate dataset ready for mapping. We just now need to repeat this process to have our LSOA dataset. So, repeat the above processes to create a <code>crime-rate</code> and <code>crime-rate-int</code> column within the LSOA dataset as well.</li>
+</ol>
 
 
 </section>
