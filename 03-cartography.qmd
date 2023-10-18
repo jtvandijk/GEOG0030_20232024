@@ -1,0 +1,173 @@
+# Cartography and Visualisation
+This week’s lecture has given you an introduction into how we can create a successful map. We further talked about map projections, cartographic conventions and issues faced with the analysis of aggregated data at areal units. The practical component of the week puts some of these learnings into practice as we analyse crime rates in London at two different scales.
+
+## Lecture slides {#slides-w03}
+The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var slides.week03 >}})
+
+## Reading list {#reading-w03}
+#### Essential readings
+- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 4**: *Georeferencing*. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 11**: *Cartography and Map Production*. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+- Wong, D. 2009. Modifiable Areal Unit Problem. *International Encyclopedia of Human Geography* 169-174. [[Link]](https://doi.org/10.1016/B978-008044910-4.00475-2)
+
+#### Suggested readings
+- Longley, P. *et al.* 2015. Geographic Information Science & systems, **Chapter 12**: *Geovisualization*. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+- Usery, L. and Seong, J. 2001. All equal-area map projections are created equal, but some are more equal than others. *Cartography and Geographic Information Science* 28(3): 183-194. [[Link]](https://doi.org/10.1559/152304001782153053)
+
+## Crime in London I
+Over the next few weeks, we will explore the spatial patterns of crime across London from both a statistical and spatial perspective. [Reid *et al.* (2018)](https://www.oxfordbibliographies.com/view/document/obo-9780195396607/obo-9780195396607-0123.xml) suggest:
+
+> Spatial analysis can be employed in both an exploratory and well as a more confirmatory manner with the primary purpose of identifying how certain community or ecological factors (such as population characteristics or the built environment) influence the spatial patterns of crime. 
+
+Against this background, we are actually going to answer a very simple question today: does our perception of crime rates (and its distribution) in London vary at different scales? Here we are looking to test whether we would make the [ecological fallacy](https://en.wikipedia.org/wiki/Ecological_fallacy) mistake of assuming patterns at the LSOA level are the same at the Borough level by looking to directly account for the impact of the Modifiable Area Unit Problem within our results. Here we will be looking specifically at a specific type of crime: *Theft from a person*.
+
+::: { .callout-note}
+The datasets you will create in this practical will be used in other practicals, so make sure to follow every step and export your data to your `data` folder at the end of the practical.
+:::
+
+### Crime data 
+For our crime data, we will use data directly from the **Police Data Portal**, which you can find at https://data.police.uk/. This Data Portal allows you to access and generate tabular data for crime recorded in the UK across different the different Police Forces since 2017. 
+
+::: { .callout-note}
+In the United Kingdom, there are 45 territorial police forces (TPF) and 3 special police forces (SPF). Each TPF covers a specific area in the UK (e.g. the "West Midlands Police Force"), whilst the SPFs are cross-jurisdiction and cover specific types of crime, such as the British Transport Police. Therefore, when we want to download data for a specific area, we need to know which Police Force covers our area interest.
+::: 
+
+When you look to download crime data for London, there are **two** territorial police forces working within the city and its greater metropolitan area: 
+
+1. [The Metropolitan Police Force](https://www.met.police.uk/), which covers Greater London.
+2. [The City of London Police](https://www.cityoflondon.police.uk/), which covers the City of London.
+
+### Population data 
+We know that if we want to study a phenomena like crime and aggregate it to an areal unit, we will need to normalise this by our some denominator (e.g. population). Fortunately, we already sorted out our 2021 LSOA population datasets last week (i.e. `LSOA2021_London.gpkg`).
+
+In addition to our **LSOA** level dataset, we also want to generate a similar dataset for our London **Boroughs**, utilising the same approach as last week by joining our population table data to Borough spatial data and creating a `Borough2021_London.gpkg` file.
+
+### Downloading data {#w03-downloading}
+As outlined above, to get going with our analysis, we need to download both population and spatial data for our Boroughs as well as the reported locations of criminal activity, theft specifically, in London in 2021. 
+
+#### London crime data
+Normally, we would now head to the Police Data Portal and download our crime data. However, the manual processing that is required is too exhaustive to do manually and far easier to do using programming. As such you can download a pre-filtered spreadsheet below. Unzip the file and copy the `csv` into a **new** folder in your `raw` data folder called: `crime`.
+
+| File                                                 | Type           | Link |
+| :------                                              | :------        | :------ |
+| Theft from persons in 2021                           | `csv`    | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/crime-theft-2021-london.zip) |
+
+::: { .callout-note}
+When mapping the data from the provided longitude and latitude coordinates, it is important to know that these locations represent the approximate location of a crime — not the exact place that it happened. This displacement occurs to preserve anonymity of the individuals involved. The process by how this displacement occurs is standardised. There is a list of anonymous map points to which the exact location of each crime is compared against this master list to find the nearest map point. The co-ordinates of the actual crime are then replaced with the co-ordinates of the map point. Each map point is specifically chosen to avoid associating that point with an exact household.
+:::
+
+#### Borough boundaries
+A lot of data about London is collated by the Greater London Authority (GLA) and made available through the [London Datastore](https://data.london.gov.uk/about/). Whereas some of the data is relatively old, it is a good place to 
+
+1. Navigate to the London Datastore: [[Link]](https://data.london.gov.uk/).
+2. Click on **Data** in the navigation menu.
+3. Type *London Boroughs* into the search field.
+4. Download the `GeoPackage` containing the boundaries of each of London's 33 Boroughs.
+5. Rename the file to `Boroughs_London.gpkg` and move it to `boundaries` folder in your `raw` data folder.
+
+#### Borough population
+The final data that we need is the total population for each of the London Boroughs in 2021. A good source for this is the 2021 Census.
+
+1. Navigate to the *Nomis* portal: [[Link]](https://www.nomisweb.co.uk/)
+2. Click on **Query data** in the **Data Downloads** panel.
+3. Click on **Census 2021** -> **Topic Summaries**.
+4. Click on **TS007A - Age by five-year age bands**.
+5. Select **Geography** and set **Local authorities: district / unitary (as of April 2023)** to **Some**.
+6. Under **List areas within** select **London**. Click on **Tick all**.
+7. Click on **Download data** at the left hand side of the screen.
+8. Once the data is ready for download, download the file to your computer and save it as `LondonBorough2021_population.xlsx`.
+9. Open the dataset in your spreadsheet editing software and extract the relevant information: the Borough names and associated population counts. Copy the data that you require into a new `csv` file and rename the columns as `BoroughNames` and `pop2021`.
+10. Now format the `pop2021` column so that it is recognised as being a **numeric** column. 
+11. Save the file as a new `csv` in your `data` folder: `LondonBorough2021_population.csv`.
+
+### Mapping crime data
+
+#### Setting up a project
+1. Start **QGIS**
+2. Click on **Project** -> **New**. Save your project as `w3-crime-analysis`. Remember to save your work throughout the practical. 
+3. Before we get started with adding data, we will first set the Coordinate Reference System of our Project. Click on **Project** -> **Properties -- CRS**. In the Filter box, type **British National Grid**. Select **OSGB 1936 / British National Grid - EPSG:27700** and click **Apply**. Click **OK**.
+
+#### Adding layers
+1. Click on **Layer** -> **Add Layer** -> **Add Vector Layer**.
+2. With **File** select as your source type, click on the small three dots button and navigate to your `LSOA2021_London.gpkg` file in your `boundaries` folder. Select the file, then click **Add**. You may need to close the box after adding the layer.
+
+We now need to create our Borough population shapefile - and to do so, we need to repeat exactly the same process as last week in terms of joining our table data to our shapefile. You should now be able to do this, so we will not provide you with detailed instructions. Remember, you need to:
+
+- Load the respective Borough dataset as a Vector Layer found in your `raw/boundaries/` data folder: `Boroughs_London.gpkg`.
+-  Load the respective population dataset that you just created as a **Delimited Text File Layer**. Remember the settings, including no geometry!
+- Join the two datasets together using the **Join** tool in the Borough dataset **Properties** box. Remember which fields to use, which to add, and to remove the prefix.
+- Export your joined dataset into a new dataset within your `data` folder as: `Boroughs_London_Pop2021.gpkg`.
+- Make sure this dataset is loaded into your **Layers** / Added to the map.
+- Remove the original Borough and population data layers.
+
+::: { .callout-warning}
+Because the population file that we downloaded does not contain Borough codes, we need to use the Borough names to join the two files together. Whilst it works here and we can easily manually check whether the join was succesful because there are only 33 records, codes are preferred as there is much less room for error and incomplete joins. This means it is often worth it to spend a bit more time and find these codes.
+:::
+
+We will now load and map our crime data. We will load this data using the **Delimited Text File Layer** option you would have used just now to load the Borough population, but this time we will be adding point coordinates to map our crime data as points.
+
+1. Click on **Layer** -> **Add Layer** -> **Add Delimited Text File Layer**.
+    - Click on the three dots button next to **File Name** and navigate to your `crime-theft-2021-london.csv` in your `raw/crime` folder. 
+    - Click on the `.csv` file of this dataset and click **Open**. 
+    - Your file format should be set to `csv`. In **Record and Fields Options** tick `Decimal separator is comma`, `First record has field names`, `Detect field types` and `Discard empty fields`. 
+    - Under **Geometry Definition**, select `Point coordinates` and set the **X field** to `Longitude` and the **Y field** to `Latitude`. The **Geometry CRS** should be: `EPSG:4326 - WGS84`. Click **Add**. 
+
+::: { .callout-warning}
+When you click **Add**, you should have gotten a pop-up from QGIS asking about transformations. Transformations are algorithms that convert data from one CRS to another. QGIS knows that the **Project CRS** is **British National GRid** but the **Layer** you are trying to add has a **WGS84** CRS. QGIS is asking you what transformation it should use to project the Layer in the Project CRS. This is one of the key strengths of QGIS: it can project data **"on the fly"**. What this means is that QGIS will automatically convert all Layers to the Project CRS once it knows which transformation you would like to use so that they will all be rendered in the correct position with respect to each other. More details on this can be found in QGIS' [user manual section on working with projections](https://docs.qgis.org/3.28/en/docs/user_manual/working_with_projections/working_with_projections.html).
+:::
+
+2. Click **OK** to accept QGIS' suggested on-the-fly projection. You should now see your crime dataset displayed on the map.
+
+```{r}
+#| label: fig-borough-crime
+#| echo: False 
+#| cache: True
+#| fig-cap: "Borough map with crime data. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w03/crime-borough.png){target='_blank'}"
+knitr::include_graphics('images/w03/crime-borough.png')
+```
+
+3. We can test the 'temporary' nature of the projection by looking at the CRS of the `crime-theft-2021-london` layer. Right-click on the layer then select **Properties** -> **Information** and then look at the associated CRS. You should see that the CRS of the layer is still `WGS84`. 
+    
+We want to make sure our analysis is as accurate and efficient as possible, so it is best to reproject our data into the **same CRS** as our administrative datasets, i.e. British National Grid. This also means we will have the dataset to use in other projects, just in case.
+
+4. Back in the main QGIS window, click on **Vector** -> **Data Management Tools** -> **Reproject Layer**. Fill in the parameters as follows:
+    - **Input Layer:** `crime-theft-2021-london`
+    - **Target CRS:** `Project CRS: EPSG: 27700`
+    - **Reprojected:** Click on the three buttons and **Save to GeoPackage** to create a new data file.
+    - **Save** it in your `raw/crime` folder as `crime-theft-2021-london-prj.gpkg`, using `theft2021` as **Layer Name**.
+    - Click **Run**. You should now see the new data layer added to your project. You can now close the **Reproject Layer** tool.
+5. You can now also remove the original `crime-theft-2021-london` dataset, only keeping the reprojected version.
+
+#### Counting points-in-polygons 
+The next step of our analysis is incredibly simple - as QGIS has an in-built tool for us to use. We will use the `Count Points in Polygons` in the `Analysis` toolset for `Vector` data to count how many crimes have occurred in our **LSOAs** and our **Boroughs**. We will then have our count statistic which we will need to normalise by our population data to create a **crime rate** statistic.
+
+1. Click on **Vector** -> **Analysis Tools** -> **Count Points in Polygons**.
+2. Within the toolbox, select the parameters as follows:
+    - **Polygons:** `Boroughs_London_Pop2021`
+    - **Points:** `theft2021` *(Note how both our data layers state the same CRS!)*
+    - No weight field or class field
+    - **Count field names:** `theft2021`
+    - Click on the three dot button and **Save to GeoPackage:** `output` -> `Borough2021_crime.gpkg`, with `borough-theft2021` as **Layer Name**.
+3. Click **Run** and **Close** the box. You should now see an `Output` layer added to your Layers box. Rename the layer to `borough-theft2021`.
+4. Right-click on the `borough-theft2021` layer and open the **Attribute Table**. You should now see a `theft2021` column next to your `pop2021` column. You can look through the column to see the different levels of crime in the each Borough. You can also sort the column, from small to big, big to small, like you would do in a spreadsheet software.
+
+Whilst it is great that we have got our `theft2021`, what we actually need is a **crime rate** to account for the different population sizes across the Boroughs. To get our **crime rate** statistic, we are going to do our first bit of table manipulation in QGIS.
+     
+5. With the **Attribute Table** of your `borough-theft2021` layer still open, click on the **pencil** icon at the top left corner. This pencil switches on the **Editing** mode. 
+
+::: { .callout-note}
+The Editing mode allows you to edit both the **Attribute Table** values and the **geometry** of your data. When it comes to the **Attribute Table**, it means you can directly edit existing values in the table **or** create and add new fields to the table. Whilst you can actually do the latter outside of the Editing mode, this Editing mode means you can reverse any edits you make and they are not permanent just in case you make a mistake.
+Using the Editing mode is the safest approach to editing your table, however, it might not always be the approach you use when generating new fields.
+:::
+
+6. Whilst in the Editing mode, click on **New Field** button and fill in the **Field Parameters** as follows:
+    - **Name:** `crime-rate`
+    - **Comment:** *leave blank*
+    - **Type:** Decimal number
+    - **Length:** 10
+    - **Precision:** 0
+7. Click **OK**. You should now see a new field added to our **Attribute Table**.
+
+::: { .callout-tip}
+Understanding how to add new fields and their parameters rely on you understanding the different data types we covered last week - and thinking through what sort of data type your field needs to contain. In our case, we will store our data as a decimal to enable our final calculation to produce a decimal (an integer/integer is likely to produce a decimal) but we will set the precision to **0** to have zero places after our decimal place when the data is used. That is because ultimately, you cannot have half a crime.
+:::

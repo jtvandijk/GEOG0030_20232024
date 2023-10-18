@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./11-data.html" rel="next">
+<link href="./03-cartography.html" rel="next">
 <link href="./01-introduction.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -139,6 +139,12 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="./02-GIScience.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">2 GIScience and GIS software</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-cartography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cartography and Visualisation</span></a>
   </div>
 </li>
       </ul>
@@ -355,7 +361,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><a href="https://www.data.gov.uk">Data.gov.uk</a> is the UK government’s central database that contains open data that the central government, local authorities and public bodies publish. This includes, for example, aggregated census and health data – and even government spending. In addition to this central database, there are other authoritative databases run by the government and/or respective public bodies that contain either a specific type of data (e.g.&nbsp;census data, crime data) or a specific collection of datasets (e.g.&nbsp;health data from the NHS, data about London). Some portals are less up-to-date than others, so it is wise to double-check with the ‘originators’ of the data to see if there are more recent versions.</p>
+<p><a href="https://www.data.gov.uk">Data.gov.uk</a> is the UK government’s central database that contains open data that the central government, local authorities and public bodies publish. This includes, for example, aggregated census and health data – and even government spending. In addition to this central database, there are other authoritative databases run by the government and/or respective public bodies that contain either a specific type of data (e.g.&nbsp;Census data, crime data) or a specific collection of datasets (e.g.&nbsp;health data from the NHS, data about London). Some portals are less up-to-date than others, so it is wise to double-check with the ‘originators’ of the data to see if there are more recent versions.</p>
 </div>
 </div>
 </div>
@@ -411,7 +417,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Administrative geographies are a way of dividing the country into smaller sub-divisions or areas that correspond with the area of responsibility of local authorities and government bodies. These administrative sub-divisions and their associated geography have several important uses, including assigning electoral constituencies and serving as a mechanism for collecting census data. These geographies are updated as populations evolve and as a result the boundaries of the administrative geographies are subject to either periodic or occasional change. <u>This is why we need to download both 2011 and 2021 LSOA boundaries.</u> More details on the administrative geographies of the UK can be found on the website of the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography">Office for National Statistics</a>.</p>
+<p>Administrative geographies are a way of dividing the country into smaller sub-divisions or areas that correspond with the area of responsibility of local authorities and government bodies. These administrative sub-divisions and their associated geography have several important uses, including assigning electoral constituencies and serving as a mechanism for collecting Census data. These geographies are updated as populations evolve and as a result the boundaries of the administrative geographies are subject to either periodic or occasional change. <u>This is why we need to download both 2011 and 2021 LSOA boundaries.</u> More details on the administrative geographies of the UK can be found on the website of the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography">Office for National Statistics</a>.</p>
 </div>
 </div>
 </div>
@@ -422,7 +428,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>You may have used spatial data before and noticed that we did not download a collection of files known as a <code>shapefile</code> but a <code>geopackage</code> instead. Whilst <code>shapefiles</code> are still being used, and you will most likely come across them at some point in your career, the more modern, more portable, and open-source <code>geopackage</code> should be your spatial data format of choice where possible. Have a look at this article on <em>towardsdatascience.com</em> for an excellent explanation on why one should use <code>geopackage</code> files instead of <code>shapefiles</code>: <a href="https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416">[Link]</a></p>
+<p>You may have used spatial data before and noticed that we did not download a collection of files known as a <code>shapefile</code> but a <code>GeoPackage</code> instead. Whilst <code>shapefiles</code> are still being used, and you will most likely come across them at some point in your career, the more modern, more portable, and open-source <code>GeoPackage</code> should be your spatial data format of choice where possible. Have a look at this article on <em>towardsdatascience.com</em> for an excellent explanation on why one should use <code>GeoPackage</code> files instead of <code>shapefiles</code>: <a href="https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416">[Link]</a></p>
 </div>
 </div>
 </div>
@@ -432,24 +438,21 @@ ul.task-list li input[type="checkbox"] {
 <p>For our population data, we will use the 2011 and 2021 Census population counts that are made available by the ONS through <a href="https://www.nomisweb.co.uk/">Nomis</a>.</p>
 <ol type="1">
 <li>Navigate to the <em>Nomis</em> portal: <a href="https://www.nomisweb.co.uk/">[Link]</a></li>
-<li>In the main menu go to <strong>Census</strong> -&gt; <strong>2011 Census</strong> -&gt; <strong>Lower Layer Super Output Areas</strong> -&gt; <strong>2011 Boundaries</strong>.</li>
-<li>Click on <strong>Key Statistics</strong>.</li>
+<li>Click on <strong>Query data</strong> in the <strong>Data Downloads</strong> panel.</li>
+<li>Click on <strong>Census 2011</strong> -&gt; <strong>Key Statistics</strong>.</li>
 <li>Click on <strong>KS101EW - Usual resident population</strong>.</li>
-<li>Click on <strong>Query data</strong> on the left-hand side of the window.</li>
 <li>Select <strong>Geography</strong> and set <strong>2011 super output areas - lower layer</strong> to <strong>All</strong>.</li>
-<li>Click on <strong>Download data</strong>.</li>
+<li>Click on <strong>Download data</strong> at the left hand side of the screen.</li>
 <li>Once the data is ready for download, download the file to your computer.</li>
 </ol>
-<p>To get the 2011 Census population counts, you should:</p>
+<p>To get the 2021 Census population counts, you should:</p>
 <ol type="1">
 <li>Navigate to the <em>Nomis</em> portal: <a href="https://www.nomisweb.co.uk/">[Link]</a></li>
-<li>In the main menu go to <strong>Census</strong> -&gt; <strong>2021 Census</strong> -&gt; <strong>Lower Layer Super Output Areas</strong> -&gt; <strong>2021 Boundaries</strong>.</li>
-<li>Click on <strong>Topic Summaries</strong>.</li>
+<li>Click on <strong>Query data</strong> in the <strong>Data Downloads</strong> panel.</li>
+<li>Click on <strong>Census 2021</strong> -&gt; <strong>Topic Summaries</strong>.</li>
 <li>Click on <strong>TS007A - Age by five-year age bands</strong>.</li>
-<li>Click on <strong>Query data</strong> on the left-hand side of the window.</li>
-<li>Select <strong>Geography</strong> and set <strong>2021 super output areas - lower layer</strong> to <strong>All</strong>.<br>
-</li>
-<li>Click on <strong>Download data</strong>.</li>
+<li>Select <strong>Geography</strong> and set <strong>2021 super output areas - lower layer</strong> to <strong>All</strong>.</li>
+<li>Click on <strong>Download data</strong> at the left hand side of the screen.</li>
 <li>Once the data is ready for download, download the file to your computer.</li>
 </ol>
 <p>In your <code>GEOG0030/data/raw/</code> folder, now create a new folder called <code>population</code> and copy the two Excel files to the newly created <code>population</code> folder. Rename the files you downloaded to: <code>LSOA2011_population.xlsx</code> and <code>LSOA2021_population.xlsx</code>, respectively.</p>
@@ -756,8 +759,7 @@ ul.task-list li input[type="checkbox"] {
 <p>To make our join work, we need to check that we have a matching <strong>UID</strong> across both our datasets. We therefore need to look at the tables of both datasets and check what attributes we have that could be used for this possible match.</p>
 <ol start="4" type="1">
 <li>Open up the <strong>Attribute Tables</strong> of each layer and check what fields we have that could be used for the join. We can see that both our respective ‘code’ fields have the same codes (<code>LSOA11CD</code> and <code>lsoa11_code</code>) which seem to contain the same information.</li>
-<li>Right-click on your <code>LSOA2011</code> spatial layer, click on <strong>Properties</strong> and then click on the <strong>Joins</strong> tab.</li>
-</ol>
+<li>Right-click on your <code>LSOA2011</code> spatial layer, click on <strong>Properties</strong> and then click on the <strong>Joins</strong> tab.
 <ul>
 <li>Click on the <strong>+</strong> button. Make sure the <strong>Join Layer</strong> is set to <code>LSOA2011_population</code>.</li>
 <li>Set the <strong>Join field</strong> to <code>lsoa11_code</code>.</li>
@@ -766,7 +768,8 @@ ul.task-list li input[type="checkbox"] {
 <li>Click on the <strong>Custom Field Name Prefix</strong> and <strong>remove</strong> the pre-entered text to leave it blank.</li>
 <li>Click on <strong>OK</strong>.</li>
 <li>Click on <strong>Apply</strong> in the main Join tab and then click <strong>OK</strong> to return to the main QGIS window.</li>
-</ul>
+</ul></li>
+</ol>
 <p>We can now check to see if our join has worked by opening up the <strong>Attribute Table</strong> of our <code>LSOA11CD</code> spatial layer and looking to see if our LSOAs now have a <strong>Population</strong> field attached to it.</p>
 <ol start="6" type="1">
 <li>Sort the data in the <strong>Attribute Table</strong> on the <code>pop2011</code> field by clicking on the column name: all LSOAs for which we have population data (i.e.&nbsp;only the London LSOAs) are now grouped at the top of the file. Select the first <strong>4,835</strong> rows of data.</li>
@@ -792,7 +795,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <ol start="7" type="1">
-<li><p>Close the <strong>Attribute Table</strong>. Right-click on the <code>LSOA2011</code> layer and select <strong>Export</strong> -&gt; <strong>Save Selected Features As</strong>. Set <strong>Format</strong> to <code>Geopackage</code> and click on the small three dots button next to <strong>File name</strong> and navigate to your <code>data/raw/boundaries</code> folder. Save the file as <code>LSOA2011_London.gpkg</code>.</p></li>
+<li><p>Close the <strong>Attribute Table</strong>. Right-click on the <code>LSOA2011</code> layer and select <strong>Export</strong> -&gt; <strong>Save Selected Features As</strong>. Set <strong>Format</strong> to <code>GeoPackage</code> and click on the small three dots button next to <strong>File name</strong> and navigate to your <code>data/raw/boundaries</code> folder. Save the file as <code>LSOA2011_London.gpkg</code>.</p></li>
 <li><p>You can now untick the <code>LSOA2011</code> containing all the LSOAs for England and Wales. Right-click on the <code>LSOA2011_London</code> layer and click on <strong>Zoom to Layer(s)</strong>.</p></li>
 </ol>
 <div class="cell" data-hash="02-GIScience_cache/html/fig-lsoa-london_e03b0189d26bcf231007cb8a56a59dfc">
@@ -817,15 +820,15 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>We can now finally map the population distribution of London in 2011.</p>
 <ol start="9" type="1">
-<li>Right-click on the <code>LSOA2011_London</code> layer and click on <strong>Properties</strong> -&gt; <strong>Symbology</strong>.</li>
-</ol>
+<li>Right-click on the <code>LSOA2011_London</code> layer and click on <strong>Properties</strong> -&gt; <strong>Symbology</strong>.
 <ul>
 <li>In the dropdown menu at the top of the window, select <strong>Graduated</strong> as symbology.</li>
 <li>Under <strong>Value</strong> choose <code>pop2011</code> as your column.</li>
 <li>We can then change the color ramp to suit our aesthetic preferences. In the <strong>Colour ramp</strong> dropdown menu select <em>Magma</em>.</li>
 <li>The final thing we need to do is <strong>classify</strong> our data - what this simply means is to decide how to group the values in our dataset together to create the graduated representation. We will be looking at classification options in later weeks, but for now, we will use the <strong>Natural Breaks</strong> option. Open the drop-down menu next to <strong>Mode</strong>, select <strong>Natural Breaks</strong>, change it to <strong>7</strong> classes and then click <strong>Classify</strong>.</li>
 <li>Finally click <strong>Apply</strong> to style your dataset.</li>
-</ul>
+</ul></li>
+</ol>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -871,7 +874,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Load the respective spatial layer.</li>
 <li>Load the respective population dataset.</li>
 <li>Join the two datasets together using an <strong>Attribute Join</strong>.</li>
-<li>Export your joined dataset (London only) as a <code>geopackage</code>.</li>
+<li>Export your joined dataset (London only) as a <code>GeoPackage</code> and save this into your <code>data</code> folder as <code>LSOA2011_London.gpkg</code>.</li>
 <li>Style your data appropriately.</li>
 <li>Export your maps as an image to your <code>output</code> folder.</li>
 </ul>
@@ -1255,8 +1258,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./11-data.html" class="pagination-link">
-        <span class="nav-page-text">Data Sources</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./03-cartography.html" class="pagination-link">
+        <span class="nav-page-text">Cartography and Visualisation</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

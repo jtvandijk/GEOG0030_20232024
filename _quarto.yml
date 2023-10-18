@@ -47,6 +47,7 @@ website:
         contents:
           - 01-introduction.qmd
           - 02-GIScience.qmd
+          - 03-cartography.qmd
       - section: "Additional Resources"
         contents:
           - 11-data.qmd

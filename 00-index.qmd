@@ -63,9 +63,9 @@ This year's workbook also takes inspiration and design elements from:
 This year's version features the following **major** updates:
 
 * Full rewrite of the workbook using `Quarto`.
-* Update to using exclusively Census 2021 (spatial) data where possible.
-* Rewriting sections relying on deprecated core packages: `raster`, `rgdal`, `rgeos`.
-* Move to `geopackage` over `shapefile` where possible.
+* Update to using 2021 Census data where possible.
+* Rewriting sections relying on deprecated and outdated core packages: `raster`, `rgdal`, `rgeos`.
+* Move to `GeoPackage` over `shapefile` where possible.
 * Update to use native pipe `|>` over `dplyr`'s implementation (`%>%`).
 * Add **dark mode** switch.
 :::

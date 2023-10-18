@@ -3,11 +3,12 @@
 
 <svg
    width="135.46666mm"
-   height="110.59584mm"
-   viewBox="0 0 135.46666 110.59584"
+   height="110.59583mm"
+   viewBox="0 0 135.46666 110.59583"
    version="1.1"
    id="svg1"
    xml:space="preserve"
+   sodipodi:docname="logo.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -35,7 +36,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-40.495484,-89.426664)"><image
+     transform="translate(-40.495483,-89.426666)"><image
        width="135.46666"
        height="110.59583"
        preserveAspectRatio="none"

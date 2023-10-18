@@ -89,7 +89,7 @@ We will use the population dataset we create today to *normalise* other datasets
 In the UK, finding authoritative data on population and *Administrative Geography* boundaries is increasingly straight-forward. Over the last decade, the UK government has opened up many of its datasets as part of an **Open Data** precedent that began in 2010 with the creation of [data.gov.uk](https://www.data.gov.uk) and the Open Government Licence (the terms and conditions for using data).
 
 ::: { .callout-note}
-[Data.gov.uk](https://www.data.gov.uk) is the UK government’s central database that contains open data that the central government, local authorities and public bodies publish. This includes, for example, aggregated census and health data – and even government spending. In addition to this central database, there are other authoritative databases run by the government and/or respective public bodies that contain either a specific type of data (e.g. census data, crime data) or a specific collection of datasets (e.g. health data from the NHS, data about London). Some portals are less up-to-date than others, so it is wise to double-check with the ‘originators’ of the data to see if there are more recent versions.
+[Data.gov.uk](https://www.data.gov.uk) is the UK government’s central database that contains open data that the central government, local authorities and public bodies publish. This includes, for example, aggregated census and health data – and even government spending. In addition to this central database, there are other authoritative databases run by the government and/or respective public bodies that contain either a specific type of data (e.g. Census data, crime data) or a specific collection of datasets (e.g. health data from the NHS, data about London). Some portals are less up-to-date than others, so it is wise to double-check with the ‘originators’ of the data to see if there are more recent versions.
 ::: 
 
 For our practical, we will access data from two other authoritative data portals:
@@ -117,36 +117,34 @@ We will start by downloading the administrative geography boundaries for England
 Repeat the above process to also download the 2021 LSOA boundaries: **Lower Layer Super Output Areas (2021) Boundaries EW BGC**. Make sure you download the **Generalised (20m)** version.
 
 ::: { .callout-warning}
-Administrative geographies are a way of dividing the country into smaller sub-divisions or areas that correspond with the area of responsibility of local authorities and government bodies. These administrative sub-divisions and their associated geography have several important uses, including assigning electoral constituencies and serving as a mechanism for collecting census data. These geographies are updated as populations evolve and as a result the boundaries of the administrative geographies are subject to either periodic or occasional change. <u>This is why we need to download both 2011 and 2021 LSOA boundaries.</u> More details on the administrative geographies of the UK can be found on the website of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).
+Administrative geographies are a way of dividing the country into smaller sub-divisions or areas that correspond with the area of responsibility of local authorities and government bodies. These administrative sub-divisions and their associated geography have several important uses, including assigning electoral constituencies and serving as a mechanism for collecting Census data. These geographies are updated as populations evolve and as a result the boundaries of the administrative geographies are subject to either periodic or occasional change. <u>This is why we need to download both 2011 and 2021 LSOA boundaries.</u> More details on the administrative geographies of the UK can be found on the website of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography).
 :::
 
 Now open your `GEOG0030/data/raw/` folder and create a new folder called `boundaries`. Rename the two files you just downloaded to `LSOA2011.gpkg` and `LSOA2021.gpkg`, respectively, and copy these into your `boundaries` folder.
 
 ::: { .callout-note}
-You may have used spatial data before and noticed that we did not download a collection of files known as a `shapefile` but a `geopackage` instead. Whilst `shapefiles` are still being used, and you will most likely come across them at some point in    your career, the more modern, more portable, and open-source `geopackage` should be your spatial data format of choice where possible. Have a look at this article on *towardsdatascience.com* for an excellent explanation on why one should use `geopackage` files instead of `shapefiles`: [[Link]](https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416)
+You may have used spatial data before and noticed that we did not download a collection of files known as a `shapefile` but a `GeoPackage` instead. Whilst `shapefiles` are still being used, and you will most likely come across them at some point in    your career, the more modern, more portable, and open-source `GeoPackage` should be your spatial data format of choice where possible. Have a look at this article on *towardsdatascience.com* for an excellent explanation on why one should use `GeoPackage` files instead of `shapefiles`: [[Link]](https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416)
 :::
 
 ### Downloading population data {#w02-download-population}
 For our population data, we will use the 2011 and 2021 Census population counts that are made available by the ONS through [Nomis](https://www.nomisweb.co.uk/).
 
 1. Navigate to the *Nomis* portal: [[Link]](https://www.nomisweb.co.uk/)
-2. In the main menu go to **Census** -> **2011 Census** -> **Lower Layer Super Output Areas** -> **2011 Boundaries**.
-3. Click on **Key Statistics**.
+2. Click on **Query data** in the **Data Downloads** panel.
+3. Click on **Census 2011** -> **Key Statistics**.
 4. Click on **KS101EW - Usual resident population**.
-5. Click on **Query data** on the left-hand side of the window.
-6. Select **Geography** and set **2011 super output areas - lower layer** to **All**.
-7. Click on **Download data**. 
+5. Select **Geography** and set **2011 super output areas - lower layer** to **All**.
+7. Click on **Download data** at the left hand side of the screen.
 8. Once the data is ready for download, download the file to your computer.
 
-To get the 2011 Census population counts, you should:
+To get the 2021 Census population counts, you should:
 
 1. Navigate to the *Nomis* portal: [[Link]](https://www.nomisweb.co.uk/)
-2. In the main menu go to **Census** -> **2021 Census** -> **Lower Layer Super Output Areas** -> **2021 Boundaries**.
-3. Click on **Topic Summaries**.
+2. Click on **Query data** in the **Data Downloads** panel.
+3. Click on **Census 2021** -> **Topic Summaries**.
 4. Click on **TS007A - Age by five-year age bands**.
-5. Click on **Query data** on the left-hand side of the window.
-6. Select **Geography** and set **2021 super output areas - lower layer** to **All**.\
-7. Click on **Download data**. 
+5. Select **Geography** and set **2021 super output areas - lower layer** to **All**.
+7. Click on **Download data** at the left hand side of the screen.
 8. Once the data is ready for download, download the file to your computer.
 
 In your `GEOG0030/data/raw/` folder, now create a new folder called `population` and copy the two Excel files to the newly created `population` folder. Rename the files you downloaded to: `LSOA2011_population.xlsx` and `LSOA2021_population.xlsx`, respectively.
@@ -321,13 +319,13 @@ To make our join work, we need to check that we have a matching **UID** across b
 
 4. Open up the **Attribute Tables** of each layer and check what fields we have that could be used for the join. We can see that both our respective 'code' fields have the same codes (`LSOA11CD` and `lsoa11_code`) which seem to contain the same information.
 5. Right-click on your `LSOA2011` spatial layer, click on **Properties** and then click on the **Joins** tab. 
-- Click on the **+** button. Make sure the **Join Layer** is set to `LSOA2011_population`.
-- Set the **Join field** to `lsoa11_code`.
-- Set the **Target field** to `LSOA11CD`.
-- Click the **Joined Fields** box and click to only select the `pop2011` field.
-- Click on the **Custom Field Name Prefix** and **remove** the pre-entered text to leave it blank.
-- Click on **OK**.
-- Click on **Apply** in the main Join tab and then click **OK** to return to the main QGIS window.
+    - Click on the **+** button. Make sure the **Join Layer** is set to `LSOA2011_population`.
+    - Set the **Join field** to `lsoa11_code`.
+    - Set the **Target field** to `LSOA11CD`.
+    - Click the **Joined Fields** box and click to only select the `pop2011` field.
+    - Click on the **Custom Field Name Prefix** and **remove** the pre-entered text to leave it blank.
+    - Click on **OK**.
+    - Click on **Apply** in the main Join tab and then click **OK** to return to the main QGIS window.
 
 We can now check to see if our join has worked by opening up the **Attribute Table** of our `LSOA11CD` spatial layer and looking to see if our LSOAs now have a **Population** field attached to it.
 
@@ -345,7 +343,7 @@ You can select the first row, scroll down to the last row that has population da
 knitr::include_graphics('images/w02/select-london.png')
 ```
 
-7. Close the **Attribute Table**. Right-click on the `LSOA2011` layer and select **Export** -> **Save Selected Features As**. Set **Format** to `Geopackage` and click on the small three dots button next to **File name** and navigate to your `data/raw/boundaries` folder. Save the file as `LSOA2011_London.gpkg`.
+7. Close the **Attribute Table**. Right-click on the `LSOA2011` layer and select **Export** -> **Save Selected Features As**. Set **Format** to `GeoPackage` and click on the small three dots button next to **File name** and navigate to your `data/raw/boundaries` folder. Save the file as `LSOA2011_London.gpkg`.
 
 8. You can now untick the `LSOA2011` containing all the LSOAs for England and Wales. Right-click on the `LSOA2011_London` layer and click on **Zoom to Layer(s)**. 
 
@@ -364,11 +362,11 @@ The main strength of a GUI GIS system is that is really helps us understand how 
 We can now finally map the population distribution of London in 2011. 
 
 9. Right-click on the `LSOA2011_London` layer and click on **Properties** -> **Symbology**.
-- In the dropdown menu at the top of the window, select **Graduated** as symbology.
-- Under **Value** choose `pop2011` as your column. 
-- We can then change the color ramp to suit our aesthetic preferences. In the **Colour ramp** dropdown menu select *Magma*. 
-- The final thing we need to do is **classify** our data - what this simply means is to decide how to group the values in our dataset together to create the graduated representation. We will be looking at classification options in later weeks, but for now, we will use the **Natural Breaks** option. Open the drop-down menu next to **Mode**, select **Natural Breaks**, change it to **7** classes and then click **Classify**.
-- Finally click **Apply** to style your dataset.
+    - In the dropdown menu at the top of the window, select **Graduated** as symbology.
+    - Under **Value** choose `pop2011` as your column. 
+    - We can then change the color ramp to suit our aesthetic preferences. In the **Colour ramp** dropdown menu select *Magma*. 
+    - The final thing we need to do is **classify** our data - what this simply means is to decide how to group the values in our dataset together to create the graduated representation. We will be looking at classification options in later weeks, but for now, we will use the **Natural Breaks** option. Open the drop-down menu next to **Mode**, select **Natural Breaks**, change it to **7** classes and then click **Classify**.
+    - Finally click **Apply** to style your dataset.
 
 ::: { .callout-tip}
 Understanding what classification is appropriate to visualise your data is an important step within spatial analysis and visualisation, and something you will learn more about in the following weeks. Overall, they should be determined by understanding your data's distribution and match your visualisation accordingly.
@@ -397,7 +395,7 @@ You now need to **repeat the entire process** to also create a map for the 2021 
 - Load the respective spatial layer.
 - Load the respective population dataset.
 - Join the two datasets together using an **Attribute Join**.
-- Export your joined dataset (London only) as a `geopackage`.
+- Export your joined dataset (London only) as a `GeoPackage` and save this into your `data` folder as `LSOA2011_London.gpkg`.
 - Style your data appropriately.
 - Export your maps as an image to your `output` folder.
 

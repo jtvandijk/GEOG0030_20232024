@@ -3,7 +3,7 @@
 urls:
   w01: "01-introduction.html"
   w02: "02-GIScience.html"
-  w03: ""
+  w03: "03-cartography.html"
   w04: ""
   w05: ""
   w06: ""
@@ -15,3 +15,11 @@ urls:
 slides:
   week01: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w01-geo.pdf"
   week02: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w02-geo.pdf"
+  week03: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w03-geo.pdf"
+  week04: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w04-geo.pdf"
+  week05: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w05-geo.pdf"
+  week06: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w06-geo.pdf"
+  week07: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w07-geo.pdf"
+  week08: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w08-geo.pdf"
+  week09: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w09-geo.pdf"
+  week10: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w10-geo.pdf"
