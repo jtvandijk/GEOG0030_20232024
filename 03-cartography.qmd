@@ -202,3 +202,4 @@ If you have used ArcMap before, this is similar to switch the view of your map c
 ::: 
 
 1. From the main QGIS window, click on **Project** -> **New Print Layout**. In the small box that first appears, call your new print layout: `crime-map-borough-lsoa`. A new window should open up.
+
