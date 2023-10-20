@@ -102,7 +102,7 @@ library(terra)
 library(dodgr)
 ```
 
-You will see some information printed to your console but as long as you do not get a message that is similar to `Error: package or namespace load failed for <packagename>` or `Error: package '<packagename' could not be loaded` all should be fine.
+You will see some information printed to your console but as long as you do not get a message that is similar to `Error: package or namespace load failed for <packagename>` or `Error: package '<packagename>' could not be loaded` all should be fine.
 
 ### A note on ArcGIS
 [ArcGIS Pro](https://www.esri.com/en-us/arcgis/products/arcgis-pro/overview) is the main commercial GIS software that you may have already used or seen/heard about through other modules or even job adverts. We do not use ArcGIS Pro in our Practicals for several reasons:
@@ -111,7 +111,7 @@ You will see some information printed to your console but as long as you do not 
 - ArcGIS is **proprietary** software, which means you need a license to use the software. For those of us in education, the University covers the cost of this license, but when you leave, you will need to pay for a personal license to continue using the software and repeat any analysis you have used the software for.
 - Whilst ArcPro can use pure [Python](https://www.python.org/) (and even R) as a programming language within it through scripts and notebooks, it primarily relies on its own **ArcPy** and **ArcGIS API for Python** packages to run the in-built tools and analytical functions. To use these packages, you still need a license which makes it difficult to share your code with others if they do not have their own ArcGIS license.
 
-Recent developments in the ArcPro software, however, does make it an attractive tool for spatial data science and quantitative geography: it has cross-user functionality, from data analysts who like to use a tool called Notebooks for their code development, to those focused more on cartography and visualisation with in-built bridges to Adobe's Creative Suite. We therefore do not want to put you off looking into ArcGIS in the future, but for this course, we want to ensure the reproducibility of your work.
+Recent developments in the ArcPro software, however, does make it an attractive tool for spatial data science and quantitative geography: it has cross-user functionality, from data analysts who like to use a tool called *Notebooks* for their code development, to those focused more on cartography and visualisation with in-built bridges to Adobe's Creative Suite. We therefore do not want to put you off looking into ArcGIS in the future, but for this course, we want to ensure the reproducibility of your work.
 
 ## Before you leave {#byl-w01}
 You should now be all ready to go with the computer practicals the coming week. Nice and easy. [That is it for this week](https://www.youtube.com/watch?v=RrEv70WrcRc)!

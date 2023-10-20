@@ -15,7 +15,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 - Usery, L. and Seong, J. 2001. All equal-area map projections are created equal, but some are more equal than others. *Cartography and Geographic Information Science* 28(3): 183-194. [[Link]](https://doi.org/10.1559/152304001782153053)
 
 ## Crime in London I
-Over the next few weeks, we will explore the spatial patterns of crime across London from both a statistical and spatial perspective. [Reid *et al.* (2018)](https://www.oxfordbibliographies.com/view/document/obo-9780195396607/obo-9780195396607-0123.xml) suggest:
+Over the next few weeks, we will explore the spatial patterns of crime across London from a spatial perspective. [Reid *et al.* (2018)](https://www.oxfordbibliographies.com/view/document/obo-9780195396607/obo-9780195396607-0123.xml) suggest:
 
 > Spatial analysis can be employed in both an exploratory and well as a more confirmatory manner with the primary purpose of identifying how certain community or ecological factors (such as population characteristics or the built environment) influence the spatial patterns of crime. 
 
@@ -195,11 +195,118 @@ knitr::include_graphics('images/w03/crime-borough-lsoa.png')
 ```
 
 #### Mapping crime data
-Now you have both datasets ready, it is time to style the maps. Remember to use the **Properties** box to symbolise your mapss. Think through using an appropriate colour scheme - perhaps [have a look online for some examples](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) if you do not want to use the default settings. Once you are happy with their symbolisation, we can turn them into proper publishable maps using QGIS's **Print Layout**. 
+Now you have both datasets ready, it is time to style the maps. Remember to use the **Properties** box to symbolise your mapss. Think through using an appropriate colour scheme - perhaps [have a look at the online colorbrewer 2.0 for inspiratoin](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) if you do not want to use the default settings. Once you are happy with their symbolisation, we can turn them into proper publishable maps using QGIS's **Print Layout**. 
+
+```{r}
+#| label: fig-map-styled
+#| echo: False 
+#| cache: True
+#| fig-cap: "An example of how your maps could have been symbolised. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w03/map-styled.png){target='_blank'}"
+knitr::include_graphics('images/w03/map-styled.png')
+```
 
 ::: { .callout-tip}
-If you have used ArcMap before, this is similar to switch the view of your map canvas to a print layout within the main window but in QGIS's case, it loads up a new window.
+If you have used ArcMap before, **Print Layout**  is similar to switch the view of your map canvas to a print layout within the main window but in QGIS's case, it loads up a new window.
 ::: 
 
 1. From the main QGIS window, click on **Project** -> **New Print Layout**. In the small box that first appears, call your new print layout: `crime-map-borough-lsoa`. A new window should open up.
+
+In the window that opens up, you are presented with a blank canvas. On the **left-hand** side of the window, you will find buttons to add print layout items: the current QGIS map canvas, text labels, images, legends, scale bars, basic shapes, arrows, attribute tables and HTML frames. In this toolbar you also find buttons to navigate, zoom in on an area and pan the view on the layout a well as buttons to select any layout item and to move the contents of the map item.
+
+On the **right-hand** side of the window, you will find two set of panels. The upper one holds the panels *Items* and *Undo History* and the lower holds the panels *Layout*, *Item properties* and *Atlas generation*. Today, we are most interested in the bottom panel as *Layout* will control the overall look of our map, whilst *Item properties* will allow us to customise the elements, such as Title or Legend, that we may add to our map.
+
+In the **bottom part** of the window, you can find a status bar with mouse position, current page number, a combo box to set the zoom level and the number of selected items if applicable. In the **upper part** of the  window, you can find menus and other toolbars. All print layout tools are available in menus and as icons in a toolbar.
+
+::: { .callout-tip}
+Working with maps in the Print Layout is simple but it can be a little fiddly and, to make more complicated maps, requires you to understand how to use certain aspects of Print Layout, such as locking items. If you get stuck, have a look at the [training manual](https://docs.qgis.org/3.28/en/docs/training_manual/map_composer/map_composer.html) or the detailed [documentation](https://docs.qgis.org/3.28/en/docs/user_manual/print_composer/index.html). 
+:::
+
+To start with creating a map, you use the **Add Map** tool to draw a box in which a snapshot of the **current active** map you have displayed in your QGIS main window will be loaded.
+
+1. Click on the **Add Map** tool and draw a box in the first half of our map to load our current map. Note, you can move your map around and resize the box simply by clicking on it as you would in Word etc.
+
+```{r}
+#| label: fig-map-layout
+#| echo: False 
+#| cache: True
+#| fig-cap: "Current active map in the **Print Layout**. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w03/map-layout.png){target='_blank'}"
+knitr::include_graphics('images/w03/map-layout.png')
+```
+    
+2. With your map selected, head to the **Items Properties** panel and look for the **Scale** parameter. 
+    + Here we can manually edit the **scale** of our map to find the right zoom level.
+    + Have a go at entering different values and see what level you think suits the size of your map.
+    + Keep a note of the scale, as we will need this for the second map we will add to our map layout - our LSOA map.
+    + Next, in the same panel, if you would like, you can add a frame to your map - this will draw a box (of your selected formatting) around the current map.
+    + In the same panel, note down the size of your map - we want to make sure the next map we add is of the same size.
+    + Note, if you need to move the position of the map within the box, look for the **Move Item Content** tool on the left-hand side toolbar.
+    + Once you are done, finally click on the **Lock Layers** and **Lock Style for layers.**
+    
+By locking the Layers (and their symbology) in our map, it means we can change our data/map in our main QGIS window without changing the map in the **Print Layout** - as we will see in a minute when adding our Borough crime rate map. If we do not lock our layers, our map would automatically update to whatever is next displayed in the main QGIS window.
+
+3. Click on the **Add Legend** tool and again, draw a box on your map in which your legend will appear.
+    - As you will see, your Legend auto-generates an entry for every layer in our Layers box in the main QGIS application:
+    - In **Item Properties**, uncheck **auto-update** - this stops QGIS automatically populating your legend and enables you to customise your legend.
+    - First, let us rename our Layer in the legend to: **Borough Crime Rate (per 10,000 people)**.
+    - Next, we want to remove all other Layers, using the **-** button
+    - We can also customise the Legend further, including type, size and alignment of font - go ahead and style your legend as you would prefer.
+    - Move the Legend to an appropriate part of the layout near your Borough crime rate map - resize if necessary.
+    
+```{r}
+#| label: fig-autolegend
+#| echo: False 
+#| cache: True
+#| fig-cap: "The automatically generated legend for your map. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w03/autolegend.png){target='_blank'}"
+knitr::include_graphics('images/w03/autolegend.png')
+```
+
+Now we are finished with the Borough map, we want to make sure we do not change any aspect of its layout. To do so, we need to lock both the Map and Legend in the **Items** panel - this prevents us accidentally moving items in our layout. Note, this is different to locking your layers in the **Items Properties** as we did earlier.
+
+4. In the **Items** panel, click the **Lock** check box for both our map and legend.
+5. In the main QGIS window, uncheck your `borough-theft2021` layer and make sure your `lsoa-theft2021` layer is now visible.
+6. Return to the **Print Layout** window annd repeat the process above of adding a map to the window - this time, you should now see your LSOA map loaded in the box (and you should see **no** changes to your Borough map).
+    - Place your LSOA map next to your LSOA map - use the snap grids to help.
+    - Set your LSOA map to the **same zoom level** as your Borough map.
+    - Make sure your LSOA map is the **same size** as your Borough map.
+    - Add a frame if you want.
+    - Lock your layer and its symbology in the **Items Properties** once ready and the lock your layer in the **Items** panel.
+
+We now just need to add a second legend for our Borough map. If we had **standardised** our values across our two maps, then we would only need to use one legend. However, in this case, as there is a difference in the values, we need to have two legends. 
+
+7. Repeat the process as above to add a Legend for our LSOA map.
+    - Remember to re-title the Legend to make it more legible/informative.
+    - Match the same formatting for a clean look.
+8. Once complete, **lock these two items** in the **Items** panel as well.
+9. Now we have our two maps ready, we can add our **main map elements**. Using the tools on the left-hand tool bar: 
+    - Add a **scale bar**: use the **Item Properties** to adjust the **Style**, **number of segments**, **font**, etc.
+    - Add a **north arrow**: draw a box to generate the arrow and then use the **Item Properties** to adjust..
+    - Add a **title** at the top of the page, and subtitles above the individual maps.
+    - Finally add a box detailing our data sources, you can copy and paste the following: *Contains National Statistics data © Crown copyright and database right [2021] (Open Government Licence). Contains Ordnance Survey data © Crown copyright and database right [2021]. Crime data obtained from data.police.uk (Open Government Licence).*
+  
+Once you have added these properties in, you should have something that looks a little like this:  
+
+```{r}
+#| label: fig-final-map
+#| echo: False 
+#| cache: True
+#| fig-cap: "Crime rates in London Boroughs and LSOAs. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w03/london-crime-rate){target='_blank'}"
+knitr::include_graphics('images/w03/london-crime-rate.png') 
+```
+
+The only thing outstanding is to export our map to a file. Go to **Layout** -> **Export as Image** and then save it in your maps folder as `London-2021-crime-rate.png`. 
+
+## Assignment {#assignment-w03}
+1. Looking at the maps you have created, how does your perception of crime (and its distribution) in London vary at different scales?
+
+At the moment, we have looked at the crime rate as an amount, therefore we use a sequential colour scheme that shows, predominantly, where the crime rate is the highest. As an alternative, we could use a diverging colour scheme that could show us where the crime rate is lower and/or higher than a critical mid-point, such as the average crime rate across the Boroughs and LSOAs. 
+
+2. Create a map of crime in London, at both the Borough and LSOA level that shows for each of these administrative geographies the percentage difference from the overall mean crime rate.
+
+::: { .callout-tip}
+- You will need to start by calculating the average crime rate for both datasets and subsequently calculate the difference from these values for each geography.
+- All calculations can be done using the field calculator in QGIS, but you might have to think through writing the right expression.
+:::
+
+## Before you leave {#byl-w03}
+[That is us all done](https://www.youtube.com/watch?v=3wxyN3z9PL4). Remember to save your project.
 
