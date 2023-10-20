@@ -40,10 +40,12 @@ for htmlf in html_files:
     # update TOC chapter 2
     html_content = html_content.replace('<span class="menu-text">GIScience and GIS software</span>', \
                                         '<span class="menu-text">2 GIScience and GIS software</span>')
-
     # update TOC chapter 3
     html_content = html_content.replace('<span class="menu-text">Cartography and Visualisation</span>', \
                                         '<span class="menu-text">3 Cartography and Visualisation</span>')
+    # update TOC chapter 3
+    html_content = html_content.replace('<span class="menu-text">Programming for Data Analysis</span>', \
+                                        '<span class="menu-text">4 Programming for Data Analysis</span>')
     # update TOC chapter 11
     html_content = html_content.replace('<span class="menu-text">Data Sources</span>', \
                                         '<span class="menu-text">11 Data Sources</span>')

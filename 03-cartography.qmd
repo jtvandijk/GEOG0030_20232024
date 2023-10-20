@@ -209,9 +209,7 @@ knitr::include_graphics('images/w03/map-styled.png')
 If you have used ArcMap before, **Print Layout**  is similar to switch the view of your map canvas to a print layout within the main window but in QGIS's case, it loads up a new window.
 ::: 
 
-1. From the main QGIS window, click on **Project** -> **New Print Layout**. In the small box that first appears, call your new print layout: `crime-map-borough-lsoa`. A new window should open up.
-
-In the window that opens up, you are presented with a blank canvas. On the **left-hand** side of the window, you will find buttons to add print layout items: the current QGIS map canvas, text labels, images, legends, scale bars, basic shapes, arrows, attribute tables and HTML frames. In this toolbar you also find buttons to navigate, zoom in on an area and pan the view on the layout a well as buttons to select any layout item and to move the contents of the map item.
+From the main QGIS window, click on **Project** -> **New Print Layout**. In the small box that first appears, call your new print layout: `crime-map-borough-lsoa`. A new window should open up that shows a blank canvas. On the **left-hand** side of the window, you will find buttons to add print layout items: the current QGIS map canvas, text labels, images, legends, scale bars, basic shapes, arrows, attribute tables and HTML frames. In this toolbar you also find buttons to navigate, zoom in on an area and pan the view on the layout a well as buttons to select any layout item and to move the contents of the map item.
 
 On the **right-hand** side of the window, you will find two set of panels. The upper one holds the panels *Items* and *Undo History* and the lower holds the panels *Layout*, *Item properties* and *Atlas generation*. Today, we are most interested in the bottom panel as *Layout* will control the overall look of our map, whilst *Item properties* will allow us to customise the elements, such as Title or Legend, that we may add to our map.
 
@@ -293,7 +291,7 @@ Once you have added these properties in, you should have something that looks a 
 knitr::include_graphics('images/w03/london-crime-rate.png') 
 ```
 
-The only thing outstanding is to export our map to a file. Go to **Layout** -> **Export as Image** and then save it in your maps folder as `London-2021-crime-rate.png`. 
+The only thing outstanding is to export our map to a file. Go to **Layout** -> **Export as Image** and then save it as `London-2021-crime-rate.png`. 
 
 ## Assignment {#assignment-w03}
 1. Looking at the maps you have created, how does your perception of crime (and its distribution) in London vary at different scales?
