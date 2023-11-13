@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./11-data.html" rel="next">
+<link href="./05-spatial.html" rel="next">
 <link href="./03-cartography.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -166,25 +166,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1 Geocomputation: An Introduction</span></a>
+ <span class="menu-text">Geocomputation: An Introduction</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-GIScience.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2 GIScience and GIS software</span></a>
+ <span class="menu-text">GIScience and GIS software</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-cartography.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3 Cartography and Visualisation</span></a>
+ <span class="menu-text">Cartography and Visualisation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-statistics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">4 Programming for Data Analysis</span></a>
+ <span class="menu-text">Programming for Data Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programming for Spatial Analysis</span></a>
   </div>
 </li>
       </ul>
@@ -201,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">11 Data Sources</span></a>
+ <span class="menu-text">Data Sources</span></a>
   </div>
 </li>
       </ul>
@@ -216,49 +222,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#programming-for-data-analysis" id="toc-programming-for-data-analysis" class="nav-link active" data-scroll-target="#programming-for-data-analysis"><span class="header-section-number">4</span> Programming for Data Analysis</a>
+  <li><a href="#programming-for-data-analysis" id="toc-programming-for-data-analysis" class="nav-link active" data-scroll-target="#programming-for-data-analysis"><span class="header-section-number">1</span> Programming for Data Analysis</a>
   <ul class="collapse">
-  <li><a href="#slides-w04" id="toc-slides-w04" class="nav-link" data-scroll-target="#slides-w04"><span class="header-section-number">4.1</span> Lecture slides</a></li>
-  <li><a href="#reading-w04" id="toc-reading-w04" class="nav-link" data-scroll-target="#reading-w04"><span class="header-section-number">4.2</span> Reading list</a></li>
-  <li><a href="#programming" id="toc-programming" class="nav-link" data-scroll-target="#programming"><span class="header-section-number">4.3</span> Programming</a></li>
-  <li><a href="#programming-in-r" id="toc-programming-in-r" class="nav-link" data-scroll-target="#programming-in-r"><span class="header-section-number">4.4</span> Programming in R</a>
+  <li><a href="#slides-w04" id="toc-slides-w04" class="nav-link" data-scroll-target="#slides-w04"><span class="header-section-number">1.1</span> Lecture slides</a></li>
+  <li><a href="#reading-w04" id="toc-reading-w04" class="nav-link" data-scroll-target="#reading-w04"><span class="header-section-number">1.2</span> Reading list</a></li>
+  <li><a href="#programming" id="toc-programming" class="nav-link" data-scroll-target="#programming"><span class="header-section-number">1.3</span> Programming</a></li>
+  <li><a href="#programming-in-r" id="toc-programming-in-r" class="nav-link" data-scroll-target="#programming-in-r"><span class="header-section-number">1.4</span> Programming in R</a>
   <ul class="collapse">
-  <li><a href="#the-rstudio-interface" id="toc-the-rstudio-interface" class="nav-link" data-scroll-target="#the-rstudio-interface"><span class="header-section-number">4.4.1</span> The RStudio interface</a></li>
+  <li><a href="#the-rstudio-interface" id="toc-the-rstudio-interface" class="nav-link" data-scroll-target="#the-rstudio-interface"><span class="header-section-number">1.4.1</span> The RStudio interface</a></li>
   </ul></li>
-  <li><a href="#rstudio-console" id="toc-rstudio-console" class="nav-link" data-scroll-target="#rstudio-console"><span class="header-section-number">4.5</span> RStudio console</a>
+  <li><a href="#rstudio-console" id="toc-rstudio-console" class="nav-link" data-scroll-target="#rstudio-console"><span class="header-section-number">1.5</span> RStudio console</a>
   <ul class="collapse">
-  <li><a href="#command-input" id="toc-command-input" class="nav-link" data-scroll-target="#command-input"><span class="header-section-number">4.5.1</span> Command Input</a></li>
-  <li><a href="#storing-variables" id="toc-storing-variables" class="nav-link" data-scroll-target="#storing-variables"><span class="header-section-number">4.5.2</span> Storing variables</a></li>
-  <li><a href="#accessing-and-returning-variables" id="toc-accessing-and-returning-variables" class="nav-link" data-scroll-target="#accessing-and-returning-variables"><span class="header-section-number">4.5.3</span> Accessing and returning variables</a></li>
-  <li><a href="#variables-of-different-data-types" id="toc-variables-of-different-data-types" class="nav-link" data-scroll-target="#variables-of-different-data-types"><span class="header-section-number">4.5.4</span> Variables of different data types</a></li>
-  <li><a href="#calling-functions-on-our-variables" id="toc-calling-functions-on-our-variables" class="nav-link" data-scroll-target="#calling-functions-on-our-variables"><span class="header-section-number">4.5.5</span> Calling functions on our variables</a></li>
-  <li><a href="#returning-functions" id="toc-returning-functions" class="nav-link" data-scroll-target="#returning-functions"><span class="header-section-number">4.5.6</span> Returning functions</a></li>
-  <li><a href="#examining-our-variables-using-functions" id="toc-examining-our-variables-using-functions" class="nav-link" data-scroll-target="#examining-our-variables-using-functions"><span class="header-section-number">4.5.7</span> Examining our variables using functions</a></li>
-  <li><a href="#creating-a-two-element-object" id="toc-creating-a-two-element-object" class="nav-link" data-scroll-target="#creating-a-two-element-object"><span class="header-section-number">4.5.8</span> Creating a two-element object</a></li>
+  <li><a href="#command-input" id="toc-command-input" class="nav-link" data-scroll-target="#command-input"><span class="header-section-number">1.5.1</span> Command Input</a></li>
+  <li><a href="#storing-variables" id="toc-storing-variables" class="nav-link" data-scroll-target="#storing-variables"><span class="header-section-number">1.5.2</span> Storing variables</a></li>
+  <li><a href="#accessing-and-returning-variables" id="toc-accessing-and-returning-variables" class="nav-link" data-scroll-target="#accessing-and-returning-variables"><span class="header-section-number">1.5.3</span> Accessing and returning variables</a></li>
+  <li><a href="#variables-of-different-data-types" id="toc-variables-of-different-data-types" class="nav-link" data-scroll-target="#variables-of-different-data-types"><span class="header-section-number">1.5.4</span> Variables of different data types</a></li>
+  <li><a href="#calling-functions-on-our-variables" id="toc-calling-functions-on-our-variables" class="nav-link" data-scroll-target="#calling-functions-on-our-variables"><span class="header-section-number">1.5.5</span> Calling functions on our variables</a></li>
+  <li><a href="#returning-functions" id="toc-returning-functions" class="nav-link" data-scroll-target="#returning-functions"><span class="header-section-number">1.5.6</span> Returning functions</a></li>
+  <li><a href="#examining-our-variables-using-functions" id="toc-examining-our-variables-using-functions" class="nav-link" data-scroll-target="#examining-our-variables-using-functions"><span class="header-section-number">1.5.7</span> Examining our variables using functions</a></li>
+  <li><a href="#creating-a-two-element-object" id="toc-creating-a-two-element-object" class="nav-link" data-scroll-target="#creating-a-two-element-object"><span class="header-section-number">1.5.8</span> Creating a two-element object</a></li>
   </ul></li>
-  <li><a href="#simple-analysis" id="toc-simple-analysis" class="nav-link" data-scroll-target="#simple-analysis"><span class="header-section-number">4.6</span> Simple analysis</a>
+  <li><a href="#simple-analysis" id="toc-simple-analysis" class="nav-link" data-scroll-target="#simple-analysis"><span class="header-section-number">1.6</span> Simple analysis</a>
   <ul class="collapse">
-  <li><a href="#housekeeping" id="toc-housekeeping" class="nav-link" data-scroll-target="#housekeeping"><span class="header-section-number">4.6.1</span> Housekeeping</a></li>
-  <li><a href="#atomic-vectors" id="toc-atomic-vectors" class="nav-link" data-scroll-target="#atomic-vectors"><span class="header-section-number">4.6.2</span> Atomic vectors</a></li>
-  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices"><span class="header-section-number">4.6.3</span> Matrices</a></li>
-  <li><a href="#dataframes" id="toc-dataframes" class="nav-link" data-scroll-target="#dataframes"><span class="header-section-number">4.6.4</span> Dataframes</a></li>
-  <li><a href="#column-names" id="toc-column-names" class="nav-link" data-scroll-target="#column-names"><span class="header-section-number">4.6.5</span> Column names</a></li>
-  <li><a href="#adding-columns" id="toc-adding-columns" class="nav-link" data-scroll-target="#adding-columns"><span class="header-section-number">4.6.6</span> Adding columns</a></li>
+  <li><a href="#housekeeping" id="toc-housekeeping" class="nav-link" data-scroll-target="#housekeeping"><span class="header-section-number">1.6.1</span> Housekeeping</a></li>
+  <li><a href="#atomic-vectors" id="toc-atomic-vectors" class="nav-link" data-scroll-target="#atomic-vectors"><span class="header-section-number">1.6.2</span> Atomic vectors</a></li>
+  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices"><span class="header-section-number">1.6.3</span> Matrices</a></li>
+  <li><a href="#dataframes" id="toc-dataframes" class="nav-link" data-scroll-target="#dataframes"><span class="header-section-number">1.6.4</span> Dataframes</a></li>
+  <li><a href="#column-names" id="toc-column-names" class="nav-link" data-scroll-target="#column-names"><span class="header-section-number">1.6.5</span> Column names</a></li>
+  <li><a href="#adding-columns" id="toc-adding-columns" class="nav-link" data-scroll-target="#adding-columns"><span class="header-section-number">1.6.6</span> Adding columns</a></li>
   </ul></li>
-  <li><a href="#crime-in-london-ii" id="toc-crime-in-london-ii" class="nav-link" data-scroll-target="#crime-in-london-ii"><span class="header-section-number">4.7</span> Crime in London II</a>
+  <li><a href="#crime-in-london-ii" id="toc-crime-in-london-ii" class="nav-link" data-scroll-target="#crime-in-london-ii"><span class="header-section-number">1.7</span> Crime in London II</a>
   <ul class="collapse">
-  <li><a href="#starting-a-project" id="toc-starting-a-project" class="nav-link" data-scroll-target="#starting-a-project"><span class="header-section-number">4.7.1</span> Starting a project</a></li>
-  <li><a href="#setting-up-a-script" id="toc-setting-up-a-script" class="nav-link" data-scroll-target="#setting-up-a-script"><span class="header-section-number">4.7.2</span> Setting up a script</a></li>
-  <li><a href="#running-a-script" id="toc-running-a-script" class="nav-link" data-scroll-target="#running-a-script"><span class="header-section-number">4.7.3</span> Running a script</a></li>
-  <li><a href="#crime-data" id="toc-crime-data" class="nav-link" data-scroll-target="#crime-data"><span class="header-section-number">4.7.4</span> Crime data</a></li>
+  <li><a href="#starting-a-project" id="toc-starting-a-project" class="nav-link" data-scroll-target="#starting-a-project"><span class="header-section-number">1.7.1</span> Starting a project</a></li>
+  <li><a href="#setting-up-a-script" id="toc-setting-up-a-script" class="nav-link" data-scroll-target="#setting-up-a-script"><span class="header-section-number">1.7.2</span> Setting up a script</a></li>
+  <li><a href="#running-a-script" id="toc-running-a-script" class="nav-link" data-scroll-target="#running-a-script"><span class="header-section-number">1.7.3</span> Running a script</a></li>
+  <li><a href="#crime-data" id="toc-crime-data" class="nav-link" data-scroll-target="#crime-data"><span class="header-section-number">1.7.4</span> Crime data</a></li>
   </ul></li>
-  <li><a href="#assignment-w04" id="toc-assignment-w04" class="nav-link" data-scroll-target="#assignment-w04"><span class="header-section-number">4.8</span> Assignment</a></li>
-  <li><a href="#wm-w04" id="toc-wm-w04" class="nav-link" data-scroll-target="#wm-w04"><span class="header-section-number">4.9</span> Want more?</a>
+  <li><a href="#assignment-w04" id="toc-assignment-w04" class="nav-link" data-scroll-target="#assignment-w04"><span class="header-section-number">1.8</span> Assignment</a></li>
+  <li><a href="#wm-w04" id="toc-wm-w04" class="nav-link" data-scroll-target="#wm-w04"><span class="header-section-number">1.9</span> Want more?</a>
   <ul class="collapse">
-  <li><a href="#data-visualisation" id="toc-data-visualisation" class="nav-link" data-scroll-target="#data-visualisation"><span class="header-section-number">4.9.1</span> Data visualisation</a></li>
-  <li><a href="#reproducible-research" id="toc-reproducible-research" class="nav-link" data-scroll-target="#reproducible-research"><span class="header-section-number">4.9.2</span> Reproducible research</a></li>
+  <li><a href="#data-visualisation" id="toc-data-visualisation" class="nav-link" data-scroll-target="#data-visualisation"><span class="header-section-number">1.9.1</span> Data visualisation</a></li>
+  <li><a href="#reproducible-research" id="toc-reproducible-research" class="nav-link" data-scroll-target="#reproducible-research"><span class="header-section-number">1.9.2</span> Reproducible research</a></li>
   </ul></li>
-  <li><a href="#byl-w04" id="toc-byl-w04" class="nav-link" data-scroll-target="#byl-w04"><span class="header-section-number">4.10</span> Before you leave</a></li>
+  <li><a href="#byl-w04" id="toc-byl-w04" class="nav-link" data-scroll-target="#byl-w04"><span class="header-section-number">1.10</span> Before you leave</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -269,14 +275,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <section id="programming-for-data-analysis" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">4</span> Programming for Data Analysis</h1>
+<h1 data-number="1"><span class="header-section-number">1</span> Programming for Data Analysis</h1>
 <p>This week’s content introduces you to the foundational concepts associated with Programming for Data Analysis. We will cover some general principles of programming as well how we can use R and RStudio effectively for data analysis by continuing to look at crime in London.</p>
 <section id="slides-w04" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="slides-w04"><span class="header-section-number">4.1</span> Lecture slides</h2>
-<p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/ppt/w04_geo.pdf">[Link]</a>.</p>
+<h2 data-number="1.1" class="anchored" data-anchor-id="slides-w04"><span class="header-section-number">1.1</span> Lecture slides</h2>
+<p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w04-geo.pdf">[Link]</a></p>
 </section>
 <section id="reading-w04" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="reading-w04"><span class="header-section-number">4.2</span> Reading list</h2>
+<h2 data-number="1.2" class="anchored" data-anchor-id="reading-w04"><span class="header-section-number">1.2</span> Reading list</h2>
 <section id="essential-readings" class="level4">
 <h4 class="anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
@@ -294,12 +300,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 <section id="programming" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="programming"><span class="header-section-number">4.3</span> Programming</h2>
+<h2 data-number="1.3" class="anchored" data-anchor-id="programming"><span class="header-section-number">1.3</span> Programming</h2>
 <p>Programming is our most fundamental way of interacting with a computer - it was how computers were first built and operated - and for a long time, the Command Line Interface (CLI) was our primary way of using computers before our Graphical User Interface (GUI) Operating Systems (OS) and software became mainstream. Nowadays, the majority of us use our computers through clicking instead of typing. However, programming and computer code underpin every single application that we use on our computers.</p>
 <p>Programming is used for endless purposes and applications, ranging from software engineering and application development, to creating websites and managing databases at substantial scales. To help with this diversity of applications, multiple types of programming languages have developed - Wikipedia, for example, has a list of <strong>50 different types</strong> of languages, although there is some overlap between many of these and some are used for incredibly niche activities.</p>
 </section>
 <section id="programming-in-r" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="programming-in-r"><span class="header-section-number">4.4</span> Programming in R</h2>
+<h2 data-number="1.4" class="anchored" data-anchor-id="programming-in-r"><span class="header-section-number">1.4</span> Programming in R</h2>
 <p>We will be using R and RStudio in this module as the main tool to complete specific tasks we need to do for our data analysis. There are a lot of alternative tools out there that you can use to achieve the same outcomes (as you have seen with QGIS, and no doubt had experience of using some statistics/spreadsheet software) but we choose to use this tool because it provides us with many advantages over these other tools.</p>
 <p>What is important to understand is that R and RStudio are two different things:</p>
 <ul>
@@ -325,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>What you should remember is that R has a steep learning curve, but the benefits of using it are well worth the effort. The best way to really learn R is to take the basic code provided in tutorials and experiment with changing parameters - such as the colour of points in a graph - to really get ‘under the hood’ of the software.</p>
 <section id="the-rstudio-interface" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="the-rstudio-interface"><span class="header-section-number">4.4.1</span> The RStudio interface</h3>
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="the-rstudio-interface"><span class="header-section-number">1.4.1</span> The RStudio interface</h3>
 <p>You should all have access to some form of R on your personal computer, or through <a href="https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere">Desktop@UCL Anywhere</a> or the <a href="https://rstudio.data-science.rc.ucl.ac.uk/auth-sign-in">RStudio Server</a>. If not, please refer to the <a href="#geocomputation-an-introduction.html#software">Geocomputation: An Introduction</a> section. Go ahead and open RStudio and we will first take a quick tour of the various components of the RStudio environment interface and how and when to use them. When you first open RStudio, it should look a little something like this:</p>
 <div class="cell" data-hash="04-statistics_cache/html/fig-rstudio-interface_d7fb0db7d67beea96fecd2e0452c9738">
 <div class="cell-output-display">
@@ -350,7 +356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 <section id="rstudio-console" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="rstudio-console"><span class="header-section-number">4.5</span> RStudio console</h2>
+<h2 data-number="1.5" class="anchored" data-anchor-id="rstudio-console"><span class="header-section-number">1.5</span> RStudio console</h2>
 <p>We will first start off with using <strong>RStudio’s console</strong> to test out some of R’s in-built functionality by creating a few variables as well as a dummy dataset that we will be able to analyse - and to get familiar with writing code.</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
@@ -374,11 +380,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <section id="command-input" class="level3" data-number="1.5.1">
-<h3 data-number="1.5.1" class="anchored" data-anchor-id="command-input"><span class="header-section-number">4.5.1</span> Command Input</h3>
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="command-input"><span class="header-section-number">1.5.1</span> Command Input</h3>
 <p>Type in <code>10 * 12</code> into the console.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-math1_c6820f2990d0850435be597446915e5c">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-math1_c387e64d91af34fe4af683498134552c">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># conduct some maths</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="sc">*</span> <span class="dv">12</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 120</code></pre>
 </div>
@@ -386,68 +397,108 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Once you press return, you should see the answer of <code>120</code> returned below.</p>
 </section>
 <section id="storing-variables" class="level3" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="storing-variables"><span class="header-section-number">4.5.2</span> Storing variables</h3>
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="storing-variables"><span class="header-section-number">1.5.2</span> Storing variables</h3>
 <p>Rather than use ‘raw’ or ‘standalone’ numbers and values, we primarily want to use variables that store these values (or groups of them) under a memorable name for easy reference later. In R terminology this is called <strong>creating an object</strong> and this object becomes stored as a <strong>variable</strong>. The <code>&lt;-</code> symbol is used to assign the value to the variable name you have given. Let us create two variables for experimenting with.</p>
 <p>Type in <code>ten &lt;- 10</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-math2_b26cfa80392b81a6c0673d952007aa51">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-math2_618aaac8761f831b5bdc353f10b45c72">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store a variable</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ten <span class="ot">&lt;-</span> <span class="dv">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p>You have just created your first variable. You will see nothing is returned in the console, but if you check your environment window it has now appeared as a new variable that contains the associated value.</p>
 <p>Type in <code>twelve &lt;- 12</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-math3_db7473a84ab3669a17bbe4718a59ddea">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-math3_e8bf82cee24822cc58c723dd1c536600">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store a variable</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>twelve <span class="ot">&lt;-</span> <span class="dv">12</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p>Once again, you will see nothing returned to the console but do check your environment window for your variable. We have now stored two numbers into our environment and given them variable names for easy reference. R stores these objects as variables in your computer’s memory so they can be processed quickly. Without saving your environment (we will come onto this below), these variables would be lost if you close R. Now we have our variables, we can go ahead and execute the same simple multiplication:</p>
 <p>Type in <code>ten * twelve</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-math4_db623764b2145427663e663143769bd0">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-math4_df11fdc22272d13672b93d6a48be20bc">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using variables</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ten <span class="sc">*</span> twelve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 120</code></pre>
 </div>
 </div>
 <p>You should see the output in the console of <code>120</code>. Whilst this maths may look trivial, it is, in fact, extremely powerful as it shows how these <strong>variables</strong> can be treated in the same way as the values they contain.</p>
 <p>Next, type in <code>ten * twelve * 8</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-math5_1655a946788bc5103e581aa736b44b8f">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-math5_2de0083a21d46dd9fcb6d94bcf4d0879">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using variables and values</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ten <span class="sc">*</span> twelve <span class="sc">*</span> <span class="dv">8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 960</code></pre>
 </div>
 </div>
 <p>You should get an answer of <code>960</code>. As you can see, we can mix <strong>variables</strong> with <strong>raw values</strong> without any problems. We can also store the output of variable calculations as a new variable.</p>
 <p>Type <code>output &lt;- ten * twelve * 8</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-math6_42a86e2581b9967cbc1438da55d703a8">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-math6_95a49a10e8c437e9ebcbdf43b2cc5955">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store output</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> ten <span class="sc">*</span> twelve <span class="sc">*</span> <span class="dv">8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 <p>Because we are storing the output of our maths to a new variable, the answer is not returned to the screen.</p>
 </section>
 <section id="accessing-and-returning-variables" class="level3" data-number="1.5.3">
-<h3 data-number="1.5.3" class="anchored" data-anchor-id="accessing-and-returning-variables"><span class="header-section-number">4.5.3</span> Accessing and returning variables</h3>
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="accessing-and-returning-variables"><span class="header-section-number">1.5.3</span> Accessing and returning variables</h3>
 <p>We can ask our computer to return this <code>output</code> by simply typing it into the console. You should see we get the same value as the earlier equation.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-math7_6446ef94ddb9c94cffa2984dec2681c2">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-math7_9e5cef76474a50bd52e7f9bd821bb424">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># return value</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>output</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 960</code></pre>
 </div>
 </div>
 </section>
 <section id="variables-of-different-data-types" class="level3" data-number="1.5.4">
-<h3 data-number="1.5.4" class="anchored" data-anchor-id="variables-of-different-data-types"><span class="header-section-number">4.5.4</span> Variables of different data types</h3>
+<h3 data-number="1.5.4" class="anchored" data-anchor-id="variables-of-different-data-types"><span class="header-section-number">1.5.4</span> Variables of different data types</h3>
 <p>We can also store variables of different data types, not just numbers but text as well.</p>
 <p>Type in <code>str_variable &lt;- "This is our 1st string variable"</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-str1_1a83d84951e5f9f7ab85ede36291bfd6">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-str1_2d94e4e49d9882640baf75a8ca0c85ee">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store a variable</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>str_variable <span class="ot">&lt;-</span> <span class="st">"This is our 1st string variable"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p>We have just stored our sentence made from a combination of characters, including letters and numbers. A variable that stores “words” (that may be sentences, or codes, or file names), is known as a string. A string is always denoted by the use of quotation marks (<code>""</code> or <code>''</code>). Type in <code>str_variable</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-str2_bf7a4efcaf0c89eb3d77f008f86dd3f4">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-str2_ad7ff80e1c04c23c48d650db77b095c5">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># return variable</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>str_variable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "This is our 1st string variable"</code></pre>
 </div>
@@ -455,21 +506,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>You should see our entire sentence returned,enclosed in quotation marks (<code>""</code>). Again, by simply entering our variable into the console, we have asked R to return our variable to us.</p>
 </section>
 <section id="calling-functions-on-our-variables" class="level3" data-number="1.5.5">
-<h3 data-number="1.5.5" class="anchored" data-anchor-id="calling-functions-on-our-variables"><span class="header-section-number">4.5.5</span> Calling functions on our variables</h3>
+<h3 data-number="1.5.5" class="anchored" data-anchor-id="calling-functions-on-our-variables"><span class="header-section-number">1.5.5</span> Calling functions on our variables</h3>
 <p>We can also <strong>call</strong> a function on our variable. This use of <strong>call</strong> is a very specific programming term and generally what you use to say ‘use’ a function. What it simply means is that we will use a specific function to do something to our variable. For example, we can also ask R to <strong>print</strong> our variable, which will give us the same output as accessing it directly via the console.</p>
 <p>Type in <code>print(str_variable)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-str3_d78f620a2dafdf82739374b3fa811b72">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-str3_508a6219ca50aa47188a5bbbfecfc173">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># printing a variable</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(str_variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "This is our 1st string variable"</code></pre>
 </div>
 </div>
 <p>We have just used our first function: <code>print()</code>. This function actively finds the variable and then returns this to our screen.</p>
 <p>You can type <code>?print</code> into the console to find out more about the <code>print()</code> function.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-str4_f1ab46092d0ed9b016d2be5be14138bc">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-str4_4bf85ff60604044592a0c84df721dcab">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># open documentation of the print function</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">?</span><span class="st">`</span>(print)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 <p>This can be used with any function to get access to their documentation which is essential to know how to use the function correctly and understand its output.</p>
 <div class="callout callout-style-simple callout-note">
@@ -484,50 +545,75 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="returning-functions" class="level3" data-number="1.5.6">
-<h3 data-number="1.5.6" class="anchored" data-anchor-id="returning-functions"><span class="header-section-number">4.5.6</span> Returning functions</h3>
+<h3 data-number="1.5.6" class="anchored" data-anchor-id="returning-functions"><span class="header-section-number">1.5.6</span> Returning functions</h3>
 <p>When a function provides an output, such as this, it is known as <strong>returning</strong>. Not all functions will return an output to your screen, so often we require a <code>print()</code> statement or another type of returning function to check whether the function was successful or not. More on this later.</p>
 </section>
 <section id="examining-our-variables-using-functions" class="level3" data-number="1.5.7">
-<h3 data-number="1.5.7" class="anchored" data-anchor-id="examining-our-variables-using-functions"><span class="header-section-number">4.5.7</span> Examining our variables using functions</h3>
+<h3 data-number="1.5.7" class="anchored" data-anchor-id="examining-our-variables-using-functions"><span class="header-section-number">1.5.7</span> Examining our variables using functions</h3>
 <p>Within the base R language, there are various functions that have been written to help us examine and find out information about our variables. For example, we can use the <code>typeof()</code> function to check what data type our variable is.</p>
 <p>Type in <code>typeof(str_variable)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-str5_5f7c5cf218f2b6c7fed068bcbf3d250c">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-str5_58b68e29bdb59a08c5e7ff0c252cfddb">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># call the typeof() function</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(str_variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "character"</code></pre>
 </div>
 </div>
 <p>You should see the answer: <em>character</em>. As evident, our <code>str_variable</code> is a character data type. We can try testing this out on one of our earlier variables too.</p>
 <p>Type in <code>typeof(ten)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-str6_9df3a076123a2783c816892f68626ec3">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-str6_187beb05c410a50897dc7c5d0bf44fb5">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># call the typeof() function</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(ten)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "double"</code></pre>
 </div>
 </div>
-<p>You should see the answer: <em>double</em>. As evident, our <code>ten</code> is a double data type. For high-level objects that involve (more complicated) data structures, such as when we load a <code>csv</code> into R as a <strong>data frame</strong>, we are also able to check what <strong>class</strong> our object is. Type in <code>class(str_variable)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-str7_03af1148111655fda3b2121fa7854c81">
+<p>You should see the answer: <em>double</em>. As evident, our <code>ten</code> is a double data type. For high-level objects that involve (more complicated) data structures, such as when we load a <code>csv</code> into R as a <strong>dataframe</strong>, we are also able to check what <strong>class</strong> our object is. Type in <code>class(str_variable)</code> into the console and execute.</p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-str7_a7ecff97be5a712944f6f6349ffcc0af">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># call the class() function</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(str_variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "character"</code></pre>
 </div>
 </div>
 <p>In this case, you will get the same answer because in R both its class and type are the same: a <em>character</em>. In other programming languages, you might have had <em>string</em> returned instead, but this effectively means the same thing.</p>
 <p>Type in <code>class(ten)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-str8_8a2606904133ebb6f8bf7a5a209379ce">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-str8_c224fe59c18b7d5681b77b198bc6de3b">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># call the class() function</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(ten)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "numeric"</code></pre>
 </div>
 </div>
 <p>In this case, you will get a different answer because the class of this variable is numeric. This is because the class of numeric objects can contain either doubles (decimals) or integers (whole numbers). We can test this by asking whether our <code>ten</code> variable is an integer or not.</p>
 <p>Type in <code>is.integer(ten)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-var1_5bff3ddd35b2fe2fee84bad6c530ef1e">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-var1_da64567658bbdca6f17650970d061778">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.integer</span>(ten)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
@@ -545,17 +631,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We can also ask how long our variable is. in this case, we will find out how many different sets of characters (strings) are stored in our variable, <code>str_variable</code>.</p>
 <p>Type in <code>length(str_variable)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-var2_aa22820045d2813a7ff281a58b481065">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-var2_713c57506a968a51c33a8e769af008c5">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># call the length() function</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(str_variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
 </div>
 <p>You should get the answer <code>1</code> because we only have one <em>set</em> of characters. We can also ask how long each set of characters is within our variable, i.e.&nbsp;ask how long the string contained by our variable is. Type in <code>nchar(str_variable)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-var3_bd80fd8a377be8f7f3f0dc7fa3ae7b2f">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-var3_139826a54ce16f7021f0e7cf09ea2fc5">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># call the nchar() function</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(str_variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 31</code></pre>
 </div>
@@ -563,17 +659,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>You should get an answer of <code>31</code>.</p>
 </section>
 <section id="creating-a-two-element-object" class="level3" data-number="1.5.8">
-<h3 data-number="1.5.8" class="anchored" data-anchor-id="creating-a-two-element-object"><span class="header-section-number">4.5.8</span> Creating a two-element object</h3>
+<h3 data-number="1.5.8" class="anchored" data-anchor-id="creating-a-two-element-object"><span class="header-section-number">1.5.8</span> Creating a two-element object</h3>
 <p>Let us go ahead and test these two ‘length’ functions a little further by creating a new variable to store two string sets within our object, i.e.&nbsp;our variable will hold two elements.</p>
 <p>Type in <code>two_str_variable &lt;- c("This is our second variable", "It has two parts to it")</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-var4_24d5710e6fcf8035c245065554fe71fb">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-var4_985af5684bab8071d4590640355d33cb">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store a new variable</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>two_str_variable <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"This is our second string variable"</span>, <span class="st">"It has two parts to it"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p>In this piece of code, we have created a new variable using the <code>c()</code> function in R, that stands for <em>combine values into a vector or list</em>. We have provided that function with two sets of strings, using a <em>comma</em> to separate our two strings - all contained within the function’s brackets (<code>()</code>). You should now see a new variable in your environment window which tells us it is a) chr: characters, b) contains two items, and c) lists those items. Let us now try both our <code>length()</code> and <code>nchar()</code> on our new variable and see what the results are.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-var5_ed3975763f4d94ff272662fbe0e6048a">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-var5_4577096edb0ceccda78af3eabe39a94d">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># call the length() function</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(two_str_variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2</code></pre>
 </div>
@@ -585,9 +691,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>You should notice that the <code>length()</code> function now returned a <strong>2</strong> and the <code>nchar()</code> function returned two values of <strong>34 and 22</strong>.</p>
 <p>There is one final function that we often want to use with our variables when we are first exploring them, which is <code>attributes()</code>. Because our current variables are very simple, they do not have any attributes but it is a really useful function, which we will come across later on.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-var6_6e32ce293c03d59ff923f62632def9f3">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-var6_b89d96708ab5c573a6ea4c2ffbd37181">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># call the attributes() function</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(two_str_variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>NULL</code></pre>
 </div>
@@ -605,8 +716,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 <section id="simple-analysis" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="simple-analysis"><span class="header-section-number">4.6</span> Simple analysis</h2>
-<p>The objects we created and played with above are very simple but the real power of R comes when we can begin to execute functions on more complex objects. R accepts four main types of data structures: <strong>vectors</strong>, <strong>matrices</strong>, <strong>data frames</strong>, and <strong>lists</strong>. These data structures are essential because they allow us to apply common statistical functions. We are going to explore these data structures with some of dummy data on the total number of pages and publication dates of the various editions of <strong>Geographic Information Systems and Science</strong> (GISS) book by Longley <em>et al.</em> and use these for a brief analysis:</p>
+<h2 data-number="1.6" class="anchored" data-anchor-id="simple-analysis"><span class="header-section-number">1.6</span> Simple analysis</h2>
+<p>The objects we created and played with above are very simple but the real power of R comes when we can begin to execute functions on more complex objects. R accepts four main types of data structures: <strong>vectors</strong>, <strong>matrices</strong>, <strong>dataframes</strong>, and <strong>lists</strong>. These data structures are essential because they allow us to apply common statistical functions. We are going to explore these data structures with some of dummy data on the total number of pages and publication dates of the various editions of <strong>Geographic Information Systems and Science</strong> (GISS) book by Longley <em>et al.</em> and use these for a brief analysis:</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -639,16 +750,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <section id="housekeeping" class="level3" data-number="1.6.1">
-<h3 data-number="1.6.1" class="anchored" data-anchor-id="housekeeping"><span class="header-section-number">4.6.1</span> Housekeeping</h3>
+<h3 data-number="1.6.1" class="anchored" data-anchor-id="housekeeping"><span class="header-section-number">1.6.1</span> Housekeeping</h3>
 <p>First, let us clear up our workspace and remove our current variables. Type <code>rm(ten, twelve, output, str_variable, two_str_variable)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-da1_e2f6135e37a598ff2df65401caee8f8c">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-da1_7c6c67c65de19ccc3032e997efa6bb4b">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clear our workspace</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(ten, twelve, output, str_variable, two_str_variable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 <p>You should now see we no longer have any variables in our window. We just used the <code>rm()</code> function to remove these variables from our environment and free up some RAM. Keeping a clear workspace is another recommendation of good practice moving forward. Of course, we do not want to get rid of any variables we might need to use later but removing any variables we no longer need (such as test variables) will help you understand and manage your code and your working environment.</p>
 </section>
 <section id="atomic-vectors" class="level3" data-number="1.6.2">
-<h3 data-number="1.6.2" class="anchored" data-anchor-id="atomic-vectors"><span class="header-section-number">4.6.2</span> Atomic vectors</h3>
+<h3 data-number="1.6.2" class="anchored" data-anchor-id="atomic-vectors"><span class="header-section-number">1.6.2</span> Atomic vectors</h3>
 <p>The first complex data object we will create is a vector. A vector is the most common and basic data structure in R. Vectors are a collection of elements that are mostly of either character, logical integer or numeric data types. Technically, vectors can be one of two types:</p>
 <ul>
 <li><strong>Atomic vectors</strong> (all elements are of the same data type)</li>
@@ -656,22 +772,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Although in practice the term ‘vector’ most commonly refers to the atomic types and not to lists. Let us create our first official ’complex; vector, detailing the different total page numbers for GISS.</p>
 <p>Type <code>gisspage_no &lt;- c(454, 517, 560, 477)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-page-no_7c9a67d59824751da1b97cbb790ed445">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-page-no_46295444a61399063d2f8c42e1053530">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store the page numbers as a variable</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>giss_page_no <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">454</span>, <span class="dv">517</span>, <span class="dv">560</span>, <span class="dv">477</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p>Type <code>print(giss_page_no)</code> into the console and execute to check the results.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-page-no-show_7be572e0de1d325d8b0281f74b95e44f">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-page-no-show_1e8ba05d26a789913980c4f151cb6a7e">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print our giss_page_no variable</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(giss_page_no)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 454 517 560 477</code></pre>
 </div>
 </div>
 <p>We can see we have our total number of pages collected together in a single vector. We could if we want, execute some statistical functions on our vector object.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-calc-mean_f2b8840a77b3a52f62170fa71b86ffc1">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-calc-mean_50fd0946da9042b528ee5495e15127f8">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the arithmetic mean on our variable</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(giss_page_no)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 502</code></pre>
 </div>
@@ -688,13 +819,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We have now completed our first set of descriptive statistics in R. Let us see how we can build on our vector object by adding in a second vector object that details the relevant years of our book. Note that the total number of pages are entered in a specific order to correspond to these publishing dates (i.e.&nbsp;chronological) and therefore we will need to enter the publication year in the same order.</p>
 <p>Type <code>giss_year &lt;- c(2001, 2005, 2011, 2015)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-pub-years_47c4906f1d071137f6edef4b5dd49e9e">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-pub-years_ddffbeeab6ade68014070079a755606e">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store the publication years as a variable</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>giss_year <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2001</span>, <span class="dv">2005</span>, <span class="dv">2011</span>, <span class="dv">2015</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p>Type <code>print(giss_year)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-year-show_7029245953f00c41c1e5159a798b8fdf">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-year-show_836d3b98810fb38c667147f0950c9692">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(giss_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2001 2005 2011 2015</code></pre>
 </div>
@@ -702,17 +843,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Of course, on their own, the two vectors do not mean much but we can use the same <code>c()</code> function that we used earlier to combine the two together to create a matrix.</p>
 </section>
 <section id="matrices" class="level3" data-number="1.6.3">
-<h3 data-number="1.6.3" class="anchored" data-anchor-id="matrices"><span class="header-section-number">4.6.3</span> Matrices</h3>
+<h3 data-number="1.6.3" class="anchored" data-anchor-id="matrices"><span class="header-section-number">1.6.3</span> Matrices</h3>
 <p>In R, a matrix is simply an extension of the numeric or character vectors. They are not a separate type of object per se but simply a vector that has two dimensions. That is they contain both <strong>rows</strong> and <strong>columns</strong>. As with atomic vectors, the elements of a matrix must be of the <strong>same data type</strong>. As both our page numbers and our years are numeric, we can add them together to create a matrix using the <code>matrix()</code> function.</p>
 <p>Type <code>giss_year_nos &lt;- matrix(c(giss_year, giss_page_no), ncol=2)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-matrix_8b32d082c627f46ffe7bf1229a3d2e3a">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-matrix_81f153c676c9ae297451a7409477fe92">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new matrix from our two vectors with two columns</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>giss_year_nos <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(giss_year, giss_page_no), <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p>Type <code>print(giss_year_nos)</code> into the console and execute to check the result.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-all-show_95857863b3820d6e2ae36e79bde9109a">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-all-show_0f7491459e32192d97841f11ad210197">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(giss_year_nos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2]
 [1,] 2001  454
@@ -721,7 +872,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [4,] 2015  477</code></pre>
 </div>
 </div>
-<p>The thing about matrices is that, for us, they do not have a huge amount of use. If we were to look at this matrix in isolation from what we know it represents, we would not really know what to do with it. As a result, we tend to primarily use <strong>Data Frames</strong> in R as they offer the opportunity to add <strong>field names</strong> to our columns to help with their interpretation.</p>
+<p>The thing about matrices is that, for us, they do not have a huge amount of use. If we were to look at this matrix in isolation from what we know it represents, we would not really know what to do with it. As a result, we tend to primarily use <strong>dataframes</strong> in R as they offer the opportunity to add <strong>field names</strong> to our columns to help with their interpretation.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -740,62 +891,92 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="dataframes" class="level3" data-number="1.6.4">
-<h3 data-number="1.6.4" class="anchored" data-anchor-id="dataframes"><span class="header-section-number">4.6.4</span> Dataframes</h3>
-<p>A data frame is an extremely important data type in R. It is pretty much the <strong>de-facto</strong> data structure for most tabular data and the data structure we use for statistics. It also is the underlying structure to the table data (what we would call the <strong>attribute table</strong> in Q-GIS) that we associate with spatial data, more on this next week.</p>
-<p>A data frame is a special type of list where every element of the list will have the same length (i.e.&nbsp;data frame is a ‘rectangular’ list), Essentially, a data frame is constructed from columns (which represent a list) and rows (which represents a corresponding element on each list). Each column will have the same amount of entries - even if, for that row, for example, the entry is simply <code>NULL</code>.</p>
-<p>Data frames can have additional attributes such as <code>rownames()</code>, which can be useful for annotating data, like <code>subject_id</code> or <code>sample_id</code> or <code>UID</code>. In statistics, they are often not used but in spatial analysis, these IDs can be essential to join data together. Some additional information on data frames:</p>
+<h3 data-number="1.6.4" class="anchored" data-anchor-id="dataframes"><span class="header-section-number">1.6.4</span> Dataframes</h3>
+<p>A dataframe is an extremely important data type in R. It is pretty much the <strong>de-facto</strong> data structure for most tabular data and the data structure we use for statistics. It also is the underlying structure to the table data (what we would call the <strong>attribute table</strong> in Q-GIS) that we associate with spatial data, more on this next week.</p>
+<p>A dataframe is a special type of list where every element of the list will have the same length (i.e.&nbsp;dataframe is a ‘rectangular’ list), Essentially, a dataframe is constructed from columns (which represent a list) and rows (which represents a corresponding element on each list). Each column will have the same amount of entries - even if, for that row, for example, the entry is simply <code>NULL</code>.</p>
+<p>dataframes can have additional attributes such as <code>rownames()</code>, which can be useful for annotating data, like <code>subject_id</code> or <code>sample_id</code> or <code>UID</code>. In statistics, they are often not used but in spatial analysis, these IDs can be essential to join data together. Some additional information on dataframes:</p>
 <ul>
 <li>They are usually created by <code>read.csv()</code> and <code>read.table()</code>, i.e.&nbsp;when importing the data into R.</li>
-<li>You can also create a new data frame with <code>data.frame()</code> function, e.g.&nbsp;a matrix can be converted to a data frame.</li>
+<li>You can also create a new dataframe with <code>data.frame()</code> function, e.g.&nbsp;a matrix can be converted to a dataframe.</li>
 <li>You can find out the number of rows and columns with <code>nrow()</code> and <code>ncol()</code>, respectively.</li>
 <li>Rownames are often automatically generated and look like<code>X1, X2, … , Xn</code>. Consistency in numbering of rownames may not be honoured when rows are reshuffled or subset.</li>
 </ul>
 <p>Type <code>giss_df &lt;- data.frame(giss_year_nos)</code> into the console and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-matrix-data-frame_c75eeca42a479e46cdcca37270385ecc">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-matrix-data-frame_52f5e1ea9c8ac93e6663220aa22331d9">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new dataframe from our matrix</span></span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>giss_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(giss_year_nos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We now have a data frame, we can use the <code>View()</code> function in R. Still in your <strong>console</strong>, type: <code>View(giss_df)</code></p>
-<div class="cell" data-hash="04-statistics_cache/html/04-view-df_4bb3b695f2e16204542188617553beca">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view our data frame</span></span>
+</div>
+<p>We now have a dataframe, we can use the <code>View()</code> function in R. Still in your <strong>console</strong>, type: <code>View(giss_df)</code></p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-view-df_24cfdf7c1a3cf097e7ce4f5afe462708">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># view our dataframe</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(giss_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 <p>You should now see a table pop-up as a new tab on your script window. It is now starting to look like the table we are trying to create, but we need to do something about the fieldnames. <strong>X1</strong> and <strong>X2</strong> are not very informative.</p>
 </section>
 <section id="column-names" class="level3" data-number="1.6.5">
-<h3 data-number="1.6.5" class="anchored" data-anchor-id="column-names"><span class="header-section-number">4.6.5</span> Column names</h3>
-<p>We can rename our data frame column field names by using the <code>names()</code> function. Before we do this, have a read of what the <code>names()</code> function does. Still in your <strong>console</strong>, type: <code>?names</code></p>
-<div class="cell" data-hash="04-statistics_cache/html/04-_dfdc065efdf5a7977393dbcc79a8c1ce">
+<h3 data-number="1.6.5" class="anchored" data-anchor-id="column-names"><span class="header-section-number">1.6.5</span> Column names</h3>
+<p>We can rename our dataframe column field names by using the <code>names()</code> function. Before we do this, have a read of what the <code>names()</code> function does. Still in your <strong>console</strong>, type: <code>?names</code></p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-open-doc_85c0e0fe2b76cfc94763a4b5303218e9">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># open documentation of the names function</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">?</span><span class="st">`</span>(names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p>As you can see, the function will get or set the names of an object, with renaming occurring by using the following syntax: <code>names(x) &lt;- value</code></p>
-<p>The value itself needs to be <em>a character vector of up to the same length as x, or NULL.</em> We have two columns in our data frame, so we need to parse our <code>names()</code> function with a character vector with <strong>two elements</strong>. In the console, we shall enter two lines of code, one after another. First our character vector with our new names, <code>new_names &lt;- c("year", "page_nos")</code>, and then the <code>names()</code> function containing this vector for renaming, <code>names(giss_df) &lt;- new_names</code>:</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-data-frame-names_dd4ffbc13991ef558b8004536f4f3a86">
+<p>The value itself needs to be <em>a character vector of up to the same length as x, or NULL.</em> We have two columns in our dataframe, so we need to parse our <code>names()</code> function with a character vector with <strong>two elements</strong>. In the console, we shall enter two lines of code, one after another. First our character vector with our new names, <code>new_names &lt;- c("year", "page_nos")</code>, and then the <code>names()</code> function containing this vector for renaming, <code>names(giss_df) &lt;- new_names</code>:</p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-data-frame-names_791fc4b4446588107c0840608f6ce9dc">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a vector with our new column names</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>new_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"page_nos"</span>)</span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a><span class="co"># rename our columns with our next names</span></span>
 <span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(giss_df) <span class="ot">&lt;-</span> new_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can go and check your data frame again and see the new names using either <code>View()</code> function or by clicking on the tab at the top.</p>
+</div>
+<p>You can go and check your dataframe again and see the new names using either <code>View()</code> function or by clicking on the tab at the top.</p>
 </section>
 <section id="adding-columns" class="level3" data-number="1.6.6">
-<h3 data-number="1.6.6" class="anchored" data-anchor-id="adding-columns"><span class="header-section-number">4.6.6</span> Adding columns</h3>
-<p>We are still missing one final column from our data frame: our <strong>edition</strong> of the textbook column. As this is a <code>character</code> data type, we would not have been able to add this directly to our matrix. This is because data frames can take different data types, unlike matrices - so let us go ahead and add the <strong>edition</strong> as a new column.</p>
-<p>To do so, we follow a similar process of creating a vector with our editions listed in chronological order, but then add this to our data frame by storing this vector as a new column in our data frame. We use the <code>$</code> sign with our code that gives us “access” to the data frame’s column - we then specify the column <code>edition</code>, which whilst it does not exist at the moment, will be created from our code that assigns our edition variable to this column.</p>
-<p>Type and execute <code>edition &lt;- c("1st", "2nd", "3rd", "4th")</code>. Then store this vector as a new column in our data frame under the column name <strong>edition</strong> by typing and executing <code>giss_df$edition &lt;- edition</code>:</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-data-frame-edition_00f21d6d71d4ed0e6eedfed34067b2de">
+<h3 data-number="1.6.6" class="anchored" data-anchor-id="adding-columns"><span class="header-section-number">1.6.6</span> Adding columns</h3>
+<p>We are still missing one final column from our dataframe: our <strong>edition</strong> of the textbook column. As this is a <code>character</code> data type, we would not have been able to add this directly to our matrix. This is because dataframes can take different data types, unlike matrices - so let us go ahead and add the <strong>edition</strong> as a new column.</p>
+<p>To do so, we follow a similar process of creating a vector with our editions listed in chronological order, but then add this to our dataframe by storing this vector as a new column in our dataframe. We use the <code>$</code> sign with our code that gives us “access” to the dataframe’s column - we then specify the column <code>edition</code>, which whilst it does not exist at the moment, will be created from our code that assigns our edition variable to this column.</p>
+<p>Type and execute <code>edition &lt;- c("1st", "2nd", "3rd", "4th")</code>. Then store this vector as a new column in our dataframe under the column name <strong>edition</strong> by typing and executing <code>giss_df$edition &lt;- edition</code>:</p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-data-frame-edition_971a6a3ccfc20097fbdc9f1ba241c0da">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a vector witheditions</span></span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>edition <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1st"</span>, <span class="st">"2nd"</span>, <span class="st">"3rd"</span>, <span class="st">"4th"</span>)</span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add this vector as a new column to our data frame</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add this vector as a new column to our dataframe</span></span>
 <span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>giss_df<span class="sc">$</span>edition <span class="ot">&lt;-</span> edition</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Again, you can go and check your data frame and see the new column using either <code>View()</code> function or by clicking on the tab at the top or by typing <code>giss_df</code> in your console window.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-data-frame-final_69c3329a614c5370a8dc62d9fdbfa1dd">
+</div>
+<p>Again, you can go and check your dataframe and see the new column using either <code>View()</code> function or by clicking on the tab at the top or by typing <code>giss_df</code> in your console window.</p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-data-frame-final_243fa90129a4858b173c47d12af21756">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>giss_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  year page_nos edition
 1 2001      454     1st
@@ -804,18 +985,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 4 2015      477     4th</code></pre>
 </div>
 </div>
-<p>Now we have our data frame, let us find out a little about it. We can first return the dimensions (the size) of our data frame by using the <code>dim()</code> function. In your <strong>console</strong>, type <code>dim(giss_df)</code> and execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-data-frame-dim_18f3dbad973308b5ed281317678aea00">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check our data frame dimensions</span></span>
+<p>Now we have our dataframe, let us find out a little about it. We can first return the dimensions (the size) of our dataframe by using the <code>dim()</code> function. In your <strong>console</strong>, type <code>dim(giss_df)</code> and execute.</p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-data-frame-dim_34e8bb20212e7e99017cad4bc2d05044">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check our dataframe dimensions</span></span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(giss_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4 3</code></pre>
 </div>
 </div>
-<p>We can see we have <strong>four rows</strong> and <strong>three columns</strong>. We can also finally use our <code>attributes()</code> function to get the attributes of our data frame. In your <strong>console</strong>, type <code>attributes(giss_df)</code> and execute:</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-data-frame-att_54079e3cd90d1f3464af2339629f4c0e">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check our data frame attributes</span></span>
+<p>We can see we have <strong>four rows</strong> and <strong>three columns</strong>. We can also finally use our <code>attributes()</code> function to get the attributes of our dataframe. In your <strong>console</strong>, type <code>attributes(giss_df)</code> and execute:</p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-data-frame-att_5e5b32e4a143dc12c42b23475a577b9f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check our dataframe attributes</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(giss_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$names
 [1] "year"     "page_nos" "edition" 
@@ -845,7 +1036,7 @@ $class
 </section>
 </section>
 <section id="crime-in-london-ii" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="crime-in-london-ii"><span class="header-section-number">4.7</span> Crime in London II</h2>
+<h2 data-number="1.7" class="anchored" data-anchor-id="crime-in-london-ii"><span class="header-section-number">1.7</span> Crime in London II</h2>
 <p>During <a href="01-introduction.html#r-package-installation">Week 1’s computer tutorial</a>, we already installed several R libraries. One of these libraries was called the <code>tidyverse</code>. The <code>tidyverse</code> is a collection of packages that are specifically designed for data wrangling, management, cleaning, analysis and visualisation within RStudio. Whilst in many cases different packages work all slightly differently, all packages of the <code>tidyverse</code> share the underlying design philosophy, grammar, and data structures.</p>
 <p>The tidyverse itself is treated and loaded as a single package, but this means if you load the <code>tidyverse</code> package within your script (through <code>library(tidyverse)</code>), you will directly have access to all the functions that are part of each of the packages that are within the overall <code>tidyverse.</code> This means you do not have to load each package separately. For more information have a look at https://www.tidyverse.org/.</p>
 <p>There are some specific functions in the <code>tidyverse</code> suite of packages that will help us cleaning and preparing our datasets now and in the future, which is one of the main reasons for using this library. Some of the most important and useful functions, from the <code>tidyr</code> and <code>dplyr</code> packages, are:</p>
@@ -907,12 +1098,12 @@ $class
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The code you just ran asked <strong>R</strong> to load all functions of the <code>tidyverse</code>. However: these functions are only available for the duration of your R sessions. When you restart your R session, you will have to load these functions again if you want to use them. Another thing to be aware of when it comes to using functions in these additional libraries, is that sometimes these functions share a name with a function form one of the <code>base</code> <strong>R</strong> packages. For instance, there exists a <code>select()</code> function within in the <code>stats</code> package that conducts linear filtering on a time series. However, after we load the <code>tidyverse</code> package and we would type <code>select()</code> this function will select columns from a data frame. We therefore sometimes need to specify which library we want to use this function from, and this can be done with a simple command (<code>library::function</code>) in our code: <code>stats::select</code> to filter that time series and <code>dplyr::select</code> to select columns in a dataframe.</p>
+<p>The code you just ran asked <strong>R</strong> to load all functions of the <code>tidyverse</code>. However: these functions are only available for the duration of your R sessions. When you restart your R session, you will have to load these functions again if you want to use them. Another thing to be aware of when it comes to using functions in these additional libraries, is that sometimes these functions share a name with a function form one of the <code>base</code> <strong>R</strong> packages. For instance, there exists a <code>select()</code> function within in the <code>stats</code> package that conducts linear filtering on a time series. However, after we load the <code>tidyverse</code> package and we would type <code>select()</code> this function will select columns from a dataframe. We therefore sometimes need to specify which library we want to use this function from, and this can be done with a simple command (<code>library::function</code>) in our code: <code>stats::select</code> to filter that time series and <code>dplyr::select</code> to select columns in a dataframe.</p>
 </div>
 </div>
 </div>
 <section id="starting-a-project" class="level3" data-number="1.7.1">
-<h3 data-number="1.7.1" class="anchored" data-anchor-id="starting-a-project"><span class="header-section-number">4.7.1</span> Starting a project</h3>
+<h3 data-number="1.7.1" class="anchored" data-anchor-id="starting-a-project"><span class="header-section-number">1.7.1</span> Starting a project</h3>
 <p>In the previous section, R may have seemed fairly labour-intensive. We had to enter all our data manually and each line of code had to be written into the command line. Fortunately this is not routinely the case. In RStudio, we can use <strong>scripts</strong> to build up our code that we can run repeatedly and save for future use. Before we start a new script, we first want to set up ourselves ready for the rest of our practicals by <strong>creating a new project</strong>.</p>
 <p>To put it succinctly, <strong>projects</strong> in RStudio keep all the files associated with a project together: input data, R scripts, analytical results, figures, etc. This means we can easily keep track of all data, input and output, whilst still creating standalone scripts for each bit of processing analysis we do. It also makes dealing with <strong>directories</strong> and <strong>paths</strong> a whole lot easier; particularly if you <strong>have followed the folder structure that was advised at the start of the module</strong>.</p>
 <p>Click on <strong>File</strong> -&gt; <strong>New Project</strong> -&gt; <strong>Existing Directory</strong> and browse to your <strong>GEOG0030</strong> folder. Click on <strong>Create Project</strong>. You should now see your main window switch to this new project and if you check your <strong>Files</strong> window, you should now see a new <strong>R Project</strong> called <strong>GEOG0030</strong>.</p>
@@ -928,7 +1119,7 @@ $class
 </div>
 </section>
 <section id="setting-up-a-script" class="level3" data-number="1.7.2">
-<h3 data-number="1.7.2" class="anchored" data-anchor-id="setting-up-a-script"><span class="header-section-number">4.7.2</span> Setting up a script</h3>
+<h3 data-number="1.7.2" class="anchored" data-anchor-id="setting-up-a-script"><span class="header-section-number">1.7.2</span> Setting up a script</h3>
 <p>For the majority of our analysis work, we will type our code <strong>within a script</strong> and not the console. Let us create our first script. Click on <strong>File</strong> -&gt; <strong>New File</strong> -&gt; <strong>R Script</strong>. This should give you a blank document that looks a bit like the command line. The difference is that anything you type here can be saved as a script and re-run at a later date.</p>
 <div class="cell" data-hash="04-statistics_cache/html/fig-rstudio-interface-script_0c75b88f1a676d92ff75b97832494975">
 <div class="cell-output-display">
@@ -943,21 +1134,41 @@ $class
 <p>Save your script as: <code>wk4-csv-processing.r</code>. Through our name, we know now that our script was created in Week 4 of Geocomputation and the code it will contain is something to do with <code>csv</code> processing. This will help us a lot in the future when we come to find code that we need for other projects.</p>
 <p>The <strong>first</strong> bit of code you will want to add to any script is to add a <strong>title</strong>. This title should give any reader a quick understanding of what your code achieves. When writing a script it is important to keep notes about what each step is doing. To do this, the hash (<code>#</code>) symbol is put before any code. This comments out that particular line so that R ignores it when the script is run.</p>
 <p>Let us go ahead and give our script a title - and maybe some additional information:</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-script-title_d4efabfb468b4342853e15e649c0cabf">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-script-title_025026b6355a30a63bc0c24f8b48ae41">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combining Police Data csv's from 2021 into a single csv</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Followed by analysis of data on monthly basis</span></span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: January 2024</span></span>
 <span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Author: Justin </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p>Now we have our title, the <strong>second</strong> bit of code we want to include in our script is to load <strong>our libraries</strong> (i.e.&nbsp;the installed packages we want to use in our script):</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-load-libraries_c1f86bfc03bfbad86d5b2529e481277d">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-load-libraries_3ca6624caa297a7480b15d3f71110f46">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
+✔ tibble  3.1.8      ✔ dplyr   1.0.10
+✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+✔ readr   2.1.3      ✔ forcats 0.5.2 
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
 </div>
 <p>By loading simply the <code>tidyverse</code> we gain access to several useful functions. However, when developing a script you will realise that you may need to load more libraries as you go along. When you do this, <strong>always add your library to the top of your script</strong>. If you ever share your script, it helps the person you are sharing with to recognise quickly if they need to install any additional packages prior to running the code It also means your libraries do not get lost in the multiple lines of code you are writing.</p>
 </section>
 <section id="running-a-script" class="level3" data-number="1.7.3">
-<h3 data-number="1.7.3" class="anchored" data-anchor-id="running-a-script"><span class="header-section-number">4.7.3</span> Running a script</h3>
+<h3 data-number="1.7.3" class="anchored" data-anchor-id="running-a-script"><span class="header-section-number">1.7.3</span> Running a script</h3>
 <p>There are two main ways to run a script in RStudio: all at once or by line/chunk. It can be advantageous to pursue with the second option as you first start out to build your script as it allows you to test your code interactively.</p>
 <section id="to-run-line-by-line" class="level4">
 <h4 class="anchored" data-anchor-id="to-run-line-by-line">To run line-by-line</h4>
@@ -979,14 +1190,14 @@ $class
 </section>
 </section>
 <section id="crime-data" class="level3" data-number="1.7.4">
-<h3 data-number="1.7.4" class="anchored" data-anchor-id="crime-data"><span class="header-section-number">4.7.4</span> Crime data</h3>
+<h3 data-number="1.7.4" class="anchored" data-anchor-id="crime-data"><span class="header-section-number">1.7.4</span> Crime data</h3>
 <p>Where last week we provided you with a crime dataset, this week you will download and prepare the dataset yourself.</p>
 <ol type="1">
 <li>Start by navigating to <a href="https://data.police.uk/">data.police.uk</a>. And click on <strong>Downloads</strong>.</li>
 <li>Under the data range select <code>January 2021</code> to <code>December 2021</code>.</li>
 <li>Under the <strong>Custom download</strong> tab select <code>Metropolitan Police Service</code> and <code>City of London Police</code>. Leave all other settings and click on <strong>Generate file</strong>.</li>
 </ol>
-<div class="cell" data-hash="04-statistics_cache/html/fig-download-crimes_f22b5ee32ff23b1b73120902877b1183">
+<div class="cell" data-filename="R code" data-hash="04-statistics_cache/html/fig-download-crimes_71e11cc8ce268e76762b0d1b9a3710f9">
 <div class="cell-output-display">
 <div id="fig-download-crimes" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -997,11 +1208,11 @@ $class
 </div>
 </div>
 <ol start="4" type="1">
-<li>It may take a few minutes for the download to be generated, so be patient. Once the <strong>Download now</strong> button appears, you can download the 2020 crime dataset.</li>
+<li>It may take a few minutes for the download to be generated, so be patient. Once the <strong>Download now</strong> button appears, you can download the 2021 crime dataset.</li>
 <li>Once downloaded, unzip the file. You will notice that the zip file contains 12 individual folders, one for each month in 2021. Each folder contains two files: one containing the data for the <code>Metropolitan Police Service</code> and one for the <code>City of London Police</code>.</li>
 <li>Create a new folder named <code>all-crime</code> in your <code>data/raw/crime</code> directory and copy all 12 folders containing our data to this new folder.</li>
 </ol>
-<div class="cell" data-hash="04-statistics_cache/html/fig-organised-crime_a867fbeee735d6ee2fb3b2a423121f7a">
+<div class="cell" data-filename="R code" data-hash="04-statistics_cache/html/fig-organised-crime_8aa48e71ea342821b6662d848b85fd71">
 <div class="cell-output-display">
 <div id="fig-organised-crime" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -1015,9 +1226,14 @@ $class
 <h4 class="anchored" data-anchor-id="reading-data-into-r">Reading data into R</h4>
 <p>We are now ready to get started with using the crime data <code>csv's</code> currently sat in our <code>all-crime</code> folder. To do so, we need to first figure out how to import the <code>csv</code> and understand the data structure it will be in after importing. To read in a <code>csv</code> into R requires the use of a very simple function from the <code>tidyverse</code> library: <code>read_csv()</code>.</p>
 <p>We can look at the help documentation to understand what we need to provide the function (or rather the optional arguments), but as we just want to load single <code>csv</code>, we will go ahead and just use the function with a simple parameter.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-load-csv_c4bb4ddc1758be5511ca8f30cc0a2453">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in a single csv from our crime data</span></span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>crime_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/crime/all-crime/2021-01/2021-01-metropolitan-street.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-load-csv_e3c605ba4663a0a8bfb629ad2419de66">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in a single csv from our crime data</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>crime_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/crime/all-crime/2021-01/2021-01-metropolitan-street.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 84848 Columns: 12
 ── Column specification ────────────────────────────────────────────────────────
@@ -1041,28 +1257,38 @@ lgl (1): Context
 </div>
 </div>
 <p>We can explore the <code>csv</code> we have just loaded as our new <code>crime_csv</code> variable and understand the class, attributes and dimensions of our variable.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-data-csv-class_fe8cdb533b9681d7b7d86e01d59b6380">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect class</span></span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(crime_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-data-csv-class_a6783685998a119ea09bae114b6ef066">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect class</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(crime_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect dimensions</span></span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(crime_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect dimensions</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(crime_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 84848    12</code></pre>
 </div>
 </div>
-<p>We have found out our variable is a data frame, containing <strong>84,848 rows and 12 columns</strong>. We however do not want just the single <code>csv</code> and instead what to combine all our <code>csv's</code> in our <code>all-crime</code> folder into a single data frame - so how do we do this?</p>
+<p>We have found out our variable is a dataframe, containing <strong>84,848 rows and 12 columns</strong>. We however do not want just the single <code>csv</code> and instead what to combine all our <code>csv's</code> in our <code>all-crime</code> folder into a single dataframe - so how do we do this?</p>
 <p>This will be the most complicated section of code you will come across today, and we will use some functions that you have not seen before. Copy the following code below into your script, then execute.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-combine-csv_79ca1215dab07cd5ab3d2c03cbd87f91">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in all files and append all rows to a single data frame</span></span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>all_crime_df <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/raw/crime/all-crime/"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">recursive =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lapply</span>(read_csv) <span class="sc">|&gt;</span></span>
-<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-combine-csv_79e52a80909876210e7be38ef8aa8cc2">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
 </div>
-<p>This might take a little time to process (or might not), as we have a lot of data to get through. You should see a new data frame appear in your global environment called <code>all_crime_df</code>, for which we now have 1,079,267 observations!</p>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in all files and append all rows to a single dataframe</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>all_crime_df <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/raw/crime/all-crime/"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">recursive =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lapply</span>(read_csv) <span class="sc">|&gt;</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>This might take a little time to process (or might not), as we have a lot of data to get through. You should see a new dataframe appear in your global environment called <code>all_crime_df</code>, for which we now have 1,079,267 observations!</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -1073,7 +1299,7 @@ lgl (1): Context
 <ol type="1">
 <li>List all the files found in the data path: <code>data/raw/crime/all-crime/</code></li>
 <li>Read each of these as a <code>csv</code> by “applying” the <code>read_csv()</code> function to all files.</li>
-<li>Binding all rows of all individual data frames together in a single data frame.</li>
+<li>Binding all rows of all individual dataframes together in a single dataframe.</li>
 </ol>
 <p>These three different actions are combined by using something called a pipe (<code>|&gt;</code>), which we will explain in more detail in later weeks.</p>
 </div>
@@ -1083,17 +1309,22 @@ lgl (1): Context
 <section id="inspecting-data-in-r" class="level4">
 <h4 class="anchored" data-anchor-id="inspecting-data-in-r">Inspecting data in R</h4>
 <p>We can now have a look at our large dataframe in more detail.</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-data-frame-analysis_f29a2db89167e3491901a4ae077f2efc">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># full inspection of the dataframe</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(all_crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-data-frame-analysis_b870c35216fb6c931b93deb0d4d44b5c">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># full inspection of the dataframe</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(all_crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(all_crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(all_crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1079267</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(all_crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(all_crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 12
   Crime …¹ Month Repor…² Falls…³ Longi…⁴ Latit…⁵ Locat…⁶ LSOA …⁷ LSOA …⁸ Crime…⁹
@@ -1109,41 +1340,80 @@ lgl (1): Context
 #   ⁴​Longitude, ⁵​Latitude, ⁶​Location, ⁷​`LSOA code`, ⁸​`LSOA name`, ⁹​`Crime type`</code></pre>
 </div>
 </div>
-<p>You should now see with have the same number of columns as our previous single <code>csv</code>, but with many more rows. You can also see that the <code>head()</code> function provides us with the first <strong>five</strong> rows of our data frame. You can conversely use <code>tail()</code> to provide the last five rows.</p>
-<p>For now in our analysis, we only want to extract the <strong>theft</strong> crime in our data frame - so we will want to filter our data based on the <strong>Crime type</strong> column. However, as we can see, we have a space in our field name for <strong>Crime type</strong> and, in fact, many of the other fields. As we want to avoid having spaces in our field names when coding, we need to rename our fields. Rename the field names, just as we did with our GIS table earlier:</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-rename-fields_35322890c8a9456e91b8edec08b7fbf5">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new vector containing updated no space / no capital field names</span></span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>no_space_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"crime_id"</span>, <span class="st">"month"</span>, <span class="st">"reported_by"</span>, <span class="st">"falls_within"</span>, <span class="st">"longitude"</span>,</span>
-<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"latitude"</span>, <span class="st">"location"</span>, <span class="st">"lsoa_code"</span>, <span class="st">"lsoa_name"</span>, <span class="st">"crime_type"</span>, <span class="st">"last_outcome_category"</span>,</span>
-<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"context"</span>)</span>
-<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a><span class="co"># rename our df field names using these new names</span></span>
-<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(all_crime_df) <span class="ot">&lt;-</span> no_space_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should now see with have the same number of columns as our previous single <code>csv</code>, but with many more rows. You can also see that the <code>head()</code> function provides us with the first <strong>five</strong> rows of our dataframe. You can conversely use <code>tail()</code> to provide the last five rows.</p>
+<p>For now in our analysis, we only want to extract the <strong>theft</strong> crime in our dataframe - so we will want to filter our data based on the <strong>Crime type</strong> column. However, as we can see, we have a space in our field name for <strong>Crime type</strong> and, in fact, many of the other fields. As we want to avoid having spaces in our field names when coding, we need to rename our fields. Rename the field names, just as we did with our GIS table earlier:</p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-rename-fields_a802ffbe43bd23cc3ecd3ee10d3d8275">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new vector containing updated no space / no capital field names</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>no_space_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"crime_id"</span>, <span class="st">"month"</span>, <span class="st">"reported_by"</span>, <span class="st">"falls_within"</span>, <span class="st">"longitude"</span>,</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"latitude"</span>, <span class="st">"location"</span>, <span class="st">"lsoa_code"</span>, <span class="st">"lsoa_name"</span>, <span class="st">"crime_type"</span>, <span class="st">"last_outcome_category"</span>,</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"context"</span>)</span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a><span class="co"># rename our df field names using these new names</span></span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(all_crime_df) <span class="ot">&lt;-</span> no_space_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 <p>We now have our dataframe ready for filtering. To do so, we will use the <code>filter()</code> function from the <code>dplyr</code> package:</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-filter-data-frame_98f4f57fc21c812246f6474fe5d00342">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter all_crime_df to contain only theft</span></span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>all_theft_df <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(all_crime_df, crime_type <span class="sc">==</span> <span class="st">"Theft from the person"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-filter-data-frame_98b7c6899890528137b02024c2ec0d3e">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
 </div>
-<p>You should now see the new variable appear in your environment with <strong>38,229</strong> observations.</p>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter all_crime_df to contain only theft</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>all_theft_df <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(all_crime_df, crime_type <span class="sc">==</span> <span class="st">"Theft from the person"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 <p>:::note { .callout-note} Although not necessary per se because R uses the function from the package that got loaded latest, it is a good idea to specify that we want to use <code>filter()</code> from the <code>dplyr</code> package instead of the default <code>stats</code> library so to avoid any confusing errors. :::</p>
-<p>We now want to do some further housekeeping and create on final data frame that will allow us to analyse crime in London by month. To do so, we want to count how many thefts occur each month in London. Fortunately, <code>dplyr</code> has another function that will do this for us, known simply as <code>count()</code>.</p>
-<p>When you go ahead and search the documentation to understand the <code>count()</code> function, you will see that there is only one function called <code>count()</code> at the moment, i.e.&nbsp;the one in the <code>dplyr</code> library, so we do not need to use the additional syntax we used above. Let us go ahead and count the number of thefts in London <strong>by month</strong>:</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-count-theft_c2fba7c9dac784c086926256d8bcf36a">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count in the all_theft_df the number of crimes by month</span></span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>theft_month_df <span class="ot">&lt;-</span> <span class="fu">count</span>(all_theft_df, month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You should now see the new variable appear in your environment with <strong>38,229</strong> observations. Now save the dataframe as a <code>csv</code> file.</p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-save-data-frame_1cde5df84a5885246bcf29f856ce01c4">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
 </div>
-<p>We have stored the output of our <code>count()</code> function to a new data frame: <code>theft_month_df</code>. Go ahead and look at the data frame to see the output: it is a very simple table containing simply the month and <code>n</code>, i.e.&nbsp;the number of thefts occurring per month. We can and should go ahead and rename this column to help with our interpretation of the data frame. We will use a quick approach to do this, that uses <strong>selection</strong> of the precise column to rename only the second column:</p>
-<div class="cell" data-hash="04-statistics_cache/html/04-rename-df-column_6f27e9c837376dd54ac2e3eb7b64980b">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename the second column of our new data frame to crime_totals</span></span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(theft_month_df)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"crime_totals"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save all_crime_df as csv</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(all_theft_df, <span class="st">"data/raw/crime/crime-theft-2021-london.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>If using a Windows machine, you will need to substitute your forward-slashes (<code>/</code>) with two backslashes (<code>\\</code>) whenever you are dealing with file paths!</p>
+</div>
+</div>
+</div>
+<p>We now want to do some further housekeeping and create on final dataframe that will allow us to analyse crime in London by month. To do so, we want to count how many thefts occur each month in London. Fortunately, <code>dplyr</code> has another function that will do this for us, known simply as <code>count()</code>.</p>
+<p>When you go ahead and search the documentation to understand the <code>count()</code> function, you will see that there is only one function called <code>count()</code> at the moment, i.e.&nbsp;the one in the <code>dplyr</code> library, so we do not need to use the additional syntax we used above. Let us go ahead and count the number of thefts in London <strong>by month</strong>:</p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-count-theft_ba660c414fd957c38578d095d9149f45">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count in the all_theft_df the number of crimes by month</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>theft_month_df <span class="ot">&lt;-</span> <span class="fu">count</span>(all_theft_df, month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We have stored the output of our <code>count()</code> function to a new dataframe: <code>theft_month_df</code>. Go ahead and look at the dataframe to see the output: it is a very simple table containing simply the month and <code>n</code>, i.e.&nbsp;the number of thefts occurring per month. We can and should go ahead and rename this column to help with our interpretation of the dataframe. We will use a quick approach to do this, that uses <strong>selection</strong> of the precise column to rename only the second column:</p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-rename-df-column_de4179fb1c961798a8efb4959c9b6bad">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename the second column of our new dataframe to crime_totals</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(theft_month_df)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"crime_totals"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 <p>This selection is made through the <code>[2]</code> element of code added after the <code>names()</code> function we have used earlier. We will look more at selection, slicing and indexing during next week’s tutorial.</p>
 </section>
 </section>
 </section>
 <section id="assignment-w04" class="level2" data-number="1.8">
-<h2 data-number="1.8" class="anchored" data-anchor-id="assignment-w04"><span class="header-section-number">4.8</span> Assignment</h2>
+<h2 data-number="1.8" class="anchored" data-anchor-id="assignment-w04"><span class="header-section-number">1.8</span> Assignment</h2>
 <p>Now we have prepared our dataset, we can conduct some analysis:</p>
 <ol type="1">
 <li>What was the average number of crimes per month in London in 2021?</li>
@@ -1151,7 +1421,7 @@ lgl (1): Context
 <li>What were the minimum and maximum values of crime in London in 2021?</li>
 <li>Besides descriptive statistics, it would be really useful to generate a simple chart. Use the documentation of the <code>barplot()</code> function to create the barplot below:</li>
 </ol>
-<div class="cell" data-hash="04-statistics_cache/html/04-bar-plot_ab124bd0cd4020fd69bd995522731b74">
+<div class="cell" data-filename="R code" data-hash="04-statistics_cache/html/04-bar-plot_cf4a0f7e51f5885bbd6c888378fbdc20">
 <div class="cell-output-display">
 <p><img src="04-statistics_files/figure-html/04-bar-plot-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1168,19 +1438,19 @@ lgl (1): Context
 </div>
 </section>
 <section id="wm-w04" class="level2" data-number="1.9">
-<h2 data-number="1.9" class="anchored" data-anchor-id="wm-w04"><span class="header-section-number">4.9</span> Want more?</h2>
+<h2 data-number="1.9" class="anchored" data-anchor-id="wm-w04"><span class="header-section-number">1.9</span> Want more?</h2>
 <section id="data-visualisation" class="level3" data-number="1.9.1">
-<h3 data-number="1.9.1" class="anchored" data-anchor-id="data-visualisation"><span class="header-section-number">4.9.1</span> Data visualisation</h3>
+<h3 data-number="1.9.1" class="anchored" data-anchor-id="data-visualisation"><span class="header-section-number">1.9.1</span> Data visualisation</h3>
 <p>The graphs and figures we have made so far are rather basic. Although possible with the basic R installation, there are easier and better ways to make nice visualisations. For this we can turn to other R packages that have been developed. In fact, there are many hundreds of packages in R each designed for a specific purpose, some of which you can use to create plots in R. One of those packages is called <code>ggplot2</code>. The <code>ggplot2</code> package is an implementation of the Grammar of Graphics (<a href="https://en.wikipedia.org/wiki/Leland_Wilkinson">Wilkinson 2005</a>) - a general scheme for data visualisation that breaks up graphs into semantic components such as scales and layers. <code>ggplot2</code> can serve as a replacement for the base graphics in R and contains a number of default options that match good visualisation practice. You provide the data, tell <code>ggplot2</code> how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details. An excellent introduction to <code>ggplot2</code> can be found in the online, freely available book <a href="https://r4ds.hadley.nz/">R for Data Science</a>; written by Hadley Wickham, core developer of <code>ggplot2</code> and the <code>tidyverse</code>. Have a particularly close look at <strong>Chapter 2</strong>: <em>Data vizualisation</em>: <a href="https://r4ds.hadley.nz/data-visualize">[Link]</a>.</p>
 </section>
 <section id="reproducible-research" class="level3" data-number="1.9.2">
-<h3 data-number="1.9.2" class="anchored" data-anchor-id="reproducible-research"><span class="header-section-number">4.9.2</span> Reproducible research</h3>
+<h3 data-number="1.9.2" class="anchored" data-anchor-id="reproducible-research"><span class="header-section-number">1.9.2</span> Reproducible research</h3>
 <p>The book <a href="https://psyteachr.github.io/reprores-v3/index.html">Data Skills for Reproducible Research</a> provides an excellent overview of skills needed for reproducible and open research using the statistical programming language R and <code>tidyverse</code> packages. To get started: have a look at <a href="https://psyteachr.github.io/reprores-v3/repro.html">Chapter 2: Reproducible Workflows</a>, <a href="https://psyteachr.github.io/reprores-v3/dplyr.html">Chapter 7: Data Wrangling</a>, and <a href="https://psyteachr.github.io/reprores-v3/func.html">Chapter 8: Iterations and Functions</a>.</p>
 <p>Another great tool is found in the <code>targets</code> package. The targets package is a <a href="https://www.gnu.org/software/make/">Make</a>-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the <a href="https://books.ropensci.org/targets/walkthrough.html">Walkthrough</a> chapter to see <code>targets</code> in action.</p>
 </section>
 </section>
 <section id="byl-w04" class="level2" data-number="1.10">
-<h2 data-number="1.10" class="anchored" data-anchor-id="byl-w04"><span class="header-section-number">4.10</span> Before you leave</h2>
+<h2 data-number="1.10" class="anchored" data-anchor-id="byl-w04"><span class="header-section-number">1.10</span> Before you leave</h2>
 <p>We have managed to take a dataset of over one million records and clean and filter it to create a barplot on theft crime in London. Of course, there is a lot more research and exploratory data analysis that can be done, but this first chart is certainly a step in the right direction. Next week, we will be doing a lot more with our dataset - including a lot more data wrangling and of course spatial analysis, but hopefully this week has shown you want you can achieve with just a few lines of code. <a href="https://www.youtube.com/watch?v=NKyYr2pbXUM">That concludes the tutorial for this week</a>!</p>
 
 
@@ -1543,8 +1813,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./11-data.html" class="pagination-link">
-        <span class="nav-page-text">Data Sources</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./05-spatial.html" class="pagination-link">
+        <span class="nav-page-text">Programming for Spatial Analysis</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

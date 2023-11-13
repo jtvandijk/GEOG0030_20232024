@@ -166,25 +166,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-introduction.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">1 Geocomputation: An Introduction</span></a>
+ <span class="menu-text">Geocomputation: An Introduction</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-GIScience.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2 GIScience and GIS software</span></a>
+ <span class="menu-text">GIScience and GIS software</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-cartography.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3 Cartography and Visualisation</span></a>
+ <span class="menu-text">Cartography and Visualisation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4 Programming for Data Analysis</span></a>
+ <span class="menu-text">Programming for Data Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programming for Spatial Analysis</span></a>
   </div>
 </li>
       </ul>
@@ -201,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">11 Data Sources</span></a>
+ <span class="menu-text">Data Sources</span></a>
   </div>
 </li>
       </ul>
@@ -241,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="geocomputation-an-introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Geocomputation: An Introduction</h1>
-<p>This week’s lecture provided you with a thorough introduction on Geocomputation, outlining how and why it is different to a traditional GIScience course. We set the scene for the remainder of the module and explained how the foundational concepts that you will learn in the first half of term sit within the overall module. This week we start easy by setting up our work environment and make sure that we can access the software that we will need over the coming weeks.</p>
+<p>This week’s lecture provided you with a thorough introduction to this Geocomputation module, outlining how and why it is different to a traditional GIScience course. We set the scene for the remainder of the module and explained how the foundational concepts that you will learn in the first half of term sit within the overall module. This week we start easy by setting up our work environment and make sure that we can access the software that we will need over the coming weeks.</p>
 <section id="slides-w01" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="slides-w01"><span class="header-section-number">1.1</span> Lecture slides</h2>
 <p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w01-geo.pdf">[Link]</a></p>
@@ -252,6 +258,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
 <li>Brundson, C. and Comber, A. 2020. Opening practice: Supporting reproducibility and critical spatial data science. <em>Journal of Geographical Systems</em> 23: 477–496. <a href="https://doi.org/10.1007/s10109-020-00334-2">[Link]</a></li>
+<li>Franklin, R. 2023. Quantitative methods III: Strength in numbers?. <em>Progress in Human Geography</em>. Online First. <a href="https://doi.org/10.1177/03091325231210512">[Link]</a>.</li>
 <li>Longley, P. <em>et al.</em> 2015. Geographic Information Science &amp; Systems, <strong>Chapter 1</strong>: <em>Geographic Information: Science, Systems, and Society</em>. <a href="https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&amp;sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a">[Link]</a></li>
 <li>Singleton, A. and Arribas-Bel, D. 2019. Geographic Data Science. <em>Geographical Analysis</em>. <a href="https://doi.org/10.1111/gean.12194">[Link]</a></li>
 </ul>
@@ -271,14 +278,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="software" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="software"><span class="header-section-number">1.4</span> Software</h2>
-<p>This module primarily uses the <a href="https://www.r-project.org/">R</a> programming language, although we start by using <a href="https://qgis.org/en/site/">QGIS</a> in the next two weeks to give you a basic foundation in the principles of spatial analysis.</p>
+<p>This module primarily uses the <a href="https://www.r-project.org/">R</a> programming language, although we will start by using <a href="https://qgis.org/en/site/">QGIS</a> over the next two weeks to provide you with a visual introduction to the principles of spatial analysis.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Please follow the instructions below to install both <a href="https://www.r-project.org/">R</a> and <a href="https://qgis.org/en/site/">QGIS</a> onto your own personal computer. If you cannot install the software on your personal computer or you are not planning to bring your own laptop to the computer practicals, please refer to the <a href="#ucl">UCL Desktop and RStudio Server</a> section below. Please make sure that you have access to a working installation of QGIS and R (including relevant packages) <strong>before</strong> the first hands-on practical session next week.</p>
+<p>Please follow the instructions below to install both <a href="https://qgis.org/en/site/">QGIS</a> and <a href="https://www.r-project.org/">R</a> onto your own personal computer. If you cannot install the software on your personal computer or you are not planning to bring your own laptop to the computer practicals, please refer to the <a href="#ucl">UCL Desktop and RStudio Server</a> section below. Please make sure that you have access to a working installation of QGIS and R (including relevant packages) <strong>before</strong> the first hands-on practical session next week.</p>
 </div>
 </div>
 </div>
@@ -291,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>We recommend installing the <strong>Long Term Release</strong> (<em>QGIS 3.28 LTR</em>) as this version should be the most stable version. For Windows users: be aware that the QGIS installation can be a little slow.</p>
+<p>We recommend installing the <strong>Long Term Release</strong> (<em>QGIS 3.28 LTR</em>) as this version should be the most current stable version. For Windows users: be aware that the QGIS installation can be a little slow.</p>
 </div>
 </div>
 </div>
@@ -299,23 +306,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="r-and-rstudio-installation" class="level3" data-number="1.4.2">
 <h3 data-number="1.4.2" class="anchored" data-anchor-id="r-and-rstudio-installation"><span class="header-section-number">1.4.2</span> R and RStudio Installation</h3>
-<p>R is both a programming language and software environment - in the form of RStudio - originally designed for statistical computing and graphics. R’s great strength is that it is open-source, can be used on any computer operating system, and is free for anyone to use and contribute to. Because of this, it is rapidly becoming the statistical language of choice for many academics and has a very large user community with people constantly contributing new packages to carry out all manner of statistical, graphical, and importantly for us, geographical tasks.</p>
-<p>Installing R takes a few relatively simple steps involving two programmes. First there is the R programme itself. Follow these steps to get it installed on your computer:</p>
+<p>R is a programming language originally designed for conducting statistical analysis and creating graphics. R’s great strength is that it is open-source, can be used on any computer operating system, and is free for anyone to use and contribute to. Because of this, it has rapidly become the statistical language of choice for many academics and has a large user community with people constantly contributing new packages to carry out all manner of statistical, graphical, and importantly for us, geographical tasks.</p>
+<p>Installing R takes a few relatively simple steps involving two pieces of software. First there is the R programme itself. Follow these steps to get it installed on your computer:</p>
 <ol type="1">
-<li>Navigate in your browser to your nearest CRAN mirror: <a href="https://cran.ma.imperial.ac.uk/">[Link]</a></li>
-<li>If you use a Windows computer, click on <em>Download R for Windows</em>. Then click on <em>base</em>. Download and install <strong>R 4.3.x for Windows</strong>. If you use a Mac computer, click on <em>Download R for macOS</em> and download and install <strong>R-4.3.x.arm64.pkg</strong> for Apple silicon Macs and <strong>R-4.3.x.x86_64.pkg</strong> for older Intal Macs.</li>
+<li>Navigate in your browser to the download page: <a href="https://cran.ma.imperial.ac.uk/">[Link]</a></li>
+<li>If you use a Windows computer, click on <em>Download R for Windows</em>. Then click on <em>base</em>. Download and install <strong>R 4.3.x for Windows</strong>. If you use a Mac computer, click on <em>Download R for macOS</em> and download and install <strong>R-4.3.x.arm64.pkg</strong> for <a href="https://support.apple.com/en-gb/HT211814">Apple silicon Macs</a> and <strong>R-4.3.x.x86_64.pkg</strong> for older <a href="https://support.apple.com/en-gb/HT211814">Intel-based Macs</a>.</li>
 </ol>
-<p>That is it! You now have installed the latest version of R on your own machine. However, to make working with R a little bit easier we also need to install something called an Integrated Development Environment (IDE). We will use RStudio:</p>
+<p>That is it! You now have installed R onto your own machine. However, to make working with R a little bit easier we also need to install something called an Integrated Development Environment (IDE). We will use <a href="https://posit.co/download/rstudio-desktop/">RStudio Desktop</a>:</p>
 <ol type="1">
 <li>Navigate to the official webpage of RStudio: <a href="https://posit.co/download/rstudio-desktop/#download">[Link]</a></li>
 <li>Download and install RStudio Desktop on your computer (<strong>free version!</strong>)</li>
 </ol>
-<p>After this, start RStudio to see if the installation was successful and no errors are shown after start up.</p>
+<p>After this, start RStudio to see if the installation was successful. If no errors are shown after start starting the programme, you are ready to go.</p>
 </section>
 <section id="ucl" class="level3" data-number="1.4.3">
 <h3 data-number="1.4.3" class="anchored" data-anchor-id="ucl"><span class="header-section-number">1.4.3</span> UCL Desktop and RStudio Server</h3>
-<p>As an alternative to installing QGIS and R with RStudio onto your personal device, there are some other options. Firstly, both programmes are available through <a href="https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere">Desktop@UCL Anywhere</a> as well as all UCL computers on campus. In case of R, there is also an RStudio server version available which you can access through your web browser: <a href="https://rstudio.data-science.rc.ucl.ac.uk/">[Link]</a></p>
-<p>You should be able to log in with your normal UCL username and password. After logging in, you should see the RStudio interface appear.</p>
+<p>There are two alternatives to installing QGIS and R with RStudio onto your personal device. First, both programmes are available through <a href="https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere">Desktop@UCL Anywhere</a> as well as all UCL computers on campus. Second, specifically to R, we have a RStudio server available which you can access through your web browser: <a href="https://rstudio.data-science.rc.ucl.ac.uk/">[Link]</a></p>
+<p>You should be able to log onto the RStudio server with your UCL username and password. After logging in, you should see the RStudio interface appear.</p>
 <div class="cell" data-hash="01-introduction_cache/html/fig-rstudio-interface_c45cc89fb83222fbf1fcf56620426e75">
 <div class="cell-output-display">
 <div id="fig-rstudio-interface" class="quarto-figure quarto-figure-center anchored">
@@ -332,17 +339,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>If it is the first time you log on to RStudio server you may only see the RStudio interface appear once you have clicked on the <em>start a new session</em> button. More importantly: if you are not on campus, RStudio server will only work with an active Virtual Private Network (VPN) connection that links your personal computer into UCL’s network. Details on setting up a VPN connection can be found in UCL’s VPN connection guides: <a href="https://www.ucl.ac.uk/isd/services/get-connected/ucl-virtual-private-network-vpn">[Link]</a></p>
+<p>If it is the first time you log on to RStudio server you may only see the RStudio interface appear once you have clicked on the <strong>start a new session</strong> button. More importantly: if you are not on campus, RStudio server will only work with an active Virtual Private Network (VPN) connection that links your personal computer into UCL’s network. Details on setting up a VPN connection can be found in UCL’s VPN connection guides: <a href="https://www.ucl.ac.uk/isd/services/get-connected/ucl-virtual-private-network-vpn">[Link]</a></p>
 </div>
 </div>
 </div>
 </section>
 <section id="r-package-installation" class="level3" data-number="1.4.4">
 <h3 data-number="1.4.4" class="anchored" data-anchor-id="r-package-installation"><span class="header-section-number">1.4.4</span> R package installation</h3>
-<p>Now we have installed or have access to QGIS and R, we need to customise R. Many useful R function come in packages, these are free libraries of code written and made available by other by R users. This includes packages specifically developed for data cleaning, data wrangling, visualisation, mapping, and spatial analysis. To save us some time, we will install all R packages that we will need over the next ten weeks in one go. Now copy and paste the following code into the <strong>console</strong> window. You can execute the code by hitting <strong>Enter</strong>. This may take a while.</p>
-<div class="cell" data-warnings="true" data-hash="01-introduction_cache/html/01-install-libaries_fcb59cd474a6ea7f3256575e11ae1bdf">
+<p>Now we have installed QGIS and R onto our machines / have access to QGIS and R through UCL’s resources, we need to customise R. Many useful R functions come in packages, these are free libraries of code written and made available by other R users. This includes packages specifically developed for data cleaning, data wrangling, visualisation, mapping, and spatial analysis. To save us some time, we will install <strong>all R packages that we will need</strong> over the next ten weeks in one go. Start RSTudio, and copy and paste the following code into the <strong>console</strong> window. You can execute the code by hitting <strong>Enter</strong>. Depending on your computer’s specificiations and the internet connection, this may take a while.</p>
+<div class="cell" data-warnings="true" data-hash="01-introduction_cache/html/01-install-libaries_7c6d4562bcabed0a71f3379476fc7110">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install packages</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"sf"</span>, <span class="st">"tmap"</span>, <span class="st">"terra"</span>, <span class="st">"dodgr"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
@@ -350,12 +362,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Even if you have used R or RStudio Server before and already installed some of the packages in the above list, do re-install all packages by running the code above to make sure you have the latest versions. Legacy installations that have not been updated may lay lead to problems when going through the tutorials.</p>
+<p>Even if you have used R or RStudio Server before and already installed some of the packages in the above list, do re-install all packages by running the code above to make sure you have the latest versions. Legacy installations that have not been updated may cause errors when running the code in this workbook.</p>
 </div>
 </div>
 </div>
-<p>Once you have installed the packages, we need to check whether we can in fact load them into our R session. Copy and paste the following code into the <strong>console</strong>, and execute by hitting <strong>Enter</strong> again.</p>
-<div class="cell" data-warnings="true" data-verbose="true" data-hash="01-introduction_cache/html/01-load-libaries_bbee57a149878f9f6d3a874d6e09e6ea">
+<p>Once you have installed the packages, we need to check whether we can in fact load them into R. Copy and paste the following code into the <strong>console</strong>, and execute by hitting <strong>Enter</strong> again.</p>
+<div class="cell" data-warnings="true" data-verbose="true" data-hash="01-introduction_cache/html/01-load-libaries_300d8abc87e52b537f4d76929e2c6a6a">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
@@ -363,13 +379,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dodgr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p>You will see some information printed to your console but as long as you do not get a message that is similar to <code>Error: package or namespace load failed for &lt;packagename&gt;</code> or <code>Error: package '&lt;packagename&gt;' could not be loaded</code> all should be fine.</p>
 </section>
 <section id="a-note-on-arcgis" class="level3" data-number="1.4.5">
 <h3 data-number="1.4.5" class="anchored" data-anchor-id="a-note-on-arcgis"><span class="header-section-number">1.4.5</span> A note on ArcGIS</h3>
-<p><a href="https://www.esri.com/en-us/arcgis/products/arcgis-pro/overview">ArcGIS Pro</a> is the main commercial GIS software that you may have already used or seen/heard about through other modules or even job adverts. We do not use ArcGIS Pro in our Practicals for several reasons:</p>
+<p><a href="https://www.esri.com/en-us/arcgis/products/arcgis-pro/overview">ArcGIS Pro</a> is the main commercial GIS software that you may have already used or seen/heard about through other modules or even job adverts. We do not use ArcGIS Pro in this module for the following reasons:</p>
 <ul>
-<li>Computing requirements for ArcGIS Pro are substantial and it <strong>only</strong> operates on the Windows Operating System. For Mac or Linux users, using ArcGIS Pro would require using either a Virtual Machine, Docker Installation, or running a copy of Windows OS on a separate partition of your hard drive.</li>
+<li>Computing requirements for ArcGIS Pro are substantial and it <strong>only</strong> operates on the Windows Operating System. For Mac or Linux users, using ArcGIS Pro would require using a Virtual Machine, Docker Installation, or a separate copy of Windows OS running on a separate partition of your hard drive.</li>
 <li>ArcGIS is <strong>proprietary</strong> software, which means you need a license to use the software. For those of us in education, the University covers the cost of this license, but when you leave, you will need to pay for a personal license to continue using the software and repeat any analysis you have used the software for.</li>
 <li>Whilst ArcPro can use pure <a href="https://www.python.org/">Python</a> (and even R) as a programming language within it through scripts and notebooks, it primarily relies on its own <strong>ArcPy</strong> and <strong>ArcGIS API for Python</strong> packages to run the in-built tools and analytical functions. To use these packages, you still need a license which makes it difficult to share your code with others if they do not have their own ArcGIS license.</li>
 </ul>

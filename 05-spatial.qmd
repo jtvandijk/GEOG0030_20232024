@@ -1,0 +1,988 @@
+# Programming for Spatial Analysis
+This week we are going to look at how to use R and RStudio as a piece of GIS software. Like last week, we will be completing an analysis on our London theft crime dataset. However, rather than solely looking at changing crime rates over time, we will add a spatial component to our analysis: how has crime changed across our LSOAs over the years.
+
+## Lecture slides {#slides-w05}
+The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var slides.week05 >}})
+
+## Reading list {#reading-w05}
+#### Essential readings
+- Longley, P. *et al.* 2015. Geographic Information Science & systems, **Chapter 13**: *Spatial Analysis*. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+- Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, **Chapter 2**: *Geographic Data in R*. [[Link]](https://geocompr.robinlovelace.net/spatial-class.html)
+- Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, **Chapter 3**: *Attribute data operations*. [[Link]](https://geocompr.robinlovelace.net/attr.html)
+- Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, **Chapter 8**: *Making maps with R*. [[Link]](https://geocompr.robinlovelace.net/adv-map.html)
+
+#### Suggested readings 
+- Poorthuis, A. and Zook, M. 2020. Being smarter about space: Drawing lessons from spatial science. *Annals of the American Association of Geographers* 110(2): 349-359. [[Link]](https://doi.org/10.1080/24694452.2019.1674630)
+- De Smith, M, Goodchild, M. and Longley, P. 2018. Geospatial analsyis. A Comprehensive guide to principles techniques and software tools. **Chapter 9**: *Big Data and geospatial analysis*. [[Link]](https://arxiv.org/pdf/1902.06672.pdf)
+- Radil, S. 2016. Spatial analysis of crime. *The Handbook of Measurement Issues in Criminology and Criminal Justice* 536-554. [[Link]](https://doi.org/10.1002/9781118868799.ch24)
+
+## Crime in London III
+To analyse crime by LSOA over time, we will go through several steps of data preparation ('data wrangling') before joining our data to LSOA polygons. We will start by taking our `all_theft_df` dataframe and wrangle it to produce a dataframe with for each LSOA the number of crimes for each month of data. We then join this dataframe to our `LSOA2021_London` GeoPackage and then produce a **crime rate** for each month, for each LSOA. Lastly, we will create a map of the crime rate in London for January 2021 using the `tmap` library.
+
+### Spatial analysis set up
+Open a new script within your GEOG0030 project and save this script as `wk5-crime-spatial-processing.r`. At the top of your script, add the following metadata (substitute accordingly):
+
+```{r}
+#| label: 05-load-styler
+#| classes: styled-output
+#| echo: False
+#| eval: True
+# load styler
+library(styler)
+```
+
+```{r}
+#| label: 05-script-title
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: False
+#| filename: "R code"
+# Analysing monthly crime in 2021 by LSOA
+# Followed by analysis of data on monthly basis
+# Date: January 2024
+# Author: Justin 
+```
+
+Now let us add **all** of the libraries we will be using today to the top of our script:
+
+```{r}
+#| label: 05-load-libraries
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# load libraries
+library(tidyverse)
+library(sf)
+library(tmap)
+```
+
+```{r}
+#| label: 05-tmap-settings
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# ensure tmap is set to plot
+tmap_mode("plot")
+```
+
+You have already been introduced to the `tidyverse` library last week, but now we are adding `sf` to read and load our spatial data as well as `tmap` to visualise our spatial data. We are going to load both of the datasets we need today straight away: the `crime-theft-2021-london.csv` we saved last week and the `LSOA2021_London.gpkg` we created in Week 3.
+
+First, let's load our `crime-theft-2021-london.csv` into a dataframe called `all_theft_df`. 
+
+```{r}
+#| label: 05-load-csv
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# read in our csv file
+all_theft_df <- read_csv("data/raw/crime/crime-theft-2021-london.csv")
+
+# filter out crimes that have no location information
+all_theft_df <- filter(all_theft_df, location != "No Location")
+``` 
+
+We can double-check what our `csv` looks like by either viewing our data or simply calling the `head()` function on our dataframe:
+ 
+```{r}
+#| label: 05-head-csv
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# inspect
+head(all_theft_df)
+``` 
+
+You should see these rows display in your console. Great, the dataset looks as we remember. Next, let's add our `LSOA2021_London.gpkg`. We will store this as a variable called `lsoa_population` and use the `sf` library to load the data:
+
+```{r}
+#| label: 05-load-shp
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# read in our LSOA GeoPackage
+lsoa_population <- st_read("data/raw/boundaries/LSOA2021_London.gpkg")
+``` 
+
+You should also see the `lsoa_population` variable appear in your environment window.
+
+### Interacting with spatial data
+As this is the first time we have loaded spatial data into R, let's go for a little exploration of how we can interact with our spatial dataframe. The first thing we want to do when we load spatial data is, of course, map it to confirm if everything is in order. To do this, we can use a really simple command from R’s `base` library: `plot()`. As we do not necessarily want to plot this data everytime we run this script in the future, we can type this command into the console:
+
+```{r}
+#| label: 05-plot-lsoapop
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# plot our LSOA data
+plot(lsoa_population)
+``` 
+
+You should see your `lsoa_population` plot appear in your **Plots** window - as you will see, your LSOA dataset is plotted 'thematically' by each of the fields within the dataset, including the `pop2021` field we created two weeks ago. 
+
+::: { .callout-warning}
+This `plot()` function is not to be used to make maps but can be used as a quick way of viewing our spatial data.
+:::
+
+We canfind out more information about our `lsoa_population` data. Let's next check out our class of our data. Again, **in the console** type:
+
+```{r}
+#| label: 05-maxprint
+#| classes: styled-output
+#| echo: False
+#| eval: True
+options(max.print=200)
+``` 
+
+```{r}
+#| label: 05-class-lsoapop
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# inspect
+class(lsoa_population)
+``` 
+
+We should see our data is an `sf` dataframe, which is great because it means we can utilise our `tidyverse` libraries with our `lsoa_population`. We can also use the `attributes()` function we looked at last week to find out a little more about the spatial part of our dataframe:
+
+```{r}
+#| label: 05-att-lsoapop
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# inspect
+attributes(lsoa_population)
+``` 
+
+We can see how many rows we have, the names of our rows and a few more pieces of information about our `lsoa_population` data, for example, we can see that the specific `$sf_column` i.e. our spatial information) in our dataset is called `geom`.
+
+We can investigate this column a little more by **selecting** this column within our console to return. In the **console** type:
+
+```{r}
+#| label: 05-geom-lsoapop
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# inspect geometry column
+lsoa_population$geom
+``` 
+
+You should see new information about our `geom` column display in your console. From this selection we can find out the dataset's:
+
+- geometry type
+- dimension
+- `bbox` (bounding box)
+- CRS (coordinate reference system)
+- definition of the first five geometries of the dataset
+
+This is really useful as one of the first things we want to know about our spatial data is what *coordinate system* it is projected with. As we should know, our `lsoa_population` data was created and exported within *British National Grid*, therefore seeing the EPSG code of British National Grid - 27700 - as our CRS confirms to us that R has read in our dataset correctly.
+
+We can also find out this information using the `st_crs()` function from the `sf` library.
+
+```{r}
+#| label: 05-crs-lsoapop
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# inspect CRS
+st_crs(lsoa_population)
+``` 
+
+You notice that we actually get a lot more information about our CRS beyond simply the code using this function. This function is really important to us as users of spatial data as it allows us to retrieve and set the CRS of our spatial data when the projection is not specified in the data but we do know what projection system should be used.
+
+The final thing we might want to do before we get started with our data analysis is to simply look at the data table part of our dataset, i.e. what we called the **Attribute Table** in QGIS, but here it is simply the table part of our dataframe. To do so, you can either use the `View()` function in the console or click on the `lsoa_population` variable within our environment.
+
+### Getting our crime data into shape
+Now we have our data loaded, our next step is to process our data to create what we need as our final output for analysis: a spatial dataframe that contains a **theft crime rate** for each LSOA for each month in 2021. We only two types of spatial or spatially-relevant data in our `all_theft_df` that can help us with this:
+
+1) The approximate WGS84 **latitude** and **longitude**.
+2) The **Lower Super Output Area (LSOA)** in which the crime it occurred.
+
+From Week 3's practical, we know we can map our points using the coordinates and then provide a count by using a **point-in-polygon** operation, but because the crime data already have an LSOA code we will be using an **Attribute Join** today.
+
+::: { .callout-warning}
+Conducting an **Attribute Join** itself is not not very complicated, we could simply use the LSOA codes, right? Not entirely. As we already encountered in Week 2, there are differences between the 2011 and 2021 LSOA boundaries. Whilst the LSOA codes look similar, these two datasets do not match up completely and should therefore **not** be joined together directly. The [data.police.uk](https://data.police.uk/) website suggests that only from June 2023, the 2021 LSOA codes are used and this means that our dataset still contains 2011 LSOA codes.
+:::
+
+#### Attribute join
+To get the number of crimes that occurred in each LSOA linked to our population data, we need to link them together. However, where our `lsoa_population` dataset is based on 2021 LSOA geographies, the `all_theft_df` dataset is linked to 2011 LSOA geographies. From a GIScience perspective, there are many ways to do this but the most straightforward is to use a **look-up table**. Look-up tables are an extremely common tool in database management and programming, providing a very simple approach to storing additional information about a feature (such as a row within a dataframe) in a separate table that can quite literally be 'looked up' when needed for a specific application. 
+
+To be able to do this, we  need to find a look-up table that contains a list of 2011 LSOAs and their corresponding 2021 LSOAs. Lucky for us the [Office for National Statistics](https://www.ons.gov.uk/) provides this for us on their Open Geography Portal. They have a table that contains exactly what we're looking for: **LSOA (2011) to LSOA (2021) to Local Authority District (2022) Lookup for England and Wales (Version 2)**. As the description on the website tells us: 
+
+> "*This is an exact fit lookup file between Lower layer Super Output Areas as at December 2011 and Lower layer Super Output Areas as at December 2021 and Local Authority Districts as at December 2022 in England and Wales. This product has been provided with a 'change indicator' field, that define the lookup between 2011 and 2021 LSOA. This field indicates which super output areas have changed between 2011 and 2021.*"
+
+1. Download the ONS look-up table: [[Link]](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/lsoa11-lsoa21-lookup.zip)
+2. Unzip and move this file to your **data** -> **raw** -> **boundaries** folder.
+3. Load the dataset using the `read_csv()` function. 
+
+```{r}
+#| label: 05-lookup-csv
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# read the lookup table
+lsoa_lookup <- read_csv("data/raw/boundaries/lsoa11_lsoa21.csv")
+``` 
+
+Now we have our lookup table, we can assign a relevant 2021 LSOA code to each of the 2011 LSOA codes in our `all_theft_df` dataframe. To do so, we are going to use one of the `join()` functions from the `dplyr` library.
+
+::: { .callout-note}
+We have already learnt how to complete **Attribute Joins** in QGIS via the **Joins** tab in the Properties window so it should come of no surprise that we can do exactly the same process within R. To conduct a join between two dataframes (spatial or non-spatial, it does not matter), we use the same principles of selecting a **unique but matching** field within our dataframes to join them together.
+
+Within R, you have two options to complete a dataframe join:
+
+- The **first** is to use the `base` R library and its `merge()` function: 
+    + By default the dataframes are merged on the columns with names they both have, but you can also provide the columns to match separate by using the parameters: `by.x` and `by.y`.
+    + Your code would look something like: `merge(x, y, by.x = "xColName", by.y = "yColName")`, with `x` and `y` each representing a dataframe.
+    + The rows in the two dataframes that match on the specified columns are extracted, and joined together. 
+    + If there is more than one match, all possible matches contribute one row each, but you can also tell merge whether you want all rows, including ones without a match, or just rows that match, with the arguments `all.x` and `all`.
+- The **second** option is to use the `dplyr` library:
+    + `dplyr` uses [SQL](https://en.wikipedia.org/wiki/SQL) database syntax for its join functions. 
+    + There are **four types** of joins possible with the `dplyr` library.
+        + `inner_join()`: includes all rows that exist both within `x` and `y.`
+        + `left_join()`: includes all rows in `x.`
+        + `right_join()`: includes all rows in `y.`
+        + `full_join()`: includes all rows in `x` and `y`.
+    + Figuring out which one you need will be on a case by case basis.
+    + Again, if the join columns have the same name, all you need is `left_join(x, y)`.
+    + If they do not have the same name, you need a `by` argument, such as `left_join(x, y, by = c("xName" = "yName"))`. Left of the equals is the column for the first dataframe, right of the equals is the name of the column for the second dataframe.
+:::    
+
+As we have seen from the list of fields above, we know that we have at least **two** fields that should match across the datasets: our **LSOA codes** and **LSOA names**. We of course need to identify the precise fields that contain these values in each of our dataframes, i.e. `LSOA11CD` and `LSOA11NM` in our `lsoa_lookup` dataframe and `lsoa_code` and `lsoa_name` in our `all_theft_df` dataframe, but once we know what fields we can use, we can go ahead and join our two dataframes together. Well often. 
+
+::: { .callout-warning}
+If you have a **one-to-one** lookup table, e.g. one `LSOA11` geography corresponds to exactly one `LSOA21` entry, this process is very easy. However, between the 2011 and 2021 Census different changes have happened: some `LSOA11` have been split into multiple `LSOA21` polygons and in other cases `LSOA11` have been merged together into a single `LSOA21` polygon. This means we need to do some extra work to make sure we not artificially change the number of crimes that are captured in the data.
+:::
+
+Unfortunately, the LSOA lookup does not link 2011 LSOAs to 2021 LSOAs on a **one-to-one** basis. In fact, [different types of relationships exists](https://geoportal.statistics.gov.uk/datasets/e99a92fb7607495689f2eeeab8108fd6_0/about) that are flagged in the `CHGIND` column:
+
+| Type  | Description |
+| :-:   | :-----------|
+| `U`   | No Change from 2011 to 2021. This means that direct comparisons can be made between these 2011 and 2021 LSOA. |
+| `S`   | Split. This means that the 2011 LSOA has been split into two or more 2021 LSOA. There will be one record for each of the 2021 LSOA that the 2011 LSOA has been split into. This means direct comparisons can be made between estimates for the single 2011 LSOA and the estimates from the aggregated 2021 LSOA.|
+| `M`   | Merged. 2011 LSOA have been merged with another one or more 2011 LSOA to form a single 2021 LSOA. This means direct comparisons can be made between the aggregated 2011 LSOAs’ estimates and the single 2021 LSOA’s estimates. |
+| `X`   | The relationship between 2011 and 2021 LSOA is irregular and fragmented. This has occurred where 2011 LSOA have been redesigned because of local authority district boundary changes, or to improve their social homogeneity. These can’t be easily mapped to equivalent 2021 LSOA like the regular splits (`S`) and merges (`M`), and therefore like for like comparisons of estimates for 2011 LSOA and 2021 LSOA are not possible. |
+
+Although there are different ways of going about this, we will: 
+
+- Divide total crimes for 2011 LSOAs that have been split equally across 2021 LSOAs.
+- Combine total crimes for LSOAs that have been merged.
+- Ignore the suggested 2021 LSOA for LSOAs for which there has been an irregular or fragmented relationship.
+
+::: { .callout-note}
+In situations like this when you actually have the point location data, the most accurate solution is to conduct a point-in-polygon analysis. However, because we do not always have access to point location data and you are likely to encounter situations where you need a lookup, we will proceed with our **Attribute Join**
+:::
+
+```{r}
+#| label: 05-adjust weightings
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# for unchanged LSOAs keep weightings of individual crimes the same 
+lsoa_lookup_same  <- lsoa_lookup |> filter(CHGIND == 'U') |>
+  group_by(LSOA11CD) |>
+  mutate(n=n())
+
+# for merged LSOAs: keep weightings of individual crimes the same 
+lsoa_lookup_merge <- lsoa_lookup |> filter(CHGIND == 'M') |>
+  group_by(LSOA11CD) |>
+  mutate(n=n())
+
+# for split LSOAs: weigh individual crimes proportionally to the number of 2021 LSOAs 
+lsoa_lookup_split <- lsoa_lookup |> filter(CHGIND == 'S') |>
+  group_by(LSOA11CD) |>
+  mutate(n=1/n())
+
+# re-combine the lookup with updated weightings
+lsoa_lookup <- rbind(lsoa_lookup_same,
+                     lsoa_lookup_merge,
+                     lsoa_lookup_split)
+
+# inspect
+lsoa_lookup
+
+```
+
+::: { .callout-note}
+The code above uses something called a **pipe** function: `|>`. A pipe is used to push the outcome of one function/process into anothe automatically. It might sound a little confusing at first, but once you start using it, it really can make your code quicker and easier to read and write. Most importantly: it stops us from having to create lots of additional variables to store outputs along the way. There is nothing wrong with not using the pipe and, in fact, sometimes it is better not to use it as we are not able to check the results of function that are called 'in the middle' of the piped workflow.
+:::
+
+Now we adjusted our weightings, we need to decide which dataset is going to be our target dataset (i.e. the dataset we attach new data too). It makes sense to use the `all_theft_df` because we need to keep **all records** in this dataset, but we do not necessarily need **all records** in the `lsoa_lookup` dataset for LSOAs for which no crime has been recorded.
+
+```{r}
+#| label: 05-lsoa-lookup-join
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# join to crime data
+all_theft_df_join <- all_theft_df |> 
+  left_join(lsoa_lookup, by = c("lsoa_code" = "LSOA11CD")) |>
+  filter(!is.na(LSOA21CD))
+``` 
+
+::: { .callout-note}
+Besides joining our LSOA lookup table to our data, we also filter out all crime records that have not been assigned a 2021 LSOA code; these occur because not all crimes in the original dataset have a location assigned to them.
+:::
+
+You should be able to determine that `all_theft_df_join` contains **20** variables: **12** from `all_theft_df`, plus **8** from `lsoa_lookup.` This seems to be fine and the join was succesful. However, if we were to count the number of rows in our original `all_theft_df` dataframe and compare it to our `all_theft_df_join` dataframe, we would notice something strange: our number of crimes have increased somehow.
+
+```{r}
+#| label: 05-crime-increase
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# number of crimes original dataset
+nrow(all_theft_df)
+
+# number of crimes joint dataset
+nrow(all_theft_df_join)
+``` 
+
+The change in number of crimes is caused by our **one-to-many** relationships: one 2011 LSOA can relate to multiple 2021 LSOAs and therewith this one row of data gets duplicated. Fortunately, we saw this coming and we already adjusted the weightings:
+
+```{r}
+#| label: 05-crime-is-fine
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# number of crimes original dataset
+nrow(all_theft_df)
+
+# number of actual crimes joint dataset
+sum(all_theft_df_join$n)
+```
+
+::: { .callout-}
+Whereas the number of crimes is very similar, there is still a difference of **10** crimes. This seems to be due to a data error where the 2011 LSOA columns in actual fact has a 2021 LSOA code. We choose here to ignore these 10 data points. 
+:::
+
+Now we have our joined dataset, we can move forward with some more data wrangling. Before we do this, it would be good if we could clean up our dataframe to only the relevant data that we need moving forward. To be able to 'clean' our dataframe, we have two choices in terms of the code we might want to run. First, we could look to drop certain columns from our dataframe. Alternatively, we could create a subset of the columns we want to keep from our dataframe and store this as a new variable or simply overwrite the currently stored variable. To do either of these types of data transformation, we need to know more about how we can interact with a dataframe in terms of **indexing**, **selecting** and **slicing**.
+
+### Data wrangling
+Everything we will be doing today as we progress with our dataframe cleaning and processing relies on us understanding how to interact with and transform our dataframe. This interaction itself relies on knowing about how **indexing** works in R as well as how to **select** and **slice** your dataframe to extract the relevant cells, rows or columns and then manipulate them. Whilst there are traditional programming approaches to this using the base R library, `dplyr` is making this type of data wrangling much easier. The following video provides an excellent explanation from both a `base` R perspective as well as using the `dplyr` library.
+
+#### Selection with base R
+The most basic approach to selecting and slicing within programming relies on the principle of using **indexes** within our data structures. Indexes actually apply to any type of data structure, from single atomic vectors to complicated dataframes as we use here. Indexing is the numbering associated with each element of a data structure. For example, if we create a simple vector that stores several strings:
+
+```{r}
+#| label: 05-select-1a
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# store a simple vector of strings
+simple_vector <- c("Aa", "Bb", "Cc", "Dd", "Ee", "Ff", "Gg")
+```
+
+R will assign each element (i.e. string) within this simple vector with a number: `Aa` = 1, `Bb` = 2, `Cc` = 3 and so on. Now we can go ahead and select each element by using the base selection syntax which is using square brackets after your element's variable name, as so:
+
+```{r}
+#| label: 05-select-1b
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select the first element of our variable
+simple_vector[1]
+```
+
+Which should return the first element, our first string containing `Aa`. You could change the number in the square brackets to any number up to 7 and you would return each specific element in our vector. However, say you do not want the first element of our vector but the second to fifth elements. To achieve this, we conduct what is known in programming as a **slicing** operation, where, using the `[]` syntax, we add a colon `:` to tell R where to **start** and where to **end** in creating a selection, known as a **slice**:
+
+```{r}
+#| label: 05-slice 1
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select the second to fifth element of our vector
+simple_vector[2:5]
+```
+
+You should now see our 2nd to 5th elements returned. Now what is super cool about selection and slicing is that we can add in a simple **- (minus)** sign to essentially reverse our selection. So for example, we want to return everything **but** the 3rd element:
+
+```{r}
+#| label: 05-slice-2
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select everything but the third element of our vector
+simple_vector[-3]
+```
+
+And with a slice, we can use the minus to slice **out** parts of our vector, for example, remove the 2nd to the 5th elements (note the use of a minus sign for **both**):
+
+```{r}
+#| label: 05-slice-3
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select outside the second to the fifth element of our vector
+simple_vector[-2:-5]
+```
+
+::: { .callout-note}
+This use of **square brackets** for selection syntax is common across many programming languages, including Python, but there are often some differences you will need to be aware of if you pursue other languages. For example:
+
+- Python always starts its index from `0`! Whereas we can see here with R, our index starts at `1`.
+- R is unable to index the characters within strings. This is something you can do in Python, but in R, we will need to use a function such as `substring()`.
+:::
+
+We can also apply these selection techniques to dataframes, but we will have a little more functionality as our dataframes are made from both **rows** and **columns**. This means when it comes to selections, we can utilise an amended selection syntax that follows a specific format to select individual rows, columns, slices of each, or just a single cell: `[rows, columns]`
+
+There are many ways we can use this syntax, which we will show below using our `lsoa_lookup` dataframe. To select a single column from your dataframe, you can use one of two approaches. First we can follow the syntax above carefully and simply set our column parameter in our syntax above to the number 2:
+
+```{r}
+#| label: 05-select-from-df1
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select the second column from the dataframe
+lsoa_lookup[,2]
+```
+
+You should see your second column display in your console. Second, we can actually select our column by only typing in the number (no need for the comma). By default, when there is only **one** argument present in the selection brackets, R will select the column from the dataframe, not the row:
+
+```{r}
+#| label: 05-select-from-df2
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select the second column from the dataframe
+lsoa_lookup[2]
+```
+
+To **select a specific row**, we need to add in a comma after our number:
+
+```{r}
+#| label: 05-select-from-df3
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select the second row from the dataframe
+lsoa_lookup[2,]
+```
+
+You should see your second row appear. Now, to select a specific cell in our dataframe, we simply provide both arguments in our selection parameters:
+
+```{r}
+#| label: 05-select-from-df4
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select the second column, row from the dataframe
+lsoa_lookup[2,2]
+```
+
+What is also helpful in R is that we can select our columns by their field names by passing these field names to our selection brackets as a string. For a single column:
+
+```{r}
+#| label: 05-select-from-df5
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select the second column from the dataframe
+lsoa_lookup["LSOA11NM"]
+```
+
+Or for more than one columns, we can supply a combined vector:
+
+```{r}
+#| label: 05-select-from-df6
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select the first, second column from the dataframe
+lsoa_lookup[c("LSOA11CD", "LSOA11NM")]
+```
+
+To retrieve the second to the fourth column in our dataframe, we can use:
+
+```{r}
+#| label: 05-select-from-df7
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select the second to the fourth column from our dataframe
+lsoa_lookup[,2:4]
+
+# select the second to the fourth column from our dataframe
+lsoa_lookup[2:4]
+```
+
+We can also provide a combined list of the columns we want to extract:
+
+```{r}
+#| label: 05-select-from-df8
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select the second to the seventh columns from our dataframe
+lsoa_lookup[c(2, 3, 4, 7)]
+```
+
+We can apply this slicing approach to our rows:
+
+```{r}
+#| label: 05-select-from-df9
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select the second to the fourth row from our dataframe
+lsoa_lookup[2:4,]
+```
+
+As well as a negative selection:
+
+```{r}
+#| label: 05-select-from-df10
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select outside the second to the fourth row from our dataframe
+lsoa_lookup[-2:-4,]
+```
+
+#### Selection with dplyr
+Instead of using the square brackets `[]` syntax, we can also use `dplyr` functions that we can use to select or slice our dataframes accordingly:
+
+- For columns, we use the `select()` function that enables us to select one or more columns using their column names.
+- For rows, we use the `slice()` function that enables us to select one or more rows using their position (i.e. similar to the process above).
+
+For **both** functions, we can also use the negative `-` approach we saw in the base R approach to 'reverse a selection'.
+
+```{r}
+#| label: 05-select-dplyr-df1
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# select column two
+dplyr::select(lsoa_lookup, 2)
+
+# select everything outside column two
+dplyr::select(lsoa_lookup, -2)
+
+# select the LSOA11CD column
+dplyr::select(lsoa_lookup, LSOA11CD)
+
+# select everything outside the LSOA11CD
+dplyr::select(lsoa_lookup, -LSOA11CD)
+```
+
+In addition to these index-based functions, within `dplyr`, we also have `filter()` that enables us to easily filter rows within our dataframe based on specific conditions. In addition, `dplyr` provides lots of functions that we can use directly with these selections to apply certain data wrangling processes to only specific parts of our dataframe, such as `mutate()` or `count()`.
+
+::: { .callout-note}
+We will be using quite a few of these functions in the remaining data wrangling section below - plus throughout our module, so it is highly recommend to download the `dplyr` [cheat sheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) to keep track of what functions we are using and why!
+:::
+
+As we have seen above, whilst there are two approaches to selection using either `base` R library or the `dplyr` library, we will continue to focus on using functions directly from the `dplyr` library to ensure efficiently and compatibility within our code. Within `dplyr`, as you also saw, whether we want to keep or drop columns, we always use the same function: `select()`.
+
+To use this function, we provide our function with a single or list of the columns we want to keep or if we want to drop them, we use the same approach, but add a `-` before our selection. Let’s see how we can extract just the relevant columns we will need for our future analysis. Note that we will overwrite our `all_theft_df_join` variable.
+
+In your script, add the following code to extract only the relevant columns we need for our future analysis:
+
+```{r}
+#| label: 05-select-relevant-cols
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# reduce our dataframe using the select function
+all_theft_df_join <- dplyr::select(all_theft_df_join, crime_id, month, longitude, latitude, lsoa_code, lsoa_name, crime_type, LSOA21CD, LSOA21NM)
+``` 
+
+You should now see that your `all_theft_df_join` dataframe should only contain nine variables. You can go and view this dataframe or call the `head()` function on the data in the console if youlike to check out this new formatting.
+
+### Aggregate crime by LSOA
+To aggregate our crime by LSOA for each month in 2021, we need to use a combination of `dplyr` functions. First, we need to **group** our crime by each 2021 LSOA and then count - by month - the number of thefts occurring in each LSOA. To do so, we will use the `group_by()` function and the `count()` function. This is the same `group_by()` function we already used to adjust the LSOA weightings. The `group_by()` function creates a 'grouped' copy of the table (in memory), then any `dplyr` function used on this grouped table will manipulate each group separately (i.e. our count by month manipulation) and then **combine the results** to a single output.
+
+If we solely run the `group_by()` function, we won't really see this effect on its own, instead we need to add the `count()` function, which counts the number of rows in each group defined by the variables provided within the function, in our case, `month`:
+
+```{r}
+#| label: 05-group-by-count
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+all_theft_df_month <- group_by(all_theft_df_join, LSOA21CD) %>% count(month)
+``` 
+
+To understand our output, go ahead and `View()` the variable. You should see that we have ended up with a new table that lists each LSOA (by the `LSOA11CD` column) twelve times, to detail the number of thefts for each month - with the months represented as a single field. What we would really prefer is to have our crime count detailed as one field for each individual month, i.e. `2021-01` as a single field, then `2021-02`, etc.
+
+To change the *shape* of our data, we are going to need to use `tidyr`'s pivot functions. In the `tidyr` library, we have the choice of two `pivot()` functions: `pivot_longer()` or `pivot_wider()`.
+
+- `pivot_wider()` 'widens' data, increasing the number of columns and decreasing the number of rows. 
+- `pivot_longer()` 'lengthens' data, increasing the number of rows and decreasing the number of columns.
+
+Our data is already pretty long, so that seems to suggest that we probably should use `pivot_wider()`. We just need to first read through the documentation to figure out what parameters we need to use and how. Type `?pivot_wider` into the console to access the documentation.
+
+If we read through the documentation, we can figure our that our two parameters of interest are the `names_from` and `values_from` fields. We use the `names_from` parameter to set our `month` column as the column from which to derive output fields from, and the `values_from` field as our `n` field (count field) to set our values. As we do not have a field that uniquely identifies each of our rows, we can not use the `id_cols` parameter. We will therefore need to state the parameters in our code to make sure the function reads in our fields for the right parameter:
+
+```{r}
+#| label: 05-pivot-wider
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# pivot wider
+theft_lsoa_month <- pivot_wider(all_theft_df_month, names_from = month, values_from = n)
+
+# inspect
+theft_lsoa_month
+```
+
+One final thing we want to do is clean up the names of our fields to mean a little more to us. Let's transform our numeric dates to text dates.
+
+```{r}
+#| label: 05-change-labels
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# rename columns
+names(theft_lsoa_month) <- c('LSOA21CD', 'jan_2021', 'feb_2021', 'mar_2021', 'apr_2021', 'may_2021', 'jun_2021', 'jul_2021', 'aug_2021', 'sept_2021', 'oct_2021', 'nov_2021','dec_2021')
+```
+
+Write out the completed theft table to a new `csv` file for future reference:
+
+```{r}
+#| label: 05-save-csv
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# save as csv
+write_csv(theft_lsoa_month, "data/data/LSOA2021_theft.csv")
+```
+### Joining crime data to LSOAs
+We are now getting to the final stages of our data processing, we just need to join our completed theft table, `theft_lsoa_month` to our `lsoa_population` spatial dataframe and then compute a theft crime rate. This will then allow us to map our theft rates per month by LSOA, exactly what we set to achieve within this practical. 
+
+```{r}
+#| label: 05-join-sdf
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# join theft by month to the LSOA popoulation dataset
+theft_lsoa_sdf <- left_join(lsoa_population, theft_lsoa_month, by = c("LSOA21CD" = "LSOA21CD"))
+``` 
+
+To double-check our join, we want to do one extra step of **quality checks** and check that each of our LSOAs has at least one occurence of crime over the twelve month period. We do this by computing a new column that totals the number of thefts. By identifying any LSOAs that have zero entries (i.e. `NA`s for each month), we can double-check with our original `theft_lsoa_month` to see if this is the correct data for that LSOA or if there has been an error in our join. 
+
+We can compute a new column by using the `mutate()` function from the `dplyr` library. We use the `rowsums()` function from the base library to compute the sum of rows and we use the `across()` function from the `dplyr` library to identify the columns for which we want to know the sum.
+
+```{r}
+#| label: 05-check-sdf
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# total number of thefts by LSOA
+theft_lsoa_sdf <- theft_lsoa_sdf |> mutate(theft_total = rowSums(across(9:20), na.rm = T))
+``` 
+
+You can now `View()` our updated `theft_lsoa_sdf` spatial dataframe and sort out columns to see those with a `theft_total` of 0. What you should see is that in about one third of the LSOAs no crime has occured. Of course, it is not feasible to confirm all these cases but you can perform some spotchecks. What we will need to do is adjust the values present within these LSOAs prior to our visualisation analysis: these should not have `NA` as their value but rather `0.`.
+
+```{r}
+#| label: 05-tidy-tidy
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# replace all NAs in our dataframe with 0
+theft_lsoa_sdf[is.na(theft_lsoa_sdf)] = 0
+``` 
+
+The final step we need to take before we can map our theft data is, of course, compute a crime rate per month for our `theft_lsoa_sdf` dataframe. We have our `pop2021` column within our `theft_lsoa_sdf` dataframe - we just need to figure out the code that allows us to apply our calculation that we've used in our previous practicals (i.e. using the Attribute/Field Calculator in QGIS: **value/pop2019 \* 10000**) to each of our datasets.
+
+Once again, after a bit of searching, we can find out that the `mutate()` function comes in handy and we can follow a specific approach in our code that allows us to apply the above equation to all of our columns within our dataframe. Now this is certainly a big jump in terms of complexity of our code: we are going to store within our `crime_rate` variable our own function that calculates crime rate on a given value, currently called `x`. We will then apply this function on each relevant cell within our `theft_lsoa_sdf` using the `mutate_at()` function:
+
+```{r}
+#| label: 05-count-those-crimes
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# create a new function to calculate the crime rate
+crime_rate = function(x, na.rm = FALSE) ((x/as.numeric(theft_lsoa_sdf$pop2021)) *10000)
+
+# apply this calculation to all columns that contain monthly crime cuonts
+theft_lsoa_sdf <- mutate_at(theft_lsoa_sdf, vars(9:20), crime_rate)
+``` 
+
+Have a look at your new `theft_lsoa_sdf` spatial dataframe. Does it look as you would expect? Now we have our **final** dataframe, we can go ahead and make our maps.
+
+### Mapping crime data
+For making our maps, we will be using one of two main visualisation libraries that can be used for spatial data: `tmap`. `tmap` is a library written around thematic map visualisation. The package offers a flexible, layer-based, and easy to use approach to create thematic maps, such as choropleths and bubble maps. What is really great about `tmap` is that it comes with one quick plotting method for a map called: `qtm()`.
+
+We can use this function to plot the theft crime rate for one of our months really quickly. Within your script, use the `qtm` function to create a map of theft crime rate in London in January 2021.
+
+::: { .callout-note
+Before continuing do confirm whether your `theft_lsoa_sdf` is indeed still of class `sf`. In some instances it is possible that this changed when manipulating the attributes. You can simply check this by running `class(theft_lsoa_sdf)`. If your dataframe is not of class `sf`, you can force it into one by running `theft_lsoa_sdf <- st_as_sf(theft_lsoa_sdf))`.
+:::
+
+```{r}
+#| label: fig-05-qtm
+#| fig-cap: Quick thematic map. 
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# quick thematic map for January 2021
+qtm(theft_lsoa_sdf, fill="jan_2021")
+``` 
+
+In this case, the `fill()` argument is how we tell `tmap` to create a choropleth map based on the values in the column we provide it with. If we simply set it to `NULL`, we would only draw the borders of our polygons. Within our `qtm` function, we can pass quite a few different parameters that would enable us to change specific aesthetics of our map - if you go ahead and look up the documentation for the function, you will see a list of these parameters. We can, for example, set the lines of our LSOA polygons to white by adding the `borders` parameter:
+
+```{r}
+#| label: fig-05-qtm-borders
+#| fig-cap: Quick thematic map with white borders.
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# quick thematic map for January 2021
+qtm(theft_lsoa_sdf, fill="jan_2021", borders = "white")
+``` 
+
+The map does not really look great. We can continue to add and change parameters in our `qtm()` function to create a map we are satisfied  with. However, the issue with the `qtm()` function is that it is quite limited in its functionality and mostly used to quickly inspect your data. Instead, when we want to develop more complex maps using the `tmap` library, we want to use their main plotting method which uses a function called `tm_shape()`, which we build on using the [layered grammar of graphics](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149) approach.
+
+::: { .callout-tip}
+When it comes to setting colours within a map or any graphic, we can either pass through a colour as a **word**, a **HEX code** or a pre-defined **palette**. You can find out more [here](http://www.sthda.com/english/wiki/colors-in-r), which is a great quick reference to just some of the possible colours and palettes you will be able to use in R.
+:::
+
+The main approach to creating maps in `tmap` is to use the [grammar of graphics](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149) to build up a map based on what is called the `tm_shape()` function. Essentially this function, when populated with a spatial dataframe, takes the spatial information of our data (including the projection and geometry of our data) and creates a spatial "object". This object contains some information about our original spatial dataframe that we can override (such as the projection) within this function's parameters, but ultimately, by using this function, you are instructing R that this is the object from which to "draw my shape".
+
+To actually draw the shape, we next need to add a layer to specify the type of shape we want R to draw from this information - in our case, our polygon data. We need to add a function therefore that tells R to "draw my spatial object as X" and within this "layer", you can also specific additional information to tell R how to draw your layer. You can then add in additional layers, including other spatial objects (and their related shapes) that you want drawn on your map, plus a specify your layout options through a layout layer.
+
+Let's see how we can build up our first map in `tmap`.
+
+```{r}
+#| label: fig-05-mapping-101
+#| fig-cap: Building up a map layer by layer.
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# shape, polygons
+tm_shape(theft_lsoa_sdf) +
+  tm_polygons()
+```
+
+As you should now see, we have now mapped the spatial polygons of our `theft_lsoa_sdf` spatial dataframe. However, this is not the map we want: we want to have our polygons represented by a choropleth map where the colours reflect the theft crime rate in January, rather than the default grey polygons we see before us. To do so, we use the `col=` parameter that is within our `tm_polygons()` shape. 
+
+::: { .callout-tip}
+The `col` parameter within `tm_polygons()` is used to fill our polygons with a specific fill type, of either:
+
+- a single color value (e.g. `red`)
+- the name of a data variable that is contained in the spatial data file Either the data variable contains color values, or values (numeric or categorical) that will be depicted by a specific color palette. 
+:::
+
+Let's go ahead and pass our `jan_2021` column within the `col()` parameter and see what we get:
+
+```{r tidy='styler'}
+#| label: fig-05-choro-1
+#| fig-cap: Building up a map layer by layer.
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# shape, polygons
+tm_shape(theft_lsoa_sdf) +
+  # specify column
+  tm_polygons(col = "jan_2021")
+```
+
+We are slowly getting there. But there are two things we can notice straight away that do not look right about our data. The first is that our **classification breaks** do not really reflect the variation in our dataset. This is because `tmap` has defaulted to its default break type: **pretty breaks**, whereas, as we know, using an approach such as **natural** breaks, aka **jenks**, may reveal better variation in our data.
+
+Using the documentation for `tm_polygons()`, it looks like the following parameters are relevant to help us create the right classification for our map:
+
+- `n`: state the number of classification breaks you want.
+- `style`: state the style of breaks you want, e.g. `fixed`, `sd`, `equal`, `quantile`.
+- `breaks`: state the numeric breaks you want to use when using the **fixed** style approach.
+
+Let's say we want to change our choropleth map to have five classes, determined via the `jenks` method. We simply need to add the `n` and `style` parameters into our `tm_polygons()` layer:
+
+```{r tidy='styler'} 
+#| label: fig-05-choro-2
+#| fig-cap: Building up a map layer by layer.
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# shape, polygons
+tm_shape(theft_lsoa_sdf) +
+  # specify column, classes
+  tm_polygons(col = "jan_2021", n=5, style="jenks")
+``` 
+
+We now have a choropleth that reflects better the distribution of our data, but we can make them a little prettier by rounding the values. To do so, we can change the `style` of the map to `fixed` and then supply a new argument for `breaks` that contains the rounded classification breaks:
+
+```{r tidy='styler'} 
+#| label: fig-05-choro-3
+#| fig-cap: Building up a map layer by layer.
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# shape, polygons
+tm_shape(theft_lsoa_sdf) +
+  # specify column, classes, breaks
+  tm_polygons(col = "jan_2021", n = 5, style = "fixed", breaks = c(0, 1, 10, 30, 60, 125))
+``` 
+
+That looks a little better from the classification side of things. Because LSOAs are rather small units, the grey borders are a bit distracting so it is probably best to remove these in this case.
+
+```{r tidy='styler'} 
+#| label: fig-05-choro-4
+#| fig-cap: Building up a map layer by layer.
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# shape, polygons
+tm_shape(theft_lsoa_sdf) +
+  # specify column, classes, breaks, borders
+  tm_polygons(col = "jan_2021", n = 5, style = "fixed", breaks = c(0, 1, 10, 30, 60, 125), border.alpha = 0)
+``` 
+
+### Styling crime data
+To style our map takes a further understanding and familiarity with our `tmap` library, but it is only something you will only really learn by having to make your own maps. As a result, we will not go into explaining **exactly** every aspect of map styling but instead provide you with some example code that you can use as well as experiment with to try to see how you can adjust aspects of the map to your preferences.
+
+Fundamentally, the **key functions** to be aware of:
+
+- `tm_layout()`: contains parameters to style titles, fonts, the legend;
+- `tm_compass()`: contains parameters to create and style a North arrow or compass;
+- `tm_scale_bar()`: contains parameters to create and style a scale bar.
+
+To be able to start styling our map, we need to interrogate each of these functions and their parameters to trial and error options to ultimately create a map we are happy with:
+
+```{r tidy='styler'} 
+#| label: fig-05-choro-5
+#| fig-cap: Building up a map layer by layer.
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# shape, polygon
+tm_shape(theft_lsoa_sdf) +
+  # specify column, classes, breaks, borders, legend title
+  tm_polygons(
+    col = "jan_2021", n = 5, style = "fixed",
+    breaks = c(0, 1, 10, 30, 60, 125),
+    palette = "Blues", border.alpha = 0,
+    title = "Rate per 10,000 people"
+  ) +
+  # add title
+  tm_layout(
+    main.title = "Theft - January 2021",
+    main.title.fontface = 2,
+    fontfamily = "Helvetica",
+    legend.outside = TRUE,
+    legend.position = c("left", "top"),
+    legend.title.size = 1,
+    legend.title.fontface = 2
+  ) +
+  # add North arrow
+  tm_compass(
+    type = "arrow",
+    position = c("right", "bottom")
+  ) +
+  # add scale bar
+  tm_scale_bar(
+    breaks = c(0, 5, 10, 15, 20),
+    position = c("left", "bottom")
+  )
+``` 
+
+### Exporting our crime data
+Once we are finished making our map, we can go ahead and export it to our `maps` folder. To do so, we need to save our map-making code to as a variable and then use the `tmap_save()` function to save the output of this code to a picture within our maps folder.
+
+```{r tidy='styler'} 
+#| label: 05-export-map
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# shape, polygons, specify column, specify classes, specify breaks, map elements
+jan2021_map <- # shape, polygon
+tm_shape(theft_lsoa_sdf) +
+  # specify column, classes, breaks, borders, legend title
+  tm_polygons(
+    col = "jan_2021", n = 5, style = "fixed",
+    breaks = c(0, 1, 10, 30, 60, 125),
+    palette = "Blues", border.alpha = 0,
+    title = "Rate per 10,000 people"
+  ) +
+  # add title
+  tm_layout(
+    main.title = "Theft - January 2021",
+    main.title.fontface = 2,
+    fontfamily = "Helvetica",
+    legend.outside = TRUE,
+    legend.position = c("left", "top"),
+    legend.title.size = 1,
+    legend.title.fontface = 2
+  ) +
+  # add North arrow
+  tm_compass(
+    type = "arrow",
+    position = c("right", "bottom")
+  ) +
+  # add scale bar
+  tm_scale_bar(
+    breaks = c(0, 5, 10, 15, 20),
+    position = c("left", "bottom")
+  )
+
+# save as image
+tmap_save(jan2021_map, filename = "data/map/jan2021_theft_crime_map.png")
+```
+
+## Assignment {#assignment-w05}
+For your assignment for this week, we want you to create a map for a different month of 2021 with a different layout and look. Keep in mind:
+
+- You will need to really think about your classification breaks when you change to map a different dataset.
+- Play with the different settings, e.g. change the colours of the map, change the legend title name, change the type of North arrow, etc.
+
+If you are up for a challenge: now try to create a map in which you incorporate the maps of two different months together in one figure. Google is your friend!
+
+## Want more? [Optional] {#wm-w05}
+### Git and Github
+[Git](https://git-scm.com/) is a version control system, originally developed to help groups of developers work collaboratively on big software projects. One way to think about it is in terms of 'Track Changes' used for documents, only this time it is applied to code - and much more powerful. A great resource to help you get started with Git is [Happy Git and GitHub for the useR](https://happygitwithr.com/index.html). Highly recommended.
+
+## Before you leave {#byl-w05}
+And that is how you use R as a GIS in its most basic form. More RGIS in the coming weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Ydg4T2MP7Z8).
+

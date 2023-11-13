@@ -2,7 +2,7 @@
 This week’s content introduces you to the foundational concepts associated with Programming for Data Analysis. We will cover some general principles of programming as well how we can use R and RStudio effectively for data analysis by continuing to look at crime in London.
 
 ## Lecture slides {#slides-w04}
-The slides for this week's lecture can be downloaded here: [[Link]](https://github.com/jtvandijk/GEOG0030/tree/master/data/ppt/w04_geo.pdf).
+The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var slides.week04 >}})
 
 ## Reading list {#reading-w04}
 #### Essential readings
@@ -89,9 +89,11 @@ Type in `10 * 12` into the console.
 
 ```{r}
 #| label: 04-math1
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # conduct some maths
 10 * 12
 ```
@@ -104,9 +106,11 @@ Rather than use 'raw' or 'standalone' numbers and values, we primarily want to u
 Type in `ten <- 10` into the console and execute.
 ```{r}
 #| label: 04-math2
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # store a variable
 ten <- 10
 ```
@@ -116,9 +120,11 @@ You have just created your first variable. You will see nothing is returned in t
 Type in `twelve <- 12` into the console and execute.
 ```{r}
 #| label: 04-math3
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # store a variable
 twelve <- 12
 ```
@@ -129,9 +135,11 @@ Type in `ten * twelve` into the console and execute.
 
 ```{r}
 #| label: 04-math4
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # using variables
 ten * twelve
 ```
@@ -141,9 +149,11 @@ You should see the output in the console of `120`. Whilst this maths may look tr
 Next, type in `ten * twelve * 8` into the console and execute.
 ```{r}
 #| label: 04-math5
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # using variables and values
 ten * twelve * 8
 ```
@@ -154,9 +164,11 @@ Type `output <- ten * twelve * 8` into the console and execute.
 
 ```{r}
 #| label: 04-math6
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # store output 
 output <- ten * twelve * 8
 ```
@@ -168,9 +180,11 @@ We can ask our computer to return this `output` by simply typing it into the con
 
 ```{r}
 #| label: 04-math7
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # return value 
 output
 ```
@@ -182,9 +196,11 @@ Type in `str_variable <- "This is our 1st string variable"` into the console and
 
 ```{r}
 #| label: 04-str1
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # store a variable
 str_variable <- "This is our 1st string variable"
 ```
@@ -193,9 +209,11 @@ We have just stored our sentence made from a combination of characters, includin
 
 ```{r}
 #| label: 04-str2
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # return variable
 str_variable
 ```
@@ -208,9 +226,11 @@ We can also **call** a function on our variable. This use of **call** is a very 
 Type in `print(str_variable)` into the console and execute.
 ```{r}
 #| label: 04-str3
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # printing a variable
 print(str_variable)
 ```
@@ -221,9 +241,11 @@ You can type `?print` into the console to find out more about the `print()` func
 
 ```{r}
 #| label: 04-str4
+#| classes: styled-output
 #| echo: True
 #| eval: False
 #| tidy: True
+#| filename: "R code"
 # open documentation of the print function
 ?print
 ```
@@ -243,9 +265,11 @@ Within the base R language, there are various functions that have been written t
 Type in `typeof(str_variable)` into the console and execute.
 ```{r}
 #| label: 04-str5
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # call the typeof() function
 typeof(str_variable)
 ```
@@ -256,20 +280,24 @@ Type in `typeof(ten)` into the console and execute.
 
 ```{r}
 #| label: 04-str6
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # call the typeof() function 
 typeof(ten)
 ```
 
-You should see the answer: *double*. As evident, our `ten` is a double data type. For high-level objects that involve (more complicated) data structures, such as when we load a `csv` into R as a **data frame**, we are also able to check what **class** our object is. Type in `class(str_variable)` into the console and execute.
+You should see the answer: *double*. As evident, our `ten` is a double data type. For high-level objects that involve (more complicated) data structures, such as when we load a `csv` into R as a **dataframe**, we are also able to check what **class** our object is. Type in `class(str_variable)` into the console and execute.
 
 ```{r}
 #| label: 04-str7
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # call the class() function 
 class(str_variable)
 ```
@@ -280,9 +308,11 @@ Type in `class(ten)` into the console and execute.
 
 ```{r}
 #| label: 04-str8
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # call the class() function 
 class(ten)
 ```
@@ -293,9 +323,11 @@ Type in `is.integer(ten)` into the console and execute.
 
 ```{r}
 #| label: 04-var1
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 is.integer(ten)
 ```
 
@@ -311,9 +343,11 @@ Type in `length(str_variable)` into the console and execute.
 
 ```{r}
 #| label: 04-var2
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # call the length() function 
 length(str_variable)
 ```
@@ -322,9 +356,11 @@ You should get the answer `1` because we only have one *set* of characters. We c
 
 ```{r}
 #| label: 04-var3
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # call the nchar() function
 nchar(str_variable)
 ```
@@ -338,9 +374,11 @@ Type in `two_str_variable <- c("This is our second variable", "It has two parts 
 
 ```{r}
 #| label: 04-var4
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # store a new variable 
 two_str_variable <- c("This is our second string variable", "It has two parts to it")
 ```
@@ -349,9 +387,11 @@ In this piece of code, we have created a new variable using the `c()` function i
 
 ```{r}
 #| label: 04-var5
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # call the length() function 
 length(two_str_variable)
 
@@ -365,9 +405,11 @@ There is one final function that we often want to use with our variables when we
 
 ```{r}
 #| label: 04-var6
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # call the attributes() function 
 attributes(two_str_variable)
 ```
@@ -377,7 +419,7 @@ In addition to make notes about the functions you are coming across in the works
 :::
 
 ## Simple analysis
-The objects we created and played with above are very simple but the real power of R comes when we can begin to execute functions on more complex objects. R accepts four main types of data structures: **vectors**, **matrices**, **data frames**, and **lists**. These data structures are essential because they allow us to apply common statistical functions. 
+The objects we created and played with above are very simple but the real power of R comes when we can begin to execute functions on more complex objects. R accepts four main types of data structures: **vectors**, **matrices**, **dataframes**, and **lists**. These data structures are essential because they allow us to apply common statistical functions. 
 We are going to explore these data structures with some of dummy data on the total number of pages and publication dates of the various editions of **Geographic Information Systems and Science** (GISS) book by Longley *et al.* and use these for a brief analysis:
 
 | Book Edition | Year of Publication | Total Number of Pages
@@ -392,9 +434,11 @@ First, let us clear up our workspace and remove our current variables. Type `rm(
 
 ```{r}
 #| label: 04-da1
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # clear our workspace
 rm(ten, twelve, output, str_variable, two_str_variable)
 ```
@@ -413,9 +457,11 @@ Type `gisspage_no <- c(454, 517, 560, 477)` into the console and execute.
 
 ```{r}
 #| label: 04-page-no
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # store the page numbers as a variable
 giss_page_no <- c(454, 517, 560, 477)
 ```
@@ -424,9 +470,11 @@ Type `print(giss_page_no)` into the console and execute to check the results.
 
 ```{r}
 #| label: 04-page-no-show
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # print our giss_page_no variable
 print(giss_page_no)
 ```
@@ -435,9 +483,11 @@ We can see we have our total number of pages collected together in a single vect
 
 ```{r}
 #| label: 04-calc-mean
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # calculate the arithmetic mean on our variable
 mean(giss_page_no)
 # calculate the median on our variable
@@ -452,9 +502,11 @@ Type `giss_year <- c(2001, 2005, 2011, 2015)` into the console and execute.
 
 ```{r}
 #| label: 04-pub-years
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # store the publication years as a variable
 giss_year <- c(2001, 2005, 2011, 2015)
 ```
@@ -463,9 +515,11 @@ Type `print(giss_year)` into the console and execute.
 
 ```{r}
 #| label: 04-year-show
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 print(giss_year)
 ```
 
@@ -478,9 +532,11 @@ Type `giss_year_nos <- matrix(c(giss_year, giss_page_no), ncol=2)` into the cons
 
 ```{r}
 #| label: 04-matrix
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # create a new matrix from our two vectors with two columns
 giss_year_nos <- matrix(c(giss_year, giss_page_no), ncol=2)
 ```
@@ -489,14 +545,16 @@ Type `print(giss_year_nos)` into the console and execute to check the result.
 
 ```{r}
 #| label: 04-all-show
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # inspect
 print(giss_year_nos)
 ```
 
-The thing about matrices is that, for us, they do not have a huge amount of use. If we were to look at this matrix in isolation from what we know it represents, we would not really know what to do with it. As a result, we tend to primarily use **Data Frames** in R as they offer the opportunity to add **field names** to our columns to help with their interpretation.
+The thing about matrices is that, for us, they do not have a huge amount of use. If we were to look at this matrix in isolation from what we know it represents, we would not really know what to do with it. As a result, we tend to primarily use **dataframes** in R as they offer the opportunity to add **field names** to our columns to help with their interpretation.
 
 ::: { .callout-note}
 The function we just used above, `matrix()`, was the first function that we used that took more than one argument. In this case, the arguments the matrix needed to run were: 
@@ -510,14 +568,14 @@ Understanding how to find out what object and data type a variable is essential 
 :::
 
 ### Dataframes
-A data frame is an extremely important data type in R. It is pretty much the **de-facto** data structure for most tabular data and the data structure we use for statistics. It also is the underlying structure to the table data (what we would call the **attribute table** in Q-GIS) that we associate with spatial data, more on this next week.
+A dataframe is an extremely important data type in R. It is pretty much the **de-facto** data structure for most tabular data and the data structure we use for statistics. It also is the underlying structure to the table data (what we would call the **attribute table** in Q-GIS) that we associate with spatial data, more on this next week.
 
-A data frame is a special type of list where every element of the list will have the same length (i.e. data frame is a 'rectangular' list), Essentially, a data frame is constructed from columns (which represent a list) and rows (which represents a corresponding element on each list). Each column will have the same amount of entries - even if, for that row, for example, the entry is simply `NULL`.
+A dataframe is a special type of list where every element of the list will have the same length (i.e. dataframe is a 'rectangular' list), Essentially, a dataframe is constructed from columns (which represent a list) and rows (which represents a corresponding element on each list). Each column will have the same amount of entries - even if, for that row, for example, the entry is simply `NULL`.
 
-Data frames can have additional attributes such as `rownames()`, which can be useful for annotating data, like `subject_id` or `sample_id` or `UID`. In statistics, they are often not used but in spatial analysis, these IDs can be essential to join data together. Some additional information on data frames:
+dataframes can have additional attributes such as `rownames()`, which can be useful for annotating data, like `subject_id` or `sample_id` or `UID`. In statistics, they are often not used but in spatial analysis, these IDs can be essential to join data together. Some additional information on dataframes:
 
 - They are usually created by `read.csv()` and `read.table()`, i.e. when importing the data into R.
-- You can also create a new data frame with `data.frame()` function, e.g. a matrix can be converted to a data frame.
+- You can also create a new dataframe with `data.frame()` function, e.g. a matrix can be converted to a dataframe.
 - You can find out the number of rows and columns with `nrow()` and `ncol()`, respectively.
 - Rownames are often automatically generated and look like`X1, X2, … , Xn`. Consistency in numbering of rownames may not be honoured when rows are reshuffled or subset.
 
@@ -525,47 +583,55 @@ Type `giss_df <- data.frame(giss_year_nos)` into the console and execute.
 
 ```{r}
 #| label: 04-matrix-data-frame
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # create a new dataframe from our matrix
 giss_df <- data.frame(giss_year_nos)
 ```
 
-We now have a data frame, we can use the `View()` function in R. Still in your **console**, type: `View(giss_df)`
+We now have a dataframe, we can use the `View()` function in R. Still in your **console**, type: `View(giss_df)`
 
 ```{r}
 #| label: 04-view-df
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
-# view our data frame
+#| filename: "R code"
+# view our dataframe
 View(giss_df)
 ```
 
 You should now see a table pop-up as a new tab on your script window. It is now starting to look like the table we are trying to create, but we need to do something about the fieldnames. **X1** and **X2** are not very informative.
 
 ### Column names
-We can rename our data frame column field names by using the `names()` function. Before we do this, have a read of what the `names()` function does. Still in your **console**, type: `?names`
+We can rename our dataframe column field names by using the `names()` function. Before we do this, have a read of what the `names()` function does. Still in your **console**, type: `?names`
 
 ```{r}
-#| label: 04-
+#| label: 04-open-doc
+#| classes: styled-output
 #| echo: True
 #| eval: False
 #| tidy: True
+#| filename: "R code"
 # open documentation of the names function
 ?names
 ```
 
 As you can see, the function will get or set the names of an object, with renaming occurring by using the following syntax: `names(x) <- value`
 
-The value itself needs to be *a character vector of up to the same length as x, or NULL.* We have two columns in our data frame, so we need to parse our `names()` function with a character vector with **two elements**. In the console, we shall enter two lines of code, one after another. First our character vector with our new names, `new_names <- c("year", "page_nos")`, and then the `names()` function containing this vector for renaming, `names(giss_df) <- new_names`:
+The value itself needs to be *a character vector of up to the same length as x, or NULL.* We have two columns in our dataframe, so we need to parse our `names()` function with a character vector with **two elements**. In the console, we shall enter two lines of code, one after another. First our character vector with our new names, `new_names <- c("year", "page_nos")`, and then the `names()` function containing this vector for renaming, `names(giss_df) <- new_names`:
 
 ```{r}
 #| label: 04-data-frame-names
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # create a vector with our new column names
 new_names <- c("year", "page_nos")
 
@@ -573,57 +639,65 @@ new_names <- c("year", "page_nos")
 names(giss_df) <- new_names
 ```
 
-You can go and check your data frame again and see the new names using either `View()` function or by clicking on the tab at the top.
+You can go and check your dataframe again and see the new names using either `View()` function or by clicking on the tab at the top.
 
 ### Adding columns
-We are still missing one final column from our data frame: our **edition** of the textbook column. As this is a `character` data type, we would not have been able to add this directly to our matrix. This is because data frames can take different data types, unlike matrices - so let us go ahead and add the **edition** as a new column.
+We are still missing one final column from our dataframe: our **edition** of the textbook column. As this is a `character` data type, we would not have been able to add this directly to our matrix. This is because dataframes can take different data types, unlike matrices - so let us go ahead and add the **edition** as a new column.
 
-To do so, we follow a similar process of creating a vector with our editions listed in chronological order, but then add this to our data frame by storing this vector as a new column in our data frame. We use the `$` sign with our code that gives us "access" to the data frame's column  - we then specify the column `edition`, which whilst it does not exist at the moment, will be created from our code that assigns our edition variable to this column. 
+To do so, we follow a similar process of creating a vector with our editions listed in chronological order, but then add this to our dataframe by storing this vector as a new column in our dataframe. We use the `$` sign with our code that gives us "access" to the dataframe's column  - we then specify the column `edition`, which whilst it does not exist at the moment, will be created from our code that assigns our edition variable to this column. 
 
-Type and execute `edition <- c("1st", "2nd", "3rd", "4th")`. Then store this vector as a new column in our data frame under the column name **edition** by typing and executing `giss_df$edition <- edition`:
+Type and execute `edition <- c("1st", "2nd", "3rd", "4th")`. Then store this vector as a new column in our dataframe under the column name **edition** by typing and executing `giss_df$edition <- edition`:
 
 ```{r}
 #| label: 04-data-frame-edition
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # create a vector witheditions
 edition <- c("1st", "2nd", "3rd", "4th")
 
-# add this vector as a new column to our data frame
+# add this vector as a new column to our dataframe
 giss_df$edition <- edition
 ```
 
-Again, you can go and check your data frame and see the new column using either `View()` function or by clicking on the tab at the top or by typing `giss_df` in your console window.
+Again, you can go and check your dataframe and see the new column using either `View()` function or by clicking on the tab at the top or by typing `giss_df` in your console window.
 
 ```{r}
 #| label: 04-data-frame-final
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # inspect
 giss_df
 ```
 
-Now we have our data frame, let us find out a little about it. We can first return the dimensions (the size) of our data frame by using the `dim()` function. In your **console**, type `dim(giss_df)` and execute.
+Now we have our dataframe, let us find out a little about it. We can first return the dimensions (the size) of our dataframe by using the `dim()` function. In your **console**, type `dim(giss_df)` and execute.
 
 ```{r}
 #| label: 04-data-frame-dim
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
-# check our data frame dimensions
+#| filename: "R code"
+# check our dataframe dimensions
 dim(giss_df)
 ```
 
-We can see we have **four rows** and **three columns**.  We can also finally use our `attributes()` function to get the attributes of our data frame. In your **console**, type `attributes(giss_df)` and execute:
+We can see we have **four rows** and **three columns**.  We can also finally use our `attributes()` function to get the attributes of our dataframe. In your **console**, type `attributes(giss_df)` and execute:
 
 ```{r}
 #| label: 04-data-frame-att
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
-# check our data frame attributes
+#| filename: "R code"
+# check our dataframe attributes
 attributes(giss_df)
 ```
 
@@ -654,7 +728,7 @@ There are some specific functions in the `tidyverse` suite of packages that will
 These functions all complete very fundamental tasks that we need to manipulate and wrangle our data.
 
 ::: { .callout-note}
-The code you just ran asked **R** to load all functions of the `tidyverse`. However: these functions are only available for the duration of your R sessions. When you restart your R session, you will have to load these functions again if you want to use them. Another thing to be aware of when it comes to using functions in these additional libraries, is that sometimes these functions share a name with a function form one of the `base` **R** packages. For instance, there exists a `select()` function within in the `stats` package that conducts linear filtering on a time series. However, after we load the `tidyverse` package and we would type `select()` this function will select columns from a data frame. We therefore sometimes need to specify which library we want to use this function from, and this can be done with a simple command (`library::function`) in our code: `stats::select` to filter that time series and `dplyr::select` to select columns in a dataframe.
+The code you just ran asked **R** to load all functions of the `tidyverse`. However: these functions are only available for the duration of your R sessions. When you restart your R session, you will have to load these functions again if you want to use them. Another thing to be aware of when it comes to using functions in these additional libraries, is that sometimes these functions share a name with a function form one of the `base` **R** packages. For instance, there exists a `select()` function within in the `stats` package that conducts linear filtering on a time series. However, after we load the `tidyverse` package and we would type `select()` this function will select columns from a dataframe. We therefore sometimes need to specify which library we want to use this function from, and this can be done with a simple command (`library::function`) in our code: `stats::select` to filter that time series and `dplyr::select` to select columns in a dataframe.
 :::
 
 ### Starting a project
@@ -687,9 +761,11 @@ Let us go ahead and give our script a title - and maybe some additional informat
 
 ```{r}
 #| label: 04-script-title
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: False
+#| filename: "R code"
 # Combining Police Data csv's from 2021 into a single csv
 # Followed by analysis of data on monthly basis
 # Date: January 2024
@@ -700,9 +776,11 @@ Now we have our title, the **second** bit of code we want to include in our scri
 
 ```{r}
 #| label: 04-load-libraries
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # load libraries
 library(tidyverse)
 ```
@@ -734,11 +812,12 @@ Where last week we provided you with a crime dataset, this week you will downloa
 #| label: fig-download-crimes
 #| echo: False 
 #| cache: True
+#| filename: "R code"
 #| fig-cap: "Downloading London's crime data. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w03/download-crime.png){target='_blank'}"
 knitr::include_graphics('images/w04/download-crime.png')
 ```
 
-4. It may take a few minutes for the download to be generated, so be patient. Once the **Download now** button appears, you can download the 2020 crime dataset.
+4. It may take a few minutes for the download to be generated, so be patient. Once the **Download now** button appears, you can download the 2021 crime dataset.
 5. Once downloaded, unzip the file. You will notice that the zip file contains 12 individual folders, one for each month in 2021. Each folder contains two files: one containing the data for the `Metropolitan Police Service` and one for the `City of London Police`. 
 6. Create a new folder named `all-crime` in your `data/raw/crime` directory and copy all 12 folders containing our data to this new folder.
 
@@ -746,6 +825,7 @@ knitr::include_graphics('images/w04/download-crime.png')
 #| label: fig-organised-crime
 #| echo: False 
 #| cache: True
+#| filename: "R code"
 #| fig-cap: "Your data folder should now look something like this.. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w03/organised-crime.png){target='_blank'}"
 knitr::include_graphics('images/w04/organised-crime.png')
 ```
@@ -757,9 +837,11 @@ We can look at the help documentation to understand what we need to provide the 
 
 ```{r}
 #| label: 04-load-csv
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # read in a single csv from our crime data
 crime_csv <- read_csv("data/raw/crime/all-crime/2021-01/2021-01-metropolitan-street.csv")
 ```
@@ -772,9 +854,11 @@ We can explore the `csv` we have just loaded as our new `crime_csv` variable and
 
 ```{r}
 #| label: 04-data-csv-class
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # inspect class 
 class(crime_csv)
 
@@ -782,30 +866,32 @@ class(crime_csv)
 dim(crime_csv)
 ```
 
-We have found out our variable is a data frame, containing **84,848 rows and 12 columns**. We however do not want just the single `csv` and instead what to combine all our `csv's` in our `all-crime` folder into a single data frame - so how do we do this?
+We have found out our variable is a dataframe, containing **84,848 rows and 12 columns**. We however do not want just the single `csv` and instead what to combine all our `csv's` in our `all-crime` folder into a single dataframe - so how do we do this?
 
 This will be the most complicated section of code you will come across today, and we will use some functions that you have not seen before. Copy the following code below into your script, then execute.
 
 ```{r}
 #| label: 04-combine-csv
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| message: False
 #| tidy: True
-# read in all files and append all rows to a single data frame
+#| filename: "R code"
+# read in all files and append all rows to a single dataframe
 all_crime_df <- list.files(path="data/raw/crime/all-crime/", full.names=TRUE, recursive=TRUE) |>
   lapply(read_csv) |>
   bind_rows()
 ```
 
-This might take a little time to process (or might not), as we have a lot of data to get through. You should see a new data frame appear in your global environment called `all_crime_df`, for which we now have 1,079,267 observations!
+This might take a little time to process (or might not), as we have a lot of data to get through. You should see a new dataframe appear in your global environment called `all_crime_df`, for which we now have 1,079,267 observations!
 
 ::: { .callout-note}
 It is a little difficult to explain the code above without going into too much detail and at this stage you are not expected to fully understand what is happening here, but essentially what the code does is:
 
 1. List all the files found in the data path: `data/raw/crime/all-crime/`
 2. Read each of these as a `csv` by "applying" the `read_csv()` function to all files.
-3. Binding all rows of all individual data frames together in a single data frame.
+3. Binding all rows of all individual dataframes together in a single dataframe.
 
 These three different actions are combined by using something called a pipe (`|>`), which we will explain in more detail in later weeks.
 :::
@@ -815,24 +901,28 @@ We can now have a look at our large dataframe in more detail.
 
 ```{r}
 #| label: 04-data-frame-analysis
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # full inspection of the dataframe
 ncol(all_crime_df)
 nrow(all_crime_df)
 head(all_crime_df)
 ```
 
-You should now see with have the same number of columns as our previous single `csv`, but with many more rows. You can also see that the `head()` function provides us with the first **five** rows of our data frame. You can conversely use `tail()` to provide the last five rows.
+You should now see with have the same number of columns as our previous single `csv`, but with many more rows. You can also see that the `head()` function provides us with the first **five** rows of our dataframe. You can conversely use `tail()` to provide the last five rows.
 
-For now in our analysis, we only want to extract the **theft** crime in our data frame - so we will want to filter our data based on the **Crime type** column. However, as we can see, we have a space in our field name for **Crime type** and, in fact, many of the other fields. As we want to avoid having spaces in our field names when coding, we need to rename our fields. Rename the field names, just as we did with our GIS table earlier:
+For now in our analysis, we only want to extract the **theft** crime in our dataframe - so we will want to filter our data based on the **Crime type** column. However, as we can see, we have a space in our field name for **Crime type** and, in fact, many of the other fields. As we want to avoid having spaces in our field names when coding, we need to rename our fields. Rename the field names, just as we did with our GIS table earlier:
 
 ```{r}
 #| label: 04-rename-fields
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # create a new vector containing updated no space / no capital field names
 no_space_names <- c("crime_id", "month", "reported_by", "falls_within", "longitude","latitude", "location", "lsoa_code", "lsoa_name", "crime_type", "last_outcome_category", "context")
 
@@ -844,40 +934,61 @@ We now have our dataframe ready for filtering. To do so, we will use the `filter
 
 ```{r}
 #| label: 04-filter-data-frame
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # filter all_crime_df to contain only theft
 all_theft_df <- dplyr::filter(all_crime_df, crime_type == "Theft from the person")
 ```
-
-You should now see the new variable appear in your environment with **38,229** observations. 
 
 :::note { .callout-note}
 Although not necessary per se because R uses the function from the package that got loaded latest, it is a good idea to specify that we want to use `filter()` from the `dplyr` package instead of the default `stats` library so to avoid any confusing errors.
 :::
 
-We now want to do some further housekeeping and create on final data frame that will allow us to analyse crime in London by month. To do so, we want to count how many thefts occur each month in London. Fortunately, `dplyr` has another function that will do this for us, known simply as `count()`.
+You should now see the new variable appear in your environment with **38,229** observations. Now save the dataframe as a `csv` file.
+
+```{r}
+#| label: 04-save-data-frame
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# save all_crime_df as csv
+write.csv(all_theft_df,"data/raw/crime/crime-theft-2021-london.csv", row.names = FALSE)
+```
+
+::: { .callout-note}
+If using a Windows machine, you will need to substitute your forward-slashes (`/`) with two backslashes (`\\`) whenever you are dealing with file paths!
+:::
+
+We now want to do some further housekeeping and create on final dataframe that will allow us to analyse crime in London by month. To do so, we want to count how many thefts occur each month in London. Fortunately, `dplyr` has another function that will do this for us, known simply as `count()`.
 
 When you go ahead and search the documentation to understand the `count()` function, you will see that there is only one function called `count()` at the moment, i.e. the one in the `dplyr` library, so we do not need to use the additional syntax we used above. Let us go ahead and count the number of thefts in London **by month**:
 
 ```{r}
 #| label: 04-count-theft
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # count in the all_theft_df the number of crimes by month 
 theft_month_df <- count(all_theft_df, month)
 ```
 
-We have stored the output of our `count()` function to a new data frame: `theft_month_df`. Go ahead and look at the data frame to see the output: it is a very simple table containing simply the month and `n`, i.e. the number of thefts occurring per month. We can and should go ahead and rename this column to help with our interpretation of the data frame. We will use a quick approach to do this, that uses **selection** of the precise column to rename only the second column: 
+We have stored the output of our `count()` function to a new dataframe: `theft_month_df`. Go ahead and look at the dataframe to see the output: it is a very simple table containing simply the month and `n`, i.e. the number of thefts occurring per month. We can and should go ahead and rename this column to help with our interpretation of the dataframe. We will use a quick approach to do this, that uses **selection** of the precise column to rename only the second column: 
 
 ```{r}
 #| label: 04-rename-df-column
+#| classes: styled-output
 #| echo: True
 #| eval: True
 #| tidy: True
-# rename the second column of our new data frame to crime_totals
+#| filename: "R code"
+# rename the second column of our new dataframe to crime_totals
 names(theft_month_df)[2] <- "crime_totals"
 ```
 
@@ -896,6 +1007,7 @@ Now we have prepared our dataset, we can conduct some analysis:
 #| echo: False
 #| eval: True
 #| tidy: True
+#| filename: "R code"
 # inspect class 
 # barplot
 barplot(theft_month_df$crime_totals, main="Theft from persons in London by month in 2021", names.arg = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"))

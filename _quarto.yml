@@ -49,6 +49,7 @@ website:
           - 02-GIScience.qmd
           - 03-cartography.qmd
           - 04-statistics.qmd
+          - 05-spatial.qmd
       - section: "Additional Resources"
         contents:
           - 11-data.qmd

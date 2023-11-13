@@ -131,25 +131,31 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">1 Geocomputation: An Introduction</span></a>
+ <span class="menu-text">Geocomputation: An Introduction</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02-GIScience.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">2 GIScience and GIS software</span></a>
+ <span class="menu-text">GIScience and GIS software</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03-cartography.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">3 Cartography and Visualisation</span></a>
+ <span class="menu-text">Cartography and Visualisation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04-statistics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">4 Programming for Data Analysis</span></a>
+ <span class="menu-text">Programming for Data Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programming for Spatial Analysis</span></a>
   </div>
 </li>
       </ul>
@@ -166,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">11 Data Sources</span></a>
+ <span class="menu-text">Data Sources</span></a>
   </div>
 </li>
       </ul>
@@ -217,11 +223,11 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="welcome" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="welcome">Welcome</h2>
-<p>Welcome to <strong>Geocomputation</strong>. This module will introduce you both to the principles of spatial analysis as well as provide you with a comprehensive introduction to the use of programming. Over the next ten weeks, you will learn about the theory, methods and tools of spatial analysis through relevant case studies. We will start by using QGIS before moving to the R programming language. You will learn how to find, manage and clean spatial, demographic and socioeconomic datasets, and then analyse them using core spatial and statistical analysis techniques.</p>
+<p>Welcome to <strong>Geocomputation</strong>. This module will introduce you both to the principles of spatial analysis as well as provide you with a comprehensive introduction to the use of programming. Over the next ten weeks, you will learn about the theory, methods and tools of spatial analysis through relevant case studies. We will start by using QGIS before moving to the R programming language. You will learn how to find, manage and clean spatial, demographic and socioeconomic datasets, and then analyse them using core spatial analysis techniques.</p>
 </section>
 <section id="moodle" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="moodle">Moodle</h2>
-<p><a href="https://moodle.ucl.ac.uk/">Moodle</a> is the central point of contact for GEOG0030 and it is where all important information will be communicated such as key module and assessment information. This workbook contains links to all reading material as well as the content of all computer tutorials</p>
+<p><a href="https://moodle.ucl.ac.uk/">Moodle</a> is the central point of contact for GEOG0030 and it is where all important information will be communicated such as key module and assessment information. This workbook contains links to all reading material as well as the contents for all computer tutorials</p>
 </section>
 <section id="module-overview" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="module-overview">Module overview</h2>
@@ -253,7 +259,7 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">Foundational Concepts</td>
-<td style="text-align: left;"><a href="">Programming for Data Analysis</a></td>
+<td style="text-align: left;"><a href="04-spatial.html">Programming for Data Analysis</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">5</td>
@@ -300,7 +306,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Ask a question at the end of a lecture or during the computer practical.</li>
 <li>Check the <a href="https://moodle.ucl.ac.uk/">Moodle</a> assessment tab for queries relating to this module’s assessment.</li>
-<li>Attend the Department’s <strong>Coding Therapy sessions</strong> that are run on a weekly basis.</li>
+<li>Attend the Department’s <strong>Coding Therapy sessions</strong> when these are taking place.</li>
 <li>Attend the scheduled Geocomputation <strong>Additional Support Hours</strong>.</li>
 </ul>
 <p>If after pursuing all these avenues you still need help, you can book a slot in our Academic Support and Feedback hours. You can use this time to discuss a geographical concept in relation to the material, assessment or for any personal matters relevant to the completion of the module.</p>
@@ -332,6 +338,8 @@ ul.task-list li input[type="checkbox"] {
 <li>Update to using 2021 Census data where possible.</li>
 <li>Rewriting sections relying on deprecated and outdated core packages: <code>raster</code>, <code>rgdal</code>, <code>rgeos</code>.</li>
 <li>Move to <code>GeoPackage</code> over <code>shapefile</code> where possible.</li>
+<li>Include <a href="https://hub.worldpop.org/">WorldPop</a> data for raster analysis.</li>
+<li>Include</li>
 <li>Update to use native pipe <code>|&gt;</code> over <code>dplyr</code>’s implementation (<code>%&gt;%</code>).</li>
 <li>Add <strong>dark mode</strong> switch.</li>
 </ul>

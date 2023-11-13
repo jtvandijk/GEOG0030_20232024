@@ -14,3 +14,8 @@ div.sidebar-header {
     max-width: 100%;
     height: auto;
 }
+
+.styled-output .cell-output {
+  background-color: #f7fcfd;
+  border-radius: 4px;
+}

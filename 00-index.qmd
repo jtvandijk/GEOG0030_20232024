@@ -13,10 +13,10 @@ This page is currently unfinished and receiving updates for the 2023-2024 academ
 :::
 
 ## Welcome { .unnumbered}
-Welcome to **Geocomputation**. This module will introduce you both to the principles of spatial analysis as well as provide you with a comprehensive introduction to the use of programming. Over the next ten weeks, you will learn about the theory, methods and tools of spatial analysis through relevant case studies. We will start by using QGIS before moving to the R programming language. You will learn how to find, manage and clean spatial, demographic and socioeconomic datasets, and then analyse them using core spatial and statistical analysis techniques. 
+Welcome to **Geocomputation**. This module will introduce you both to the principles of spatial analysis as well as provide you with a comprehensive introduction to the use of programming. Over the next ten weeks, you will learn about the theory, methods and tools of spatial analysis through relevant case studies. We will start by using QGIS before moving to the R programming language. You will learn how to find, manage and clean spatial, demographic and socioeconomic datasets, and then analyse them using core spatial analysis techniques. 
 
 ## Moodle { .unnumbered}
-[Moodle](https://moodle.ucl.ac.uk/) is the central point of contact for GEOG0030 and it is where all important information will be communicated such as key module and assessment information. This workbook contains links to all reading material as well as the content of all computer tutorials
+[Moodle](https://moodle.ucl.ac.uk/) is the central point of contact for GEOG0030 and it is where all important information will be communicated such as key module and assessment information. This workbook contains links to all reading material as well as the contents for all computer tutorials
 
 ## Module overview { .unnumbered}
 The topics covered over the next ten weeks are:
@@ -42,7 +42,7 @@ If you need specific assistance with this course please:
 
 - Ask a question at the end of a lecture or during the computer practical.
 - Check the [Moodle](https://moodle.ucl.ac.uk/) assessment tab for queries relating to this module's assessment.
-- Attend the Department's **Coding Therapy sessions** that are run on a weekly basis.
+- Attend the Department's **Coding Therapy sessions** when these are taking place.
 - Attend the scheduled Geocomputation **Additional Support Hours**.
 
 If after pursuing all these avenues you still need help, you can book a slot in our Academic Support and Feedback hours. You can use this time to discuss a geographical concept in relation to the material, assessment or for any personal matters relevant to the completion of the module.
@@ -62,10 +62,12 @@ This year's workbook also takes inspiration and design elements from:
 ::: { .callout-note}
 This year's version features the following **major** updates:
 
-* Full rewrite of the workbook using `Quarto`.
-* Update to using 2021 Census data where possible.
-* Rewriting sections relying on deprecated and outdated core packages: `raster`, `rgdal`, `rgeos`.
-* Move to `GeoPackage` over `shapefile` where possible.
-* Update to use native pipe `|>` over `dplyr`'s implementation (`%>%`).
-* Add **dark mode** switch.
+- Full rewrite of the workbook using `Quarto`.
+- Update to using 2021 Census data where possible.
+- Rewriting sections relying on deprecated and outdated core packages: `raster`, `rgdal`, `rgeos`.
+- Move to `GeoPackage` over `shapefile` where possible.
+- Include [WorldPop](https://hub.worldpop.org/) data for raster analysis.
+- Include
+- Update to use native pipe `|>` over `dplyr`'s implementation (`%>%`).
+- Add **dark mode** switch.
 :::
