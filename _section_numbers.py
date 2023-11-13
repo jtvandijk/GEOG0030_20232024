@@ -43,9 +43,13 @@ for htmlf in html_files:
     # update TOC chapter 3
     html_content = html_content.replace('<span class="menu-text">Cartography and Visualisation</span>', \
                                         '<span class="menu-text">3 Cartography and Visualisation</span>')
-    # update TOC chapter 3
+    # update TOC chapter 4
     html_content = html_content.replace('<span class="menu-text">Programming for Data Analysis</span>', \
                                         '<span class="menu-text">4 Programming for Data Analysis</span>')
+    
+    # update TOC chapter 5
+    html_content = html_content.replace('<span class="menu-text">Programming for Spatial Analysis</span>', \
+                                        '<span class="menu-text">5 Programming for Spatial Analysis</span>')
     # update TOC chapter 11
     html_content = html_content.replace('<span class="menu-text">Data Sources</span>', \
                                         '<span class="menu-text">11 Data Sources</span>')

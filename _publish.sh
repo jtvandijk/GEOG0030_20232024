@@ -4,7 +4,7 @@
 quarto render
 
 # fix section numbers
-source activate html
+source activate simple
 python _section_numbers.py
 
 # track changes
