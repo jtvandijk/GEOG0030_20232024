@@ -20,10 +20,10 @@ format:
     highlight-style: atom-one
     number-sections: true
     number-depth: 3
+    pagetitle: "{{< var meta.title >}}"
 
 website:
   repo-url: https://github.com/jtvandijk/GEOG0030
-  # favicon: assets/favicon.png
   repo-actions: [issue]
   page-navigation: true
   page-footer:
@@ -54,6 +54,5 @@ website:
         contents:
           - 11-data.qmd
 
-# misc
 editor: source
 

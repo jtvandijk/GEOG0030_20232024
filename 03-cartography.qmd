@@ -6,12 +6,12 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 
 ## Reading list {#reading-w03}
 #### Essential readings
-- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 4**: *Georeferencing*. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
-- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 11**: *Cartography and Map Production*. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 4**: *Georeferencing*, pp. 77-98. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 11**: *Cartography and Map Production*, pp. 237-252. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
 - Wong, D. 2009. Modifiable Areal Unit Problem. *International Encyclopedia of Human Geography* 169-174. [[Link]](https://doi.org/10.1016/B978-008044910-4.00475-2)
 
 #### Suggested readings
-- Longley, P. *et al.* 2015. Geographic Information Science & systems, **Chapter 12**: *Geovisualization*. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+- Longley, P. *et al.* 2015. Geographic Information Science & systems, **Chapter 12**: *Geovisualization*, pp. 266-289. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
 - Usery, L. and Seong, J. 2001. All equal-area map projections are created equal, but some are more equal than others. *Cartography and Geographic Information Science* 28(3): 183-194. [[Link]](https://doi.org/10.1559/152304001782153053)
 
 ## Crime in London I
@@ -26,10 +26,10 @@ The datasets you will create in this practical will be used in other practicals,
 :::
 
 ### Crime data 
-For our crime data, we will use data directly from the **Police Data Portal**, which you can find at https://data.police.uk/. This Data Portal allows you to access and generate tabular data for crime recorded in the UK across different the different Police Forces since 2017. 
+For our crime data, we will use data directly from the **Police Data Portal**, which you can find at [data.polic.uk](https://data.police.uk/). This data portal allows you to access and generate tabular data for crime recorded in the UK across different the different police forces since 2017. 
 
 ::: { .callout-note}
-In the United Kingdom, there are 45 territorial police forces (TPF) and 3 special police forces (SPF). Each TPF covers a specific area in the UK (e.g. the "West Midlands Police Force"), whilst the SPFs are cross-jurisdiction and cover specific types of crime, such as the British Transport Police. Therefore, when we want to download data for a specific area, we need to know which Police Force covers our area interest.
+In the United Kingdom, there are 45 territorial police forces (TPF) and 3 special police forces (SPF). Each TPF covers a specific area in the UK (e.g. the *West Midlands Police Force*), whilst the SPFs are cross-jurisdiction and cover specific types of crime, such as the [British Transport Police](https://www.btp.police.uk/). Therefore, when we want to download data for a specific area, we need to know which police force covers our area interest.
 ::: 
 
 When you look to download crime data for London, there are **two** territorial police forces working within the city and its greater metropolitan area: 
@@ -37,27 +37,24 @@ When you look to download crime data for London, there are **two** territorial p
 1. [The Metropolitan Police Force](https://www.met.police.uk/), which covers Greater London.
 2. [The City of London Police](https://www.cityoflondon.police.uk/), which covers the City of London.
 
-### Population data 
-We know that if we want to study a phenomena like crime and aggregate it to an areal unit, we will need to normalise this by our some denominator (e.g. population). Fortunately, we already sorted out our 2021 LSOA population datasets last week (i.e. `LSOA2021_London.gpkg`).
-
-In addition to our **LSOA** level dataset, we also want to generate a similar dataset for our London **Boroughs**, utilising the same approach as last week by joining our population table data to Borough spatial data and creating a `Borough2021_London.gpkg` file.
-
-### Downloading data {#w03-downloading}
-As outlined above, to get going with our analysis, we need to download both population and spatial data for our Boroughs as well as the reported locations of criminal activity, theft specifically, in London in 2021. 
-
 #### London crime data
-Normally, we would now head to the Police Data Portal and download our crime data. However, the manual processing that is required is too exhaustive to do manually and far easier to do using programming. As such you can download a pre-filtered spreadsheet below. Unzip the file and copy the `csv` into a **new** folder in your `raw` data folder called: `crime`.
+Normally, we would now head to the **Police Data Portal** and download our crime data. However, the manual processing that is required to clean and prepare the data that we need today is too exhaustive and far easier to do using programming, so you can download a pre-filtered spreadsheet below. Unzip the file and copy the `csv` into a **new** folder in your `raw` data folder called: `crime`.
 
 | File                                                 | Type           | Link |
 | :------                                              | :------        | :------ |
 | Theft from persons in 2021                           | `csv`    | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/crime-theft-2021-london.zip) |
 
 ::: { .callout-note}
-When mapping the data from the provided longitude and latitude coordinates, it is important to know that these locations represent the approximate location of a crime — not the exact place that it happened. This displacement occurs to preserve anonymity of the individuals involved. The process by how this displacement occurs is standardised. There is a list of anonymous map points to which the exact location of each crime is compared against this master list to find the nearest map point. The co-ordinates of the actual crime are then replaced with the co-ordinates of the map point. Each map point is specifically chosen to avoid associating that point with an exact household.
+When mapping the data from the provided longitude and latitude coordinates, it is important to know that these locations represent the approximate location of a crime — not the exact place where it happened. This displacement is introduced on purpose to preserve anonymity of the individuals involved. The process by how this displacement occurs is standardised: There is a list of anonymous map points to which the exact location of each crime is compared against this master list to find the nearest map point. The co-ordinates of the actual crime are then replaced with the co-ordinates of the map point. Each map point is specifically chosen to avoid associating that point with an exact household.
 :::
 
+### Population data 
+In last week's practical we mentioned that if we want to study a phenomena like crime and aggregate it to an areal unit, we will need to normalise this by some denominator (e.g. population). This week we will actually do this. Fortunately, we already sorted out our 2021 LSOA population dataset last week (i.e.  `LSOA2021_London.gpkg`).
+
+In addition to our **LSOA** level dataset, we also want to generate a similar dataset for our London **Boroughs** today, utilising the same approach as last week by joining Borough population table data to Borough spatial data and creating a `Borough2021_London.gpkg` file.
+
 #### Borough boundaries
-A lot of data about London is collated by the Greater London Authority (GLA) and made available through the [London Datastore](https://data.london.gov.uk/about/). Whereas some of the data is relatively old, it is a good place to 
+A lot of data about London is collated by the Greater London Authority (GLA) and made available through the [London Datastore](https://data.london.gov.uk/about/). Whereas some of the data is relatively old, it is a good place to get some data specific to London:
 
 1. Navigate to the London Datastore: [[Link]](https://data.london.gov.uk/).
 2. Click on **Data** in the navigation menu.
@@ -66,7 +63,7 @@ A lot of data about London is collated by the Greater London Authority (GLA) and
 5. Rename the file to `Boroughs_London.gpkg` and move it to `boundaries` folder in your `raw` data folder.
 
 #### Borough population
-The final data that we need is the total population for each of the London Boroughs in 2021. A good source for this is the 2021 Census.
+The final data that we need is the total population for each of the London Boroughs in 2021. A good source for this is the 2021 Census again.
 
 1. Navigate to the *Nomis* portal: [[Link]](https://www.nomisweb.co.uk/)
 2. Click on **Query data** in the **Data Downloads** panel.
@@ -91,13 +88,13 @@ The final data that we need is the total population for each of the London Borou
 1. Click on **Layer** -> **Add Layer** -> **Add Vector Layer**.
 2. With **File** select as your source type, click on the small three dots button and navigate to your `LSOA2021_London.gpkg` file in your `boundaries` folder. Select the file, then click **Add**. You may need to close the box after adding the layer.
 
-We now need to create our Borough population shapefile - and to do so, we need to repeat exactly the same process as last week in terms of joining our table data to our shapefile. You should now be able to do this, so we will not provide you with detailed instructions. Remember, you need to:
+We now need to create our Borough population spatial layer. To do so, we need to repeat exactly the same process as last week in terms of joining our table data to our spatial layer. You should now be able to do this, so we will not provide you with detailed instructions. Remember, you need to:
 
 - Load the respective Borough dataset as a Vector Layer found in your `raw/boundaries/` data folder: `Boroughs_London.gpkg`.
 -  Load the respective population dataset that you just created as a **Delimited Text File Layer**. Remember the settings, including no geometry!
 - Join the two datasets together using the **Join** tool in the Borough dataset **Properties** box. Remember which fields to use, which to add, and to remove the prefix.
 - Export your joined dataset into a new dataset within your `data` folder as: `Boroughs_London_Pop2021.gpkg`.
-- Make sure this dataset is loaded into your **Layers** / Added to the map.
+- Make sure this dataset is loaded into your **Layers** / added to the map.
 - Remove the original Borough and population data layers.
 
 ::: { .callout-warning}
@@ -113,10 +110,10 @@ We will now load and map our crime data. We will load this data using the **Deli
     - Under **Geometry Definition**, select `Point coordinates` and set the **X field** to `Longitude` and the **Y field** to `Latitude`. The **Geometry CRS** should be: `EPSG:4326 - WGS84`. Click **Add**. 
 
 ::: { .callout-warning}
-When you click **Add**, you should have gotten a pop-up from QGIS asking about transformations. Transformations are algorithms that convert data from one CRS to another. QGIS knows that the **Project CRS** is **British National GRid** but the **Layer** you are trying to add has a **WGS84** CRS. QGIS is asking you what transformation it should use to project the Layer in the Project CRS. This is one of the key strengths of QGIS: it can project data **"on the fly"**. What this means is that QGIS will automatically convert all Layers to the Project CRS once it knows which transformation you would like to use so that they will all be rendered in the correct position with respect to each other. More details on this can be found in QGIS' [user manual section on working with projections](https://docs.qgis.org/3.28/en/docs/user_manual/working_with_projections/working_with_projections.html).
+When you click **Add**, you should have gotten a pop-up from QGIS asking about transformations. Transformations are algorithms that convert data from one CRS to another. QGIS knows that the **Project CRS** is **British National GRid** but the **Layer** you are trying to add has a **WGS84** CRS. QGIS is asking you what transformation it should use to project the Layer in the Project CRS. This is one of the key strengths of QGIS: it can project data **"on the fly"**. What this means is that QGIS will automatically convert all Layers to the **Project CRS** once it knows which transformation you would like to use so that they will all be rendered in the correct position with respect to each other. More details on this can be found in QGIS' [user manual section on working with projections](https://docs.qgis.org/3.28/en/docs/user_manual/working_with_projections/working_with_projections.html).
 :::
 
-2. Click **OK** to accept QGIS' suggested on-the-fly projection. You should now see your crime dataset displayed on the map.
+2. Click **OK** to accept QGIS' suggested on-the-fly projection. You should now see your crime dataset displayed on the map canvas.
 
 ```{r}
 #| label: fig-borough-crime
@@ -139,7 +136,7 @@ We want to make sure our analysis is as accurate and efficient as possible, so i
 5. You can now also remove the original `crime-theft-2021-london` dataset, only keeping the reprojected version.
 
 #### Counting points-in-polygons 
-The next step of our analysis is incredibly simple - as QGIS has an in-built tool for us to use. We will use the `Count Points in Polygons` in the `Analysis` toolset for `Vector` data to count how many crimes have occurred in our **LSOAs** and our **Boroughs**. We will then have our count statistic which we will need to normalise by our population data to create a **crime rate** statistic.
+The next step of our analysis is incredibly simple, as QGIS has an in-built tool for us to use. We will use the `Count Points in Polygons` in the `Analysis` toolset for `Vector` data to count how many crimes have occurred in our **LSOAs** and our **Boroughs**. We will then have our count statistic which we will need to normalise by our population data to create a **crime rate** statistic.
 
 1. Click on **Vector** -> **Analysis Tools** -> **Count Points in Polygons**.
 2. Within the toolbox, select the parameters as follows:
@@ -166,11 +163,7 @@ Using the *Editing mode* is the safest approach to editing your table, however, 
     - **Type:** Decimal number
 7. Click **OK**. You should now see a new field added to our **Attribute Table**.
 
-::: { .callout-tip}
-Understanding how to add new fields and their parameters rely on you understanding the different data types we covered last week - and thinking through what sort of data type your field needs to contain.
-:::
-
-The empty field has *NULL* populated for each row - so we need to find a way to give our Boroughs some crime rate data. To do this, we will calculate a simple **Crime Rate** using the **Field Calculator** tool provided by QGIS within the **Attribute Table**. We will create a crime rate that details the number of crimes per 10,000 people in the Borough. 
+The empty field has *NULL* populated for each row, so we need to find a way to give our Boroughs some crime rate data. To do this, we will calculate a simple **Crime Rate** using the **Field Calculator** tool provided by QGIS within the **Attribute Table**. We will create a crime rate that details the number of crimes per 10,000 people in the Borough. 
 
 8. Whilst still in the *Editing mode*, click on the **Abacus** button (`ctrl + i` or `cmd + i`), which is known as the **Field Calculator**. 
 9. In the **Field Calculator** window:
@@ -195,7 +188,7 @@ knitr::include_graphics('images/w03/crime-borough-lsoa.png')
 ```
 
 #### Mapping crime data
-Now you have both datasets ready, it is time to style the maps. Remember to use the **Properties** box to symbolise your mapss. Think through using an appropriate colour scheme - perhaps [have a look at the online colorbrewer 2.0 for inspiratoin](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) if you do not want to use the default settings. Once you are happy with their symbolisation, we can turn them into proper publishable maps using QGIS's **Print Layout**. 
+Now you have both datasets ready, it is time to style the maps. Remember to use the **Properties** box to symbolise your mapss. Think through using an appropriate colour scheme, perhaps [have a look at the online colorbrewer 2.0 for inspiration](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) if you do not want to use the default settings. Once you are happy with their symbolisation, we can turn them into proper publishable maps using QGIS's **Print Layout**. 
 
 ```{r}
 #| label: fig-map-styled
@@ -211,7 +204,7 @@ If you have used ArcMap before, **Print Layout**  is similar to switch the view 
 
 From the main QGIS window, click on **Project** -> **New Print Layout**. In the small box that first appears, call your new print layout: `crime-map-borough-lsoa`. A new window should open up that shows a blank canvas. On the **left-hand** side of the window, you will find buttons to add print layout items: the current QGIS map canvas, text labels, images, legends, scale bars, basic shapes, arrows, attribute tables and HTML frames. In this toolbar you also find buttons to navigate, zoom in on an area and pan the view on the layout a well as buttons to select any layout item and to move the contents of the map item.
 
-On the **right-hand** side of the window, you will find two set of panels. The upper one holds the panels *Items* and *Undo History* and the lower holds the panels *Layout*, *Item properties* and *Atlas generation*. Today, we are most interested in the bottom panel as *Layout* will control the overall look of our map, whilst *Item properties* will allow us to customise the elements, such as Title or Legend, that we may add to our map.
+On the **right-hand** side of the window, you will find two set of panels. The upper one holds the panels *Items* and *Undo History* and the lower holds the panels *Layout*, *Item properties* and *Atlas generation*. Today, we are most interested in the bottom panel as *Layout* will control the overall look of our map, whilst *Item properties* will allow us to customise the elements, such as title or legend, that we may add to our map.
 
 In the **bottom part** of the window, you can find a status bar with mouse position, current page number, a combo box to set the zoom level and the number of selected items if applicable. In the **upper part** of the  window, you can find menus and other toolbars. All print layout tools are available in menus and as icons in a toolbar.
 
@@ -245,9 +238,9 @@ By locking the Layers (and their symbology) in our map, it means we can change o
 3. Click on the **Add Legend** tool and again, draw a box on your map in which your legend will appear.
     - As you will see, your Legend auto-generates an entry for every layer in our Layers box in the main QGIS application:
     - In **Item Properties**, uncheck **auto-update** - this stops QGIS automatically populating your legend and enables you to customise your legend.
-    - First, let us rename our Layer in the legend to: **Borough Crime Rate (per 10,000 people)**.
-    - Next, we want to remove all other Layers, using the **-** button
-    - We can also customise the Legend further, including type, size and alignment of font - go ahead and style your legend as you would prefer.
+    - First, let us rename our layer in the legend to: **Borough Crime Rate (per 10,000 people)**.
+    - Next, we want to remove all other Layers, using the **-** (minus) button
+    - We can also customise the Legend further, including type, size and alignment of font. Go ahead and style your legend as you would prefer.
     - Move the Legend to an appropriate part of the layout near your Borough crime rate map - resize if necessary.
     
 ```{r}
@@ -258,21 +251,25 @@ By locking the Layers (and their symbology) in our map, it means we can change o
 knitr::include_graphics('images/w03/autolegend.png')
 ```
 
-Now we are finished with the Borough map, we want to make sure we do not change any aspect of its layout. To do so, we need to lock both the Map and Legend in the **Items** panel - this prevents us accidentally moving items in our layout. Note, this is different to locking your layers in the **Items Properties** as we did earlier.
+Now we are finished with the Borough map, we want to make sure we do not change any aspect of its layout. To do so, we need to lock both the map layer and legend in the **Items** panel. This prevents us accidentally moving items in our layout. Note, this is different to locking your layers in the **Items Properties** as we did earlier.
 
-4. In the **Items** panel, click the **Lock** check box for both our map and legend.
+4. In the **Items** panel, click the **Lock** check box for both our map layer and legend.
 5. In the main QGIS window, uncheck your `borough-theft2021` layer and make sure your `lsoa-theft2021` layer is now visible.
-6. Return to the **Print Layout** window annd repeat the process above of adding a map to the window - this time, you should now see your LSOA map loaded in the box (and you should see **no** changes to your Borough map).
+6. Return to the **Print Layout** window annd repeat the process above of adding a map to the window. This time you should see your LSOA map loaded in the box (and you should see **no** changes to your Borough map).
     - Place your LSOA map next to your LSOA map - use the snap grids to help.
     - Set your LSOA map to the **same zoom level** as your Borough map.
     - Make sure your LSOA map is the **same size** as your Borough map.
     - Add a frame if you want.
     - Lock your layer and its symbology in the **Items Properties** once ready and the lock your layer in the **Items** panel.
 
-We now just need to add a second legend for our Borough map. If we had **standardised** our values across our two maps, then we would only need to use one legend. However, in this case, as there is a difference in the values, we need to have two legends. 
+We now just need to add a second legend for our Borough map. 
+
+::: { .callout-note}
+If we had **standardised** our values across our two maps, then we would only need to use one legend. However, in this case, as there are large differences in the value ranges, we need to have two legends. 
+::: 
 
 7. Repeat the process as above to add a Legend for our LSOA map.
-    - Remember to re-title the Legend to make it more legible/informative.
+    - Remember to re-title the legend to make it more legible/informative.
     - Match the same formatting for a clean look.
 8. Once complete, **lock these two items** in the **Items** panel as well.
 9. Now we have our two maps ready, we can add our **main map elements**. Using the tools on the left-hand tool bar: 
@@ -287,7 +284,7 @@ Once you have added these properties in, you should have something that looks a 
 #| label: fig-final-map
 #| echo: False 
 #| cache: True
-#| fig-cap: "Crime rates in London Boroughs and LSOAs. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w03/london-crime-rate){target='_blank'}"
+#| fig-cap: "Crime rates in London Boroughs and LSOAs. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w03/london-crime-rate.png){target='_blank'}"
 knitr::include_graphics('images/w03/london-crime-rate.png') 
 ```
 
@@ -295,10 +292,7 @@ The only thing outstanding is to export our map to a file. Go to **Layout** -> *
 
 ## Assignment {#assignment-w03}
 1. Looking at the maps you have created, how does your perception of crime (and its distribution) in London vary at different scales?
-
-At the moment, we have looked at the crime rate as an amount, therefore we use a sequential colour scheme that shows, predominantly, where the crime rate is the highest. As an alternative, we could use a diverging colour scheme that could show us where the crime rate is lower and/or higher than a critical mid-point, such as the average crime rate across the Boroughs and LSOAs. 
-
-2. Create a map of crime in London, at both the Borough and LSOA level that shows for each of these administrative geographies the percentage difference from the overall mean crime rate.
+2. At the moment, we have looked at the crime rate as an amount, therefore we use a sequential colour scheme that shows, predominantly, where the crime rate is the highest. As an alternative, we could use a diverging colour scheme that could show us where the crime rate is lower and/or higher than a critical mid-point, such as the average crime rate across the Boroughs and LSOAs. Create a map of crime in London, at both the Borough and LSOA levels that shows for each of these administrative geographies the percentage difference from the overall mean crime rate.
 
 ::: { .callout-tip}
 - You will need to start by calculating the average crime rate for both datasets and subsequently calculate the difference from these values for each geography.
@@ -307,4 +301,3 @@ At the moment, we have looked at the crime rate as an amount, therefore we use a
 
 ## Before you leave {#byl-w03}
 [That is us all done](https://www.youtube.com/watch?v=3wxyN3z9PL4). Remember to save your project.
-

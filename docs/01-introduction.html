@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>introduction</title>
+<title>GEOG0030</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -247,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="geocomputation-an-introduction" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Geocomputation: An Introduction</h1>
-<p>This week’s lecture provided you with a thorough introduction to this Geocomputation module, outlining how and why it is different to a traditional GIScience course. We set the scene for the remainder of the module and explained how the foundational concepts that you will learn in the first half of term sit within the overall module. This week we start easy by setting up our work environment and make sure that we can access the software that we will need over the coming weeks.</p>
+<p>This week’s lecture provided you with a thorough introduction to this Geocomputation module, outlining how and why it is different to a traditional GIScience course. We set the scene for the remainder of the module and explained how the foundational concepts that you will learn in the first half of term sit within the overall module. This week we start easy by setting up our work environment and making sure that we can access the software that we will need over the coming weeks.</p>
 <section id="slides-w01" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="slides-w01"><span class="header-section-number">1.1</span> Lecture slides</h2>
 <p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w01-geo.pdf">[Link]</a></p>
@@ -258,9 +258,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
 <li>Brundson, C. and Comber, A. 2020. Opening practice: Supporting reproducibility and critical spatial data science. <em>Journal of Geographical Systems</em> 23: 477–496. <a href="https://doi.org/10.1007/s10109-020-00334-2">[Link]</a></li>
-<li>Franklin, R. 2023. Quantitative methods III: Strength in numbers?. <em>Progress in Human Geography</em>. Online First. <a href="https://doi.org/10.1177/03091325231210512">[Link]</a>.</li>
-<li>Longley, P. <em>et al.</em> 2015. Geographic Information Science &amp; Systems, <strong>Chapter 1</strong>: <em>Geographic Information: Science, Systems, and Society</em>. <a href="https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&amp;sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a">[Link]</a></li>
-<li>Singleton, A. and Arribas-Bel, D. 2019. Geographic Data Science. <em>Geographical Analysis</em>. <a href="https://doi.org/10.1111/gean.12194">[Link]</a></li>
+<li>Franklin, R. 2023. Quantitative methods III: Strength in numbers? <em>Progress in Human Geography</em>. Online First. <a href="https://doi.org/10.1177/03091325231210512">[Link]</a>.</li>
+<li>Longley, P. <em>et al.</em> 2015. Geographic Information Science &amp; Systems, <strong>Chapter 1</strong>: <em>Geographic Information: Science, Systems, and Society</em>, pp.&nbsp;1-32. <a href="https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&amp;sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a">[Link]</a></li>
+<li>Singleton, A. and Arribas-Bel, D. 2019. Geographic Data Science. <em>Geographical Analysis</em> 53(1): 61-75. <a href="https://doi.org/10.1111/gean.12194">[Link]</a></li>
 </ul>
 </section>
 <section id="suggested-readings" class="level4">
@@ -322,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="ucl" class="level3" data-number="1.4.3">
 <h3 data-number="1.4.3" class="anchored" data-anchor-id="ucl"><span class="header-section-number">1.4.3</span> UCL Desktop and RStudio Server</h3>
 <p>There are two alternatives to installing QGIS and R with RStudio onto your personal device. First, both programmes are available through <a href="https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere">Desktop@UCL Anywhere</a> as well as all UCL computers on campus. Second, specifically to R, we have a RStudio server available which you can access through your web browser: <a href="https://rstudio.data-science.rc.ucl.ac.uk/">[Link]</a></p>
-<p>You should be able to log onto the RStudio server with your UCL username and password. After logging in, you should see the RStudio interface appear.</p>
+<p>You should be able to log onto the RStudio server with your regular UCL <em>username</em> and <em>password</em>. After logging in, you should see the RStudio interface appear.</p>
 <div class="cell" data-hash="01-introduction_cache/html/fig-rstudio-interface_c45cc89fb83222fbf1fcf56620426e75">
 <div class="cell-output-display">
 <div id="fig-rstudio-interface" class="quarto-figure quarto-figure-center anchored">
@@ -346,7 +346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="r-package-installation" class="level3" data-number="1.4.4">
 <h3 data-number="1.4.4" class="anchored" data-anchor-id="r-package-installation"><span class="header-section-number">1.4.4</span> R package installation</h3>
-<p>Now we have installed QGIS and R onto our machines / have access to QGIS and R through UCL’s resources, we need to customise R. Many useful R functions come in packages, these are free libraries of code written and made available by other R users. This includes packages specifically developed for data cleaning, data wrangling, visualisation, mapping, and spatial analysis. To save us some time, we will install <strong>all R packages that we will need</strong> over the next ten weeks in one go. Start RSTudio, and copy and paste the following code into the <strong>console</strong> window. You can execute the code by hitting <strong>Enter</strong>. Depending on your computer’s specificiations and the internet connection, this may take a while.</p>
+<p>Now we have installed QGIS and R onto our machines / have access to QGIS and R through UCL’s resources, we need to customise R. Many useful R functions come in packages, these are free libraries of code written and made available by other R users. This includes packages specifically developed for data cleaning, data wrangling, visualisation, mapping, and spatial analysis. To save us some time, we will install <strong>all R packages that we will need</strong> over the next ten weeks in one go. Start RStudio, and copy and paste the following code into the <strong>console</strong> window. You can execute the code by hitting <strong>Enter</strong>. Depending on your computer’s specificiations and the internet connection, this may take a while.</p>
 <div class="cell" data-warnings="true" data-hash="01-introduction_cache/html/01-install-libaries_7c6d4562bcabed0a71f3379476fc7110">
 <div class="code-with-filename">
 <div class="code-with-filename-file">

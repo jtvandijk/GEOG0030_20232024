@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>statistics</title>
+<title>GEOG0030</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -259,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#crime-data" id="toc-crime-data" class="nav-link" data-scroll-target="#crime-data"><span class="header-section-number">4.7.4</span> Crime data</a></li>
   </ul></li>
   <li><a href="#assignment-w04" id="toc-assignment-w04" class="nav-link" data-scroll-target="#assignment-w04"><span class="header-section-number">4.8</span> Assignment</a></li>
-  <li><a href="#wm-w04" id="toc-wm-w04" class="nav-link" data-scroll-target="#wm-w04"><span class="header-section-number">4.9</span> Want more?</a>
+  <li><a href="#wm-w04" id="toc-wm-w04" class="nav-link" data-scroll-target="#wm-w04"><span class="header-section-number">4.9</span> Want more? [Optional]</a>
   <ul class="collapse">
   <li><a href="#data-visualisation" id="toc-data-visualisation" class="nav-link" data-scroll-target="#data-visualisation"><span class="header-section-number">4.9.1</span> Data visualisation</a></li>
   <li><a href="#reproducible-research" id="toc-reproducible-research" class="nav-link" data-scroll-target="#reproducible-research"><span class="header-section-number">4.9.2</span> Reproducible research</a></li>
@@ -276,7 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="programming-for-data-analysis" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">4</span> Programming for Data Analysis</h1>
-<p>This week’s content introduces you to the foundational concepts associated with Programming for Data Analysis. We will cover some general principles of programming as well how we can use R and RStudio effectively for data analysis by continuing to look at crime in London.</p>
+<p>This week’s content introduces you to the foundational concepts associated with <em>Programming for Data Analysis</em>. We will cover some general principles of programming as well how we can use R and RStudio effectively for data analysis by continuing to look at crime in London.</p>
 <section id="slides-w04" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="slides-w04"><span class="header-section-number">4.1</span> Lecture slides</h2>
 <p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w04-geo.pdf">[Link]</a></p>
@@ -301,8 +301,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="programming" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="programming"><span class="header-section-number">4.3</span> Programming</h2>
-<p>Programming is our most fundamental way of interacting with a computer - it was how computers were first built and operated - and for a long time, the Command Line Interface (CLI) was our primary way of using computers before our Graphical User Interface (GUI) Operating Systems (OS) and software became mainstream. Nowadays, the majority of us use our computers through clicking instead of typing. However, programming and computer code underpin every single application that we use on our computers.</p>
-<p>Programming is used for endless purposes and applications, ranging from software engineering and application development, to creating websites and managing databases at substantial scales. To help with this diversity of applications, multiple types of programming languages have developed - Wikipedia, for example, has a list of <strong>50 different types</strong> of languages, although there is some overlap between many of these and some are used for incredibly niche activities.</p>
+<p>Programming is our most fundamental way of interacting with a computer, it was how computers were first built and operated and for a long time, the Command Line Interface (CLI) was our primary way of using computers before our Graphical User Interface (GUI) Operating Systems (OS) and software became mainstream. Nowadays, the majority of us use our computers through clicking instead of typing. However, programming and computer code underpin every single application that we use on our computers.</p>
+<p>Programming is used for endless purposes and applications, ranging from software engineering and application development, to creating websites and managing databases at substantial scales. To help with this diversity of applications, multiple types of programming languages have developed. Wikipedia, for example, has a <a href="https://en.wikipedia.org/wiki/List_of_programming_languages">list of hundreds of different languages</a>, although there is some overlap between many of these, some are used for incredibly niche activities, and some are not used any more at all.</p>
 </section>
 <section id="programming-in-r" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="programming-in-r"><span class="header-section-number">4.4</span> Programming in R</h2>
@@ -312,7 +312,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>R is our programming language, which we need to understand in terms of general principles, syntax and structure.</li>
 <li>RStudio is our <a href="https://en.wikipedia.org/wiki/Integrated_development_environment">Integrated Development Environment (IDE)</a>, which we need to understand in terms of functionality and workflow. An IDE is simply a complicated way of saying “a place where I write and build scripts and execute my code”.</li>
 </ul>
-<p>As you may know already, R is a free and open-source programming language, that originally was created to focus on statistical analysis. In conjunction with the development of R as a language, the same community created the RStudio IDE to execute this statistical programming. Together, R and RStudio have grown into an incredibly success partnership of analytical programming language and analysis software - and is widely used for academic research as well as in the commercial sector. As a result, it has a huge and active contributor community which constantly adds functionality to the language and software, making it an incredibly useful tool for many purposes and applications beyond statistical analysis.</p>
+<p>As you may know already, R is a free and open-source programming language, that originally was created to focus on statistical analysis. In conjunction with the development of R as a language, the same community created the RStudio IDE to execute this statistical programming. Together, R and RStudio have grown into an incredibly success partnership of analytical programming language and analysis software. As a result, it has a huge and active contributor community which constantly adds functionality to the language and software, making it an incredibly useful tool for many purposes and applications beyond statistical analysis.</p>
 <p>Unlike traditional statistical analysis programmes you may have used such as <a href="https://www.microsoft.com/en-us/microsoft-365/excel">Microsoft Excel</a> or even <a href="https://www.arcgis.com/home/index.html">ArcGIS Online</a>, within the RStudio IDE, the user has to type commands to get it to execute tasks such as loading in a dataset or performing a calculation. We primarily do this by building up a script, that provides a record of what you have done, whilst also enabling the straightforward repetition of tasks.</p>
 <p>We can also use the <strong>R Console</strong> to execute simple instructions that do not need repeating such as installing libraries or quickly viewing data. In addition, R, its various graphic-oriented “packages” and RStudio are capable of making graphs, charts and maps through just a few lines of code which can then be easily modified and tweaked by making slight changes to the script if mistakes are spotted. Unfortunately, command-line computing can also be off-putting at first. It is easy to make mistakes that are not always obvious to detect and thus debug. Nevertheless, there are good reasons to stick with R and RStudio. These include:</p>
 <ul>
@@ -329,10 +329,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Calculating a number of statistics for data exploration and checking.</li>
 <li>Creating basic and more complex plots in order to visualise the distributions values within a dataset.</li>
 </ol>
-<p>What you should remember is that R has a steep learning curve, but the benefits of using it are well worth the effort. The best way to really learn R is to take the basic code provided in tutorials and experiment with changing parameters - such as the colour of points in a graph - to really get ‘under the hood’ of the software.</p>
+<p>What you should remember is that R has a steep learning curve, but the benefits of using it are well worth the effort. The best way to really learn R is to take the basic code provided in tutorials and experiment with changing parameters such as the colour of points in a graph to really get ‘under the hood’ of the software.</p>
 <section id="the-rstudio-interface" class="level3" data-number="1.4.1">
 <h3 data-number="1.4.1" class="anchored" data-anchor-id="the-rstudio-interface"><span class="header-section-number">4.4.1</span> The RStudio interface</h3>
-<p>You should all have access to some form of R on your personal computer, or through <a href="https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere">Desktop@UCL Anywhere</a> or the <a href="https://rstudio.data-science.rc.ucl.ac.uk/auth-sign-in">RStudio Server</a>. If not, please refer to the <a href="#geocomputation-an-introduction.html#software">Geocomputation: An Introduction</a> section. Go ahead and open RStudio and we will first take a quick tour of the various components of the RStudio environment interface and how and when to use them. When you first open RStudio, it should look a little something like this:</p>
+<p>You should all have access to some form of R on your personal computer, or through <a href="https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere">Desktop@UCL Anywhere</a> or the <a href="https://rstudio.data-science.rc.ucl.ac.uk/auth-sign-in">RStudio Server</a>. If not, please refer to the <a href="01-geocomputation-an-introduction.html#software">Geocomputation: An Introduction</a> section. Go ahead and open RStudio and we will first take a quick tour of the various components of the RStudio environment interface and how and when to use them. When you first open RStudio, it should look a little something like this:</p>
 <div class="cell" data-hash="04-statistics_cache/html/fig-rstudio-interface_d7fb0db7d67beea96fecd2e0452c9738">
 <div class="cell-output-display">
 <div id="fig-rstudio-interface" class="quarto-figure quarto-figure-center anchored">
@@ -357,7 +357,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="rstudio-console" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="rstudio-console"><span class="header-section-number">4.5</span> RStudio console</h2>
-<p>We will first start off with using <strong>RStudio’s console</strong> to test out some of R’s in-built functionality by creating a few variables as well as a dummy dataset that we will be able to analyse - and to get familiar with writing code.</p>
+<p>We will first start off with using <strong>RStudio’s console</strong> to test out some of R’s in-built functionality by creating a few variables as well as a dummy dataset that we will be able to analyse.</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -375,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>In your RStudio console, you should see a prompt sign <code>&gt;</code> on the left hand side. This is where we can directly interact with R. Anything that appears as red in the command line means it is an error (or a warning) so you will likely need to correct your code. If you just a <code>&gt;</code> it means you can type in your next line, a <code>+</code> means that you have not finished the previous line of code. As will become clear, <code>+</code> signs often appear if you do not close brackets or you did not properly finish your command in a way that R expected.</p>
+<p>In your RStudio console, you should see a prompt sign <code>&gt;</code> on the left hand side. This is where we can directly interact with R. Anything that appears as red in the command line means it is an error (or a warning) so you will likely need to correct your code. If you just see a <code>&gt;</code> it means you can type in your next line, whilst a <code>+</code> means that you have not finished the previous line of code. As will become clear, <code>+</code> signs often appear if you do not close brackets or you did not properly finish your command in a way that R expected.</p>
 </div>
 </div>
 </div>
@@ -523,13 +523,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We have just used our first function: <code>print()</code>. This function actively finds the variable and then returns this to our screen.</p>
 <p>You can type <code>?print</code> into the console to find out more about the <code>print()</code> function.</p>
-<div class="cell styled-output" data-hash="04-statistics_cache/html/04-str4_4bf85ff60604044592a0c84df721dcab">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-str4_02cb53accdb17e3afe8d865d941371fb">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># open documentation of the print function</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">?</span><span class="st">`</span>(print)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>?print</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>This can be used with any function to get access to their documentation which is essential to know how to use the function correctly and understand its output.</p>
@@ -564,7 +564,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] "character"</code></pre>
 </div>
 </div>
-<p>You should see the answer: <em>character</em>. As evident, our <code>str_variable</code> is a character data type. We can try testing this out on one of our earlier variables too.</p>
+<p>You should see the answer: <code>character</code>. As evident, our <code>str_variable</code> is a <strong>character data type</strong>. We can try testing this out on one of our earlier variables too.</p>
 <p>Type in <code>typeof(ten)</code> into the console and execute.</p>
 <div class="cell styled-output" data-hash="04-statistics_cache/html/04-str6_187beb05c410a50897dc7c5d0bf44fb5">
 <div class="code-with-filename">
@@ -578,7 +578,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] "double"</code></pre>
 </div>
 </div>
-<p>You should see the answer: <em>double</em>. As evident, our <code>ten</code> is a double data type. For high-level objects that involve (more complicated) data structures, such as when we load a <code>csv</code> into R as a <strong>dataframe</strong>, we are also able to check what <strong>class</strong> our object is. Type in <code>class(str_variable)</code> into the console and execute.</p>
+<p>You should see the answer: <code>double</code>. As evident, our <code>ten</code> is a <strong>double data type</strong>. For high-level objects that involve (more complicated) data structures, such as when we load a <code>csv</code> into R as a <strong>dataframe</strong>, we are also able to check what <strong>class</strong> our object is. Type in <code>class(str_variable)</code> into the console and execute.</p>
 <div class="cell styled-output" data-hash="04-statistics_cache/html/04-str7_a7ecff97be5a712944f6f6349ffcc0af">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -926,13 +926,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="column-names" class="level3" data-number="1.6.5">
 <h3 data-number="1.6.5" class="anchored" data-anchor-id="column-names"><span class="header-section-number">4.6.5</span> Column names</h3>
 <p>We can rename our dataframe column field names by using the <code>names()</code> function. Before we do this, have a read of what the <code>names()</code> function does. Still in your <strong>console</strong>, type: <code>?names</code></p>
-<div class="cell styled-output" data-hash="04-statistics_cache/html/04-open-doc_85c0e0fe2b76cfc94763a4b5303218e9">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-open-doc_0c38c18912ec24890dad5eacefbb6908">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># open documentation of the names function</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">?</span><span class="st">`</span>(names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>?names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>As you can see, the function will get or set the names of an object, with renaming occurring by using the following syntax: <code>names(x) &lt;- value</code></p>
@@ -1018,7 +1018,7 @@ $class
 [1] "data.frame"</code></pre>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note">
+<div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -1027,7 +1027,7 @@ $class
 <ul>
 <li>R is case-sensitive so you need to make sure that you capitalise everything correctly if required.</li>
 <li>The spaces between the words do not matter but the positions of the commas and brackets do. Remember, if you find the prompt, <code>&gt;</code>, is replaced with a <code>+</code> it is because the command is incomplete. If necessary, hit the escape (<code>esc</code>) key and try again.</li>
-<li>It is important to come up with good names for your objects. In the case of the majority of our variables, we used a underscore <code>_</code> to separate the words. It is good practice to keep the object names as short as possible but they still need to be easy to read and clear what they are referring to. Be aware: <strong>you cannot start an object name with a number!</strong></li>
+<li>It is important to come up with good names for your objects. In the case of the majority of our variables, we used an underscore (<code>_</code>) to separate the words. It is good practice to keep the object names as short as possible but they still need to be easy to read and clear what they are referring to. Be aware: <strong>you cannot start an object name with a number!</strong></li>
 <li>If you press the up arrow in the console you will be able to edit the previous lines of code you have inputted.</li>
 </ul>
 </div>
@@ -1038,13 +1038,13 @@ $class
 <section id="crime-in-london-ii" class="level2" data-number="1.7">
 <h2 data-number="1.7" class="anchored" data-anchor-id="crime-in-london-ii"><span class="header-section-number">4.7</span> Crime in London II</h2>
 <p>During <a href="01-introduction.html#r-package-installation">Week 1’s computer tutorial</a>, we already installed several R libraries. One of these libraries was called the <code>tidyverse</code>. The <code>tidyverse</code> is a collection of packages that are specifically designed for data wrangling, management, cleaning, analysis and visualisation within RStudio. Whilst in many cases different packages work all slightly differently, all packages of the <code>tidyverse</code> share the underlying design philosophy, grammar, and data structures.</p>
-<p>The tidyverse itself is treated and loaded as a single package, but this means if you load the <code>tidyverse</code> package within your script (through <code>library(tidyverse)</code>), you will directly have access to all the functions that are part of each of the packages that are within the overall <code>tidyverse.</code> This means you do not have to load each package separately. For more information have a look at https://www.tidyverse.org/.</p>
+<p>The tidyverse itself is treated and loaded as a single package, but this means if you load the <code>tidyverse</code> package within your script (through <code>library(tidyverse)</code>), you will directly have access to all the functions that are part of each of the packages that are within the overall <code>tidyverse.</code> This means you do not have to load each package separately. For more information have a look at <a href="https://www.tidyverse.org/">www.tidyverse.org</a>.</p>
 <p>There are some specific functions in the <code>tidyverse</code> suite of packages that will help us cleaning and preparing our datasets now and in the future, which is one of the main reasons for using this library. Some of the most important and useful functions, from the <code>tidyr</code> and <code>dplyr</code> packages, are:</p>
 <table class="table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 16%">
+<col style="width: 25%">
+<col style="width: 58%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1055,38 +1055,38 @@ $class
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">dplyr</td>
-<td style="text-align: left;">select</td>
+<td style="text-align: left;"><code>dplyr</code></td>
+<td style="text-align: left;"><code>select()</code></td>
 <td style="text-align: left;">select columns</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">dplyr</td>
-<td style="text-align: left;">filter</td>
+<td style="text-align: left;"><code>dplyr</code></td>
+<td style="text-align: left;"><code>filter()</code></td>
 <td style="text-align: left;">select rows</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">dplyr</td>
-<td style="text-align: left;">mutate</td>
+<td style="text-align: left;"><code>dplyr</code></td>
+<td style="text-align: left;"><code>mutate()</code></td>
 <td style="text-align: left;">transform or recode variables</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">dplyr</td>
-<td style="text-align: left;">summarise</td>
+<td style="text-align: left;"><code>dplyr</code></td>
+<td style="text-align: left;"><code>summarise()</code></td>
 <td style="text-align: left;">summarise data</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">dplyr</td>
-<td style="text-align: left;">group by</td>
+<td style="text-align: left;"><code>dplyr</code></td>
+<td style="text-align: left;"><code>group_by()</code></td>
 <td style="text-align: left;">group data into subgroups for further processing</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">tidyr</td>
-<td style="text-align: left;">pivot_longer</td>
+<td style="text-align: left;"><code>tidyr</code></td>
+<td style="text-align: left;"><code>pivot_longer()</code></td>
 <td style="text-align: left;">convert data from wide format to long format</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">tidyr</td>
-<td style="text-align: left;">pivot_wider</td>
+<td style="text-align: left;"><code>tidyr</code></td>
+<td style="text-align: left;"><code>pivot_wider()</code></td>
 <td style="text-align: left;">convert long format dataset to wide format</td>
 </tr>
 </tbody>
@@ -1133,16 +1133,15 @@ $class
 </div>
 <p>Save your script as: <code>wk4-csv-processing.r</code>. Through our name, we know now that our script was created in Week 4 of Geocomputation and the code it will contain is something to do with <code>csv</code> processing. This will help us a lot in the future when we come to find code that we need for other projects.</p>
 <p>The <strong>first</strong> bit of code you will want to add to any script is to add a <strong>title</strong>. This title should give any reader a quick understanding of what your code achieves. When writing a script it is important to keep notes about what each step is doing. To do this, the hash (<code>#</code>) symbol is put before any code. This comments out that particular line so that R ignores it when the script is run.</p>
-<p>Let us go ahead and give our script a title - and maybe some additional information:</p>
-<div class="cell styled-output" data-hash="04-statistics_cache/html/04-script-title_025026b6355a30a63bc0c24f8b48ae41">
+<p>Let us go ahead and give our script a title and include some metadata:</p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-script-title_da7dd7dd2d352a80dcb497690a5f3aa7">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combining Police Data csv's from 2021 into a single csv</span></span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Followed by analysis of data on monthly basis</span></span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: January 2024</span></span>
-<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Author: Justin </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysing theft in London by month</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: January 2024</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Author: Justin </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>Now we have our title, the <strong>second</strong> bit of code we want to include in our script is to load <strong>our libraries</strong> (i.e.&nbsp;the installed packages we want to use in our script):</p>
@@ -1174,7 +1173,7 @@ $class
 <h4 class="anchored" data-anchor-id="to-run-line-by-line">To run line-by-line</h4>
 <ul>
 <li>By clicking: select the line or chunk of code you want to run, then click on <strong>Code</strong> and choose <strong>Run selected lines</strong>.</li>
-<li>By key commands: select the line or chunk of code you want to run and then hold <strong>Ctl</strong> or <strong>Cmd</strong> and press <strong>Return</strong>.</li>
+<li>By key commands: select the line or chunk of code you want to run and then hold <code>Ctl</code> or <code>Cmd</code> and press <code>Return</code>.</li>
 </ul>
 </section>
 <section id="to-run-the-whole-script" class="level4">
@@ -1186,12 +1185,12 @@ $class
 </section>
 <section id="stopping-a-script-from-running" class="level4">
 <h4 class="anchored" data-anchor-id="stopping-a-script-from-running">Stopping a script from running</h4>
-<p>If you are running a script that seems to be stuck (for whatever reason) or you notice some of your code is wrong, you will need to interrupt R. To do so, click on <strong>Session</strong> -&gt; <strong>Interrupt R</strong>. If this does not work, you may end up needing to <strong>Terminate R</strong> but this may lose any unsaved progress.</p>
+<p>If you are running a script that seems to be stuck (for whatever reason) or you notice some of your code is wrong, you will need to interrupt R. To do so, click on <strong>Session</strong> -&gt; <strong>Interrupt R</strong>. If this does not work, you may end up needing to terminate R but this will loose any unsaved progress.</p>
 </section>
 </section>
 <section id="crime-data" class="level3" data-number="1.7.4">
 <h3 data-number="1.7.4" class="anchored" data-anchor-id="crime-data"><span class="header-section-number">4.7.4</span> Crime data</h3>
-<p>Where last week we provided you with a crime dataset, this week you will download and prepare the dataset yourself.</p>
+<p>Where last week we provided you with a crime dataset, this week you will download and prepare the dataset yourselves.</p>
 <ol type="1">
 <li>Start by navigating to <a href="https://data.police.uk/">data.police.uk</a>. And click on <strong>Downloads</strong>.</li>
 <li>Under the data range select <code>January 2021</code> to <code>December 2021</code>.</li>
@@ -1274,18 +1273,19 @@ lgl (1): Context
 <pre><code>[1] 84848    12</code></pre>
 </div>
 </div>
-<p>We have found out our variable is a dataframe, containing <strong>84,848 rows and 12 columns</strong>. We however do not want just the single <code>csv</code> and instead what to combine all our <code>csv's</code> in our <code>all-crime</code> folder into a single dataframe - so how do we do this?</p>
+<p>We have found out our variable is a dataframe, containing <strong>84,848 rows and 12 columns</strong>. We however do not want just the single <code>csv</code> and instead what to combine all our <code>csv's</code> in our <code>all-crime</code> folder into a single dataframe. How do we do this?</p>
 <p>This will be the most complicated section of code you will come across today, and we will use some functions that you have not seen before. Copy the following code below into your script, then execute.</p>
-<div class="cell styled-output" data-hash="04-statistics_cache/html/04-combine-csv_79e52a80909876210e7be38ef8aa8cc2">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-combine-csv_fd8e0ac1e5b055c24da18338b97e6dde">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in all files and append all rows to a single dataframe</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>all_crime_df <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/raw/crime/all-crime/"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">recursive =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lapply</span>(read_csv) <span class="sc">|&gt;</span></span>
-<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a list of all csv files in the crime folder</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>all_crime_df <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/raw/crime/all-crime/"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># apply the read_csv() function on each of these files</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(read_csv) <span class="sc">|&gt;</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># combine ('bind') them all together into one</span></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>This might take a little time to process (or might not), as we have a lot of data to get through. You should see a new dataframe appear in your global environment called <code>all_crime_df</code>, for which we now have 1,079,267 observations!</p>
@@ -1301,7 +1301,7 @@ lgl (1): Context
 <li>Read each of these as a <code>csv</code> by “applying” the <code>read_csv()</code> function to all files.</li>
 <li>Binding all rows of all individual dataframes together in a single dataframe.</li>
 </ol>
-<p>These three different actions are combined by using something called a pipe (<code>|&gt;</code>), which we will explain in more detail in later weeks.</p>
+<p>These three different actions are combined by using something called a pipe (<code>|&gt;</code>), which we will explain in a bit more detail next week.</p>
 </div>
 </div>
 </div>
@@ -1341,7 +1341,7 @@ lgl (1): Context
 </div>
 </div>
 <p>You should now see with have the same number of columns as our previous single <code>csv</code>, but with many more rows. You can also see that the <code>head()</code> function provides us with the first <strong>five</strong> rows of our dataframe. You can conversely use <code>tail()</code> to provide the last five rows.</p>
-<p>For now in our analysis, we only want to extract the <strong>theft</strong> crime in our dataframe - so we will want to filter our data based on the <strong>Crime type</strong> column. However, as we can see, we have a space in our field name for <strong>Crime type</strong> and, in fact, many of the other fields. As we want to avoid having spaces in our field names when coding, we need to rename our fields. Rename the field names, just as we did with our GIS table earlier:</p>
+<p>For now in our analysis, we only want to extract the <strong>theft</strong> crime in our dataframe, so we need to filter our data based on the <strong>Crime type</strong> column. However, as we can see, we have a space in our field name for <strong>Crime type</strong> and, in fact, many of the other fields. As we want to avoid having spaces in our field names when coding, we need to rename our fields. Rename the field names, just as we did with our GIS table earlier:</p>
 <div class="cell styled-output" data-hash="04-statistics_cache/html/04-rename-fields_a802ffbe43bd23cc3ecd3ee10d3d8275">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -1366,15 +1366,24 @@ lgl (1): Context
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>all_theft_df <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(all_crime_df, crime_type <span class="sc">==</span> <span class="st">"Theft from the person"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>:::note { .callout-note} Although not necessary per se because R uses the function from the package that got loaded latest, it is a good idea to specify that we want to use <code>filter()</code> from the <code>dplyr</code> package instead of the default <code>stats</code> library so to avoid any confusing errors. :::</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>If two functions from different packages have the same name, R default to use the function from the package that got loaded last. To avoid confusion, however, it can be a good idea at times to specify the library from which a function should be taken. In this case, we can make it clear that we want to use <code>filter()</code> from the <code>dplyr</code> package instead of the default <code>stats</code> library.</p>
+</div>
+</div>
+</div>
 <p>You should now see the new variable appear in your environment with <strong>38,229</strong> observations. Now save the dataframe as a <code>csv</code> file.</p>
-<div class="cell styled-output" data-hash="04-statistics_cache/html/04-save-data-frame_1cde5df84a5885246bcf29f856ce01c4">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-save-data-frame_b8fc7c979cfeea4c7a58337558d36e79">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save all_crime_df as csv</span></span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(all_theft_df, <span class="st">"data/raw/crime/crime-theft-2021-london.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(all_theft_df, <span class="st">"data/raw/crime/crime-theft-2021-london.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note">
@@ -1383,32 +1392,32 @@ lgl (1): Context
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>If using a Windows machine, you will need to substitute your forward-slashes (<code>/</code>) with two backslashes (<code>\\</code>) whenever you are dealing with file paths!</p>
+<p>Remember that if using a Windows machine, you might need to substitute your forward-slashes (<code>/</code>) with two backslashes (<code>\\</code>) whenever you are dealing with file paths!</p>
 </div>
 </div>
 </div>
 <p>We now want to do some further housekeeping and create on final dataframe that will allow us to analyse crime in London by month. To do so, we want to count how many thefts occur each month in London. Fortunately, <code>dplyr</code> has another function that will do this for us, known simply as <code>count()</code>.</p>
 <p>When you go ahead and search the documentation to understand the <code>count()</code> function, you will see that there is only one function called <code>count()</code> at the moment, i.e.&nbsp;the one in the <code>dplyr</code> library, so we do not need to use the additional syntax we used above. Let us go ahead and count the number of thefts in London <strong>by month</strong>:</p>
-<div class="cell styled-output" data-hash="04-statistics_cache/html/04-count-theft_ba660c414fd957c38578d095d9149f45">
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-count-theft_829559bd9d5f182e1fe8a3d2340bb1eb">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count in the all_theft_df the number of crimes by month</span></span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>theft_month_df <span class="ot">&lt;-</span> <span class="fu">count</span>(all_theft_df, month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>month_theft_df <span class="ot">&lt;-</span> <span class="fu">count</span>(all_theft_df, month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>We have stored the output of our <code>count()</code> function to a new dataframe: <code>theft_month_df</code>. Go ahead and look at the dataframe to see the output: it is a very simple table containing simply the month and <code>n</code>, i.e.&nbsp;the number of thefts occurring per month. We can and should go ahead and rename this column to help with our interpretation of the dataframe. We will use a quick approach to do this, that uses <strong>selection</strong> of the precise column to rename only the second column:</p>
-<div class="cell styled-output" data-hash="04-statistics_cache/html/04-rename-df-column_de4179fb1c961798a8efb4959c9b6bad">
+<p>We have stored the output of our <code>count()</code> function to a new dataframe: <code>month_theft_df</code>. Go ahead and look at the dataframe to see the output: it is a very simple table containing simply the month and <code>n</code>, i.e.&nbsp;the number of thefts occurring per month. We can and should go ahead and rename this column to help with our interpretation of the dataframe. We will use a quick approach to do this, that uses <strong>selection</strong> of the precise column to rename only the second column:</p>
+<div class="cell styled-output" data-hash="04-statistics_cache/html/04-rename-df-column_b99ca5ad4d8208d78907a28e7308f468">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename the second column of our new dataframe to crime_totals</span></span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(theft_month_df)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"crime_totals"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(month_theft_df)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"crime_totals"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>This selection is made through the <code>[2]</code> element of code added after the <code>names()</code> function we have used earlier. We will look more at selection, slicing and indexing during next week’s tutorial.</p>
+<p>This selection is made through the <code>[2]</code> element of code added after the <code>names()</code> function we have used earlier. We will look more at selection, slicing and indexing in next week’s tutorial.</p>
 </section>
 </section>
 </section>
@@ -1421,7 +1430,7 @@ lgl (1): Context
 <li>What were the minimum and maximum values of crime in London in 2021?</li>
 <li>Besides descriptive statistics, it would be really useful to generate a simple chart. Use the documentation of the <code>barplot()</code> function to create the barplot below:</li>
 </ol>
-<div class="cell" data-filename="R code" data-hash="04-statistics_cache/html/04-bar-plot_cf4a0f7e51f5885bbd6c888378fbdc20">
+<div class="cell" data-filename="R code" data-hash="04-statistics_cache/html/04-bar-plot_5ae5a40639c66ae9e6c63693c26d52c3">
 <div class="cell-output-display">
 <p><img src="04-statistics_files/figure-html/04-bar-plot-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1432,16 +1441,16 @@ lgl (1): Context
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Do not forget to save your script so you can go back to it at a later time. When you close R and are asked if you want to save your workspace: this is not necessary. Saving the workspace will keep any variables generated during your current session saved and available in a future session, but so will re-running your script.</p>
+<p>Do not forget to save your script so you can go back to it at a later time. When you close R and are asked if you want to save your workspace: this is not per se necessary. Saving the workspace will keep any variables generated during your current session saved and available in a future session, but so will re-running your script.</p>
 </div>
 </div>
 </div>
 </section>
 <section id="wm-w04" class="level2" data-number="1.9">
-<h2 data-number="1.9" class="anchored" data-anchor-id="wm-w04"><span class="header-section-number">4.9</span> Want more?</h2>
+<h2 data-number="1.9" class="anchored" data-anchor-id="wm-w04"><span class="header-section-number">4.9</span> Want more? [Optional]</h2>
 <section id="data-visualisation" class="level3" data-number="1.9.1">
 <h3 data-number="1.9.1" class="anchored" data-anchor-id="data-visualisation"><span class="header-section-number">4.9.1</span> Data visualisation</h3>
-<p>The graphs and figures we have made so far are rather basic. Although possible with the basic R installation, there are easier and better ways to make nice visualisations. For this we can turn to other R packages that have been developed. In fact, there are many hundreds of packages in R each designed for a specific purpose, some of which you can use to create plots in R. One of those packages is called <code>ggplot2</code>. The <code>ggplot2</code> package is an implementation of the Grammar of Graphics (<a href="https://en.wikipedia.org/wiki/Leland_Wilkinson">Wilkinson 2005</a>) - a general scheme for data visualisation that breaks up graphs into semantic components such as scales and layers. <code>ggplot2</code> can serve as a replacement for the base graphics in R and contains a number of default options that match good visualisation practice. You provide the data, tell <code>ggplot2</code> how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details. An excellent introduction to <code>ggplot2</code> can be found in the online, freely available book <a href="https://r4ds.hadley.nz/">R for Data Science</a>; written by Hadley Wickham, core developer of <code>ggplot2</code> and the <code>tidyverse</code>. Have a particularly close look at <strong>Chapter 2</strong>: <em>Data vizualisation</em>: <a href="https://r4ds.hadley.nz/data-visualize">[Link]</a>.</p>
+<p>The barplot we have made above is very basic, and there are better ways to make nice visualisations. For this we can turn to other R packages that have been developed. In fact, there are many hundreds of packages in R each designed for a specific purpose, some of which you can use to create plots in R. One of those packages is called <code>ggplot2</code>. The <code>ggplot2</code> package is an implementation of the Grammar of Graphics (<a href="https://en.wikipedia.org/wiki/Leland_Wilkinson">Wilkinson 2005</a>): a general scheme for data visualisation that breaks up graphs into semantic components such as scales and layers. <code>ggplot2</code> can serve as a replacement for the base graphics in R and contains a number of default options that match good visualisation practice. You provide the data, tell <code>ggplot2</code> how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details. An excellent introduction to <code>ggplot2</code> can be found in the online, freely available book <a href="https://r4ds.hadley.nz/">R for Data Science</a>; written by Hadley Wickham, core developer of <code>ggplot2</code> and the <code>tidyverse</code>. Have a particularly close look at <a href="https://r4ds.hadley.nz/data-visualize"><strong>Chapter 2</strong>: <em>Data vizualisation</em></a>.</p>
 </section>
 <section id="reproducible-research" class="level3" data-number="1.9.2">
 <h3 data-number="1.9.2" class="anchored" data-anchor-id="reproducible-research"><span class="header-section-number">4.9.2</span> Reproducible research</h3>
@@ -1451,7 +1460,7 @@ lgl (1): Context
 </section>
 <section id="byl-w04" class="level2" data-number="1.10">
 <h2 data-number="1.10" class="anchored" data-anchor-id="byl-w04"><span class="header-section-number">4.10</span> Before you leave</h2>
-<p>We have managed to take a dataset of over one million records and clean and filter it to create a barplot on theft crime in London. Of course, there is a lot more research and exploratory data analysis that can be done, but this first chart is certainly a step in the right direction. Next week, we will be doing a lot more with our dataset - including a lot more data wrangling and of course spatial analysis, but hopefully this week has shown you want you can achieve with just a few lines of code. <a href="https://www.youtube.com/watch?v=NKyYr2pbXUM">That concludes the tutorial for this week</a>!</p>
+<p>We have managed to take a dataset of over one million records and clean and filter it to create a barplot on theft crime in London. Of course, there is a lot more research and exploratory data analysis that can be done, but this first chart is certainly a step in the right direction. Next week, we will be doing a lot more with our dataset, including a lot more data wrangling and an introduction to using spatial data, but hopefully this week has shown you want you can achieve with just a few lines of code. <a href="https://www.youtube.com/watch?v=NKyYr2pbXUM">That concludes the tutorial for this week</a>!</p>
 
 
 </section>

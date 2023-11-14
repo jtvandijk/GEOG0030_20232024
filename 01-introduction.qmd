@@ -1,15 +1,15 @@
 # Geocomputation: An Introduction
-This week’s lecture provided you with a thorough introduction to this Geocomputation module, outlining how and why it is different to a traditional GIScience course. We set the scene for the remainder of the module and explained how the foundational concepts that you will learn in the first half of term sit within the overall module. This week we start easy by setting up our work environment and make sure that we can access the software that we will need over the coming weeks.
+This week’s lecture provided you with a thorough introduction to this Geocomputation module, outlining how and why it is different to a traditional GIScience course. We set the scene for the remainder of the module and explained how the foundational concepts that you will learn in the first half of term sit within the overall module. This week we start easy by setting up our work environment and making sure that we can access the software that we will need over the coming weeks.
 
 ## Lecture slides {#slides-w01}
 The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var slides.week01 >}})
 
 ## Reading list {#reading-w01}
 #### Essential readings
-- Brundson, C. and Comber, A. 2020. Opening practice: Supporting reproducibility and critical spatial data science. *Journal of Geographical Systems* 23: 477–496. [[Link]](https://doi.org/10.1007/s10109-020-00334-2) 
-- Franklin, R. 2023. Quantitative methods III: Strength in numbers?. *Progress in Human Geography*. Online First. [[Link]](https://doi.org/10.1177/03091325231210512).
-- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 1**: *Geographic Information: Science, Systems, and Society*. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
-- Singleton, A. and Arribas-Bel, D. 2019. Geographic Data Science. *Geographical Analysis*. [[Link]](https://doi.org/10.1111/gean.12194)
+- Brundson, C. and Comber, A. 2020. Opening practice: Supporting reproducibility and critical spatial data science. *Journal of Geographical Systems* 23: 477–496. [[Link]](https://doi.org/10.1007/s10109-020-00334-2)
+- Franklin, R. 2023. Quantitative methods III: Strength in numbers? *Progress in Human Geography*. Online First. [[Link]](https://doi.org/10.1177/03091325231210512).
+- Longley, P. *et al.* 2015. Geographic Information Science & Systems, **Chapter 1**: *Geographic Information: Science, Systems, and Society*, pp. 1-32. [[Link]](https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a)
+- Singleton, A. and Arribas-Bel, D. 2019. Geographic Data Science. *Geographical Analysis* 53(1): 61-75. [[Link]](https://doi.org/10.1111/gean.12194)
 
 #### Suggested readings
 - Miller, H. and Goodchild, M. 2015. Data-driven geography. *GeoJournal* 80: 449–461. [[Link]](https://doi.org/10.1007/s10708-014-9602-6)
@@ -53,7 +53,7 @@ After this, start RStudio to see if the installation was successful. If no error
 ### UCL Desktop and RStudio Server {#ucl}
 There are two alternatives to installing QGIS and R with RStudio onto your personal device. First, both programmes are available through [Desktop@UCL Anywhere](https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere) as well as all UCL computers on campus. Second, specifically to R, we have a RStudio server available which you can access through your web browser: [[Link]](https://rstudio.data-science.rc.ucl.ac.uk/)
 
-You should be able to log onto the RStudio server with your UCL username and password. After logging in, you should see the RStudio interface appear. 
+You should be able to log onto the RStudio server with your regular UCL *username* and *password*. After logging in, you should see the RStudio interface appear. 
 
 ```{r} 
 #| label: fig-rstudio-interface
@@ -68,7 +68,7 @@ If it is the first time you log on to RStudio server you may only see the RStudi
 :::
 
 ### R package installation 
-Now we have installed QGIS and R onto our machines / have access to QGIS and R through UCL's resources, we need to customise R. Many useful R functions come in packages, these are free libraries of code written and made available by other R users. This includes packages specifically developed for data cleaning, data wrangling, visualisation, mapping, and spatial analysis. To save us some time, we will install **all R packages that we will need** over the next ten weeks in one go. Start RSTudio, and copy and paste the following code into the **console** window. You can execute the code by hitting **Enter**. Depending on your computer's specificiations and the internet connection, this may take a while.
+Now we have installed QGIS and R onto our machines / have access to QGIS and R through UCL's resources, we need to customise R. Many useful R functions come in packages, these are free libraries of code written and made available by other R users. This includes packages specifically developed for data cleaning, data wrangling, visualisation, mapping, and spatial analysis. To save us some time, we will install **all R packages that we will need** over the next ten weeks in one go. Start RStudio, and copy and paste the following code into the **console** window. You can execute the code by hitting **Enter**. Depending on your computer's specificiations and the internet connection, this may take a while.
 
 ```{r} 
 #| label: 01-install-libaries
