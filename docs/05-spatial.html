@@ -282,7 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="crime-in-london-iii" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="crime-in-london-iii"><span class="header-section-number">5.3</span> Crime in London III</h2>
-<p>To analyse crime over time, we will go through several steps of data preparation before joining our data to LSOA polygons. Because theft by month, by LSOA, may result in a rather sparsely populated map, we will also <strong>aggregate</strong> our LSOA data to the <strong>Middle layer Super Output Area</strong> (MSOA) level. After this, we will map the crime rate for 2021 using the <code>tmap</code> library.</p>
+<p>To analyse crime over space, we will go through several steps of data preparation and data linkage to ultimately aggregate our data to the <strong>Middle layer Super Output Area</strong> (MSOA) level. After this, we will map the crime rate for 2021 using the <code>tmap</code> library.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -296,12 +296,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="spatial-analysis-set-up" class="level3" data-number="1.3.1">
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="spatial-analysis-set-up"><span class="header-section-number">5.3.1</span> Spatial analysis set up</h3>
 <p>Open a new script within your GEOG0030 project and save this script as <code>wk5-crime-spatial-processing.r</code>. At the top of your script, add the following metadata:</p>
-<div class="cell styled-output" data-hash="05-spatial_cache/html/05-script-title_e6e44a01b14e781c64136da67dbfb57b">
+<div class="cell styled-output" data-hash="05-spatial_cache/html/05-script-title_82fdb1de0fc534e050e1b2d4311f436b">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysing theft in London by month, by MSOA</span></span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysing theft in London by MSOA</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: January 2024</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Author: Justin </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -667,7 +667,7 @@ PROJCRS["OSGB36 / British National Grid",
 </section>
 <section id="getting-our-crime-data-into-shape" class="level3" data-number="1.3.3">
 <h3 data-number="1.3.3" class="anchored" data-anchor-id="getting-our-crime-data-into-shape"><span class="header-section-number">5.3.3</span> Getting our crime data into shape</h3>
-<p>Now we have our data loaded, our next step is to process our data to create what we need as our final output for analysis: a spatial dataframe that contains a <strong>theft crime rate</strong> for each MSOA for each month in 2021. We only two types of spatial or spatially-relevant data in our <code>all_theft_df</code> that can help us with this:</p>
+<p>Now we have our data loaded, our next step is to process our data to create what we need as our final output for analysis: a spatial dataframe that contains a <strong>theft crime rate</strong> for each MSOA. We only two types of spatial or spatially-relevant data in our <code>all_theft_df</code> that can help us with this:</p>
 <ol type="1">
 <li>The approximate WGS84 <strong>latitude</strong> and <strong>longitude</strong>.</li>
 <li>The <strong>Lower Super Output Area (LSOA)</strong> in which the crime it occurred.</li>
@@ -1489,17 +1489,17 @@ chr (2): lsoa21cd, msoa21cd
 <section id="joining-crime-data-to-msoas" class="level3" data-number="1.3.6">
 <h3 data-number="1.3.6" class="anchored" data-anchor-id="joining-crime-data-to-msoas"><span class="header-section-number">5.3.6</span> Joining crime data to MSOAs</h3>
 <p>We are now getting to the final stages of our data processing, we just need to join our completed theft table, <code>all_theft_df_msoa</code> to our <code>msoa_population</code> spatial dataframe and then compute a theft crime rate. This will then allow us to map our crime rates by MSOA, exactly what we set to achieve within this practical.</p>
-<div class="cell styled-output" data-hash="05-spatial_cache/html/05-join-sdf_2878a474aadbe7c3f0b1741c1962a625">
+<div class="cell styled-output" data-hash="05-spatial_cache/html/05-join-sdf_d62866d4a49daf3337ae35c0e568cf19">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join theft by month to the MSOA popoulation dataset</span></span>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join theft to the MSOA popoulation dataset</span></span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>theft_msoa_sdf <span class="ot">&lt;-</span> msoa_population <span class="sc">|&gt;</span></span>
 <span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(all_theft_df_msoa, <span class="at">by =</span> <span class="fu">c</span>(<span class="at">msoa21cd =</span> <span class="st">"msoa21cd"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>To double-check our join, we want to do one extra step of <strong>quality checks</strong> and check that each of our MSOAs has at least one occurrence of crime over the twelve month period. We do this by computing a new column that totals the number of thefts. By identifying any MSOAs that have zero entries (i.e.&nbsp;<code>NA</code>s for each month), we can double-check with our original <code>all_theft_df_msoa</code> to see if this is the correct data for that MSOA or if there has been an error in our join. What we will need to do is adjust the values present within these MSOAs prior to our visualisation analysis: these should not have <code>NA</code> as their value but rather <code>0</code>.</p>
+<p>To double-check our join, we want to do one extra step of <strong>quality checks</strong> and check that each of our MSOAs has at least one occurrence of crime over the twelve month period. We do this by computing a new column that totals the number of thefts. By identifying any MSOAs that have zero entries (<code>NA</code>), we can double-check with our original <code>all_theft_df_msoa</code> to see if this is the correct data for that MSOA or if there has been an error in our join. What we will need to do is adjust the values present within these MSOAs prior to our visualisation analysis: these should not have <code>NA</code> as their value but rather <code>0</code>.</p>
 <div class="cell styled-output" data-hash="05-spatial_cache/html/05-tidy-tidy_701b33f1e9c62d40e3077b0e72947c4b">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -1525,7 +1525,7 @@ chr (2): lsoa21cd, msoa21cd
 <section id="mapping-crime-data" class="level3" data-number="1.3.7">
 <h3 data-number="1.3.7" class="anchored" data-anchor-id="mapping-crime-data"><span class="header-section-number">5.3.7</span> Mapping crime data</h3>
 <p>For making our maps, we will be using one of two main visualisation libraries that can be used for spatial data: <code>tmap</code>. <code>tmap</code> is a library written around thematic map visualisation. The package offers a flexible, layer-based, and easy to use approach to create thematic maps, such as choropleths and bubble maps. What is really great about <code>tmap</code> is that it comes with one quick plotting method for a map called: <code>qtm()</code>.</p>
-<p>We can use this function to plot the theft crime rate for one of our months really quickly. Within your script, use the <code>qtm</code> function to create a map of theft crime rate in London in 2021.</p>
+<p>We can use this function to plot the theft crime rate really quickly. Within your script, use the <code>qtm</code> function to create a map of theft crime rate in London in 2021.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">

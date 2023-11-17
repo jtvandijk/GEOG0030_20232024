@@ -17,7 +17,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 - Radil, S. 2016. Spatial analysis of crime. **Chapter 24**: *The Handbook of Measurement Issues in Criminology and Criminal Justice*, pp. 536-554. [[Link]](https://doi.org/10.1002/9781118868799.ch24)
 
 ## Crime in London III
-To analyse crime over time, we will go through several steps of data preparation before joining our data to LSOA polygons. Because theft by month, by LSOA, may result in a rather sparsely populated map, we will also **aggregate** our LSOA data to the **Middle layer Super Output Area** (MSOA) level. After this, we will map the crime rate for 2021 using the `tmap` library.
+To analyse crime over space, we will go through several steps of data preparation and data linkage to ultimately aggregate our data to the **Middle layer Super Output Area** (MSOA) level. After this, we will map the crime rate for 2021 using the `tmap` library.
 
 ::: { .callout-note}
 OAs, LSOAs and MSOAs make up the different levels of the census statistical geographies. Middle layer Super Output Areas (MSOAs) are made up of groups of LSOAs, usually four or five. They comprise between 2,000 and 6,000 households and have a usually resident population between 5,000 and 15,000 persons. For details see the explanation on the webapge of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies#middle-layer-super-output-areas-msoas)
@@ -33,7 +33,7 @@ Open a new script within your GEOG0030 project and save this script as `wk5-crim
 #| eval: True
 #| tidy: False
 #| filename: "R code"
-# Analysing theft in London by month, by MSOA
+# Analysing theft in London by MSOA
 # Date: January 2024
 # Author: Justin 
 ```
@@ -221,7 +221,7 @@ You notice that we actually get a lot more information about our CRS beyond simp
 The final thing we might want to do before we get started with our data analysis is to simply look at the data table part of our dataset, i.e. what we called the **Attribute Table** in QGIS, but here it is simply the table part of our dataframe. To do so, you can either use the `View()` function in the console or click on the `msoa_population` variable within our environment.
 
 ### Getting our crime data into shape
-Now we have our data loaded, our next step is to process our data to create what we need as our final output for analysis: a spatial dataframe that contains a **theft crime rate** for each MSOA for each month in 2021. We only two types of spatial or spatially-relevant data in our `all_theft_df` that can help us with this:
+Now we have our data loaded, our next step is to process our data to create what we need as our final output for analysis: a spatial dataframe that contains a **theft crime rate** for each MSOA. We only two types of spatial or spatially-relevant data in our `all_theft_df` that can help us with this:
 
 1) The approximate WGS84 **latitude** and **longitude**.
 2) The **Lower Super Output Area (LSOA)** in which the crime it occurred.
@@ -750,12 +750,12 @@ We are now getting to the final stages of our data processing, we just need to j
 #| eval: True
 #| tidy: True
 #| filename: "R code"
-# join theft by month to the MSOA popoulation dataset
+# join theft to the MSOA popoulation dataset
 theft_msoa_sdf <- msoa_population |>
   left_join(all_theft_df_msoa, by = c("msoa21cd" = "msoa21cd"))
 ``` 
 
-To double-check our join, we want to do one extra step of **quality checks** and check that each of our MSOAs has at least one occurrence of crime over the twelve month period. We do this by computing a new column that totals the number of thefts. By identifying any MSOAs that have zero entries (i.e. `NA`s for each month), we can double-check with our original `all_theft_df_msoa` to see if this is the correct data for that MSOA or if there has been an error in our join. What we will need to do is adjust the values present within these MSOAs prior to our visualisation analysis: these should not have `NA` as their value but rather `0`.
+To double-check our join, we want to do one extra step of **quality checks** and check that each of our MSOAs has at least one occurrence of crime over the twelve month period. We do this by computing a new column that totals the number of thefts. By identifying any MSOAs that have zero entries (`NA`), we can double-check with our original `all_theft_df_msoa` to see if this is the correct data for that MSOA or if there has been an error in our join. What we will need to do is adjust the values present within these MSOAs prior to our visualisation analysis: these should not have `NA` as their value but rather `0`.
 
 ```{r}
 #| label: 05-tidy-tidy
@@ -787,7 +787,7 @@ Have a look at your new `theft_msoa_sdf` spatial dataframe. Does it look as you 
 ### Mapping crime data
 For making our maps, we will be using one of two main visualisation libraries that can be used for spatial data: `tmap`. `tmap` is a library written around thematic map visualisation. The package offers a flexible, layer-based, and easy to use approach to create thematic maps, such as choropleths and bubble maps. What is really great about `tmap` is that it comes with one quick plotting method for a map called: `qtm()`.
 
-We can use this function to plot the theft crime rate for one of our months really quickly. Within your script, use the `qtm` function to create a map of theft crime rate in London in 2021.
+We can use this function to plot the theft crime rate really quickly. Within your script, use the `qtm` function to create a map of theft crime rate in London in 2021.
 
 ::: { .callout-note}
 Before continuing do confirm whether your `theft_msoa_sdf` is indeed still of class `sf`. In some instances it is possible that this changed when manipulating the attributes. You can simply check this by running `class(theft_msoa_sdf)`. If your dataframe is not of class `sf`, you can force it into one by running `theft_msoa_sdf <- st_as_sf(theft_msoa_sdf))`.
