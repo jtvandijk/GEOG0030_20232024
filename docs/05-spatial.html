@@ -282,7 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="crime-in-london-iii" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="crime-in-london-iii"><span class="header-section-number">5.3</span> Crime in London III</h2>
-<p>To analyse crime over time, we will go through several steps of data preparation before joining our data to LSOA polygons. Because theft by month, by LSOA, may result in a rather sparsely populated map, we will also <strong>aggregate</strong> our LSOA data to the <strong>Middle layer Super Output Area</strong> (MSOA) level. After this, we will map the crime rate for January 2021 using the <code>tmap</code> library.</p>
+<p>To analyse crime over time, we will go through several steps of data preparation before joining our data to LSOA polygons. Because theft by month, by LSOA, may result in a rather sparsely populated map, we will also <strong>aggregate</strong> our LSOA data to the <strong>Middle layer Super Output Area</strong> (MSOA) level. After this, we will map the crime rate for 2021 using the <code>tmap</code> library.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -1602,7 +1602,7 @@ chr (2): lsoa21cd, msoa21cd
 </div>
 </div>
 </div>
-<p>As you should now see, we have now mapped the spatial polygons of our <code>theft_msoa_sdf</code> spatial dataframe. However, this is not the map we want: we want to have our polygons represented by a choropleth map where the colours reflect the theft crime rate in January, rather than the default grey polygons we see before us. To do so, we use the <code>col=</code> parameter that is within our <code>tm_polygons()</code> shape.</p>
+<p>As you should now see, we have now mapped the spatial polygons of our <code>theft_msoa_sdf</code> spatial dataframe. However, this is not the map we want: we want to have our polygons represented by a choropleth map where the colours reflect the theft crime rate, rather than the default grey polygons we see before us. To do so, we use the <code>col=</code> parameter that is within our <code>tm_polygons()</code> shape.</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -1798,9 +1798,7 @@ chr (2): lsoa21cd, msoa21cd
 </section>
 <section id="assignment-w05" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="assignment-w05"><span class="header-section-number">5.4</span> Assignment</h2>
-<ul>
-<li>Play with the different settings, e.g.&nbsp;change the colours of the map, change the legend title name, change the type of North arrow, etc.</li>
-</ul>
+<p>Now we have prepared our dataset, we can play with the different settings. 1. Experiment by changing the colours of the map, changing the legend title name, changing the type of North arrow, etc. 2. We have used a <code>quantile</code> method to classify our data. Do you think that is appropriate? Any other ways you could think of on representing these MSOA crime rates better?</p>
 </section>
 <section id="wm-w05" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="wm-w05"><span class="header-section-number">5.5</span> Want more? [Optional]</h2>

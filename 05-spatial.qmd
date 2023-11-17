@@ -17,7 +17,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 - Radil, S. 2016. Spatial analysis of crime. **Chapter 24**: *The Handbook of Measurement Issues in Criminology and Criminal Justice*, pp. 536-554. [[Link]](https://doi.org/10.1002/9781118868799.ch24)
 
 ## Crime in London III
-To analyse crime over time, we will go through several steps of data preparation before joining our data to LSOA polygons. Because theft by month, by LSOA, may result in a rather sparsely populated map, we will also **aggregate** our LSOA data to the **Middle layer Super Output Area** (MSOA) level. After this, we will map the crime rate for January 2021 using the `tmap` library.
+To analyse crime over time, we will go through several steps of data preparation before joining our data to LSOA polygons. Because theft by month, by LSOA, may result in a rather sparsely populated map, we will also **aggregate** our LSOA data to the **Middle layer Super Output Area** (MSOA) level. After this, we will map the crime rate for 2021 using the `tmap` library.
 
 ::: { .callout-note}
 OAs, LSOAs and MSOAs make up the different levels of the census statistical geographies. Middle layer Super Output Areas (MSOAs) are made up of groups of LSOAs, usually four or five. They comprise between 2,000 and 6,000 households and have a usually resident population between 5,000 and 15,000 persons. For details see the explanation on the webapge of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies#middle-layer-super-output-areas-msoas)
@@ -841,7 +841,7 @@ tm_shape(theft_msoa_sdf) +
   tm_polygons()
 ```
 
-As you should now see, we have now mapped the spatial polygons of our `theft_msoa_sdf` spatial dataframe. However, this is not the map we want: we want to have our polygons represented by a choropleth map where the colours reflect the theft crime rate in January, rather than the default grey polygons we see before us. To do so, we use the `col=` parameter that is within our `tm_polygons()` shape. 
+As you should now see, we have now mapped the spatial polygons of our `theft_msoa_sdf` spatial dataframe. However, this is not the map we want: we want to have our polygons represented by a choropleth map where the colours reflect the theft crime rate, rather than the default grey polygons we see before us. To do so, we use the `col=` parameter that is within our `tm_polygons()` shape. 
 
 ::: { .callout-tip}
 The `col` parameter within `tm_polygons()` is used to fill our polygons with a specific fill type, of either:
@@ -996,7 +996,9 @@ tmap_save(msoa_map, filename = "data/maps/msoa_theft_map.png")
 ```
 
 ## Assignment {#assignment-w05}
-- Play with the different settings, e.g. change the colours of the map, change the legend title name, change the type of North arrow, etc.
+Now we have prepared our dataset, we can play with the different settings. 
+1. Experiment by changing the colours of the map, changing the legend title name, changing the type of North arrow, etc. 
+2. We have used a `quantile` method to classify our data. Do you think that is appropriate? Any other ways you could think of on representing these MSOA crime rates better?
 
 ## Want more? [Optional] {#wm-w05}
 ### Git and Github
