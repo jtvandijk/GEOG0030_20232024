@@ -997,6 +997,7 @@ tmap_save(msoa_map, filename = "data/maps/msoa_theft_map.png")
 
 ## Assignment {#assignment-w05}
 Now we have prepared our dataset, we can play with the different settings. 
+
 1. Experiment by changing the colours of the map, changing the legend title name, changing the type of North arrow, etc. 
 2. We have used a `quantile` method to classify our data. Do you think that is appropriate? Any other ways you could think of on representing these MSOA crime rates better?
 
