@@ -50,6 +50,9 @@ website:
           - 03-cartography.qmd
           - 04-statistics.qmd
           - 05-spatial.qmd
+      - section: "Core Spatial Analysis"
+        contents:
+          - 06-operations.qmd
       - section: "Additional Resources"
         contents:
           - 11-data.qmd

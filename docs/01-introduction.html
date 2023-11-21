@@ -198,12 +198,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
- <span class="menu-text">Additional Resources</span></a>
+ <span class="menu-text">Core Spatial Analysis</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6 Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Additional Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11-data.html" class="sidebar-item-text sidebar-link">
@@ -347,13 +364,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="r-package-installation" class="level3" data-number="1.4.4">
 <h3 data-number="1.4.4" class="anchored" data-anchor-id="r-package-installation"><span class="header-section-number">1.4.4</span> R package installation</h3>
 <p>Now we have installed QGIS and R onto our machines / have access to QGIS and R through UCL’s resources, we need to customise R. Many useful R functions come in packages, these are free libraries of code written and made available by other R users. This includes packages specifically developed for data cleaning, data wrangling, visualisation, mapping, and spatial analysis. To save us some time, we will install <strong>all R packages that we will need</strong> over the next ten weeks in one go. Start RStudio, and copy and paste the following code into the <strong>console</strong> window. You can execute the code by hitting <strong>Enter</strong>. Depending on your computer’s specificiations and the internet connection, this may take a while.</p>
-<div class="cell" data-warnings="true" data-hash="01-introduction_cache/html/01-install-libaries_7c6d4562bcabed0a71f3379476fc7110">
+<div class="cell" data-warnings="true" data-hash="01-introduction_cache/html/01-install-libaries_147c9f0a374ed55072aad66af3618b22">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"sf"</span>, <span class="st">"tmap"</span>, <span class="st">"terra"</span>, <span class="st">"dodgr"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"sf"</span>, <span class="st">"tmap"</span>, <span class="st">"osmdata"</span>, <span class="st">"terra"</span>, <span class="st">"dodgr"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -367,7 +384,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Once you have installed the packages, we need to check whether we can in fact load them into R. Copy and paste the following code into the <strong>console</strong>, and execute by hitting <strong>Enter</strong> again.</p>
-<div class="cell" data-warnings="true" data-verbose="true" data-hash="01-introduction_cache/html/01-load-libaries_300d8abc87e52b537f4d76929e2c6a6a">
+<div class="cell" data-warnings="true" data-verbose="true" data-hash="01-introduction_cache/html/01-load-libaries_b8416ccaa652baea98f355b13ed7aae2">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -376,8 +393,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dodgr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmdata)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dodgr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>You will see some information printed to your console but as long as you do not get a message that is similar to <code>Error: package or namespace load failed for &lt;packagename&gt;</code> or <code>Error: package '&lt;packagename&gt;' could not be loaded</code> all should be fine.</p>

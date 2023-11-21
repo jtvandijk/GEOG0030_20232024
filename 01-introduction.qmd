@@ -79,7 +79,7 @@ Now we have installed QGIS and R onto our machines / have access to QGIS and R t
 #| tidy: True
 #| filename: "R code"
 # install packages
-install.packages(c('tidyverse','sf','tmap','terra','dodgr'))
+install.packages(c('tidyverse','sf','tmap','osmdata','terra','dodgr'))
 ```
 
 ::: { .callout-warning}
@@ -101,6 +101,7 @@ Once you have installed the packages, we need to check whether we can in fact lo
 library(tidyverse)
 library(sf)
 library(tmap)
+library(osmdata)
 library(terra)
 library(dodgr)
 ```
