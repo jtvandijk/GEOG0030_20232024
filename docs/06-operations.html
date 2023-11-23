@@ -425,7 +425,7 @@ PROJCRS["OSGB36 / British National Grid",
     ID["EPSG",27700]]</code></pre>
 </div>
 </div>
-<p>Of course it should be of no surprise that our <code>msoa_lon</code> spatial dataframe is in <strong>BNG / ESPG: 27700</strong>, however, it is always good to check. Let’s go ahead and read in our <code>tfl_stations</code> dataset as well:</p>
+<p>Of course it should be of no surprise that our <code>msoa_lon</code> spatial dataframe is in <strong>OSGB36 / British National Grid </strong>, however, it is always good to check. Let’s go ahead and read in our <code>tfl_stations</code> dataset as well:</p>
 <div class="cell styled-output" data-hash="06-operations_cache/html/06-load-stations_c12fe446b08071e17904b64686b5c781">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -527,7 +527,7 @@ PROJCRS["OSGB36 / British National Grid",
     ID["EPSG",27700]]</code></pre>
 </div>
 </div>
-<p>You should see that our <code>london_stations</code> spatial dataframe is now in <strong>BNG / EPSG: 27700</strong>. We are now ready to load our final dataset - our <code>csv</code> that contains our crimedata for 2021. We can do this by repeating the steps we took during <a href="04-statistics.html#crime-data">Week 4’s computer tutorial</a>:</p>
+<p>You should see that our <code>london_stations</code> spatial dataframe is now in <strong>OSGB36 / British National Grid</strong>. We are now ready to load our final dataset - our collection of <code>csv's</code> that contain the crimedata for London for 2021. We can do this by repeating the steps we took during <a href="04-statistics.html#crime-data">Week 4’s computer tutorial</a>:</p>
 <div class="cell styled-output" data-hash="06-operations_cache/html/06-combine-csv_266f51162e7e1b861d51ed8e2b442706">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -541,13 +541,13 @@ PROJCRS["OSGB36 / British National Grid",
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>From this <code>csv</code>, we want to do three things:</p>
+<p>Now we have loaded all crime data again, we want to do three things:</p>
 <ol type="1">
-<li>Extract only those crimes that are bicycle thefts, i.e.&nbsp;<code>crime_type == "bicycle theft"</code>.</li>
-<li>Convert our <code>csv</code> into a spatial dataframe that shows the locations of our crimes, determined by the latitude and longitudes provided, as points.</li>
+<li>Extract only those crimes that are bicycle thefts.</li>
+<li>Convert our <code>csv</code> into a spatial dataframe that shows the locations of our crimes, as per the latitude and longitudes provided.</li>
 <li>Transform our data from <strong>WGS84 / 4326</strong> to <strong>BNG / 27700</strong>.</li>
 </ol>
-<div class="cell styled-output" data-hash="06-operations_cache/html/06-bike-theft_2f617f8864d836d4eb40c9e40d8ecf22">
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-bike-theft_de4ccd675dc2d5affa4027506d033fea">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -558,14 +558,15 @@ PROJCRS["OSGB36 / British National Grid",
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Crime type</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Bicycle theft"</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(Longitude) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(Latitude)) <span class="sc">|&gt;</span></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># only keep the longitude and latitude columns</span></span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Longitude, Latitude) <span class="sc">|&gt;</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># transform into a point spatial dataframe</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># note providing the columns as the coordinates to use</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># plus the CRS, which as our columns are long/lat is WGS84/4236</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Longitude"</span>, <span class="st">"Latitude"</span>), <span class="at">crs =</span> <span class="dv">4236</span>) <span class="sc">|&gt;</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># transform into BNG</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">27700</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># transform into a point spatial dataframe, projected in WGS84</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Longitude"</span>, <span class="st">"Latitude"</span>), <span class="at">crs =</span> <span class="dv">4236</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># transform into BNG</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">27700</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<p>We now have our three datasets loaded, it is time for a little data checking. We can see just from our <strong>Environment</strong> window that in total, we have <strong>302</strong> train and tube stations and <strong>20,768</strong> crimes to look at in our analysis. We can double-check the (Attribute) tables of our newly created spatial dataframes to see what data we have to work with. You can either do this manually by clicking on the variable, or using commands such as <code>head()</code>, <code>summary()</code> and <code>names()</code> to get an understanding of our dataframe structures and the field names present.You can choose your approach, but make sure to look at your data.</p>
+<p>As you should remember from the code above, for our bicycle theft data, we actually only have our geometry column because this is all that we extracted from our collection of crime <code>csv's</code>. For our <code>stations_london</code> spatial dataframe, we have a little more information, including the name of the station, its address, and as its geometry.</p>
+<p>Now, let’s map all three layers of data onto a single map using <code>tmap</code>:</p>
 
 
 </section>

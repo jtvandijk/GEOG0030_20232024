@@ -689,7 +689,17 @@ PROJCRS["OSGB36 / British National Grid",
 <li>The approximate WGS84 <strong>latitude</strong> and <strong>longitude</strong>.</li>
 <li>The <strong>Lower Super Output Area (LSOA)</strong> in which the crime it occurred.</li>
 </ol>
-<p>From Week 3’s practical, we know we can map our points using the coordinates and then provide a count by using a <strong>point-in-polygon</strong> operation, but because the crime data already have an LSOA code we will be using an <strong>Attribute Join</strong> today to show you the use of <strong>lookup tables</strong>. ::: { .callout-warning} In situations like this when you actually have the point location data, the best solution is probably to conduct a point-in-polygon analysis yourself rather than relying on a <strong>lookup table</strong>. However, because we do not always have access to point location data and you are likely to encounter situations where you need a <strong>lookup</strong> table, there won’t be any point-in-polygon action today. :::</p>
+<p>From Week 3’s practical, we know we can map our points using the coordinates and then provide a count by using a <strong>point-in-polygon</strong> operation, but because the crime data already have an LSOA code we will be using an <strong>Attribute Join</strong> today to show you the use of <strong>lookup tables</strong>.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>In situations like this when you actually have the point location data, the best solution is probably to conduct a point-in-polygon analysis yourself rather than relying on a <strong>lookup table</strong>. However, because we do not always have access to point location data and you are likely to encounter situations where you need a <strong>lookup</strong> table, there won’t be any point-in-polygon action today.</p>
+</div>
+</div>
+</div>
 <section id="attribute-join" class="level4">
 <h4 class="anchored" data-anchor-id="attribute-join">Attribute join</h4>
 <p>To get the number of crimes that occurred in each 2021 MSOA linked to our population data, we need to link them together. However, we have two issues. First, our data is available at the LSOA level. Second, and to complicate things further, the <code>all_theft_df</code> dataset is based on 2011 LSOA geographies. This means that we need to take two steps:</p>

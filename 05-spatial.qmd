@@ -227,6 +227,7 @@ Now we have our data loaded, our next step is to process our data to create what
 2) The **Lower Super Output Area (LSOA)** in which the crime it occurred.
 
 From Week 3's practical, we know we can map our points using the coordinates and then provide a count by using a **point-in-polygon** operation, but because the crime data already have an LSOA code we will be using an **Attribute Join** today to show you the use of **lookup tables**. 
+
 ::: { .callout-warning}
 In situations like this when you actually have the point location data, the best solution is probably to conduct a point-in-polygon analysis yourself rather than relying on a **lookup table**. However, because we do not always have access to point location data and you are likely to encounter situations where you need a **lookup** table, there won't be any point-in-polygon action today.
 :::
