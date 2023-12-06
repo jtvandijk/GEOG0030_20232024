@@ -588,7 +588,7 @@ We now have a dataframe, we can use the `View()` function in R. Still in your **
 #| label: 04-view-df
 #| classes: styled-output
 #| echo: True
-#| eval: True
+#| eval: False
 #| tidy: True
 #| filename: "R code"
 # view our dataframe
