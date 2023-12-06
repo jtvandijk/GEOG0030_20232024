@@ -1,5 +1,5 @@
 # GIScience and GIS software
-This week’s lecture introduced you to foundational concepts associated with GIScience and GIS software, with particular emphasis on the representation of spatial data and sample design. Out of all our foundational concepts you will come across in the next four weeks, this is probably the most substantial to get to grips with and has both significant theoretical and practical aspects to its learning. The practical component of the week puts some of these learnings into practice, by creating a simple visualisation of London's population in the Census years of 2011 and 2021.
+This week’s lecture introduced you to foundational concepts associated with GIScience and GIS software, with particular emphasis on the representation of spatial data and sample design. Out of all our foundational concepts you will come across in the next four weeks, this is probably the most substantial to get to grips with and has both significant theoretical and practical aspects to its learning. The practical component of the week puts some of these learnings into practice by creating a simple visualisation of London's population in the Census years of 2011 and 2021.
 
 ## Lecture slides {#slides-w01}
 The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var slides.week02 >}})
@@ -16,7 +16,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 - Yuan, M. 2001. Representing complex geographic phenomena in GIS. *Cartography and Geographic Information Science* 28(2): 83-96. [[Link]](https://doi.org/10.1559/152304001782173718)
 
 ## Population change in London
-This first computer practical is mainly concerned with creating **Attribute Joins** in order to create [choropleth maps](https://en.wikipedia.org/wiki/Choropleth_map). You will be using different types of *joins* throughout this practical, this module in general, and probably the rest of your career, so it is incredibly important that you understand how these work.
+This first computer practical is mainly concerned with creating **Attribute Joins** so to create [choropleth maps](https://en.wikipedia.org/wiki/Choropleth_map). You will be using different types of **joins** throughout this practical, this module in general, and probably the rest of your career, so it is incredibly important that you understand how these work.
 
 ::: { .callout-warning}
 The datasets you will create in this practical will be used in coming week's practicals, so make sure to follow every step and save your data carefully.
@@ -28,7 +28,7 @@ One of the reasons behind this is that the data you often need to use is almost 
 
 A typical spatial analysis workflow typically will look something like this:
 
-| Step        | Action      |
+| Step        | Action       |
 | :--         | :----------- |
 | `identify`  | Think about the data you need to complete your analysis. |
 | `find`      | Find the data that matches your requirements. |
@@ -42,25 +42,19 @@ A typical spatial analysis workflow typically will look something like this:
 As you can see, the analysis and visualisation parts only make up the last steps of the workflow and instead, the workflow is very top-heavy with data management. 
 
 ::: { .callout-note}
-Very often in GIS-related courses you will be given pre-processed datasets. Because data management is an essential part of your workflow, we will clean the majority of our data from the get-go. This will help you understand the processes that you will need to go through in the future as you search for and download your own data before loading it into your GIS environment.
+Very often in GIS-related modules you will be given pre-processed datasets. We will minimise the usage of pre-processed dataset in this module. Because data management is an essential part of your workflow, we will clean the majority of our data from the get-go. This will help you understand the processes that you will need to go through in the future as you search for and download your own data before loading it into your GIS environment.
 :::
 
 ### Setting the scene {#w02-scene}
-In this part of the practical, we will investigate how the population in London has changed over time. Understanding population change over time and space is spatial analysis at its most fundamental. We can understand a lot just from where population is growing or decreasing, including thinking through the impacts of these changes on the provision of housing, education, health and transport infrastructure. 
-Today we will look at population in London in the Census years of 2011 and 2021 at the so-called **Lower Super Output Area** (LSOA) geography level (see @#02-download-spatial below for some details on Administrative Geographies).
+Today we will investigate how the population in London has changed over time. Understanding population change over time and space is spatial analysis at its most fundamental. We can understand a lot just from where population is growing or decreasing, including thinking through the impacts of these changes on the provision of housing, education, health and transport infrastructure. 
+Today we will look at population in London in the Census years of 2011 and 2021 at the so-called **Lower Super Output Area** (LSOA) geography level (see @w02-download-population below for some details on Administrative Geographies).
 
-::: { .callout-note}
-We will use the population dataset we create today to *normalise* other datasets in the module. Why? When we record events created by humans, there is often a population bias: simply, more people in an area will by probability lead to a higher occurrence of said event, such as crime. We will look at this in greater detail next week.
+::: { .callout-warning}
+Administrative geographies are a way of dividing the country into smaller sub-divisions or areas that correspond with the area of responsibility of local authorities and government bodies. These administrative sub-divisions and their associated geography have several important uses, including assigning electoral constituencies and serving as a mechanism for collecting Census data. These geographies are updated as populations evolve and as a result the boundaries of the administrative geographies are subject to either periodic or occasional change.
 :::
 
 ### Finding data {#w02-finding}
-In the UK, finding authoritative data on population and *Administrative Geography* boundaries is increasingly straightforward. Over the last decade, the UK government has opened up many of its datasets as part of an **Open Data** precedent that began in 2010 with the creation of [data.gov.uk](https://www.data.gov.uk) and the Open Government Licence (the terms and conditions for using data).
-
-::: { .callout-note}
-[Data.gov.uk](https://www.data.gov.uk) is the UK government’s central database that contains open data that the central government, local authorities, and public bodies publish. This includes, for example, aggregated census and health data. In addition to this central database, there are other authoritative databases run by the government and/or respective public bodies that contain either a specific type of data (e.g. Census data, crime data) or a specific collection of datasets (e.g. health data from the NHS, data related to London). Some portals are less up-to-date than others, so it is wise to double-check with the 'originators' of the data to see if there are more recent versions.
-::: 
-
-For our practical, we will access data from two authoritative data portals:
+In the UK, finding authoritative data on population and *Administrative Geography* boundaries is increasingly straightforward. Over the last decade, the UK government has opened up many of its datasets as part of an **Open Data** precedent that began in 2010 with the creation of [data.gov.uk](https://www.data.gov.uk) and the [Open Government Licence](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/). For our practical today, we will access data from two authoritative data portals:
 
 - For our administrative boundaries, we will download the **spatial** data through the *Open Geography Portal*. 
 - For our population data, we will download **attribute** data directly from the *Office of National Statistics (ONS)*.
@@ -86,7 +80,7 @@ We will start by downloading the administrative geography boundaries for England
 Repeat the above process to also download the 2021 LSOA boundaries: **Lower Layer Super Output Areas (2021) Boundaries EW BGC**. Make sure you download the **Generalised (20m)** version.
 
 ::: { .callout-warning}
-Administrative geographies are a way of dividing the country into smaller sub-divisions or areas that correspond with the area of responsibility of local authorities and government bodies. These administrative sub-divisions and their associated geography have several important uses, including assigning electoral constituencies and serving as a mechanism for collecting Census data. These geographies are updated as populations evolve and as a result the boundaries of the administrative geographies are subject to either periodic or occasional change. <u>This is why we need to download both 2011 and 2021 LSOA boundaries.</u> More details on the administrative geographies of the UK can be found on the website of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography). On a different page they also explain the [Census 2021 geographies](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies), which include the LSOAs that we are using.
+Due to boundary changes, we need to download both the 2011 and 2021 LSOA files. More details on the administrative geographies of the UK can be found on the website of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography). On a different page they also explain the [Census 2021 geographies](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies), which include the LSOAs that we are using.
 :::
 
 Now open your `GEOG0030/raw/` folder and create a new folder called `boundaries`. Rename the two files you just downloaded to `LSOA2011.gpkg` and `LSOA2021.gpkg`, respectively, and copy these into your `boundaries` folder.
@@ -121,7 +115,7 @@ To get the 2021 Census population counts, you should:
 In your `GEOG0030/raw/` folder, now create a new folder called `population` and copy the two Excel files to the newly created `population` folder. Rename the files you downloaded to: `LSOA2011_population.xlsx` and `LSOA2021_population.xlsx`, respectively.
 
 ### Cleaning population data {#w02-cleaning}
-When you open up any of the LSOA spreadsheets in Excel, you will notice that some additional rows of information are contained at the top of each of these files. This extra information will confuse QGIS and we therefore need to do some data cleaning. To reduce the chance of errors in later stages, we will also save the data in `csv` format.
+When you open up any of the LSOA spreadsheets in Excel, you will notice that some additional rows of information are contained at the top of each of these files. This extra information will cause issues in QGIS and we therefore need to do some data cleaning. To reduce the chance of errors in later stages, we will also save the data in `csv` format.
 
 ::: {.callout-tip}
 `csv` stands for comma (or character) separated values. A `csv` file can be thought of as stripped-down Excel spreadsheet in which every column of data is separated by a comma. If you open a `csv` file within Excel, however, it will look 'normal'. The advantage of using `csv` files is that it (should) make it easier to read data into QGIS and R as less things can go wrong. `csv` does have its limitations, especially when you are dealing with large datasets. A powerful and modern alternative is the [parquet format](https://parquet.apache.org/). For an introduction on how to use this, refer to **Chapter 23** in Hadley Wickham's [R for Data Science (Second Edition)](https://r4ds.hadley.nz/arrow)
@@ -132,10 +126,11 @@ Open the `LSOA2011_population.xlsx` file in Excel. We have two main columns: one
 
 Looking at this we need to take three steps. First, we need to remove the top rows that we do not need. Second, we need to make sure that we extract all the rows with data that are relevant to [Greater London](https://en.wikipedia.org/wiki/Greater_London). Third, we need to split the information in the first column and put it into two separate columns. The reason for this is that the column contains unique area codes as well as unique area names. However, to be able to effectively link our population data to our spatial data, the codes are much more reliable and much less likely to cause issues than the area names. Putting area codes and area names into separate columns will help us sorting this out.
 
-1. Open a new Excel spreadsheet. From the `LSOA2011_population.xlsx` spreadsheet, cut (**Edit** -> **Cut**) all cells from columns **A** to **B** and rows **9 to 4,651** into this new spreadsheet. Row **4,651** denotes the end of the <u>majority</u> of the *Greater London* LSOAs.
-2. Now we need to identify the missing LSOAs that were not kept at the top of the file with the other London LSOAs, probably because these LSOAs got introduced at a later point in time. Unfortunately, we can only do this manually by searching for the name of each of the London Boroughs and subsequently cutting the associated rows of data from the spreadsheet and pasting these into the second spreadsheet.
-3. Go to **Edit** -> **Find** -> **Find**. Type in **City of London**. Cut (**Edit** -> **Cut**) the two rows of data (*City of London 001F*, *City of London 001G*) and paste these at the bottom of the second spreadsheet. 
-4. Repeat this process to find all missing LSOAs by searching the names of all **32** London Boroughs. 
+1. Open a new Excel spreadsheet. 
+2. From the `LSOA2011_population.xlsx` spreadsheet, cut (**Edit** -> **Cut**) all cells from columns **A** to **B** and rows **9 to 4,651** into this new spreadsheet. Row **4,651** denotes the end of the <u>majority</u> of the *Greater London* LSOAs.
+3. Now we need to identify the missing LSOAs that were not kept at the top of the file with the other London LSOAs, probably because these LSOAs got introduced at a later point in time. Unfortunately, we can only do this manually by searching for the name of each of the London Boroughs and subsequently cutting the associated rows of data from the spreadsheet and pasting these into the second spreadsheet.
+4. Go to **Edit** -> **Find** -> **Find**. Type in **City of London**. Cut (**Edit** -> **Cut**) the two rows of data (*City of London 001F*, *City of London 001G*) and paste these at the bottom of the second spreadsheet. 
+5. Repeat this process to find all missing LSOAs by searching the names of all **32** London Boroughs. 
 
 ::: { .callout-tip}
 You can make this process a bit less tedious by using keyboard shortcuts. On MacOS you can use: `cmd + f` to open up the find menu, `cmd + x` to cut data, and `cmd + v` to paste data. On Windows you can use: `ctrl + f` to open up the find menu, `ctrl + x` to cut data, and `ctrl + v` to paste date.
@@ -164,9 +159,9 @@ Not all of the **32** London Boroughs have missing LSOAs whilst in other cases t
 | Kingston upon Thames    | Harrow              |
 | Merton                  | Hillingdon          |
 
-5. Once you copied all the rows of data, rename the columns in the new spreadsheet to `lsoa` and `pop2011`, respectively. 
-6. Cut all the data from the `pop2011` column that is stored in column **B** and paste these into column **C**. You now should have a column *without* any data sat between the `lsoa` and `pop2011` columns.
-7. Highlight the entire `lsoa` column and in the **Data** menu click on the **Text to Columns** menu button.
+6. Once you copied all the rows of data, rename the columns in the new spreadsheet to `lsoa` and `pop2011`, respectively. 
+7. Cut all the data from the `pop2011` column that is stored in column **B** and paste these into column **C**. You now should have a column *without* any data sat between the `lsoa` and `pop2011` columns.
+8. Highlight the entire `lsoa` column and in the **Data** menu click on the **Text to Columns** menu button.
 
 ```{r}
 #| label: fig-text-to-columns
@@ -180,9 +175,9 @@ knitr::include_graphics('images/w02/text-to-columns.png')
 Note that the **Text to Columns** function might be elsewhere in the menu depending on your version of Excel and/or your operating system.
 :::
 
-8. In the **Text to Columns** menu, select the **Delimited** radio button and click **Next**.
-9. Uncheck the checkbox for **Tab** and put `:` (colon) into the **Other** box. Click **Finish**. 
-10. Change the name of the `lsoa` column to `lsoa11_code` and change the name of the now populated column **B** to `lsoa11_name`.
+9. In the **Text to Columns** menu, select the **Delimited** radio button and click **Next**.
+10. Uncheck the checkbox for **Tab** and put `:` (colon) into the **Other** box. Click **Finish**. 
+11. Change the name of the `lsoa` column to `lsoa11_code` and change the name of the now populated column **B** to `lsoa11_name`.
 
 ```{r}
 #| label: fig-almost-there
@@ -192,7 +187,7 @@ Note that the **Text to Columns** function might be elsewhere in the menu depend
 knitr::include_graphics('images/w02/almost-there.png')
 ```
 
-11. One thing that might cause problems when we try to link the population data to the spatial data is that there are still spaces contained in the `lsoa11_code` column. This is not directly noticeable as these spaces are `white space` characters at the end of the LSOA codes without any other characters following it (i.e. [trailing spaces](https://stackoverflow.com/questions/22273233/what-is-meant-by-trailing-space-and-whats-the-difference-between-it-and-a-blank)). This may seem trivial, but we need this column and we therefore need to remove these. We can do this by highlighting the entire `lsoa11_code` column and in the **Home** menu opting for **Replace** under the **Find & Select** menu.
+12. One thing that might cause problems when we try to link the population data to the spatial data is that there are still spaces contained in the `lsoa11_code` column. This is not directly noticeable as these spaces are `white space` characters at the end of the LSOA codes without any other characters following it (i.e. [trailing spaces](https://stackoverflow.com/questions/22273233/what-is-meant-by-trailing-space-and-whats-the-difference-between-it-and-a-blank)). This may seem trivial, but we need this column and we therefore need to remove these. We can do this by highlighting the entire `lsoa11_code` column and in the **Home** menu opting for **Replace** under the **Find & Select** menu.
 
 ```{r}
 #| label: fig-find-replace
@@ -202,12 +197,12 @@ knitr::include_graphics('images/w02/almost-there.png')
 knitr::include_graphics('images/w02/find-replace.png')
 ```
 
-12. In the **Find what** box put in a singular `white space`, using the *spacebar* on your keyboard, keep the **Replace with** box empty, and click on **Replace all**. You should get a message that **4,835** replacements have been made. 
+13. In the **Find what** box put in a singular `white space`, using the *spacebar* on your keyboard, keep the **Replace with** box empty, and click on **Replace all**. You should get a message that **4,835** replacements have been made. 
 
-One further bit of formatting that you must do before saving your data is to format our population field. At the moment, you will see that there are commas separating the thousands within our values. If we leave these commas in our values, QGIS will read them as decimal points, creating decimal values of our population. There are many points at which we could resolve this issue, but the easiest point is now - we will strip our population values of the commas and set them to integer (whole numbers) values. 
+One further bit of formatting that you must do before saving your data is to format our population field. At the moment, you will see that there are commas separating the thousands within our values. If we leave these commas in our values, QGIS will read them as decimal points, creating decimal values of our population. There are many points at which we could resolve this issue, but the easiest point is now.
 
-13. To format the `pop2011` column, highlight the entire column and *right-click* on the `C` cell.  Click on **Format Cells** and set the cells to **Number** with **0** decimal places. You should see that the commas are now removed from your population values.
-14. Save your spreadsheet as a `csv` file into your `data` folder as `LSOA2011_population.csv`.
+14. To format the `pop2011` column, highlight the entire column and *right-click* on the `C` cell.  Click on **Format Cells** and set the cells to **Number** with **0** decimal places. You should see that the commas are now removed from your population values.
+15. Save your spreadsheet as a `csv` file into your `data` folder as `LSOA2011_population.csv`.
 
 ::: { .callout-tip}
 After saving the file, Excel might give you a warning along the lines of *Possible data loss*. You can safely ignore this message as the only 'information' you have lost is markup information (e.g. fonts, colours, items in bold, etc.) or formulas within Excel (e.g. if you used Excel formulas to calculate *means*, *medians*, etc.). In some cases you might also have options to choose what type of `csv` you would want to save the spreadsheet as. If so, opt for something along the lines of `CSV UTF-8 (Comma-delimited) (.csv)`. 
@@ -221,21 +216,21 @@ Depending on the language settings of your operating system (e.g. Windows, MacOS
 Now the 2011 data is prepared, we can move on to the 2021 data:
 
 1. Open the `LSOA2021_population.xlsx` in Excel. You will notice that the file is formatted largely the same as the `LSOA2011_population.xlsx` file, although if you were to look closely you will notice that the majority of London data are not at the top this time but that Local Authority Districts are grouped together - and in fact all data pertaining to Greater London are also grouped together. This makes our lives much easier because we can now simply cut the data for each of the **32** Boroughs and *City of London* in one go.
-2. Open a new Excel spreadsheet. From the `LSOA2021_population.xlsx` spreadsheet, cut (**Edit** -> **Cut**) all cells from columns **A** to **B** and rows **19,790 to 2,4783** and paste these into this new spreadsheet.
-3. Take the remaining steps to prepare the 2021 population steps: split the `lsoa` column, remove the trailing `white space` characters from the LSOA code column, and remove the decimal commas in the population count column.
-4. Save the file as `csv` into your `data` folder as `LSOA2021_population.csv` with the following column names: `lsoa21_code`, `lsoa21_name`, and `pop2021`. 
+2. Open a new Excel spreadsheet. 
+3. From the `LSOA2021_population.xlsx` spreadsheet, cut (**Edit** -> **Cut**) all cells from columns **A** to **B** and rows **19,790 to 2,4783** and paste these into this new spreadsheet.
+4. Take the remaining steps to prepare the 2021 population steps: split the `lsoa` column, remove the trailing `white space` characters from the LSOA code column, and remove the decimal commas in the population count column.
+5. Save the file as `csv` into your `data` folder as `LSOA2021_population.csv` with the following column names: `lsoa21_code`, `lsoa21_name`, and `pop2021`. 
 
 ::: { .callout-warning}
 Again make sure you did not miss any LSOAs. You should end up with **4,995** rows of data in your second spreadsheet.
 :::
 
 ### Mapping population data
-
 #### Setting up a project
 We will now use QGIS to create population maps for the LSOAs in London for both years. To achieve this, we need to **join our table data to our spatial datasets** and then map our populations for our visual analysis. 
 
 ::: { .callout-note}
-Due to the differences in the LSOA boundaries between 2011 and 2021, we can only make a visual comparison between the two years. You will notice that data interoperability is a key issue that you will face in spatial analysis, particularly when it comes to working with Administrative Geographies. 
+Due to the differences in the LSOA boundaries between 2011 and 2021, we can only make a visual comparison between the two years. You will notice that data interoperability is a key issue that you will face in spatial analysis, particularly when it comes to working with ever-changing administrative geographies. 
 :::
 
 1. Start **QGIS**.
@@ -265,7 +260,7 @@ knitr::include_graphics('images/w02/england-wales.png')
 We are now going to join our 2011 population data to our 2011 spatial data file. We start by adding the 2011 population data to our project. 
 
 1. Click on **Layer** -> **Add Layer** -> **Add Delimited Text Layer**.
-2. Click on the three dots button again and navigate to your **2011 population data** in your `data` folder. Your file format should be set to `csv`. You should have the following boxes clicked under the **Record and Field options** menu: `Decimal separator is comma`, `First record has field names`, `Detect field types` and `Discard empty fields`. QGIS does many of these by default, but do double-check.
+2. Click on the three dots button again and navigate to your **2011 population data** in your `data` folder. Your file format should be set to `csv`. You should have the following boxes ticked under the **Record and Field options** menu: `Decimal separator is comma`, `First record has field names`, `Detect field types` and `Discard empty fields`. QGIS does many of these by default, but do double-check.
 3. Set the Geometry to *No geometry (attribute only table)* under the **Geometry Definition** menu. Then click **Add** and **Close**. You should now see a table added to your `Layers` pane.
 
 We can now join this table data to our spatial data using an **Attribute Join**.
@@ -355,7 +350,7 @@ knitr::include_graphics('images/w02/lsoa-population-2011.png')
 ```
 
 ::: { .callout-warning}
-Whereas the above map is <u>fine for today</u>, it is technically incorrect because we are showing <u>absolute</u> numbers on a choropleth. This is something we should **never** do, unless the spatial units are identical in size (e.g. a hexagonal tessellation of an area), because larger areas will draw attention and affect the visualisation.
+Whereas the above map is <u>fine for today</u>, it is technically incorrect because we are showing <u>absolute</u> numbers on a choropleth. This is something we should **never** do, unless the spatial units are identical in size (e.g. a hexagonal tessellation of an area), because larger areas will draw attention and affect the visualisation. 
 :::
 
 ### Exporting map for visual analysis
@@ -364,20 +359,20 @@ To export your map select only the map layers you want to export and then opt fo
 ## Assignment {#assignment-w02}
 You now need to **repeat the entire process** to also create a map for the 2021 Census data. Remember, you need to:
 
-- Load the respective spatial layer.
-- Load the respective population dataset.
-- Join the two datasets together using an **Attribute Join**.
-- Export your joined dataset (London only) as a `GeoPackage` and save this into your `raw/boundaries` folder as `LSOA2021_London.gpkg`. <u>We will use this file in later weeks.</u>
-- Style your data appropriately.
-- Export your maps as an image to your `output` folder.
+1. Load the respective spatial layer.
+2. Load the respective population dataset.
+3. Join the two datasets together using an **Attribute Join**.
+4. Export your joined dataset (London only) as a `GeoPackage` and save this into your `raw/boundaries` folder as `LSOA2021_London.gpkg`. **We will use this file in later weeks.**
+5. Style your data appropriately.
+6. Export your maps as an image to your `output` folder.
 
-::: { .callout-note}
+::: { .callout-tip}
 To make visual comparisons against our two datasets, theoretically we would need to standardise the breaks at which our classification schemes are set at. To set all two datasets to the same breaks, you can do the following:
 
-- *Right-click* again on the `LSOA2011_London` dataset and, click on **Styles** -> **Copy Styles** -> **Symbology**.
-- Now *right-click* on the `LSOA2021_London` file, and click on **Styles** -> **Paste Style** -> **Symbology**. You should now see the classification breaks in the 2021 dataset change to match those in the 2011 data.
-- The final thing you need to do is to change the classification column in the `Symbology` tab for the 2021 dataset to reflect `pop2021`.
+1. *Right-click* again on the `LSOA2011_London` dataset and, click on **Styles** -> **Copy Styles** -> **Symbology**.
+2. Now *right-click* on the `LSOA2021_London` file, and click on **Styles** -> **Paste Style** -> **Symbology**. You should now see the classification breaks in the 2021 dataset change to match those in the 2011 data.
+3. The final thing you need to do is to change the classification column in the `Symbology` tab for the 2021 dataset to say `pop2021` instead of `pop2011`.
 :::
 
 ## Before you leave {#byl-w02}
-Save your project so you can go back to it if you need to, other than that [that is it for this week](https://www.youtube.com/watch?v=Wmc8bQoL-J0)!
+Save your project so you can go back to it if you need to, other than that [that is it for this week](https://www.youtube.com/watch?v=Wmc8bQoL-J0). Probably time to start looking at this week's reading list!

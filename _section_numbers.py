@@ -51,7 +51,7 @@ for htmlf in html_files:
     html_content = html_content.replace('<span class="menu-text">Programming for Spatial Analysis</span>', \
                                         '<span class="menu-text">5 Programming for Spatial Analysis</span>')
 
-    # update TOC chapter 5
+    # update TOC chapter 6
     html_content = html_content.replace('<span class="menu-text">Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</span>', \
                                         '<span class="menu-text">6 Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</span>')
 

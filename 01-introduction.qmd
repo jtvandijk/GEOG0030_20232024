@@ -17,7 +17,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 - Worobey, M. *et al.* 2022. The Huanan Seafood Wholesale Market in Wuhan was the early epicenter of the COVID-19 pandemic. *Science* 377(6609): 951-959. [[Link]](https://doi.org/10.1126/science.abp8715)
 
 ## Getting started
-Over the next few weeks, we will be taking a closer look at many of the foundational concepts that will ultimately enable you to confidently and competently analyse spatial data using both programming and GIS software. You will further learn how to plan, structure and conduct your own spatial analysis using programming – whilst making decisions on how to best present your work, which is a crucial aspect of any type of investigation but of particular relevance to your dissertation.
+Over the next few weeks, we will be taking a closer look at many of the foundational concepts that will ultimately enable you to confidently and competently analyse spatial data using both programming and GIS software. You will further learn how to plan, structure and conduct your own spatial analysis using programming.
 
 ## Software 
 This module primarily uses the [R](https://www.r-project.org/) programming language, although we will start by using [QGIS](https://qgis.org/en/site/) over the next two weeks to provide you with a visual introduction to the principles of spatial analysis.
@@ -36,7 +36,7 @@ We recommend installing the **Long Term Release** (*QGIS 3.28 LTR*) as this vers
 After installation, start QGIS to see if the installation was successful.
 
 ### R and RStudio Installation 
-R is a programming language originally designed for conducting statistical analysis and creating graphics. R’s great strength is that it is open-source, can be used on any computer operating system, and is free for anyone to use and contribute to. Because of this, it has rapidly become the statistical language of choice for many academics and has a large user community with people constantly contributing new packages to carry out all manner of statistical, graphical, and importantly for us, geographical tasks.
+R is a programming language originally designed for conducting statistical analysis and creating graphics. R’s great strength is that it is open source, can be used on any computer operating system, and is free for anyone to use and contribute to. Because of this, it has rapidly become the statistical language of choice for many academics and has a large user community with people constantly contributing new packages to carry out all manner of statistical, graphical, and importantly for us, geographical tasks.
 
 Installing R takes a few relatively simple steps involving two pieces of software. First there is the R programme itself. Follow these steps to get it installed on your computer:
 
@@ -51,7 +51,11 @@ That is it! You now have installed R onto your own machine. However, to make wor
 After this, start RStudio to see if the installation was successful. If no errors are shown after start starting the programme, you are ready to go.
 
 ### UCL Desktop and RStudio Server {#ucl}
-There are two alternatives to installing QGIS and R with RStudio onto your personal device. First, both programmes are available through [Desktop@UCL Anywhere](https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere) as well as all UCL computers on campus. Second, specifically to R, we have a RStudio server available which you can access through your web browser: [[Link]](https://rstudio.data-science.rc.ucl.ac.uk/)
+There are two alternatives to installing QGIS and R with RStudio onto your personal device. First, both programmes are available through [Desktop@UCL Anywhere](https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere) as well as all UCL computers on campus. Second, specifically to R, we have RStudio Server available which you can access through your web browser: [[Link]](https://rstudio.data-science.rc.ucl.ac.uk/)
+
+::: { .callout-note}
+RStudio Server is a version of R 'in the cloud' which you can access through your web browser.
+:::
 
 You should be able to log onto the RStudio server with your regular UCL *username* and *password*. After logging in, you should see the RStudio interface appear. 
 
@@ -83,7 +87,7 @@ install.packages(c('tidyverse','sf','tmap','osmdata','terra','dodgr'))
 ```
 
 ::: { .callout-warning}
-Even if you have used R or RStudio Server before and already installed some of the packages in the above list, do re-install all packages by running the code above to make sure you have the latest versions. Legacy installations that have not been updated may cause errors when running the code in this workbook.
+Even if you have used R or RStudio Server before and previously installed some of the packages in the above list, do re-install all packages by running the code above to make sure you have the latest versions. Legacy installations that have not been updated may cause errors when running the code in this workbook.
 :::
 
 Once you have installed the packages, we need to check whether we can in fact load them into R. Copy and paste the following code into the **console**, and execute by hitting **Enter** again.
@@ -106,7 +110,16 @@ library(terra)
 library(dodgr)
 ```
 
-You will see some information printed to your console but as long as you do not get a message that is similar to `Error: package or namespace load failed for <packagename>` or `Error: package '<packagename>' could not be loaded` all should be fine.
+You will see some information printed to your console but as long as you do not get any of the messages below, the installation was successful. 
+If you do get any of the messages below it means that the package was not properly installed, so try to install the package in question again. 
+
+- `Error: package or namespace load failed for <packagename>`
+- `Error: package '<packagename>' could not be loaded`
+- `Error in library(<packagename>) : there is no package called '<packagename>'` 
+
+::: { .callout-note}
+Many packages depend on other packages (so-called *dependencies*). It happens at times when you install a package it does not install all dependencies. If you encounter any of the above errors in reference to a package that you did not explicitly install, it is probably a missing dependency. Simply install the dependency by typing `install.packages('<dependencyname>')` and try loading all packages again.
+:::
 
 ### A note on ArcGIS
 [ArcGIS Pro](https://www.esri.com/en-us/arcgis/products/arcgis-pro/overview) is the main commercial GIS software that you may have already used or seen/heard about through other modules or even job adverts. We do not use ArcGIS Pro in this module for the following reasons:
@@ -115,7 +128,7 @@ You will see some information printed to your console but as long as you do not 
 - ArcGIS is **proprietary** software, which means you need a license to use the software. For those of us in education, the University covers the cost of this license, but when you leave, you will need to pay for a personal license to continue using the software and repeat any analysis you have used the software for.
 - Whilst ArcPro can use pure [Python](https://www.python.org/) (and even R) as a programming language within it through scripts and notebooks, it primarily relies on its own **ArcPy** and **ArcGIS API for Python** packages to run the in-built tools and analytical functions. To use these packages, you still need a license which makes it difficult to share your code with others if they do not have their own ArcGIS license.
 
-Recent developments in the ArcPro software, however, does make it an attractive tool for spatial data science and quantitative geography: it has cross-user functionality, from data analysts who like to use a tool called *Notebooks* for their code development, to those focused more on cartography and visualisation with in-built bridges to Adobe's Creative Suite. We therefore do not want to put you off looking into ArcGIS in the future, but for this course, we want to ensure the reproducibility of your work.
+Recent developments in the ArcPro software, however, does make it an attractive tool for spatial data science and quantitative geography: it has cross-user functionality, from data analysts to those focused more on cartography and visualisation with in-built bridges to Adobe's Creative Suite. We therefore do not want to put you off looking into ArcGIS in the future, but during this module we want to ensure the reproducibility of your work.
 
 ## Before you leave {#byl-w01}
-You should now be all ready to go with the computer practicals the coming week. Nice and easy. [That is it for this week](https://www.youtube.com/watch?v=RrEv70WrcRc)!
+You should now be all ready to go with the computer practicals the coming week. Nice and easy. Time to look at the articles on the reading list?  [That is it for this week](https://www.youtube.com/watch?v=RrEv70WrcRc)!

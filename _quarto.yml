@@ -42,7 +42,7 @@ website:
       - section: "Module overview"
         contents:
           text: "Welcome"
-          file: 00-index.qmd
+          file: index.qmd
       - section: "Foundational Concepts"
         contents:
           - 01-introduction.qmd
@@ -51,8 +51,7 @@ website:
           - 04-statistics.qmd
           - 05-spatial.qmd
       - section: "Core Spatial Analysis"
-        contents:
-          - 06-operations.qmd
+      - section: "Advanced Spatial Analysis"
       - section: "Additional Resources"
         contents:
           - 11-data.qmd

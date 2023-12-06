@@ -21,6 +21,11 @@ Over the next few weeks, we will explore the spatial patterns of crime across Lo
 
 Against this background, we are actually going to answer a very simple question today: does our perception of crime rates (and its distribution) in London vary at different scales? Here we are looking to test whether we would make the [ecological fallacy](https://en.wikipedia.org/wiki/Ecological_fallacy) mistake of assuming patterns at the LSOA level are the same at the Borough level by looking to directly account for the impact of the Modifiable Area Unit Problem within our results. Here we will be looking specifically at a specific type of crime: *Theft from a person*.
 
+
+::: { .callout-note}
+We will use the population dataset we create today to *normalise* other datasets in the module. Why? When we record events created by humans, there is often a population bias: simply, more people in an area will by probability lead to a higher occurrence of said event, such as crime. We will look at this in greater detail next week.
+:::
+
 ::: { .callout-note}
 The datasets you will create in this practical will be used in other practicals, so make sure to follow every step and export your data to your `data` folder at the end of the practical.
 :::
