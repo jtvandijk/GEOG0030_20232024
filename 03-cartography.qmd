@@ -1,5 +1,5 @@
 # Cartography and Visualisation
-This week’s lecture has given you an introduction into how we can create a successful map. We further talked about map projections, cartographic conventions and issues faced with the analysis of aggregated data at areal units. The practical component of the week puts some of these learnings into practice as we analyse crime rates in London at two different scales.
+This week’s lecture has given you an introduction on how to create a successful map. We further talked about map projections, cartographic conventionsm, and issues faced with the analysis of aggregated data at areal units. The practical component of the week puts some of these learnings into practice as we analyse crime rates in London at two different scales.
 
 ## Lecture slides {#slides-w03}
 The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var slides.week03 >}})
@@ -19,14 +19,9 @@ Over the next few weeks, we will explore the spatial patterns of crime across Lo
 
 > Spatial analysis can be employed in both an exploratory and well as a more confirmatory manner with the primary purpose of identifying how certain community or ecological factors (such as population characteristics or the built environment) influence the spatial patterns of crime. 
 
-Against this background, we are actually going to answer a very simple question today: does our perception of crime rates (and its distribution) in London vary at different scales? Here we are looking to test whether we would make the [ecological fallacy](https://en.wikipedia.org/wiki/Ecological_fallacy) mistake of assuming patterns at the LSOA level are the same at the Borough level by looking to directly account for the impact of the Modifiable Area Unit Problem within our results. Here we will be looking specifically at a specific type of crime: *Theft from a person*.
+Against this background, we are actually going to answer a very simple question today: does our perception of crime rates (and its distribution) in London vary at different scales? Here we are looking to test whether we would make the [ecological fallacy](https://en.wikipedia.org/wiki/Ecological_fallacy) mistake of assuming patterns at the LSOA level are the same at the Borough level by looking to directly account for the impact of the [Modifiable Area Unit Problem](https://en.wikipedia.org/wiki/Modifiable_areal_unit_problem) within our results. Here we will be looking specifically at a specific type of crime: *Theft from a person*.
 
-
-::: { .callout-note}
-We will use the population dataset we create today to *normalise* other datasets in the module. Why? When we record events created by humans, there is often a population bias: simply, more people in an area will by probability lead to a higher occurrence of said event, such as crime. We will look at this in greater detail next week.
-:::
-
-::: { .callout-note}
+::: { .callout-warning}
 The datasets you will create in this practical will be used in other practicals, so make sure to follow every step and export your data to your `data` folder at the end of the practical.
 :::
 
@@ -45,18 +40,18 @@ When you look to download crime data for London, there are **two** territorial p
 #### London crime data
 Normally, we would now head to the **Police Data Portal** and download our crime data. However, the manual processing that is required to clean and prepare the data that we need today is too exhaustive and far easier to do using programming, so you can download a pre-filtered spreadsheet below. Unzip the file and copy the `csv` into a **new** folder in your `raw` data folder called: `crime`.
 
-| File                                                 | Type           | Link |
-| :------                                              | :------        | :------ |
-| Theft from persons in 2021                           | `csv`    | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/crime-theft-2021-london.zip) |
+| File                            | Type     | Link |
+| :------                         | :------  | :------ |
+| Theft from persons in 2021      | `csv`    | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/crime-theft-2021-london.zip) |
 
 ::: { .callout-note}
-When mapping the data from the provided longitude and latitude coordinates, it is important to know that these locations represent the approximate location of a crime — not the exact place where it happened. This displacement is introduced on purpose to preserve anonymity of the individuals involved. The process by how this displacement occurs is standardised: There is a list of anonymous map points to which the exact location of each crime is compared against this master list to find the nearest map point. The co-ordinates of the actual crime are then replaced with the co-ordinates of the map point. Each map point is specifically chosen to avoid associating that point with an exact household.
+When mapping the data from the provided longitude and latitude coordinates, it is important to know that these locations represent the approximate location of a crime — not the exact place where it happened. This displacement is introduced on purpose to preserve anonymity of the individuals involved. The process by how this displacement occurs is standardised. There is a list of anonymous map points to which the exact location of each crime is compared against this master list to find the nearest map point. The co-ordinates of the actual crime are then replaced with the co-ordinates of the map point. Each map point is specifically chosen to avoid associating that point with an exact household.
 :::
 
 ### Population data 
-In last week's practical we mentioned that if we want to study a phenomena like crime and aggregate it to an areal unit, we will need to normalise this by some denominator (e.g. population). This week we will actually do this. Fortunately, we already sorted out our 2021 LSOA population dataset last week (i.e.  `LSOA2021_London.gpkg`).
+If we want to study a phenomena like crime and aggregate it to an areal unit, we will need to normalise this by some denominator (e.g. population). Why? When we record events created by humans, there is often a population bias: simply, more people in an area will by probability lead to a higher occurrence of said event. Fortunately, we already prepared a 2021 LSOA population dataset [last week](02-GIScience.html#assignment-w02).
 
-In addition to our **LSOA** level dataset, we also want to generate a similar dataset for our London **Boroughs** today, utilising the same approach as last week by joining Borough population table data to Borough spatial data and creating a `Borough2021_London.gpkg` file.
+In addition to our **LSOA** level dataset, we also need a population dataset for our London **Boroughs** today. We can do this utilising by joining Borough population data to Borough spatial data and creating a `Borough2021_London.gpkg` file.
 
 #### Borough boundaries
 A lot of data about London is collated by the Greater London Authority (GLA) and made available through the [London Datastore](https://data.london.gov.uk/about/). Whereas some of the data is relatively old, it is a good place to get some data specific to London:
@@ -83,13 +78,12 @@ The final data that we need is the total population for each of the London Borou
 11. Save the file as a new `csv` in your `data` folder: `LondonBorough2021_population.csv`.
 
 ### Mapping crime data
-
 #### Setting up a project
 1. Start **QGIS**
 2. Click on **Project** -> **New**. Save your project as `w3-crime-analysis`. Remember to save your work throughout the practical. 
 3. Before we get started with adding data, we will first set the Coordinate Reference System of our Project. Click on **Project** -> **Properties -- CRS**. In the Filter box, type **British National Grid**. Select **OSGB 1936 / British National Grid - EPSG:27700** and click **Apply**. Click **OK**.
 
-#### Adding layers
+#### Adding vector layers
 1. Click on **Layer** -> **Add Layer** -> **Add Vector Layer**.
 2. With **File** select as your source type, click on the small three dots button and navigate to your `LSOA2021_London.gpkg` file in your `boundaries` folder. Select the file, then click **Add**. You may need to close the box after adding the layer.
 
@@ -103,9 +97,10 @@ We now need to create our Borough population spatial layer. To do so, we need to
 - Remove the original Borough and population data layers.
 
 ::: { .callout-warning}
-Because the population file that we downloaded does not contain Borough codes, we need to use the Borough names to join the two files together. Whilst it works here and we can easily manually check whether the join was succesful because there are only 33 records, codes are preferred as there is much less room for error and incomplete joins. This means it is often worth it to spend a bit more time and find these codes over relying on names.
+Because the population file that we downloaded does not contain Borough codes, we need to use the Borough names to join the two files together. Whilst it works here and we can easily manually check whether the join was successful because there are only 33 records, codes are preferred as there is much less room for error and incomplete joins. This means it is often worth it to spend a bit more time and find these codes over relying on names.
 :::
 
+#### Adding point layers
 We will now load and map our crime data. We will load this data using the **Delimited Text File Layer** option you would have used just now to load the Borough population, but this time we will be adding point coordinates to map our crime data as points.
 
 1. Click on **Layer** -> **Add Layer** -> **Add Delimited Text File Layer**.
@@ -115,7 +110,7 @@ We will now load and map our crime data. We will load this data using the **Deli
     - Under **Geometry Definition**, select `Point coordinates` and set the **X field** to `Longitude` and the **Y field** to `Latitude`. The **Geometry CRS** should be: `EPSG:4326 - WGS84`. Click **Add**. 
 
 ::: { .callout-warning}
-When you click **Add**, you should have gotten a pop-up from QGIS asking about transformations. Transformations are algorithms that convert data from one CRS to another. QGIS knows that the **Project CRS** is **British National GRid** but the **Layer** you are trying to add has a **WGS84** CRS. QGIS is asking you what transformation it should use to project the Layer in the Project CRS. This is one of the key strengths of QGIS: it can project data **"on the fly"**. What this means is that QGIS will automatically convert all Layers to the **Project CRS** once it knows which transformation you would like to use so that they will all be rendered in the correct position with respect to each other. More details on this can be found in QGIS' [user manual section on working with projections](https://docs.qgis.org/3.28/en/docs/user_manual/working_with_projections/working_with_projections.html).
+When you click **Add**, you should have gotten a pop-up from QGIS asking about transformations. Transformations are algorithms that convert data from one CRS to another. QGIS knows that the **Project CRS** is **British National GRid** but the **Layer** you are trying to add has a **WGS84** CRS. QGIS is asking you what transformation it should use to project the Layer in the Project CRS. This is one of the key strengths of QGIS: it can project data 'on the fly'. What this means is that QGIS will automatically convert all Layers to the **Project CRS** once it knows which transformation you would like to use so that they will all be rendered in the correct position with respect to each other. More details on this can be found in QGIS' [user manual section on working with projections](https://docs.qgis.org/3.28/en/docs/user_manual/working_with_projections/working_with_projections.html).
 :::
 
 2. Click **OK** to accept QGIS' suggested on-the-fly projection. You should now see your crime dataset displayed on the map canvas.
@@ -128,7 +123,7 @@ When you click **Add**, you should have gotten a pop-up from QGIS asking about t
 knitr::include_graphics('images/w03/crime-borough.png')
 ```
 
-3. We can test the 'temporary' nature of the projection by looking at the CRS of the `crime-theft-2021-london` layer. Right-click on the layer then select **Properties** -> **Information** and then look at the associated CRS. You should see that the CRS of the layer is still `WGS84`. 
+3. We can test the temporary nature of the projection by looking at the CRS of the `crime-theft-2021-london` layer. Right-click on the layer then select **Properties** -> **Information** and then look at the associated CRS. You should see that the CRS of the layer is still `WGS84`. 
     
 We want to make sure our analysis is as accurate and efficient as possible, so it is best to reproject our data into the **same CRS** as our administrative datasets, i.e. British National Grid. This also means we will have the dataset to use in other projects, just in case.
 
@@ -141,12 +136,12 @@ We want to make sure our analysis is as accurate and efficient as possible, so i
 5. You can now also remove the original `crime-theft-2021-london` dataset, only keeping the reprojected version.
 
 #### Counting points-in-polygons 
-The next step of our analysis is incredibly simple, as QGIS has an in-built tool for us to use. We will use the `Count Points in Polygons` in the `Analysis` toolset for `Vector` data to count how many crimes have occurred in our **LSOAs** and our **Boroughs**. We will then have our count statistic which we will need to normalise by our population data to create a **crime rate** statistic.
+The next step of our analysis involves assigning the crime point data to our administrative geographies. We will use the `Count Points in Polygons` in the `Analysis` toolset to count how many crimes have occurred in our **LSOAs** and our **Boroughs**. We will then have a count statistic that we need to normalise by population data to create a **crime rate** statistic.
 
 1. Click on **Vector** -> **Analysis Tools** -> **Count Points in Polygons**.
 2. Within the toolbox, select the parameters as follows:
     - **Polygons:** `Boroughs_London_Pop2021`
-    - **Points:** `theft2021` *(Note how both our data layers state the same CRS!)*
+    - **Points:** `theft2021` [Note how both our data layers state the same CRS.]
     - No weight field or class field
     - **Count field names:** `theft2021`
     - Click on the three dot button and **Save to GeoPackage:** `output` -> `Borough2021_crime.gpkg`, with `borough-theft2021` as **Layer Name**.
@@ -174,12 +169,12 @@ The empty field has *NULL* populated for each row, so we need to find a way to g
 9. In the **Field Calculator** window:
     - Check the **Update existing field** box.
     - Use the drop-down to select the `crime-rate` field.
-    - In the Expression editor, add the following expression: **( "theft2021" / "pop2021" ) \* 10000**
+    - In the Expression editor, add the following expression: `( "theft2021" / "pop2021" ) * 10000`
     - Once done, click **OK**.
 10. Click on the **Save** button to save these edits. Click again on the **Pencil** button to exit *Editing mode*.
 
 ::: { .callout-tip}
-The `crime-rate` is stored as a decimal as this is required for the calculation to succeed, but ultimately you cannot have half a crime. You can transform the decimal number to an `integer` by forcing the `crime-rate` column to a new field using the **Field Calculator** using *Editing mode* again. Instead of ticking the **Update existing field** box you would now keep the **Create a new field** box ticked. Name the new field `crime-rate-int`, make sure the **Output field type** is set to `Whole number (integer)`, and use the following expression to create a new field with an integer value: **to_int("crime-rate")**. Save your changes by clicking on the **Save** button.
+The `crime-rate` is stored as a decimal as this is required for the calculation to succeed, but ultimately you cannot have half a crime. You can transform the decimal number to an `integer` by forcing the `crime-rate` column to a new field using the same **Field Calculator**. Instead of ticking the **Update existing field** box you would now keep the **Create a new field** box ticked. Name the new field `crime-rate-int`, make sure the **Output field type** is set to `Whole number (integer)`, and use the following expression to create a new field with an integer value: `to_int("crime-rate")`. Save your changes by clicking on the **Save** button.
 :::
 
 11. We now have our Borough crime rate dataset ready for mapping. We just now need to repeat this process to have our **LSOA** dataset. So, add the `LSOA2021_London.gpkg` file to your project and repeat the above process to create a `crime-rate` and `crime-rate-int` column within the **LSOA** dataset as well. After reordering some of the layers, your screen should look something like this:
@@ -230,13 +225,13 @@ knitr::include_graphics('images/w03/map-layout.png')
 ```
     
 2. With your map selected, head to the **Items Properties** panel and look for the **Scale** parameter. 
-    + Here we can manually edit the **scale** of our map to find the right zoom level.
-    + Have a go at entering different values and see what level you think suits the size of your map.
-    + Keep a note of the scale, as we will need this for the second map we will add to our map layout - our LSOA map.
-    + Next, in the same panel, if you would like, you can add a frame to your map - this will draw a box (of your selected formatting) around the current map.
-    + In the same panel, note down the size of your map - we want to make sure the next map we add is of the same size.
-    + Note, if you need to move the position of the map within the box, look for the **Move Item Content** tool on the left-hand side toolbar.
-    + Once you are done, finally click on the **Lock Layers** and **Lock Style for layers.**
+    - Here we can manually edit the **scale** of our map to find the right zoom level.
+    - Have a go at entering different values and see what level you think suits the size of your map.
+    - Keep a note of the scale, as we will need this for the second map we will add to our map layout - our LSOA map.
+    - Next, in the same panel, if you would like, you can add a frame to your map - this will draw a box (of your selected formatting) around the current map.
+    - In the same panel, note down the size of your map - we want to make sure the next map we add is of the same size.
+    - Note, if you need to move the position of the map within the box, look for the **Move Item Content** tool on the left-hand side toolbar.
+    - Once you are done, finally click on the **Lock Layers** and **Lock Style for layers.**
     
 By locking the Layers (and their symbology) in our map, it means we can change our data/map in our main QGIS window without changing the map in the **Print Layout** - as we will see in a minute when adding our Borough crime rate map. If we do not lock our layers, our map would automatically update to whatever is next displayed in the main QGIS window.
 
@@ -297,7 +292,7 @@ The only thing outstanding is to export our map to a file. Go to **Layout** -> *
 
 ## Assignment {#assignment-w03}
 1. Looking at the maps you have created, how does your perception of crime (and its distribution) in London vary at different scales?
-2. At the moment, we have looked at the crime rate as an amount, therefore we use a sequential colour scheme that shows, predominantly, where the crime rate is the highest. As an alternative, we could use a diverging colour scheme that could show us where the crime rate is lower and/or higher than a critical mid-point, such as the average crime rate across the Boroughs and LSOAs. Create a map of crime in London, at both the Borough and LSOA levels that shows for each of these administrative geographies the percentage difference from the overall mean crime rate.
+2. At the moment, we have looked at the crime rate as a relative amount. We therefore use a sequential colour scheme that shows, predominantly, where the crime rate is the highest. Alternatively, we could use a diverging colour scheme that could show us where the crime rate is lower and/or higher than a critical mid-point, such as the average crime rate across the Boroughs and LSOAs. Create a map of crime in London, at both the Borough and LSOA levels that shows for each of these administrative geographies the **percentage difference** from the overall mean crime rate.
 
 ::: { .callout-tip}
 - You will need to start by calculating the average crime rate for both datasets and subsequently calculate the difference from these values for each geography.
@@ -305,4 +300,4 @@ The only thing outstanding is to export our map to a file. Go to **Layout** -> *
 :::
 
 ## Before you leave {#byl-w03}
-[That is us all done](https://www.youtube.com/watch?v=3wxyN3z9PL4). Remember to save your project.
+[That is us all done](https://www.youtube.com/watch?v=3wxyN3z9PL4). Remember to save your project. And remember the reading list. 

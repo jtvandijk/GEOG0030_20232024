@@ -15,7 +15,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 - Arribas-Bel, D. *et al*. 2021. Open data products - A framework for creating valuable analysis ready data. *Journal of Geographical Systems* 23: 497-514. [[Link]](https://doi.org/10.1007/s10109-021-00363-5)
 
 ## Programming
-Programming is our most fundamental way of interacting with a computer, it was how computers were first built and operated and for a long time, the Command Line Interface (CLI) was our primary way of using computers before our Graphical User Interface (GUI) Operating Systems (OS) and software became mainstream. Nowadays, the majority of us use our computers through clicking instead of typing. However, programming and computer code underpin every single application that we use on our computers.
+Programming is our most fundamental way of interacting with a computer, it was how computers were first built and operated and for a long time, the [Command Line Interface (CLI)](https://en.wikipedia.org/wiki/Command-line_interface) was our primary way of using computers before our [Graphical User Interface (GUI)](https://en.wikipedia.org/wiki/Graphical_user_interface) Operating Systems (OS) and software became mainstream. Nowadays, the majority of us use our computers through clicking instead of typing. However, programming and computer code underpin every single application that we use on our computers.
 
 Programming is used for endless purposes and applications, ranging from software engineering and application development, to creating websites and managing databases at substantial scales. To help with this diversity of applications, multiple types of programming languages have developed. Wikipedia, for example, has a [list of hundreds of different languages](https://en.wikipedia.org/wiki/List_of_programming_languages), although there is some overlap between many of these, some are used for incredibly niche activities, and some are not used any more at all.
 
@@ -25,18 +25,18 @@ We will be using R and RStudio in this module as the main tool to complete speci
 What is important to understand is that R and RStudio are two different things:
 
 - R is our programming language, which we need to understand in terms of general principles, syntax and structure.
-- RStudio is our [Integrated Development Environment (IDE)](https://en.wikipedia.org/wiki/Integrated_development_environment), which we need to understand in terms of functionality and workflow. An IDE is simply a complicated way of saying "a place where I write and build scripts and execute my code".
+- RStudio is our [Integrated Development Environment (IDE)](https://en.wikipedia.org/wiki/Integrated_development_environment), which we need to understand in terms of functionality and workflow. An IDE is simply software programme that makes creating and organising your code easier.
 
 As you may know already, R is a free and open-source programming language, that originally was created to focus on statistical analysis. In conjunction with the development of R as a language, the same community created the RStudio IDE to execute this statistical programming. Together, R and RStudio have grown into an incredibly success partnership of analytical programming language and analysis software. As a result, it has a huge and active contributor community which constantly adds functionality to the language and software, making it an incredibly useful tool for many purposes and applications beyond statistical analysis.
 
 Unlike traditional statistical analysis programmes you may have used such as [Microsoft Excel](https://www.microsoft.com/en-us/microsoft-365/excel) or even [ArcGIS Online](https://www.arcgis.com/home/index.html), within the RStudio IDE, the user has to type commands to get it to execute tasks such as loading in a dataset or performing a calculation. We primarily do this by building up a script, that provides a record of what you have done, whilst also enabling the straightforward repetition of tasks. 
 
-We can also use the **R Console** to execute simple instructions that do not need repeating such as installing libraries or quickly viewing data. In addition, R, its various graphic-oriented "packages" and RStudio are capable of making graphs, charts and maps through just a few lines of code which can then be easily modified and tweaked by making slight changes to the script if mistakes are spotted. Unfortunately, command-line computing can also be off-putting at first. It is easy to make mistakes that are not always obvious to detect and thus debug. Nevertheless, there are good reasons to stick with R and RStudio. These include:
+We can also use the **R Console** to execute simple instructions that do not need repeating such as installing libraries or quickly viewing data. In addition, R, its various graphic-oriented packages and RStudio are capable of making graphs, charts and maps through just a few lines of code which can then be easily modified and tweaked by making slight changes to the script if mistakes are spotted. Unfortunately, command-line computing can also be off-putting at first. It is easy to make mistakes that are not always obvious to detect and thus debug. Nevertheless, there are good reasons to stick with R and RStudio. These include:
 
 - It is broadly intuitive with a strong focus on publishable-quality graphics.
 - It is 'intelligent' and offers in-built good practice; it tends to stick to statistical conventions and present data in sensible ways.
-- It is **free**, cross-platform, customisable and extendable with a whole swathe of packages/libraries ('add ons') including those for discrete choice, multilevel and longitudinal regression, mapping, spatial statistics, spatial regression, and geostatistics.
-- It is well respected and used at the world's largest technology companies (including Google, Microsoft and Facebook, and at hundreds of other companies).
+- It is **free**, cross-platform, customisable and extendable with a whole swathe of packages (libraries) including those for discrete choice, multilevel and longitudinal regression, mapping, spatial statistics, spatial regression, geostatistics, network analysis, etc.
+- It is well respected and used at the world's largest technology companies including Google, Microsoft and Facebook.
 - It offers a **transferable skill** that shows to potential employers experience both of statistics and of computing.
 
 The intention of the practical elements of this week is to provide a thorough introduction to RStudio to get you started:
@@ -49,7 +49,7 @@ The intention of the practical elements of this week is to provide a thorough in
 What you should remember is that R has a steep learning curve, but the benefits of using it are well worth the effort. The best way to really learn R is to take the basic code provided in tutorials and experiment with changing parameters such as the colour of points in a graph to really get 'under the hood' of the software. 
 
 ### The RStudio interface
-You should all have access to some form of R on your personal computer, or through [Desktop@UCL Anywhere](https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere) or the [RStudio Server](https://rstudio.data-science.rc.ucl.ac.uk/auth-sign-in). If not, please refer to the [Geocomputation: An Introduction](01-geocomputation-an-introduction.html#software) section. Go ahead and open RStudio and we will first take a quick tour of the various components of the RStudio environment interface and how and when to use them. When you first open RStudio, it should look a little something like this:
+You should all have access to some form of R on your personal computer, or through [Desktop@UCL Anywhere](https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere) or the [RStudio Server](https://rstudio.data-science.rc.ucl.ac.uk/auth-sign-in). If not, please refer to the [Geocomputation: An Introduction](01-introduction.html#software) section. Go ahead and open RStudio and we will first take a quick tour of the various components of the RStudio environment interface and how and when to use them. When you first open RStudio, it should look a little something like this:
 
 ```{r}
 #| label: fig-rstudio-interface
@@ -67,9 +67,9 @@ The main windows (panel/pane) to keep focused on for now are:
 * **Plots**: where the outputs of our graphs, charts and maps are shown
 * **Help**: where you can search for help, e.g. by typing in a function to find out its parameters.
 
-You may also have your **Script Window** open, which is where we build up and write code, to a) keep a record of our work, b) enable us to repeat and re-run code again, often with different parameters. We will not use this window until we get to the final practical instructions.
+You may also have your **Script Window** open, which is where we build up and write code. This not only helps us to keep a record of our work, but also enables us to repeat and re-run code again. We will not use this window until we get to the final practical instructions.
 
-We will see how we use these windows as we progress through this tutorial and understand in more detail what we mean by words such as 'attributes' (do not get confused here with the **Attribute Table** for QGIS) and data structures.
+We will see how we use these windows as we progress through this tutorial and understand in more detail what we mean by words such as *attributes* (do not get confused here with the **Attribute Table** for QGIS) and data structures.
 
 ## RStudio console
 We will first start off with using **RStudio's console** to test out some of R's in-built functionality by creating a few variables as well as a dummy dataset that we will be able to analyse. 
@@ -86,7 +86,6 @@ In your RStudio console, you should see a prompt sign `>` on the left hand side.
 
 ### Command Input
 Type in `10 * 12` into the console.
-
 ```{r}
 #| label: 04-math1
 #| classes: styled-output
@@ -101,7 +100,7 @@ Type in `10 * 12` into the console.
 Once you press return, you should see the answer of `120` returned below.
 
 ### Storing variables
-Rather than use 'raw' or 'standalone' numbers and values, we primarily want to use variables that store these values (or groups of them) under a memorable name for easy reference later. In R terminology this is called **creating an object** and this object becomes stored as a **variable**. The `<-` symbol is used to assign the value to the variable name you have given. Let us create two variables for experimenting with. 
+Rather than use *raw* or *standalone* numbers and values, we primarily want to use variables that store these values (or groups of them) under a memorable name for easy reference later. In R terminology this is called **creating an object** and this object becomes stored as a **variable**. The `<-` symbol is used to assign the value to the variable name you have given. Let us create two variables to experiment with. 
 
 Type in `ten <- 10` into the console and execute.
 ```{r}
@@ -129,7 +128,7 @@ Type in `twelve <- 12` into the console and execute.
 twelve <- 12
 ```
 
-Once again, you will see nothing returned to the console but do check your environment window for your variable. We have now stored two numbers into our environment and given them variable names for easy reference. R stores these objects as variables in your computer's memory so they can be processed quickly. Without saving your environment (we will come onto this below), these variables would be lost if you close R. Now we have our variables, we can go ahead and execute the same simple multiplication:
+Once again, you will see nothing returned to the console but do check your environment window for your variable. We have now stored two numbers into our environment and given them variable names for easy reference. R stores these objects as variables in your computer's [RAM memory](https://en.wikipedia.org/wiki/Random-access_memory) so they can be processed quickly. Without saving your environment, these variables would be lost if you close R. Now we have our variables, we can go ahead and execute the same simple multiplication:
 
 Type in `ten * twelve` into the console and execute.
 
@@ -205,7 +204,9 @@ Type in `str_variable <- "This is our 1st string variable"` into the console and
 str_variable <- "This is our 1st string variable"
 ```
 
-We have just stored our sentence made from a combination of characters, including letters and numbers. A variable that stores "words" (that may be sentences, or codes, or file names), is known as a string. A string is always denoted by the use of quotation marks (`""` or `''`). Type in `str_variable` into the console and execute.
+We have just stored our sentence made from a combination of characters, including letters and numbers. A variable that stores "words" (that may be sentences, or codes, or file names), is known as a string. A string is always denoted by the use of quotation marks (`""` or `''`). 
+
+Type in `str_variable` into the console and execute.
 
 ```{r}
 #| label: 04-str2
@@ -277,7 +278,6 @@ typeof(str_variable)
 You should see the answer: `character`. As evident, our `str_variable` is a **character data type**. We can try testing this out on one of our earlier variables too.
 
 Type in `typeof(ten)` into the console and execute.
-
 ```{r}
 #| label: 04-str6
 #| classes: styled-output
@@ -305,7 +305,6 @@ class(str_variable)
 In this case, you will get the same answer because in R both its class and type are the same: a *character*. In other programming languages, you might have had *string* returned instead, but this effectively means the same thing. 
 
 Type in `class(ten)` into the console and execute.
-
 ```{r}
 #| label: 04-str8
 #| classes: styled-output
@@ -320,7 +319,6 @@ class(ten)
 In this case, you will get a different answer because the class of this variable is numeric. This is because the class of numeric objects can contain either doubles (decimals) or integers (whole numbers). We can test this by asking whether our `ten` variable is an integer or not. 
 
 Type in `is.integer(ten)` into the console and execute.
-
 ```{r}
 #| label: 04-var1
 #| classes: styled-output
@@ -340,7 +338,6 @@ Whilst knowing how to distinguish between different data types might not seem im
 We can also ask how long our variable is. in this case, we will find out how many different sets of characters (strings) are stored in our variable, `str_variable`. 
 
 Type in `length(str_variable)` into the console and execute.
-
 ```{r}
 #| label: 04-var2
 #| classes: styled-output
@@ -352,8 +349,9 @@ Type in `length(str_variable)` into the console and execute.
 length(str_variable)
 ```
 
-You should get the answer `1` because we only have one *set* of characters. We can also ask how long each set of characters is within our variable, i.e. ask how long the string contained by our variable is. Type in `nchar(str_variable)` into the console and execute.
+You should get the answer `1` because we only have one *set* of characters. We can also ask how long each set of characters is within our variable, i.e. ask how long the string contained by our variable is. 
 
+Type in `nchar(str_variable)` into the console and execute.
 ```{r}
 #| label: 04-var3
 #| classes: styled-output
@@ -383,8 +381,9 @@ Type in `two_str_variable <- c("This is our second variable", "It has two parts 
 two_str_variable <- c("This is our second string variable", "It has two parts to it")
 ```
 
-In this piece of code, we have created a new variable using the `c()` function in R, that stands for *combine values into a vector or list*.  We have provided that function with two sets of strings, using a *comma* to separate our two strings - all contained within the function's brackets (`()`). You should now see a new variable in your environment window which tells us it is a) chr: characters, b) contains two items, and c) lists those items. Let us now try both our `length()` and `nchar()` on our new variable and see what the results are.
+In this piece of code, we have created a new variable using the `c()` function in R, that stands for *combine values into a vector or list*.  We have provided that function with two sets of strings, using a *comma* to separate our two strings - all contained within the function's brackets (`()`). You should now see a new variable in your environment window which tells us it is a) chr: characters, b) contains two items, and c) lists those items. 
 
+Let us now try both our `length()` and `nchar()` on our new variable and see what the results are:
 ```{r}
 #| label: 04-var5
 #| classes: styled-output
@@ -420,6 +419,7 @@ In addition to make notes about the functions you are coming across in the works
 
 ## Simple analysis
 The objects we created and played with above are very simple but the real power of R comes when we can begin to execute functions on more complex objects. R accepts four main types of data structures: **vectors**, **matrices**, **dataframes**, and **lists**. These data structures are essential because they allow us to apply common statistical functions. 
+
 We are going to explore these data structures with some of dummy data on the total number of pages and publication dates of the various editions of **Geographic Information Systems and Science** (GISS) book by Longley *et al.* and use these for a brief analysis:
 
 | Book Edition | Year of Publication | Total Number of Pages
@@ -451,9 +451,7 @@ The first complex data object we will create is a vector. A vector is the most c
 * **Atomic vectors** (all elements are of the same data type)
 * **Lists** (elements can be of different data types)
 
-Although in practice the term 'vector' most commonly refers to the atomic types and not to lists. Let us create our first official 'complex; vector, detailing the different total page numbers for GISS. 
-
-Type `gisspage_no <- c(454, 517, 560, 477)` into the console and execute.
+Let us create our first official vector, detailing the different total page numbers for GISS. Type `gisspage_no <- c(454, 517, 560, 477)` into the console and execute.
 
 ```{r}
 #| label: 04-page-no
@@ -467,7 +465,6 @@ giss_page_no <- c(454, 517, 560, 477)
 ```
 
 Type `print(giss_page_no)` into the console and execute to check the results.
-
 ```{r}
 #| label: 04-page-no-show
 #| classes: styled-output
@@ -479,8 +476,7 @@ Type `print(giss_page_no)` into the console and execute to check the results.
 print(giss_page_no)
 ```
 
-We can see we have our total number of pages collected together in a single vector. We could if we want, execute some statistical functions on our vector object.
-
+We can see we have our total number of pages collected together in a single vector. We could if we want, execute some statistical functions on our vector object:
 ```{r}
 #| label: 04-calc-mean
 #| classes: styled-output
@@ -499,7 +495,6 @@ range(giss_page_no)
 We have now completed our first set of descriptive statistics in R. Let us see how we can build on our vector object by adding in a second vector object that details the relevant years of our book. Note that the total number of pages are entered in a specific order to correspond to these publishing dates (i.e. chronological) and therefore we will need to enter the publication year in the same order. 
 
 Type `giss_year <- c(2001, 2005, 2011, 2015)` into the console and execute.
-
 ```{r}
 #| label: 04-pub-years
 #| classes: styled-output
@@ -512,7 +507,6 @@ giss_year <- c(2001, 2005, 2011, 2015)
 ```
 
 Type `print(giss_year)` into the console and execute.
-
 ```{r}
 #| label: 04-year-show
 #| classes: styled-output
@@ -529,7 +523,6 @@ Of course, on their own, the two vectors do not mean much but we can use the sam
 In R, a matrix is simply an extension of the numeric or character vectors. They are not a separate type of object per se but simply a vector that has two dimensions. That is they contain both **rows** and **columns**. As with atomic vectors, the elements of a matrix must be of the **same data type**. As both our page numbers and our years are numeric, we can add them together to create a matrix using the `matrix()` function.
 
 Type `giss_year_nos <- matrix(c(giss_year, giss_page_no), ncol=2)` into the console and execute.
-
 ```{r}
 #| label: 04-matrix
 #| classes: styled-output
@@ -542,7 +535,6 @@ giss_year_nos <- matrix(c(giss_year, giss_page_no), ncol=2)
 ```
 
 Type `print(giss_year_nos)` into the console and execute to check the result.
-
 ```{r}
 #| label: 04-all-show
 #| classes: styled-output
@@ -580,7 +572,6 @@ dataframes can have additional attributes such as `rownames()`, which can be use
 - Rownames are often automatically generated and look like`X1, X2, … , Xn`. Consistency in numbering of rownames may not be honoured when rows are reshuffled or subset.
 
 Type `giss_df <- data.frame(giss_year_nos)` into the console and execute.
-
 ```{r}
 #| label: 04-matrix-data-frame
 #| classes: styled-output
@@ -593,7 +584,6 @@ giss_df <- data.frame(giss_year_nos)
 ```
 
 We now have a dataframe, we can use the `View()` function in R. Still in your **console**, type: `View(giss_df)`
-
 ```{r}
 #| label: 04-view-df
 #| classes: styled-output
@@ -609,7 +599,6 @@ You should now see a table pop-up as a new tab on your script window. It is now 
 
 ### Column names
 We can rename our dataframe column field names by using the `names()` function. Before we do this, have a read of what the `names()` function does. Still in your **console**, type: `?names`
-
 ```{r}
 #| label: 04-open-doc
 #| classes: styled-output
@@ -624,7 +613,6 @@ We can rename our dataframe column field names by using the `names()` function. 
 As you can see, the function will get or set the names of an object, with renaming occurring by using the following syntax: `names(x) <- value`
 
 The value itself needs to be *a character vector of up to the same length as x, or NULL.* We have two columns in our dataframe, so we need to parse our `names()` function with a character vector with **two elements**. In the console, we shall enter two lines of code, one after another. First our character vector with our new names, `new_names <- c("year", "page_nos")`, and then the `names()` function containing this vector for renaming, `names(giss_df) <- new_names`:
-
 ```{r}
 #| label: 04-data-frame-names
 #| classes: styled-output
@@ -647,7 +635,6 @@ We are still missing one final column from our dataframe: our **edition** of the
 To do so, we follow a similar process of creating a vector with our editions listed in chronological order, but then add this to our dataframe by storing this vector as a new column in our dataframe. We use the `$` sign with our code that gives us "access" to the dataframe's column  - we then specify the column `edition`, which whilst it does not exist at the moment, will be created from our code that assigns our edition variable to this column. 
 
 Type and execute `edition <- c("1st", "2nd", "3rd", "4th")`. Then store this vector as a new column in our dataframe under the column name **edition** by typing and executing `giss_df$edition <- edition`:
-
 ```{r}
 #| label: 04-data-frame-edition
 #| classes: styled-output
@@ -662,8 +649,7 @@ edition <- c("1st", "2nd", "3rd", "4th")
 giss_df$edition <- edition
 ```
 
-Again, you can go and check your dataframe and see the new column using either `View()` function or by clicking on the tab at the top or by typing `giss_df` in your console window.
-
+Again, you can go and check your dataframe and see the new column using either `View()` function, by clicking on the tab at the top or by typing `giss_df` in your console window, or by typing the name of the object into the console:
 ```{r}
 #| label: 04-data-frame-final
 #| classes: styled-output
@@ -676,7 +662,6 @@ giss_df
 ```
 
 Now we have our dataframe, let us find out a little about it. We can first return the dimensions (the size) of our dataframe by using the `dim()` function. In your **console**, type `dim(giss_df)` and execute.
-
 ```{r}
 #| label: 04-data-frame-dim
 #| classes: styled-output
@@ -689,7 +674,6 @@ dim(giss_df)
 ```
 
 We can see we have **four rows** and **three columns**.  We can also finally use our `attributes()` function to get the attributes of our dataframe. In your **console**, type `attributes(giss_df)` and execute:
-
 ```{r}
 #| label: 04-data-frame-att
 #| classes: styled-output
@@ -702,6 +686,8 @@ attributes(giss_df)
 ```
 
 ::: { .callout-warning}
+Some important notes to keep in mind:
+
 - R is case-sensitive so you need to make sure that you capitalise everything correctly if required.
 - The spaces between the words do not matter but the positions of the commas and brackets do. Remember, if you find the prompt, `>`, is replaced with a `+` it is because the command is incomplete. If necessary, hit the escape (`esc`) key and try again.
 - It is important to come up with good names for your objects. In the case of the majority of our variables, we used an underscore (`_`) to separate the words. It is good practice to keep the object names as short as possible but they still need to be easy to read and clear what they are referring to. Be aware: **you cannot start an object name with a number!**
@@ -711,7 +697,11 @@ attributes(giss_df)
 ## Crime in London II
 During [Week 1's computer tutorial](01-introduction.html#r-package-installation), we already installed several R libraries. One of these libraries was called the `tidyverse`. The `tidyverse` is a collection of packages that are specifically designed for data wrangling, management, cleaning, analysis and visualisation within RStudio. Whilst in many cases different packages work all slightly differently, all packages of the `tidyverse` share the underlying design philosophy, grammar, and data structures.
 
-The tidyverse itself is treated and loaded as a single package, but this means if you load the `tidyverse` package within your script (through `library(tidyverse)`), you will directly have access to all the functions that are part of each of the packages that are within the overall `tidyverse.` This means you do not have to load each package separately. For more information have a look at [www.tidyverse.org](https://www.tidyverse.org/).
+The tidyverse itself is treated and loaded as a single package, but this means if you load the `tidyverse` package within your script (through `library(tidyverse)`), you will directly have access to all the functions that are part of each of the packages that are within the overall `tidyverse.` This means you do not have to load each package separately. 
+
+::: { .callout-tip}
+For more information on the `tidyverse` have a look at [www.tidyverse.org](https://www.tidyverse.org/).
+:::
 
 There are some specific functions in the `tidyverse` suite of packages that will help us cleaning and preparing our datasets now and in the future, which is one of the main reasons for using this library. Some of the most important and useful functions, from the `tidyr` and `dplyr` packages, are:
 
@@ -728,13 +718,13 @@ There are some specific functions in the `tidyverse` suite of packages that will
 These functions all complete very fundamental tasks that we need to manipulate and wrangle our data.
 
 ::: { .callout-note}
-The code you just ran asked **R** to load all functions of the `tidyverse`. However: these functions are only available for the duration of your R sessions. When you restart your R session, you will have to load these functions again if you want to use them. Another thing to be aware of when it comes to using functions in these additional libraries, is that sometimes these functions share a name with a function form one of the `base` **R** packages. For instance, there exists a `select()` function within in the `stats` package that conducts linear filtering on a time series. However, after we load the `tidyverse` package and we would type `select()` this function will select columns from a dataframe. We therefore sometimes need to specify which library we want to use this function from, and this can be done with a simple command (`library::function`) in our code: `stats::select` to filter that time series and `dplyr::select` to select columns in a dataframe.
+The code you just ran asked **R** to load all functions of the `tidyverse`. However: these functions are only available for the duration of your R sessions. When you restart your R session, you will have to load these functions again if you want to use them. Another thing to be aware of when loading libraries is that sometimes these functions share a name with aniother function from one of the `base` **R** packages. For instance, there is a `select()` function in the `stats` package that conducts linear filtering on a time series. However, after we load the `tidyverse` package and we would type `select()` this function will select columns from a dataframe. We therefore sometimes need to specify which function exactly we want. This can be done with a simple command (`library::function`): `stats::select` to filter on a time series and `dplyr::select` to select columns in a dataframe.
 :::
 
 ### Starting a project
 In the previous section, R may have seemed fairly labour-intensive. We had to enter all our data manually and each line of code had to be written into the command line. Fortunately this is not routinely the case. In RStudio, we can use **scripts** to build up our code that we can run repeatedly and save for future use. Before we start a new script, we first want to set up ourselves ready for the rest of our practicals by **creating a new project**.
 
-To put it succinctly, **projects** in RStudio keep all the files associated with a project together: input data, R scripts, analytical results, figures, etc. This means we can easily keep track of all data, input and output, whilst still creating standalone scripts for each bit of processing analysis we do. It also makes dealing with **directories** and **paths** a whole lot easier; particularly if you **have followed the folder structure that was advised at the start of the module**.
+To put it succinctly, **projects** in RStudio keep all the files associated with a project together: input data, R scripts, analytical results, figures, etc. This means we can easily keep track of all data, input and output, whilst still creating standalone scripts for each bit of processing analysis we do. It also makes dealing with [directories and filepaths](https://en.wikipedia.org/wiki/Path_(computing)) a whole lot easier; particularly if you **have followed the folder structure that was advised at the start of the module**.
 
 Click on **File** -> **New Project** -> **Existing Directory** and browse to your **GEOG0030** folder. Click on **Create Project**. You should now see your main window switch to this new project and if you check your **Files** window, you should now see a new **R Project** called **GEOG0030**.
 
@@ -755,10 +745,9 @@ knitr::include_graphics('images/w04/new-script.png')
 
 Save your script as: `wk4-csv-processing.r`. Through our name, we know now that our script was created in Week 4 of Geocomputation and the code it will contain is something to do with `csv` processing. This will help us a lot in the future when we come to find code that we need for other projects.
 
-The **first** bit of code you will want to add to any script is to add a **title**. This title should give any reader a quick understanding of what your code achieves. When writing a script it is important to keep notes about what each step is doing. To do this, the hash (`#`) symbol is put before any code. This comments out that particular line so that R ignores it when the script is run.
+The first bit of code you will want to add to any script is to add a **title**. This title should give any reader a quick understanding of what your code achieves. When writing a script it is important to keep notes about what each step is doing. To do this, the hash (`#`) symbol is put before any code. This comments out that particular line so that R ignores it when the script is run.
 
 Let us go ahead and give our script a title and include some metadata:
-
 ```{r}
 #| label: 04-script-title
 #| classes: styled-output
@@ -784,7 +773,9 @@ Now we have our title, the **second** bit of code we want to include in our scri
 library(tidyverse)
 ```
 
-By loading simply the `tidyverse` we gain access to several useful functions. However, when developing a script you will realise that you may need to load more libraries as you go along. When you do this, **always add your library to the top of your script**. If you ever share your script, it helps the person you are sharing with to recognise quickly if they need to install any additional packages prior to running the code It also means your libraries do not get lost in the multiple lines of code you are writing.
+::: { .callout-tip}
+By loading simply the `tidyverse` we gain access to several useful functions. However, when developing a script you might realise that you need to load other libraries as well. When you do this, **always add your library to the top of your script**. If you ever share your script, it helps the person you are sharing with to recognise quickly if they need to install any additional packages prior to running the code. It also means your libraries do not get lost in the multiple lines of code you are writing.
+:::
 
 ### Running a script
 There are two main ways to run a script in RStudio: all at once or by line/chunk. It can be advantageous to pursue with the second option as you first start out to build your script as it allows you to test your code interactively.
@@ -797,8 +788,7 @@ There are two main ways to run a script in RStudio: all at once or by line/chunk
 - By clicking: select **Run** on the top-right of the scripting window and choose **Run All**.
 - By key commands: hold `Option` plus `Ctl` or `Cmd` and `R`.
 
-#### Stopping a script from running
-If you are running a script that seems to be stuck (for whatever reason) or you notice some of your code is wrong, you will need to interrupt R. To do so, click on **Session** -> **Interrupt R**. If this does not work, you may end up needing to terminate R but this will loose any unsaved progress.
+If you are running a script that seems for whatever reason to be stuck or you notice some of your code is wrong, you will need to interrupt R. To do so, click on **Session** -> **Interrupt R**. If this does not work, you may have to terminate and restart R.
 
 ### Crime data
 Where last week we provided you with a crime dataset, this week you will download and prepare the dataset yourselves.
@@ -849,7 +839,7 @@ crime_csv <- read_csv("data/raw/crime/all-crime/2021-01/2021-01-metropolitan-str
 If using a Windows machine, you will need to substitute your forward-slashes (`/`) with two backslashes (`\\`) whenever you are dealing with file paths.
 :::
 
-We can explore the `csv` we have just loaded as our new `crime_csv` variable and understand the class, attributes and dimensions of our variable. 
+We can explore the `csv` we have just loaded as our new `crime_csv` variable and understand the class, attributes and dimensions of our variable:
 
 ```{r}
 #| label: 04-data-csv-class
@@ -884,14 +874,14 @@ all_crime_df <- list.files(path="data/raw/crime/all-crime/", full.names=TRUE, re
   bind_rows()
 ```
 
-This might take a little time to process (or might not), as we have a lot of data to get through. You should see a new dataframe appear in your global environment called `all_crime_df`, for which we now have 1,079,267 observations!
+Depending on your computer, this might take a little time to process because we have a lot of data to get through. You should see a new dataframe appear in your global environment called `all_crime_df`, for which we now have **1,079,267** observations.
 
 ::: { .callout-note}
 It is a little difficult to explain the code above without going into too much detail and at this stage you are not expected to fully understand what is happening here, but essentially what the code does is:
 
-1. List all the files found in the data path: `data/raw/crime/all-crime/`
-2. Read each of these as a `csv` by "applying" the `read_csv()` function to all files.
-3. Binding all rows of all individual dataframes together in a single dataframe.
+1. List all the files found in the filepath: `data/raw/crime/all-crime/`
+2. Read each of these as a `csv` by applying the `read_csv()` function to all files.
+3. Sticking all rows of all individual dataframes together in a single dataframe.
 
 These three different actions are combined by using something called a pipe (`|>`), which we will explain in a bit more detail next week.
 :::
@@ -966,7 +956,7 @@ Remember that if using a Windows machine, you might need to substitute your forw
 
 We now want to do some further housekeeping and create on final dataframe that will allow us to analyse crime in London by month. To do so, we want to count how many thefts occur each month in London. Fortunately, `dplyr` has another function that will do this for us, known simply as `count()`.
 
-When you go ahead and search the documentation to understand the `count()` function, you will see that there is only one function called `count()` at the moment, i.e. the one in the `dplyr` library, so we do not need to use the additional syntax we used above. Let us go ahead and count the number of thefts in London **by month**:
+When you go ahead and search the documentation to understand the `count()` function, you will see that there is only one function called `count()` at the moment, i.e. the one in the `dplyr` library, so we do not need to use the additional syntax we used above. Let us go ahead and count the number of thefts in London by month:
 
 ```{r}
 #| label: 04-count-theft
@@ -1019,12 +1009,12 @@ Do not forget to save your script so you can go back to it at a later time. When
 
 ## Want more? [Optional] {#wm-w04}
 ### Data visualisation
-The barplot we have made above is very basic, and there are better ways to make nice visualisations. For this we can turn to other R packages that have been developed. In fact, there are many hundreds of packages in R each designed for a specific purpose, some of which you can use to create plots in R. One of those packages is called `ggplot2`. The `ggplot2` package is an implementation of the Grammar of Graphics ([Wilkinson 2005](https://en.wikipedia.org/wiki/Leland_Wilkinson)): a general scheme for data visualisation that breaks up graphs into semantic components such as scales and layers. `ggplot2` can serve as a replacement for the base graphics in R and contains a number of default options that match good visualisation practice. You provide the data, tell `ggplot2` how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details. An excellent introduction to `ggplot2` can be found in the online, freely available book [R for Data Science](https://r4ds.hadley.nz/); written by Hadley Wickham, core developer of `ggplot2` and the `tidyverse`. Have a particularly close look at [**Chapter 2**: *Data vizualisation*](https://r4ds.hadley.nz/data-visualize).
+The barplot we have made above is very basic and there are better ways to make nice visualisations. For this we can turn to other R packages that have been developed. In fact, there are many hundreds of packages in R each designed for a specific purpose, some of which you can use to create plots in R. One of those packages is called `ggplot2`. The `ggplot2` package is an implementation of the Grammar of Graphics ([Wilkinson 2005](https://en.wikipedia.org/wiki/Leland_Wilkinson)): a general scheme for data visualisation that breaks up graphs into semantic components such as scales and layers. `ggplot2` can serve as a replacement for the base graphics in R and contains a number of default options that match good visualisation practice. You provide the data, tell `ggplot2` how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details. An excellent introduction to `ggplot2` can be found in the online, freely available book [R for Data Science](https://r4ds.hadley.nz/); written by Hadley Wickham, core developer of `ggplot2` and the `tidyverse`. Have a particularly close look at [**Chapter 2**: *Data vizualisation*](https://r4ds.hadley.nz/data-visualize).
 
 ### Reproducible research
 The book [Data Skills for Reproducible Research](https://psyteachr.github.io/reprores-v3/index.html) provides an excellent overview of skills needed for reproducible and open research using the statistical programming language R and `tidyverse` packages. To get started: have a look at [Chapter 2: Reproducible Workflows](https://psyteachr.github.io/reprores-v3/repro.html), [Chapter 7: Data Wrangling](https://psyteachr.github.io/reprores-v3/dplyr.html), and [Chapter 8: Iterations and Functions](https://psyteachr.github.io/reprores-v3/func.html). 
 
-Another great tool is found in the `targets` package. The targets package is a [Make](https://www.gnu.org/software/make/)-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the [Walkthrough](https://books.ropensci.org/targets/walkthrough.html) chapter to see `targets` in action. 
+Another great tool can be found in the `targets` package. The targets package is a [Make](https://www.gnu.org/software/make/)-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the [Walkthrough](https://books.ropensci.org/targets/walkthrough.html) chapter to see `targets` in action. 
 
 ## Before you leave {#byl-w04}
-We have managed to take a dataset of over one million records and clean and filter it to create a barplot on theft crime in London. Of course, there is a lot more research and exploratory data analysis that can be done, but this first chart is certainly a step in the right direction. Next week, we will be doing a lot more with our dataset, including a lot more data wrangling and an introduction to using spatial data, but hopefully this week has shown you want you can achieve with just a few lines of code. [That concludes the tutorial for this week](https://www.youtube.com/watch?v=NKyYr2pbXUM)!
+We have managed to take a dataset of over one million records and clean and filter it to create a barplot on theft crime in London. Of course, there is a lot more research and exploratory data analysis that can be done, but this first chart is certainly a step in the right direction. Next week, we will be doing a lot more with our dataset, but hopefully this week has shown you want you can achieve with just a few lines of code. [That concludes the tutorial for this week](https://www.youtube.com/watch?v=NKyYr2pbXUM). Back to the reading list you go!

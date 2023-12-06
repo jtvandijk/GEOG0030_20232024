@@ -65,6 +65,7 @@ This year's version features the following **major** updates:
 - Rewriting sections relying on deprecated and outdated core packages: `raster`, `rgdal`, `rgeos`.
 - Move to `GeoPackage` over `shapefile` where possible.
 - Include [WorldPop](https://hub.worldpop.org/) data for raster analysis.
+- Include an extenstive introduction to using lookup tables.
 - Update to use native pipe `|>` over `dplyr`'s implementation (`%>%`).
 - Add **dark mode** switch.
 :::
