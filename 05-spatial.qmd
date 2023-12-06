@@ -55,6 +55,16 @@ library(tmap)
 ```
 
 ```{r}
+#| label: 05-load-libraries-bg
+#| echo: False
+#| eval: True
+# load libraries
+library(tidyverse)
+library(sf)
+library(tmap)
+```
+
+```{r}
 #| label: 05-tmap-settings
 #| classes: styled-output
 #| echo: False
