@@ -94,7 +94,7 @@ Once downloaded, move your `tfl_stations.kml` download to your `raw` data folder
 msoa_london <- st_read("data/raw/boundaries/MSOA2021_London.gpkg")
 ``` 
 
-Check the **CRS** of our `london_ward_shp` spatial dataframe:
+Check the **CRS** of our `msoa_london` spatial dataframe:
 
 ```{r}
 #| label: 06-crs-msoapop
@@ -289,7 +289,7 @@ bike_theft <- bike_theft |> st_intersection(msoa_london)
 Out of the two, the **subset** approach is the fastest to use as R is simply comparing the geometries rather than also editing the geometries, but which approach you use with future data is always dependent on your data and the output you need.
 :::
 
-Before we go ahead and sort out our `london_stations` spatial dataframe, we are going to look at how we can **dissolve** our `msoa_london` spatial dataframe into a single feature. Reducing a spatial dataframe to a single observation is often required when using R and `sf`'s geometric operations to complete geometric comparisons. Sometimes, also, we simply want to map an outline of an area, such as London, rather than add in the additional spatial complexities of our wards. To achieve just a single observation that represents the **outline geometry** of our dataset, we use the geometric operation `st_union()`. 
+Before we go ahead and sort out our `london_stations` spatial dataframe, we are going to look at how we can **dissolve** our `msoa_london` spatial dataframe into a single feature. Reducing a spatial dataframe to a single observation is often required when using R and `sf`'s geometric operations to complete geometric comparisons. Sometimes, also, we simply want to map an outline of an area, such as London, rather than add in the additional spatial complexities of our MSOAs. To achieve just a single observation that represents the **outline geometry** of our dataset, we use the geometric operation `st_union()`. 
 
 ::: { .callout-tip}
 You can also use the `st_union()` function to combine two datasets into one. This can be used to **merge** data together that are of the same spatial type.
@@ -771,15 +771,15 @@ Now we have, for each bike theft in our `bike_theft` spatial dataframe, an attri
 count(bike_theft, d400_sq)
 ```
 
-Over 40 per cent of bike thefts occur within 400m of a train station. Our main hypothesis that *bike thefts occur primarily near train and tube stations * is perhaps not quite proven, but so far we have managed to quantify that a substantial amount of bike thefts do occur within 400m of these areas.
+Almost 50 per cent of bike thefts occur within 400m of a train station. Our main hypothesis that *bike thefts occur primarily near train and tube stations * is perhaps not quite proven, but so far we have managed to quantify that a substantial amount of bike thefts do occur within 400m of these areas.
 
-In a final step, we will conduct a very familiar procedure: aggregating our data to the MSOA level. At the moment, we have now calculated for each bike theft whether or not it occurs within 400m of a tube or train station. We can use this to see if specific wards are **hotspots** of bike crimes near stations across London. To do this, we will be using the same process we used in in previous weeks: counting **the number of points in each of our polygons**.
+In a final step, we will conduct a very familiar procedure: aggregating our data to the MSOA level. At the moment, we have now calculated for each bike theft whether or not it occurs within 400m of a tube or train station. We can use this to see if specific MSOAs are **hotspots** of bike crimes near stations across London. To do this, we will be using the same process we used in in previous weeks: counting **the number of points in each of our polygons**.
 
-To create a point-in-polygon count within `sf`, we use the `st_intersects()` function again but instead of using the matrix output of `TRUE` or `FALSE` that we have used before, what we actually want to extract from our function is the total number of points it identifies as intersecting with our `london_ward_shp` spatial dataframe. To achieve this, we use the `lengths()` function from the `base` R package to count the number of wards returned within the index list its `sparse` output creates.
+To create a point-in-polygon count within `sf`, we use the `st_intersects()` function again but instead of using the matrix output of `TRUE` or `FALSE` that we have used before, what we actually want to extract from our function is the total number of points it identifies as intersecting with our `msoa_london` spatial dataframe. To achieve this, we use the `lengths()` function from the `base` R package to count the number of wards returned within the index list its `sparse` output creates.
 
-Remember, this `sparse` output creates a list of the bike thefts (by their index) that intersect with each ward. The `lengths()` function will return the length of this list, i.e. how many bike thefts each ward contains or, in other words, a **point-in-polygon** count. This time around therefore we do not set the `sparse` function to `FALSE` but leave it as `TRUE` (its default) by not entering the parameter. As a result, we can calculate the number of bike thefts per ward and the number of bike thefts within 400m of a station per ward and use this to generate a **theft rate** for each ward of the number of bikes thefts that occur near a train station for identification of these **hotspots**. 
+Remember, this `sparse` output creates a list of the bike thefts (by their index) that intersect with each MSOA. The `lengths()` function will return the length of this list, i.e. how many bike thefts each MSOA contains or, in other words, a **point-in-polygon** count. This time around therefore we do not set the `sparse` function to `FALSE` but leave it as `TRUE` (its default) by not entering the parameter. As a result, we can calculate the number of bike thefts per MSOA and the number of bike thefts within 400m of a station per MSOA and use this to generate a **theft rate** for each MSOA of the number of bikes thefts that occur near a train station for identification of these **hotspots**. 
 
-Calculate the number of bike thefts per ward and the number of bike thefts within 400m of a station per ward using the PIP operation via `st_intersects()`:
+Calculate the number of bike thefts per MSOA and the number of bike thefts within 400m of a station per MSOA using the PIP operation via `st_intersects()`:
 
 ```{r}
 #| label: 06-intersect-point-in-poly
@@ -797,10 +797,10 @@ msoa_london$total_bike_theft <- lengths(st_intersects(msoa_london, bike_theft))
 msoa_london$station_bike_theft <- lengths(st_intersects(msoa_london, filter(bike_theft, d400_sq == TRUE)))
 ```
 
-As you can see from the code above, we have now calculated our total bike theft and bike theft near a train station for each ward. The final step in our processing therefore is to create our rate of potentially station-related bike theft = bike theft near train station / total bike theft.
+As you can see from the code above, we have now calculated our total bike theft and bike theft near a train station for each MSOA. The final step in our processing therefore is to create our rate of potentially station-related bike theft = bike theft near train station / total bike theft.
 
 ::: { .callout-note}
-We are looking specifically at the phenomena of whether bike theft occurs near to a train or tube station or not. By normalising by the total bike theft, we are creating a rate that shows specifically where there are hotspots of bike theft near train stations. This, however, will be of course influenced by the number of train stations within a ward, the size of the ward, and of course the number of bikes and potentially daytime and residential populations within an area.
+We are looking specifically at the phenomena of whether bike theft occurs near to a train or tube station or not. By normalising by the total bike theft, we are creating a rate that shows specifically where there are hotspots of bike theft near train stations. This, however, will be of course influenced by the number of train stations within a MSOA, the size of the MSOA, and of course the number of bikes and potentially daytime and residential populations within an area.
 :::
 
 Calculate the rate of bike theft within 400m of a train or tube station out of all bike thefts for each MSOA:
