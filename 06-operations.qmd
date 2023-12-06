@@ -40,7 +40,6 @@ Now let us add all of the libraries we will be using today to the top of our scr
 #| echo: True
 #| eval: False
 #| tidy: True
-#| cache: True
 #| filename: "R code"
 # load libraries
 library(tidyverse)
@@ -263,7 +262,6 @@ Each approach is implemented differently in R. To **subset** our data, we only n
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # subset
@@ -278,7 +276,6 @@ If we want to **clip** our data, we need to use the `st_intersection()` function
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # clip
@@ -301,7 +298,6 @@ You can also use the `st_union()` function to combine two datasets into one. Thi
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # union
@@ -316,7 +312,6 @@ You should see that our `london_outline` spatial data frame only has one observa
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 plot(london_outline)
@@ -339,7 +334,6 @@ In addition to this key-value pair, we also need to obtain the **bounding box** 
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| cache: True
 #| filename: "R code"
 # extract bounding box from London outline (WGS84)
 p_bbox <- st_bbox(st_transform(london_outline, 4326))
@@ -366,7 +360,6 @@ To extract only the points of our tube and train stations from our `london_stati
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| cache: True
 #| filename: "R code"
 # extract only points 
 london_stations_osm <- london_stations_osm$osm_points |>
@@ -393,7 +386,6 @@ As we can see in our plot above, not all of our stations appear to be of the sam
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # count
@@ -408,7 +400,6 @@ As we can see, not everything in our `london_stations_osm` spatial dataframe is 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # extract train and tube stations
@@ -425,7 +416,6 @@ We can first look at this by comparing their distributions visually on a map. Bu
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # clip London stations
@@ -510,7 +500,6 @@ As highlighted above, the offset between our spatial dataframes adds a little co
 ```{r}
 #| label: fig-snap-snap-snap
 #| echo: False 
-#| cache: True
 #| fig-cap: "Snapping points to a line. In our case we snap our points to other points. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w06/snap.png){target='_blank'}"
 knitr::include_graphics('images/w06/snap.png')
 ```
@@ -525,7 +514,6 @@ Snap our our `london_stations` spatial dataframe to our `london_stations_osm` sp
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # snap points
@@ -544,7 +532,6 @@ To simplify our `london_stations_osm` spatial dataframe into a single geometry, 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # create a single geometry 
@@ -600,7 +587,6 @@ Query whether the points in our `london_stations` spatial dataframe are within 1
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # create a single geometry 
@@ -618,7 +604,6 @@ We can go ahead and `count()` the results of our query.
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # count 
@@ -636,7 +621,6 @@ Now we have done our checks and we know that we can move forward with using our 
 #| echo: True
 #| eval: False
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # write to GeoPackage
@@ -654,7 +638,6 @@ When it comes to buffers, we need to consider two main things: what distance wil
 ```{r}
 #| label: fig-buffer-buffer
 #| echo: False 
-#| cache: True
 #| fig-cap: "A single versus multiple buffer. The single buffer represents a dissolved version of the multiple buffer option. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w06/buffer.png){target='_blank'}"
 knitr::include_graphics('images/w06/buffer.png')
 ```
@@ -667,7 +650,6 @@ In terms of CRS, we want to make sure we use a CRS that defines its measurement 
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # generate a 400m buffer
@@ -682,7 +664,6 @@ You can then go ahead and plot our buffer to see the results, entering `plot(sta
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 plot(station_400m_buffer)
@@ -702,7 +683,6 @@ To detect which bike thefts occur within 400m of a train or tube station, we can
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # intersect buffers with thefts
@@ -716,7 +696,6 @@ We could go ahead and recode this to create a `1` or `0`, or `YES` or `NO` after
 #| fig-cap: Map of bike thefts in the vicinity of stations. 
 #| echo: True
 #| eval: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # set tmap back to plot
@@ -745,7 +724,6 @@ We will again need to use the **single geometry** version of our `london_station
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 #| 
@@ -764,7 +742,6 @@ Now we have, for each bike theft in our `bike_theft` spatial dataframe, an attri
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # count thefts within 400m of a station
@@ -787,7 +764,6 @@ Calculate the number of bike thefts per MSOA and the number of bike thefts withi
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # point in polygon
@@ -811,7 +787,6 @@ Calculate the rate of bike theft within 400m of a train or tube station out of a
 #| echo: True
 #| eval: True
 #| tidy: True
-#| cache: True
 #| message: False
 #| filename: "R code"
 # theft rate
