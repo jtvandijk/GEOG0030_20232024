@@ -774,7 +774,7 @@ theft_msoa_sdf[is.na(theft_msoa_sdf)] = 0
 ``` 
 
 The final step we need to take before we can map our theft data is, of course, compute a crime rate. We have our `pop2021` column within our `theft_msoa_sdf` dataframe, so now we can add a crime rate as follows:
-
+  
 ```{r}
 #| label: 05-count-those-crimes
 #| classes: styled-output
@@ -1007,7 +1007,8 @@ tmap_save(msoa_map, filename = "data/maps/msoa_theft_map.png")
 ```
 
 ## Assignment {#assignment-w05}
-Now we have prepared our dataset and made our first maps in R, we can play with the different settings. 
+Now we have prepared our dataset and made our first maps in R, we can play with the different settings.
+
 1. Experiment by changing the colours of the map, changing the legend title name, changing the type of North arrow, etc. 
 2. We have used a `quantile` method to classify our data. Do you think that is appropriate? Any other ways you could think of on representing these MSOA crime rates better?
 

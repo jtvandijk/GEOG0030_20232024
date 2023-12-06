@@ -42,7 +42,7 @@ website:
       - section: "Module overview"
         contents:
           text: "Welcome"
-          file: index.qmd
+          file: 00-index.qmd
       - section: "Foundational Concepts"
         contents:
           - 01-introduction.qmd
