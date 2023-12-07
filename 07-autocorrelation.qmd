@@ -399,7 +399,21 @@ tm_shape(ethnicity_london_sdf) +
 Please remember, whereas the above map is fine for a quick inspection, it is technically incorrect because we are showing absolute numbers on a choropleth. This is something we should never do, unless the spatial units are identical in size (e.g. a hexagonal tessellation of an area), because larger areas will draw attention and affect the visualisation. To be fair, even for a quick inspection, it would be much better to normalise these counts by the total number of people living within each of the Wards to get a more honoust picture of the distribution.
 :::
 
-The thing with spatial distributions is that we can quickly pick up on spatial patterns present within our data just by looking at the data. For example, we can clearly see some concentrations of people that self-identify as Asian-Bangladeshi's in East London. The question now is whether these clusters are significant from a statistical point of view. This brings us to measuring spatial correlation.
+The thing with spatial distributions is that we can quickly pick up on spatial patterns present within our data just by looking at the data. For example, we can clearly see some concentrations of people that self-identify as Asian-Bangladeshi's in East London. The question now is whether these clusters are significant from a statistical point of view. This brings us to measuring spatial correlation. 
+
+Before we move on, let's normalise the `asian_banglades` variable by creating a new variable that contains the proportion of individuals that self-identify as Asian-Bangladeshi:
+
+```{r}
+#| label: 07-create-proportions
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# calculate proportions
+ethnicity_london_sdf <- ethnicity_london_sdf |>
+  mutate(asian_bangladeshi_prop = asian_bangladeshi/all_pop)
+```
 
 ## Spatial autocorrelation
 We can assess the distribution of our data using what is known as spatial autocorrelation tests, which can be conducted on both a global (identify if the data is clustered) and local (identify the precise clusters) scales. Whilst these different tests quantify how clustered, how random, or how dispersed, these distributions are through various approaches, ultimately they provide us with statistical and spatial information that can be used to create quantifiable descriptions of a variable's distribution and how it vary over space.
@@ -415,13 +429,11 @@ Three of the most frequently used tests are the Global Moran's I, the. Local Mor
 | :---- | :---| :--------------| :--------------| :---|
 | Global Moran's I | Global | Tests how "random" the spatial distribution of values are, producing a correlation coefficient for the relationship between a variable (like income) and its surrounding values. | **Moran's I statistic:** <br> Metric between -1 and 1. <br> -1 = dispersed <br> 0 = CSR <br> 1 = clustered | Yes - $p$-value |
 | Local Moran's I | Local | Tests the difference between a unit of analysis and its neighbour(s).  | **Local Moran's I statistic:** <br> 1. Can be used alongside the mean of values to generate cluster type generations. <br>i.e. High-High, High-Low, Low-High, Low-Low, Insignificant. <br> 2. Can also use standard deviation of main local statistic to show just high and low clusters  | Yes - $p$-value |
-| Local Getis-Ord | Local |  Identifies statistically significant hot spots and cold spots using the local Getis-Ord Gi* statistic.  | Can use the standard deviation of statistic to identify hot and cold spots | Yes - $p$-value |
+| Local Getis-Ord | Local |  Identifies statistically significant hot spots and cold spots using the local Getis-Ord $Gi*$ statistic.  | Can use the standard deviation of statistic to identify hot and cold spots | Yes - $p$-value |
 
 ::: {.callout-note}
 In each of these cases, our $p$-values are pseudo $p$-values, generated through simulations such as those outlined in the lecture. Our pseudo $p$-values allow us to interpret our relationships with a level of confidence. If we find that our relationships do not have any significance, then we cannot be confident in presenting them as true results.
 ::: 
-
-<!-- normalise values by total population -->
 
 ### Spatial lag
 Underlying our global Moran's I test is the concept of a **spatial lag model**. A spatial lag model plots each value against the mean of its neighbours' values, defined by our selected approach. This creates a scatter plot, from which our Moran's I statistic can be derived.
@@ -598,7 +610,11 @@ ward_spatial_weights_fd <- ward_neighbours_fd |> nb2listw(style = 'C', zero.poli
 ```
 
 ::: {.callout-note}
-For the fixed distance measure we need to specify an addition parameter (`zero.policy`). This is because it is possible that there are Wards without **any** neighbour (i.e. there is a Ward with a centroid that is not within our specified distance). This is not ideal, because you would want every unit to have at least one neighbour. We do not need this parameter in case of the contiguity based measures today because every Ward polygon touches at least one other Ward polygon.
+The *style* that we specify in the code above determines how neighbours are weighted. `style = 'C'` row-standardises the values, e.g. if a Ward has five neighbours the value of the spatially lagged variable of interest will be the average of the variable of interest of these five neighbours --- every neighbour has an equal weight. See `?nb2listw` for more information on the different styles.
+:::
+
+::: {.callout-note}
+For the fixed distance measure we need to specify an additional parameter (`zero.policy`). This is because it is possible that there are Wards without **any** neighbour (i.e. there is a Ward with a centroid that is not within our specified distance). This is not ideal, because you would want every unit to have at least one neighbour. We do not need this parameter in case of the contiguity based measures today because every Ward polygon touches at least one other Ward polygon --- provided our spatial data are in order.
 :::
 
 ### Global Moran's I
@@ -621,248 +637,309 @@ Before we run our global Moran's I test, we will first create a spatial lag mode
 #| tidy: True
 #| filename: "R code"
 # Moran's plot
-moran.plot(ethnicity_london_sdf$asian_bangladeshi, listw = ward_spatial_weights_queen)
+moran.plot(ethnicity_london_sdf$asian_bangladeshi_prop, listw = ward_spatial_weights_queen)
 ```
 
-We can see that there is a positive relationship between our `asian_bangladeshi` variable and the spatially lagged `asian_bangladeshi` variable, therefore we are expecting our global Moran's I test to produce a statistic reflective of the slope visible in our scatter plot. Now we can run the global Moran's I spatial autocorrelation test:
+We can see that there is a positive relationship between our `asian_bangladeshi_prop` variable and the spatially lagged `asian_bangladeshi_prop` variable, therefore we are expecting our global Moran's I test to produce a statistic reflective of the slope visible in our scatter plot. Now we can run the global Moran's I spatial autocorrelation test:
 
-<!-- ```{r 07-run-GMI, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
-<!-- # run the global Moran's I test on our y6_obesity_2014 data -->
-<!-- obesity_GMI <- obesity_Ward_sdf %>% pull(y6_obesity_2014) %>% as.vector() %>% moran.test(., Ward_spatial_weights_queen) -->
+```{r}
+#| label: 07-global-moran-queen
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# Moran's I
+moran_queen <- ethnicity_london_sdf |> 
+  pull(asian_bangladeshi_prop) |> 
+  as.vector() |>
+  moran.test(ward_spatial_weights_queen)
 
-<!-- # print global Moran's I result -->
-<!-- obesity_GMI -->
-<!-- ```  -->
+# inspect result
+moran_queen
+```
 
-<!-- The Moran’s I statistic calculated should be 0.53. With 1 = clustered, 0 = no pattern, -1 = dispersed, this means we can confirm that childhood obesity in London is positively autocorrelated. In other words, childhood obesity does spatially cluster. We can also consider the pseudo $p$-value as a measure of the statistical significance of the model - at < 2.2e-16, which confirm our result is (psuedo) significant. -->
+The Moran’s I statistic calculated should be 0.73. With $1$ = clustered, $0$ = no pattern, $-1$ = dispersed, this means we can confirm that the population in London that self-identifies as Asian-Bangladeshi is positively autocorrelated. In other words, Asian-Bangladeshi's do spatially cluster. We can also consider the pseudo $p$-value as a measure of the statistical significance of the model - at $< 2.2e-16$, which confirm our result is statistically significant.
 
-<!-- :::note -->
-<!-- **Note** <br/> -->
-<!-- Before we run our local spatial autocorrelation tests, let's just take a second to think through what our results have shown. From our global statistical tests, we can confirm that: -->
+::: {.callout-note}
+Before we run our local spatial autocorrelation tests, let's just take a second to think through what our results have shown. From our global statistical tests, we can confirm that:
 
-<!-- * There is clustering in our dataset. -->
-<!-- * Similar values are clustering. -->
-<!-- * High values are clustering. -->
+- There is clustering in our dataset.
+- Similar values are clustering.
+- High values are clustering.
 
-<!-- We can conclude already that areas of high levels of childhood obesity tend to cluster in the same area. What we do not know yet is **where** these clusters are occurring. To help with this, we need to run our **local** models to identify where these clusters are located. -->
-<!-- ::: -->
+We can conclude already that Wards with a relatively large proportion of people that self-identify as Asian-Bangladeshi's tend to cluster in the same area. What we do not know yet is **where** these clusters are occurring. To help with this, we need to run our **local** models to identify where these clusters are located.
+:::
 
-<!-- ### Local Moran's I -->
-<!-- A local Moran's I test deconstructs the global Moran’s I down to its components and then constructs a localized measure of autocorrelation, which can show different cluster types. To run a local Moran's I test, the code again is similar to above: -->
+### Local Moran's I
+A local Moran's I test deconstructs the global Moran’s I down to its components and then constructs a localised measure of autocorrelation, which can show different cluster types. To run a local Moran's I test, the code is similar to above:
 
-<!-- ```{r 07-local-MI-1, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
-<!-- # run the local Moran's I test on our y6_obesity_2014 data -->
-<!-- obesity_LMI <- obesity_Ward_sdf %>% pull(y6_obesity_2014) %>% as.vector() %>% localmoran(., Ward_spatial_weights_queen) -->
+```{r}
+#| label: 07-local-moran-queen
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# Local Moran's I
+local_moran_queen <- ethnicity_london_sdf |>
+  pull(asian_bangladeshi_prop) |> 
+  as.vector() |>
+  localmoran(ward_spatial_weights_queen)
 
-<!-- # print the first 5 lines of the local Moran's I statistic output -->
-<!-- head(obesity_LMI) -->
-<!-- ```  -->
+# inspect result
+head(local_moran_queen)
+```
 
-<!-- As you should see, we do not get given a single statistic as per with our global tests, but rather a table of five different statistics that are all related back to each of the Wards in our dataset. -->
+As you should see, we ae not given a single statistic as we did with our global test, but rather a table of different statistics that are all related back to each of the Wards in our dataset.
 
-<!-- If we look at the help page for the `localmoran` function (run `?localmoran` in your console) we can find out what each of these statistics mean: -->
+If we look at the help page for the `localmoran` function (run `?localmoran` in your console) we can find out what each of these statistics mean:
 
-<!-- | Name | Description | -->
-<!-- | :----- | :---------------| -->
-<!-- | Ii | Local Moran's I statistic | -->
-<!-- | E.Ii | Expectation of local Moran's I statistic | -->
-<!-- | Var.Ii | Variance of local Moran's I statistic | -->
-<!-- | Z.Ii | Standard deviation of local Moran's I statistic | -->
-<!-- | Pr() | $p$-value of local Moran's I statistic | -->
+| Name    | Description |
+| :-----  | :---------------|
+| Ii      | Local Moran's I statistic |
+| E.Ii    | Expectation of local Moran's I statistic |
+| Var.Ii  | Variance of local Moran's I statistic |
+| Z.Ii    | Standard deviation of local Moran's I statistic |
+| Pr()    | $p$-value of local Moran's I statistic |
 
-<!-- We therefore have a local Moran's I statistic for each of our Wards, as well as a significance value plus a few other pieces of information that can help us create some maps showing our clusters. To be able to do this, we need to join our local Moran's I output back into our `obesity_Ward_sdf` spatial dataframe, which will then allow us to map these results.  -->
+We therefore have a Moran's I statistic for each of our Wards, as well as a significance value plus a few other pieces of information that can help us create some maps showing our clusters. To be able to do this, we need to join our local Moran's I output back into our `ethnicity_london_sdf` spatial dataframe, which will then allow us to map these results.
 
-<!-- To create this join, we first **coerce** our local Moran's I output into a dataframe that we then join to our `obesity_Ward_sdf` spatial dataframe using the `mutate()` function from the `dplyr` library. In our case, we do not need to provide an **attribute** to join these two dataframes together as we use the computer's logic to join the data in the order in which it was created: -->
+To create this join, we first **coerce** our local Moran's I output into a dataframe that we then join to our `ethnicity_london_sdf` spatial dataframe using the familiar `mutate()` function from the `dplyr` library. In our case, we do not need to provide an **attribute** to join these two dataframes together as we use the computer's logic to join the data in the order in which it was created:
 
-<!-- ```{r 07-local-MI-join, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
-<!-- # coerce obesity_LMI into dataframe -->
-<!-- obesity_LMI <- as.data.frame(obesity_LMI) -->
+```{r}
+#| label: 07-local-moran-join
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# coerce to dataframe
+local_moran_queen <- as.data.frame(local_moran_queen)
 
-<!-- # update the names for easier reference -->
-<!-- names(obesity_LMI) <- c("LMI_Ii", "LMI_eIi", "LMI_varIi", "LMI_zIi", "LMI_sigP") -->
+# update the names for easier reference
+names(local_moran_queen) <- c("LMI_Ii", "LMI_eIi", "LMI_varIi", "LMI_zIi", "LMI_sigP")
 
-<!-- # join to obesity_Ward_sdf -->
-<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% mutate(obesity_LMI) -->
-<!-- ```  -->
+# join
+ethnicity_london_sdf <- ethnicity_london_sdf |>
+  mutate(local_moran_queen)
+```
 
-<!-- We now have the data we need to plot our local spatial autocorrelation maps. We will first plot the most simple maps to do with our local Moran's I test: the local Moran's I statistic as well as the $p$-values of the local Moran's I statistic. -->
+We now have the data we need to plot our local spatial autocorrelation maps. We will first plot the most simple maps to do with our local Moran's I test: the local Moran's I statistic.
 
-<!-- Map the local Moran's I statistic:  -->
+```{r tidy='styler'}
+#| label: fig-07-map-local-moran
+#| fig-cap: "Cluster map of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# map the local Moran's I statistic
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons("LMI_Ii", style = "pretty", midpoint = 0, title = "Local Moran's I statistic") +
+  tm_layout(main.title= "Spatial Autocorrelation Asian Bangladeshi's in London",
+            main.title.fontface = 2, fontfamily = "Helvetica",
+            legend.outside = TRUE,
+            legend.outside.position = "right",
+            legend.title.size = 1,
+            legend.title.fontface = 2) +
+  tm_compass(type = "arrow", position = c("right", "bottom")) +
+  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+```
 
-<!-- ```{r 07-map-LMI, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # map our local Moran's I statistic  -->
-<!-- tm_shape(obesity_Ward_sdf) +  -->
-<!--   tm_polygons("LMI_Ii", style = "pretty", midpoint = 0, title = "Local Moran's I statistic") +  -->
-<!--   tm_layout(main.title= "Spatial Autocorrelation of Childhood Obesity in London",  -->
-<!--             main.title.fontface = 2, fontfamily = "Helvetica",  -->
-<!--             legend.outside = TRUE,  -->
-<!--             legend.outside.position = "right",  -->
-<!--             legend.title.size = 1,  -->
-<!--             legend.title.fontface = 2) +  -->
-<!--   tm_compass(type = "arrow", position = c("right", "bottom")) +  -->
-<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
-<!-- ```  -->
+From the map, it is possible to observe the variations in autocorrelation across space. We can interpret that there seems to be a geographic pattern to the autocorrelation. However, it is not possible to understand if these are clusters of high or low values or which ones are statistically signficant. To be able to interpret this confidently, we also need to know the significance of the patterns we see in our map and therefore need to map the $p$-value of local Moran's I statistic.
 
-<!-- From the map, it is possible to observe the variations in autocorrelation across space. We can interpret that there seems to be a geographic pattern to the autocorrelation. However, it is not possible to understand if these are clusters of high or low values. To be able to interpret this confidently, we also need to know the significance of the patterns we see in our map and therefore need to map the $p$-value of local Moran's I statistic. -->
+```{r tidy='styler'}
+#| label: fig-07-map-local-moran-significance
+#| fig-cap: "Significant cluster map of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# significance breaks
+breaks <- c(0, 0.05, 0.1, 1)
 
-<!-- Map the $p$-value of local Moran's I statistic: -->
+# colour palette
+colours <- c('#ffffff', "#a6bddb", "#2b8cbe" )
 
-<!-- ```{r 07-map-LMI-p, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # significance breaks -->
-<!-- breaks <- c(0, 0.05, 0.1, 1) -->
+# map our local # map the local Moran's I statistic
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons("LMI_sigP", style = "fixed", breaks = breaks,
+              palette = rev(colours), title = "p-value of Local Moran's I stat") +
+  tm_layout(main.title = "Spatial Autocorrelation Asian Bangladeshi's in London",
+            main.title.fontface = 2, fontfamily = "Helvetica",
+            legend.outside = TRUE,
+            legend.outside.position = "right",
+            legend.title.size = 1,
+            legend.title.fontface = 2) +
+  tm_compass(type = "arrow", position = c("right", "bottom")) +
+  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+```
 
-<!-- # colours for our local Moran's I statistic -->
-<!-- colours <- c('white', "#a6bddb", "#2b8cbe" ) -->
+Using our significance map, we can interpret the above clusters present in our local Moran's I statistic more confidently. As evident, we do have several clusters that are statistically significant to the $p$-value < 0.05.
 
-<!-- # map our local Moran's I statistic  -->
-<!-- tm_shape(obesity_Ward_sdf) +  -->
-<!--   tm_polygons("LMI_sigP", style = "fixed", breaks = breaks,  -->
-<!--               palette = rev(colours), title = "p-value of Local Moran's I stat") +  -->
-<!--   tm_layout(main.title = "Spatial Autocorrelation of Childhood Obesity in London",  -->
-<!--             main.title.fontface = 2, fontfamily = "Helvetica",  -->
-<!--             legend.outside = TRUE,  -->
-<!--             legend.outside.position = "right",  -->
-<!--             legend.title.size = 1,  -->
-<!--             legend.title.fontface = 2) +  -->
-<!--   tm_compass(type = "arrow", position = c("right", "bottom")) +  -->
-<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
-<!-- ```  -->
+Ideally we would combine these two outputs to see what values cluster together as well as which clusters are significant. We can do this with a cluster map of our **local Moran's I statistic (Ii)** which will show areas of different types of clusters, including:
 
-<!-- Using our significance map, we can interpret the above clusters present in our local Moran's I statistic more confidently. As evident, we do have several clusters that are statistically significant to the $p$-value < 0.05.  -->
+- **HIGH-HIGH**: A Ward with a relatively high proportion of residents that self-identify as Asian-Bangladeshi that is also surrounded by other Wards with a relatively high proportion of residents that self-identify as Asian-Bangladeshi.
+- **HIGH-LOW**: A Ward with a relativley high proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively low proportion of residents that self-identify as Asian-Bangladeshi.
+- **LOW-HIGH**: A Ward with a relativley low proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively high proportion of residents that self-identify as Asian-Bangladeshi.
+- **LOW-LOW**: A Ward with a relatively low proportion of residents that self-identify as Asian-Bangladeshi that is also surrounded by other Wards with a relatively low proportion of residents that self-identify as Asian-Bangladeshi.
 
-<!-- Ideally we would combine these two outputs to see what values cluster together and which clusters are significant. We can do this with a cluster map of our **local Moran's I statistic (Ii)** which will show areas of different types of clusters, including: -->
+Our HIGH-HIGH and LOW-LOW will show our clusters, whereas the other two cluster types reveal anomalies in our variable. To create a map that shows this, we need to quantify the relationship each of our Wards have with the Wards around them to determine their cluster type. We do this using their observed value and their local Moran's I statistic and their deviation around their respective means:
 
-<!-- * **HIGH-HIGH**: A Ward of high obesity that is also surrounded by other Wards of high obesity. -->
-<!-- * **HIGH-LOW**: A Ward of high obesity that is surrounded by Wards of low obesity. -->
-<!-- * **LOW-HIGH**: A Ward of low obesity that is surrounded by Wards of high obesity. -->
-<!-- * **LOW-LOW**: A Ward of low obesity that is also surrounded by other Wards of low obesity. -->
-<!-- * Those areas that have no significant cluster or relationship to the Wards around them. -->
+- If a Ward's observed value is higher than the observed mean and it's local Moran's I statistic is higher than the LMI mean, it is designated as **HIGH-HIGH**.
+- If a Ward's observed value is lower than the observed mean and it's local Moran's I statistic is lower than the LMI mean, it is designated as **LOW-LOW**.
+* If a Ward's observed value is lower than the observed mean but it's local Moran's I statistic is higher than the LMI mean, it is designated as **LOW-HIGH**.
+* If a Ward's observed value is higher than the observed mean but it's local Moran's I statistic is lower than the LMI mean, it is designated as **HIGH-LOW**.
+* If a Ward's LMI was found not to be significant, the Ward will be mapped as **not significant**.
 
-<!-- Our HIGH-HIGH and LOW-LOW will show our clusters, whereas the other two cluster types reveal anomalies in our variable. To create a map that shows this, we need to quantify the relationship each of our Wards have with the Wards around them to determine their cluster type. We do this using their observed value and their local Moran's I statistic and their deviation around their respective means: -->
+To create this cluster map, we need to take several additional steps. We firstly need, for each Ward, whether its observed value is higher or lower than the mean observed. We then need to know, for each Ward, whether its LMI value is higher or lower than the mean LMI. Finally, we can use the values of these two columns to assign each Ward with a cluster type.
 
-<!-- * *If a Ward's observed value is higher than the observed mean and it's local Moran's I statistic is higher than the LMI mean*, it is designated as **HIGH-HIGH**. -->
-<!-- * *If a Ward's observed value is lower than the observed mean and it's local Moran's I statistic is lower than the LMI mean*, it is designated as **LOW-LOW**. -->
-<!-- * *If a Ward's observed value is lower than the observed mean but it's local Moran's I statistic is higher than the LMI mean*, it is designated as **LOW-HIGH**. -->
-<!-- * *If a Ward's observed value is higher than the observed mean but it's local Moran's I statistic is lower than the LMI mean*, it is designated as **HIGH-LOW**. -->
-<!-- * *If a Ward's LMI was found not to be significant*, the Ward will be mapped as **not significant**. -->
+```{r tidy='styler'}
+#| label: fig-07-map-local-moran-cluster-type
+#| fig-cap: "Cluster types map of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# significance breaks
+ethnicity_london_sdf <- ethnicity_london_sdf |> mutate(obs_diff = (asian_bangladeshi_prop - mean(ethnicity_london_sdf$asian_bangladeshi_prop)))
 
-<!-- For example, this means that if we know our Ward’s observed value is less than the mean value of our overall `y6_obesity_2014 variable`, then it means it is of course a low value for obesity in comparison to the entirety of London. If it’s local Moran’s I statistic is also lower than the mean value of the rest of the LMI_Ii statistics, it also means it is located in a neighbourhood of low values. As a result, if this relationship is significant (determined by the pseudo $p$-value from our local Moran’s I calculation), we can call this a “LOW-LOW” cluster. -->
+# compare local LMI value with mean LMI value
+ethnicity_london_sdf <- ethnicity_london_sdf |> mutate(LMI_diff = (ethnicity_london_sdf$LMI_Ii - mean(ethnicity_london_sdf$LMI_Ii)))
 
-<!-- To achieve this cluster map, we need to take several additional steps: -->
+# set significance threshold
+signif <- 0.05
 
-<!-- * The first will tell us, for each Ward, whether its observed value is higher or lower than the mean observed. -->
-<!-- * The second will tell us, for each Ward, whether its LMI value is higher or lower than the mean LMI. -->
-<!-- * The third will use the values of these two columns to assign each Ward with a cluster type. -->
+# generate column with cluster type, using values above
+ethnicity_london_sdf <- ethnicity_london_sdf |>
+  mutate(cluster_type = case_when(obs_diff > 0 & LMI_diff > 0 & LMI_sigP < signif ~ "High-High",
+                                  obs_diff < 0 & LMI_diff < 0 & LMI_sigP < signif ~ "Low-Low",
+                                  obs_diff < 0 & LMI_diff > 0 & LMI_sigP < signif ~ "Low-High",
+                                  obs_diff > 0 & LMI_diff < 0 & LMI_sigP < signif ~ "High-Low",
+                                  LMI_sigP > signif ~ "No Significance"))
 
-<!-- Determine the cluster type of each Ward by comparing observed and LMI values against their respective means and the significance value: -->
+```
 
-<!-- ```{r 07-LMI-cluster-type, warnings=FALSE, message=FALSE, cache=FALSE, tidy='styler'} -->
-<!-- # compare local value for obesity with mean value -->
-<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% mutate(obs_diff = (y6_obesity_2014 - mean(obesity_Ward_sdf$y6_obesity_2014))) -->
+Now we have a column detailing our cluster types, we can create a cluster map that details our four cluster types as well as those that are not significant. Creating a categorical map in R and using `tmap` is a little tricky and we will need to do some preparing of our colour palettes to ensure our data is mapped correctly. To do this, we first need to figure out how many cluster types we have in our `cluster_type` field:
 
-<!-- # compare local LMI value with mean LMI value -->
-<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% mutate(LMI_diff = (obesity_LMI$LMI_Ii - mean(obesity_LMI$LMI_Ii))) -->
+```{r}
+#| label: 07-local-moran-cluster-types
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# count the cluster types
+count(ethnicity_london_sdf, cluster_type)
+```
 
-<!-- # set a significance threshold  -->
-<!-- signif <- 0.05 -->
+We can see that we have three out of the four possible cluster types in our dataset --- alongside the `No Significance` value. We therefore need to ensure our palette includes three colours for these cluster types, plus a white colour for `No Significance`:
 
-<!-- # generate column with cluster type, using values above -->
-<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>%  -->
-<!--   mutate(cluster_type = case_when(obs_diff > 0 & LMI_diff > 0 & LMI_sigP < signif ~ "High-High", -->
-<!--                                   obs_diff < 0 & LMI_diff < 0 & LMI_sigP < signif ~ "Low-Low", -->
-<!--                                   obs_diff < 0 & LMI_diff > 0 & LMI_sigP < signif ~ "Low-High", -->
-<!--                                   obs_diff > 0 & LMI_diff < 0 & LMI_sigP < signif ~ "High-Low", -->
-<!--                                   LMI_sigP > signif ~ "No Significance")) -->
+```{r}
+#| label: 07-local-moran-cluster-types-colours
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# create palette
+pal <- c("#d7191c", "#fdae61", "#2c7bb6","#F5F5F5")
+```
 
-<!-- ``` -->
+Now we can finally map our clusters:
 
-<!-- Now we have a column detailing our cluster types, we can create a cluster map that details our four cluster types as well as those that are not significant. Creating a categorical map in R and using `tmap` is a little tricky and we will need to do some preparing of our colour palettes to ensure our data is mapped correctly. To do this, we first need to figure out how many cluster types we have in our `cluster_type` field: -->
+```{r tidy='styler'}
+#| label: fig-07-cluster-plot
+#| fig-cap: "Cluster types map of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# plot the different clusters
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons(col = "cluster_type", palette = pal, title = "Cluster Type") +
+  tm_layout(main.title = "Cluster Map of Asian Bangladeshi's in London",
+            main.title.fontface = 2, fontfamily = "Helvetica", legend.outside = TRUE,
+            legend.outside.position = "right",
+            legend.title.size = 1,
+            legend.title.fontface = 2) +
+  tm_compass(type = "arrow", position = c("right", "bottom")) +
+  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+```
 
-<!-- ```{r 07-LMI-cs, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # count the different values within our `cluster_type` variable  -->
-<!-- count(obesity_Ward_sdf, cluster_type) -->
-<!-- ``` -->
+And there we have it: within one map we can visualise both the relationship of our Wards to their respective neighbourhoods and the significance of this relationship from our local Moran's I test. This type of map is called a [LISA map](https://geodacenter.github.io/workbook/6a_local_auto/lab6a.html) and is a great way of showing how a variable is actually clustering.
 
-<!-- We can see we actually have all four cluster types present within our dataset - alongside the `No Significance` value. We therefore need to ensure our palette includes four colours for these two cluster types, plus a white colour for `No Significance`: -->
+### Getis-Ord-Gi*
+The final test we will run today is the local Getis-Ord, which will produce the $Gi*$ statistic. This statistic will identify hot- and coldspots by looking at the neighbours within a defined proximity to identify where either high or low values cluster spatially and recognising statistically significant hotspots as those areas of high values where other areas within a neighbourhood range also share high values too (and vice versa for coldspots).
 
-<!-- ```{r 07-plot-LMI-hscs, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # create a colour palette -->
-<!-- pal <- c("#d7191c", "#fdae61", "#abd9e9", "#2c7bb6","#F5F5F5") -->
+```{r}
+#| label: 07-local-gi-queen
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# Gi* test
+gi_queen <- ethnicity_london_sdf |> 
+  pull(asian_bangladeshi_prop) |> 
+  as.vector() |>
+  localG(ward_spatial_weights_queen)
 
-<!-- # plot the clusters -->
-<!-- tm_shape(obesity_Ward_sdf) + -->
-<!--   tm_polygons(col = "cluster_type", palette = pal, title = "Cluster Type") + -->
-<!--   tm_layout(main.title = "Cluster Map of Childhood Obesity in London, 2014", -->
-<!--             main.title.fontface = 2, fontfamily = "Helvetica", legend.outside = TRUE, -->
-<!--             legend.outside.position = "right", -->
-<!--             legend.title.size = 1, -->
-<!--             legend.title.fontface = 2) + -->
-<!--   tm_compass(type = "arrow", position = c("right", "bottom")) + -->
-<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
-<!-- ```  -->
+# join
+ethnicity_london_sdf <- ethnicity_london_sdf |>
+  mutate(asian_bangladeshi_gi = as.numeric(gi_queen))
 
-<!-- And there we have it: within one map we can visualise both the relationship of our Wards to their respective neighbourhoods and the significance of this relationship from our local Moran's I test. This type of map is called a LISA map and is a great way of showing how a variable is actually clustering. -->
+# inspect
+ethnicity_london_sdf
+```
 
-<!-- ### Getis-Ord-Gi* -->
-<!-- The final test we will run today is the local Getis-Ord, which will produce the Gi* statistic. This statistic will identify hot- and coldspots by looking at the neighbours within a defined proximity to identify where either high or low values cluster spatially and recognising statistically significant hotspots as those areas of high values where other areas within a neighbourhood range also share high values too (and vice versa for coldspots). -->
+By printing the results of our test, we can see that the local Getis-Ord test is a bit different from a local Moran's I test as it only contains a single value: the z-score. The z-score is a standardised value relating to whether high values or low values are clustering together, which we call the $Gi*$ statistic. Now we have joined this output, a list of our $Gi*$ values, to our `ethnicity_london_sdf` spatial dataframe and map the result:
 
-<!-- Run the local Gi* statistic spatial autocorrelation test and print the result: -->
+```{r tidy='styler'}
+#| label: fig-07-cluster-plot-gi
+#| fig-cap: "Local $Gi*$ map of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# plot the different clusters
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons("asian_bangladeshi_prop", style = "pretty", midpoint=0, title = "Local Gi* statistic") +
+  tm_layout(main.title = "Hot/Cold Spot Map of Asian-Bangladeshi's",
+            main.title.fontface = 2, fontfamily = "Helvetica",
+            legend.outside = TRUE,
+            legend.outside.position = "right",
+            legend.title.size = 1,
+            legend.title.fontface = 2) +
+  tm_compass(type = "arrow", position = c("right", "bottom")) +
+  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+```
 
-<!-- ```{r 07-local-GO, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # run the local Gi* test on our y6_obesity_2014 data, note we again use the fd weights -->
-<!-- obesity_LGO <- obesity_Ward_sdf %>% pull(y6_obesity_2014) %>% as.vector() %>% localG(., Ward_spatial_weights_fd)  -->
+Our map shows quite clear hot spots of self-identified Asian-Bangladeshi's across London. 
 
-<!-- # join the local Gi* statistic to `obesity_Ward_sdf` spatial dataframe -->
-<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% mutate(obesity_LGO_G = as.numeric(obesity_LGO)) -->
+::: {.callout-warning}
+If we want to only map the statistically significant clusters, we need to use these [z-scores](https://en.wikipedia.org/wiki/Standard_score) to filter out only statistically significant clusters. When using a 95 percent confidence level your values should be between `-1.96` and `+1.96` standard deviations.
+:::
 
-<!-- # inspect -->
-<!-- obesity_Ward_sdf -->
-<!-- ```  -->
+## Assignment {#assignment-w07}
+Through conducting our spatial autocorrelation tests, we can visually confirm the presence of clusters in our `asian_bangladeshi_prop` variable and provide a significance value associated with these tests. 
 
-<!-- By printing the results of our test, we can see that the local Getis-Ord test is a bit different from a local Moran's I test as it only contains a single value: the z-score. The z-score is a standardised value relating to whether high values or low values are clustering together, which we call the Gi* statistic. We can join this output, a list of our Gi* values, to our `obesity_Ward_sdf` spatial dataframe and map the result: -->
+Now you have the code, you will be able to repeat this analysis on any variable in the future. For this week's assignment, we therefore want you to find out whether also our `white_british` variable contains spatial clustering.
 
-<!-- ```{r 07-join-local-GO, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+In order to do this, you have to:
 
-<!-- ``` -->
-
-<!-- ```{r 07-map-local-GO, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # create a colour palette -->
-<!-- GIColours <- rev(brewer.pal(8, "RdBu")) -->
-
-<!-- # plot the clusters -->
-<!-- tm_shape(obesity_Ward_sdf) +  -->
-<!--   tm_polygons("obesity_LGO_G", style = "pretty", palette=GIColours, -->
-<!--               midpoint=0, title = "Local Gi* statistic") + -->
-<!--   tm_layout(main.title = 'Hot/Cold Spot Map of Childhood Obesity in London, 2014',  -->
-<!--             main.title.fontface = 2, fontfamily = "Helvetica", -->
-<!--             legend.outside = TRUE,  -->
-<!--             legend.outside.position = "right",  -->
-<!--             legend.title.size = 1,  -->
-<!--             legend.title.fontface = 2) +  -->
-<!--   tm_compass(type = "arrow", position = c("right", "bottom")) + -->
-<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
-<!-- ```  -->
-
-<!-- Our map shows quite clearly hot and cold spots of obesity across London. How does this compare with our local Moran's I? Do we see the same clusters? -->
-
-<!-- :::tip -->
-<!-- **Tip** <br/> -->
-<!-- If we want to only map the statistically significant clusters, we need to use these [z-scores](https://en.wikipedia.org/wiki/Standard_score) to filter out only statistically significant clusters. When using a 95 percent confidence level your values should be between `-1.96` and `+1.96` standard deviations. -->
-<!-- ::: -->
-
-<!-- ## Assignment 2 {#assignment-2-w07} -->
-<!-- Through conducting our spatial autocorrelation tests, we can visually confirm the presence of clusters in our `y6_obesity_2014` variable and provide a significance value associated with these tests. This provides us with a way to explain our distributions **quantitatively** during the analysis of our results. -->
-
-<!-- Now you have the code, you will be able to repeat this analysis on any variable in the future. For this week's assignment, we therefore want you to find out whether our `IDACI_2010` variable contains spatial clustering. -->
-
-<!-- In order to do this, you have to: -->
-
-<!-- 1. Create a choropleth map showing the distribution of the variable values. -->
-<!-- 2. Calculate a global spatial autocorrelation statistic and explain what it shows. -->
-<!-- 3. Create a local Moran's I map showing the four cluster types. -->
-<!-- 4. Create a local Getis-Ord hotspot map. -->
-<!-- 5. Compare these results to the output of our `y6_obesity_2014` values. Do both variables have clusters? Do we see similar clusters in similar locations? What might this tell us about the relationship between deprivation and obesity in children in London? -->
-<!-- 6. Run the analysis using a different neighbour definition. What happens? Do the results change? -->
+1. Create a choropleth map showing the distribution of the variable values.
+2. Calculate a global spatial autocorrelation statistic and explain what it shows.
+3. Create a local Moran's I map showing the cluster types.
+4. Create a local Getis-Ord hotspot map.
+5. Compare these results to the output of our `asian_bangladeshi_prop` values. Do both variables have clusters? Do we see similar clusters in similar locations?
+6. Run the analysis using a different neighbour definition. What happens? Do the results change?
 
 ## Want more? [Optional] {#wm-w07}
 ### More spatial autocorrelation {.unnumbered}

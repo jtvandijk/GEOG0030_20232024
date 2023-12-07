@@ -268,12 +268,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#defining-neighbours" id="toc-defining-neighbours" class="nav-link" data-scroll-target="#defining-neighbours"><span class="header-section-number">7.6.2</span> Defining neighbours</a></li>
   <li><a href="#spatial-weights-matrix" id="toc-spatial-weights-matrix" class="nav-link" data-scroll-target="#spatial-weights-matrix"><span class="header-section-number">7.6.3</span> Spatial weights matrix</a></li>
   <li><a href="#global-morans-i" id="toc-global-morans-i" class="nav-link" data-scroll-target="#global-morans-i"><span class="header-section-number">7.6.4</span> Global Moran’s I</a></li>
+  <li><a href="#local-morans-i" id="toc-local-morans-i" class="nav-link" data-scroll-target="#local-morans-i"><span class="header-section-number">7.6.5</span> Local Moran’s I</a></li>
+  <li><a href="#getis-ord-gi" id="toc-getis-ord-gi" class="nav-link" data-scroll-target="#getis-ord-gi"><span class="header-section-number">7.6.6</span> Getis-Ord-Gi*</a></li>
   </ul></li>
-  <li><a href="#wm-w07" id="toc-wm-w07" class="nav-link" data-scroll-target="#wm-w07"><span class="header-section-number">7.7</span> Want more? [Optional]</a>
+  <li><a href="#assignment-w07" id="toc-assignment-w07" class="nav-link" data-scroll-target="#assignment-w07"><span class="header-section-number">7.7</span> Assignment</a></li>
+  <li><a href="#wm-w07" id="toc-wm-w07" class="nav-link" data-scroll-target="#wm-w07"><span class="header-section-number">7.8</span> Want more? [Optional]</a>
   <ul class="collapse">
   <li><a href="#more-spatial-autocorrelation" id="toc-more-spatial-autocorrelation" class="nav-link" data-scroll-target="#more-spatial-autocorrelation">More spatial autocorrelation</a></li>
   </ul></li>
-  <li><a href="#byl-w07" id="toc-byl-w07" class="nav-link" data-scroll-target="#byl-w07"><span class="header-section-number">7.8</span> Before you leave</a></li>
+  <li><a href="#byl-w07" id="toc-byl-w07" class="nav-link" data-scroll-target="#byl-w07"><span class="header-section-number">7.9</span> Before you leave</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -952,6 +955,17 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <p>The thing with spatial distributions is that we can quickly pick up on spatial patterns present within our data just by looking at the data. For example, we can clearly see some concentrations of people that self-identify as Asian-Bangladeshi’s in East London. The question now is whether these clusters are significant from a statistical point of view. This brings us to measuring spatial correlation.</p>
+<p>Before we move on, let’s normalise the <code>asian_banglades</code> variable by creating a new variable that contains the proportion of individuals that self-identify as Asian-Bangladeshi:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-create-proportions_eaf926d3171abbad0f18451b5efb5b99">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate proportions</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>ethnicity_london_sdf <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">asian_bangladeshi_prop =</span> asian_bangladeshi<span class="sc">/</span>all_pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
 </section>
 <section id="spatial-autocorrelation" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="spatial-autocorrelation"><span class="header-section-number">7.6</span> Spatial autocorrelation</h2>
@@ -997,7 +1011,7 @@ Projected CRS: OSGB36 / British National Grid
 <tr class="odd">
 <td style="text-align: left;">Local Getis-Ord</td>
 <td style="text-align: left;">Local</td>
-<td style="text-align: left;">Identifies statistically significant hot spots and cold spots using the local Getis-Ord Gi* statistic.</td>
+<td style="text-align: left;">Identifies statistically significant hot spots and cold spots using the local Getis-Ord <span class="math inline">\(Gi*\)</span> statistic.</td>
 <td style="text-align: left;">Can use the standard deviation of statistic to identify hot and cold spots</td>
 <td style="text-align: left;">Yes - <span class="math inline">\(p\)</span>-value</td>
 </tr>
@@ -1013,7 +1027,6 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<!-- normalise values by total population -->
 <section id="spatial-lag" class="level3" data-number="1.6.1">
 <h3 data-number="1.6.1" class="anchored" data-anchor-id="spatial-lag"><span class="header-section-number">7.6.1</span> Spatial lag</h3>
 <p>Underlying our global Moran’s I test is the concept of a <strong>spatial lag model</strong>. A spatial lag model plots each value against the mean of its neighbours’ values, defined by our selected approach. This creates a scatter plot, from which our Moran’s I statistic can be derived.</p>
@@ -1090,17 +1103,17 @@ Projected CRS: OSGB36 / British National Grid
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Queens neighbours</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>ward_neighbours_queen <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">poly2nb</span>(<span class="at">queen =</span> T)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Rook neigbhours</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>ward_neighbours_rook <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">poly2nb</span>(<span class="at">queen =</span> F)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixed distance neighbours</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>ward_neighbours_fd <span class="ot">&lt;-</span> <span class="fu">dnearneigh</span>(<span class="fu">st_geometry</span>(<span class="fu">st_centroid</span>(ethnicity_london_sdf)),</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">4000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Queens neighbours</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>ward_neighbours_queen <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">poly2nb</span>(<span class="at">queen =</span> T)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Rook neigbhours</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>ward_neighbours_rook <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">poly2nb</span>(<span class="at">queen =</span> F)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Fixed distance neighbours</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>ward_neighbours_fd <span class="ot">&lt;-</span> <span class="fu">dnearneigh</span>(<span class="fu">st_geometry</span>(<span class="fu">st_centroid</span>(ethnicity_london_sdf)),</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">4000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in st_centroid.sf(ethnicity_london_sdf): st_centroid assumes attributes
@@ -1124,9 +1137,9 @@ are constant over geometries of x</code></pre>
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the centroids of all of the Wards in London</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>ward_centroid <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_centroid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the centroids of all of the Wards in London</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>ward_centroid <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_centroid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in st_centroid.sf(ethnicity_london_sdf): st_centroid assumes attributes
@@ -1149,8 +1162,8 @@ are constant over geometries of x</code></pre>
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot neighbours: Queen</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ward_neighbours_queen, <span class="fu">st_geometry</span>(ward_centroid), <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot neighbours: Queen</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ward_neighbours_queen, <span class="fu">st_geometry</span>(ward_centroid), <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <div id="fig-07-plot-them-neighbours-queen" class="quarto-figure quarto-figure-center anchored">
@@ -1166,8 +1179,8 @@ are constant over geometries of x</code></pre>
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot neighbours: Rook</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ward_neighbours_rook, <span class="fu">st_geometry</span>(ward_centroid), <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot neighbours: Rook</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ward_neighbours_rook, <span class="fu">st_geometry</span>(ward_centroid), <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <div id="fig-07-plot-them-neighbours-rook" class="quarto-figure quarto-figure-center anchored">
@@ -1183,8 +1196,8 @@ are constant over geometries of x</code></pre>
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot neighbours: Fixed distance</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ward_neighbours_fd, <span class="fu">st_geometry</span>(ward_centroid), <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot neighbours: Fixed distance</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ward_neighbours_fd, <span class="fu">st_geometry</span>(ward_centroid), <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <div id="fig-07-plot-them-neighbours-fixed" class="quarto-figure quarto-figure-center anchored">
@@ -1233,17 +1246,17 @@ are constant over geometries of x</code></pre>
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a neighbours list - Queen</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>ward_spatial_weights_queen <span class="ot">&lt;-</span> ward_neighbours_queen <span class="sc">|&gt;</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nb2listw</span>(<span class="at">style =</span> <span class="st">"C"</span>)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># create a neighbours list - Rook</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>ward_spatial_weights_queen <span class="ot">&lt;-</span> ward_neighbours_rook <span class="sc">|&gt;</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nb2listw</span>(<span class="at">style =</span> <span class="st">"C"</span>)</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create a neighbours list</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>ward_spatial_weights_fd <span class="ot">&lt;-</span> ward_neighbours_fd <span class="sc">|&gt;</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nb2listw</span>(<span class="at">style =</span> <span class="st">"C"</span>, <span class="at">zero.policy =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a neighbours list - Queen</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>ward_spatial_weights_queen <span class="ot">&lt;-</span> ward_neighbours_queen <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nb2listw</span>(<span class="at">style =</span> <span class="st">"C"</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># create a neighbours list - Rook</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>ward_spatial_weights_queen <span class="ot">&lt;-</span> ward_neighbours_rook <span class="sc">|&gt;</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nb2listw</span>(<span class="at">style =</span> <span class="st">"C"</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co"># create a neighbours list</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>ward_spatial_weights_fd <span class="ot">&lt;-</span> ward_neighbours_fd <span class="sc">|&gt;</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nb2listw</span>(<span class="at">style =</span> <span class="st">"C"</span>, <span class="at">zero.policy =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note">
@@ -1252,7 +1265,17 @@ are constant over geometries of x</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>For the fixed distance measure we need to specify an addition parameter (<code>zero.policy</code>). This is because it is possible that there are Wards without <strong>any</strong> neighbour (i.e.&nbsp;there is a Ward with a centroid that is not within our specified distance). This is not ideal, because you would want every unit to have at least one neighbour. We do not need this parameter in case of the contiguity based measures today because every Ward polygon touches at least one other Ward polygon.</p>
+<p>The <em>style</em> that we specify in the code above determines how neighbours are weighted. <code>style = 'C'</code> row-standardises the values, e.g.&nbsp;if a Ward has five neighbours the value of the spatially lagged variable of interest will be the average of the variable of interest of these five neighbours — every neighbour has an equal weight. See <code>?nb2listw</code> for more information on the different styles.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>For the fixed distance measure we need to specify an additional parameter (<code>zero.policy</code>). This is because it is possible that there are Wards without <strong>any</strong> neighbour (i.e.&nbsp;there is a Ward with a centroid that is not within our specified distance). This is not ideal, because you would want every unit to have at least one neighbour. We do not need this parameter in case of the contiguity based measures today because every Ward polygon touches at least one other Ward polygon — provided our spatial data are in order.</p>
 </div>
 </div>
 </div>
@@ -1267,13 +1290,13 @@ are constant over geometries of x</code></pre>
 <li><span class="math inline">\(1\)</span> suggests a <em>non-random</em> distribution of clearly defined clusters</li>
 </ul>
 <p>Before we run our global Moran’s I test, we will first create a spatial lag model plot which looks at each of the values plotted against their spatially lagged values. The graph will show quickly whether we are likely to expect our test to return a positive, zero, or negative statistic:</p>
-<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/fig-07-plot-moran-queens_97554332fdab7e616f9cd268371cf1b9">
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/fig-07-plot-moran-queens_61506c1f18b9f46876f06241bb05ba2c">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Moran's plot</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.plot</span>(ethnicity_london_sdf<span class="sc">$</span>asian_bangladeshi, <span class="at">listw =</span> ward_spatial_weights_queen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Moran's plot</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.plot</span>(ethnicity_london_sdf<span class="sc">$</span>asian_bangladeshi_prop, <span class="at">listw =</span> ward_spatial_weights_queen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <div id="fig-07-plot-moran-queens" class="quarto-figure quarto-figure-center anchored">
@@ -1284,196 +1307,495 @@ are constant over geometries of x</code></pre>
 </div>
 </div>
 </div>
-<p>We can see that there is a positive relationship between our <code>asian_bangladeshi</code> variable and the spatially lagged <code>asian_bangladeshi</code> variable, therefore we are expecting our global Moran’s I test to produce a statistic reflective of the slope visible in our scatter plot. Now we can run the global Moran’s I spatial autocorrelation test:</p>
-<!-- ```{r 07-run-GMI, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
-<!-- # run the global Moran's I test on our y6_obesity_2014 data -->
-<!-- obesity_GMI <- obesity_Ward_sdf %>% pull(y6_obesity_2014) %>% as.vector() %>% moran.test(., Ward_spatial_weights_queen) -->
-<!-- # print global Moran's I result -->
-<!-- obesity_GMI -->
-<!-- ```  -->
-<!-- The Moran’s I statistic calculated should be 0.53. With 1 = clustered, 0 = no pattern, -1 = dispersed, this means we can confirm that childhood obesity in London is positively autocorrelated. In other words, childhood obesity does spatially cluster. We can also consider the pseudo $p$-value as a measure of the statistical significance of the model - at < 2.2e-16, which confirm our result is (psuedo) significant. -->
-<!-- :::note -->
-<!-- **Note** <br/> -->
-<!-- Before we run our local spatial autocorrelation tests, let's just take a second to think through what our results have shown. From our global statistical tests, we can confirm that: -->
-<!-- * There is clustering in our dataset. -->
-<!-- * Similar values are clustering. -->
-<!-- * High values are clustering. -->
-<!-- We can conclude already that areas of high levels of childhood obesity tend to cluster in the same area. What we do not know yet is **where** these clusters are occurring. To help with this, we need to run our **local** models to identify where these clusters are located. -->
-<!-- ::: -->
-<!-- ### Local Moran's I -->
-<!-- A local Moran's I test deconstructs the global Moran’s I down to its components and then constructs a localized measure of autocorrelation, which can show different cluster types. To run a local Moran's I test, the code again is similar to above: -->
-<!-- ```{r 07-local-MI-1, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
-<!-- # run the local Moran's I test on our y6_obesity_2014 data -->
-<!-- obesity_LMI <- obesity_Ward_sdf %>% pull(y6_obesity_2014) %>% as.vector() %>% localmoran(., Ward_spatial_weights_queen) -->
-<!-- # print the first 5 lines of the local Moran's I statistic output -->
-<!-- head(obesity_LMI) -->
-<!-- ```  -->
+<p>We can see that there is a positive relationship between our <code>asian_bangladeshi_prop</code> variable and the spatially lagged <code>asian_bangladeshi_prop</code> variable, therefore we are expecting our global Moran’s I test to produce a statistic reflective of the slope visible in our scatter plot. Now we can run the global Moran’s I spatial autocorrelation test:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-global-moran-queen_871235ae604ca5ec1f08d7bfee4ea852">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Moran's I</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>moran_queen <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(asian_bangladeshi_prop) <span class="sc">|&gt;</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.vector</span>() <span class="sc">|&gt;</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">moran.test</span>(ward_spatial_weights_queen)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect result</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>moran_queen</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Moran I test under randomisation
 
-<!-- As you should see, we do not get given a single statistic as per with our global tests, but rather a table of five different statistics that are all related back to each of the Wards in our dataset. -->
-<!-- If we look at the help page for the `localmoran` function (run `?localmoran` in your console) we can find out what each of these statistics mean: -->
-<!-- | Name | Description | -->
-<!-- | :----- | :---------------| -->
-<!-- | Ii | Local Moran's I statistic | -->
-<!-- | E.Ii | Expectation of local Moran's I statistic | -->
-<!-- | Var.Ii | Variance of local Moran's I statistic | -->
-<!-- | Z.Ii | Standard deviation of local Moran's I statistic | -->
-<!-- | Pr() | $p$-value of local Moran's I statistic | -->
-<!-- We therefore have a local Moran's I statistic for each of our Wards, as well as a significance value plus a few other pieces of information that can help us create some maps showing our clusters. To be able to do this, we need to join our local Moran's I output back into our `obesity_Ward_sdf` spatial dataframe, which will then allow us to map these results.  -->
-<!-- To create this join, we first **coerce** our local Moran's I output into a dataframe that we then join to our `obesity_Ward_sdf` spatial dataframe using the `mutate()` function from the `dplyr` library. In our case, we do not need to provide an **attribute** to join these two dataframes together as we use the computer's logic to join the data in the order in which it was created: -->
-<!-- ```{r 07-local-MI-join, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
-<!-- # coerce obesity_LMI into dataframe -->
-<!-- obesity_LMI <- as.data.frame(obesity_LMI) -->
-<!-- # update the names for easier reference -->
-<!-- names(obesity_LMI) <- c("LMI_Ii", "LMI_eIi", "LMI_varIi", "LMI_zIi", "LMI_sigP") -->
-<!-- # join to obesity_Ward_sdf -->
-<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% mutate(obesity_LMI) -->
-<!-- ```  -->
-<!-- We now have the data we need to plot our local spatial autocorrelation maps. We will first plot the most simple maps to do with our local Moran's I test: the local Moran's I statistic as well as the $p$-values of the local Moran's I statistic. -->
-<!-- Map the local Moran's I statistic:  -->
-<!-- ```{r 07-map-LMI, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # map our local Moran's I statistic  -->
-<!-- tm_shape(obesity_Ward_sdf) +  -->
-<!--   tm_polygons("LMI_Ii", style = "pretty", midpoint = 0, title = "Local Moran's I statistic") +  -->
-<!--   tm_layout(main.title= "Spatial Autocorrelation of Childhood Obesity in London",  -->
-<!--             main.title.fontface = 2, fontfamily = "Helvetica",  -->
-<!--             legend.outside = TRUE,  -->
-<!--             legend.outside.position = "right",  -->
-<!--             legend.title.size = 1,  -->
-<!--             legend.title.fontface = 2) +  -->
-<!--   tm_compass(type = "arrow", position = c("right", "bottom")) +  -->
-<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
-<!-- ```  -->
-<!-- From the map, it is possible to observe the variations in autocorrelation across space. We can interpret that there seems to be a geographic pattern to the autocorrelation. However, it is not possible to understand if these are clusters of high or low values. To be able to interpret this confidently, we also need to know the significance of the patterns we see in our map and therefore need to map the $p$-value of local Moran's I statistic. -->
-<!-- Map the $p$-value of local Moran's I statistic: -->
-<!-- ```{r 07-map-LMI-p, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # significance breaks -->
-<!-- breaks <- c(0, 0.05, 0.1, 1) -->
-<!-- # colours for our local Moran's I statistic -->
-<!-- colours <- c('white', "#a6bddb", "#2b8cbe" ) -->
-<!-- # map our local Moran's I statistic  -->
-<!-- tm_shape(obesity_Ward_sdf) +  -->
-<!--   tm_polygons("LMI_sigP", style = "fixed", breaks = breaks,  -->
-<!--               palette = rev(colours), title = "p-value of Local Moran's I stat") +  -->
-<!--   tm_layout(main.title = "Spatial Autocorrelation of Childhood Obesity in London",  -->
-<!--             main.title.fontface = 2, fontfamily = "Helvetica",  -->
-<!--             legend.outside = TRUE,  -->
-<!--             legend.outside.position = "right",  -->
-<!--             legend.title.size = 1,  -->
-<!--             legend.title.fontface = 2) +  -->
-<!--   tm_compass(type = "arrow", position = c("right", "bottom")) +  -->
-<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
-<!-- ```  -->
-<!-- Using our significance map, we can interpret the above clusters present in our local Moran's I statistic more confidently. As evident, we do have several clusters that are statistically significant to the $p$-value < 0.05.  -->
-<!-- Ideally we would combine these two outputs to see what values cluster together and which clusters are significant. We can do this with a cluster map of our **local Moran's I statistic (Ii)** which will show areas of different types of clusters, including: -->
-<!-- * **HIGH-HIGH**: A Ward of high obesity that is also surrounded by other Wards of high obesity. -->
-<!-- * **HIGH-LOW**: A Ward of high obesity that is surrounded by Wards of low obesity. -->
-<!-- * **LOW-HIGH**: A Ward of low obesity that is surrounded by Wards of high obesity. -->
-<!-- * **LOW-LOW**: A Ward of low obesity that is also surrounded by other Wards of low obesity. -->
-<!-- * Those areas that have no significant cluster or relationship to the Wards around them. -->
-<!-- Our HIGH-HIGH and LOW-LOW will show our clusters, whereas the other two cluster types reveal anomalies in our variable. To create a map that shows this, we need to quantify the relationship each of our Wards have with the Wards around them to determine their cluster type. We do this using their observed value and their local Moran's I statistic and their deviation around their respective means: -->
-<!-- * *If a Ward's observed value is higher than the observed mean and it's local Moran's I statistic is higher than the LMI mean*, it is designated as **HIGH-HIGH**. -->
-<!-- * *If a Ward's observed value is lower than the observed mean and it's local Moran's I statistic is lower than the LMI mean*, it is designated as **LOW-LOW**. -->
-<!-- * *If a Ward's observed value is lower than the observed mean but it's local Moran's I statistic is higher than the LMI mean*, it is designated as **LOW-HIGH**. -->
-<!-- * *If a Ward's observed value is higher than the observed mean but it's local Moran's I statistic is lower than the LMI mean*, it is designated as **HIGH-LOW**. -->
-<!-- * *If a Ward's LMI was found not to be significant*, the Ward will be mapped as **not significant**. -->
-<!-- For example, this means that if we know our Ward’s observed value is less than the mean value of our overall `y6_obesity_2014 variable`, then it means it is of course a low value for obesity in comparison to the entirety of London. If it’s local Moran’s I statistic is also lower than the mean value of the rest of the LMI_Ii statistics, it also means it is located in a neighbourhood of low values. As a result, if this relationship is significant (determined by the pseudo $p$-value from our local Moran’s I calculation), we can call this a “LOW-LOW” cluster. -->
-<!-- To achieve this cluster map, we need to take several additional steps: -->
-<!-- * The first will tell us, for each Ward, whether its observed value is higher or lower than the mean observed. -->
-<!-- * The second will tell us, for each Ward, whether its LMI value is higher or lower than the mean LMI. -->
-<!-- * The third will use the values of these two columns to assign each Ward with a cluster type. -->
-<!-- Determine the cluster type of each Ward by comparing observed and LMI values against their respective means and the significance value: -->
-<!-- ```{r 07-LMI-cluster-type, warnings=FALSE, message=FALSE, cache=FALSE, tidy='styler'} -->
-<!-- # compare local value for obesity with mean value -->
-<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% mutate(obs_diff = (y6_obesity_2014 - mean(obesity_Ward_sdf$y6_obesity_2014))) -->
-<!-- # compare local LMI value with mean LMI value -->
-<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% mutate(LMI_diff = (obesity_LMI$LMI_Ii - mean(obesity_LMI$LMI_Ii))) -->
-<!-- # set a significance threshold  -->
-<!-- signif <- 0.05 -->
-<!-- # generate column with cluster type, using values above -->
-<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>%  -->
-<!--   mutate(cluster_type = case_when(obs_diff > 0 & LMI_diff > 0 & LMI_sigP < signif ~ "High-High", -->
-<!--                                   obs_diff < 0 & LMI_diff < 0 & LMI_sigP < signif ~ "Low-Low", -->
-<!--                                   obs_diff < 0 & LMI_diff > 0 & LMI_sigP < signif ~ "Low-High", -->
-<!--                                   obs_diff > 0 & LMI_diff < 0 & LMI_sigP < signif ~ "High-Low", -->
-<!--                                   LMI_sigP > signif ~ "No Significance")) -->
-<!-- ``` -->
-<!-- Now we have a column detailing our cluster types, we can create a cluster map that details our four cluster types as well as those that are not significant. Creating a categorical map in R and using `tmap` is a little tricky and we will need to do some preparing of our colour palettes to ensure our data is mapped correctly. To do this, we first need to figure out how many cluster types we have in our `cluster_type` field: -->
-<!-- ```{r 07-LMI-cs, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # count the different values within our `cluster_type` variable  -->
-<!-- count(obesity_Ward_sdf, cluster_type) -->
-<!-- ``` -->
-<!-- We can see we actually have all four cluster types present within our dataset - alongside the `No Significance` value. We therefore need to ensure our palette includes four colours for these two cluster types, plus a white colour for `No Significance`: -->
-<!-- ```{r 07-plot-LMI-hscs, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # create a colour palette -->
-<!-- pal <- c("#d7191c", "#fdae61", "#abd9e9", "#2c7bb6","#F5F5F5") -->
-<!-- # plot the clusters -->
-<!-- tm_shape(obesity_Ward_sdf) + -->
-<!--   tm_polygons(col = "cluster_type", palette = pal, title = "Cluster Type") + -->
-<!--   tm_layout(main.title = "Cluster Map of Childhood Obesity in London, 2014", -->
-<!--             main.title.fontface = 2, fontfamily = "Helvetica", legend.outside = TRUE, -->
-<!--             legend.outside.position = "right", -->
-<!--             legend.title.size = 1, -->
-<!--             legend.title.fontface = 2) + -->
-<!--   tm_compass(type = "arrow", position = c("right", "bottom")) + -->
-<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
-<!-- ```  -->
-<!-- And there we have it: within one map we can visualise both the relationship of our Wards to their respective neighbourhoods and the significance of this relationship from our local Moran's I test. This type of map is called a LISA map and is a great way of showing how a variable is actually clustering. -->
-<!-- ### Getis-Ord-Gi* -->
-<!-- The final test we will run today is the local Getis-Ord, which will produce the Gi* statistic. This statistic will identify hot- and coldspots by looking at the neighbours within a defined proximity to identify where either high or low values cluster spatially and recognising statistically significant hotspots as those areas of high values where other areas within a neighbourhood range also share high values too (and vice versa for coldspots). -->
-<!-- Run the local Gi* statistic spatial autocorrelation test and print the result: -->
-<!-- ```{r 07-local-GO, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # run the local Gi* test on our y6_obesity_2014 data, note we again use the fd weights -->
-<!-- obesity_LGO <- obesity_Ward_sdf %>% pull(y6_obesity_2014) %>% as.vector() %>% localG(., Ward_spatial_weights_fd)  -->
-<!-- # join the local Gi* statistic to `obesity_Ward_sdf` spatial dataframe -->
-<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% mutate(obesity_LGO_G = as.numeric(obesity_LGO)) -->
-<!-- # inspect -->
-<!-- obesity_Ward_sdf -->
-<!-- ```  -->
-<!-- By printing the results of our test, we can see that the local Getis-Ord test is a bit different from a local Moran's I test as it only contains a single value: the z-score. The z-score is a standardised value relating to whether high values or low values are clustering together, which we call the Gi* statistic. We can join this output, a list of our Gi* values, to our `obesity_Ward_sdf` spatial dataframe and map the result: -->
-<!-- ```{r 07-join-local-GO, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- ``` -->
-<!-- ```{r 07-map-local-GO, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # create a colour palette -->
-<!-- GIColours <- rev(brewer.pal(8, "RdBu")) -->
-<!-- # plot the clusters -->
-<!-- tm_shape(obesity_Ward_sdf) +  -->
-<!--   tm_polygons("obesity_LGO_G", style = "pretty", palette=GIColours, -->
-<!--               midpoint=0, title = "Local Gi* statistic") + -->
-<!--   tm_layout(main.title = 'Hot/Cold Spot Map of Childhood Obesity in London, 2014',  -->
-<!--             main.title.fontface = 2, fontfamily = "Helvetica", -->
-<!--             legend.outside = TRUE,  -->
-<!--             legend.outside.position = "right",  -->
-<!--             legend.title.size = 1,  -->
-<!--             legend.title.fontface = 2) +  -->
-<!--   tm_compass(type = "arrow", position = c("right", "bottom")) + -->
-<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
-<!-- ```  -->
-<!-- Our map shows quite clearly hot and cold spots of obesity across London. How does this compare with our local Moran's I? Do we see the same clusters? -->
-<!-- :::tip -->
-<!-- **Tip** <br/> -->
-<!-- If we want to only map the statistically significant clusters, we need to use these [z-scores](https://en.wikipedia.org/wiki/Standard_score) to filter out only statistically significant clusters. When using a 95 percent confidence level your values should be between `-1.96` and `+1.96` standard deviations. -->
-<!-- ::: -->
-<!-- ## Assignment 2 {#assignment-2-w07} -->
-<!-- Through conducting our spatial autocorrelation tests, we can visually confirm the presence of clusters in our `y6_obesity_2014` variable and provide a significance value associated with these tests. This provides us with a way to explain our distributions **quantitatively** during the analysis of our results. -->
-<!-- Now you have the code, you will be able to repeat this analysis on any variable in the future. For this week's assignment, we therefore want you to find out whether our `IDACI_2010` variable contains spatial clustering. -->
-<!-- In order to do this, you have to: -->
-<!-- 1. Create a choropleth map showing the distribution of the variable values. -->
-<!-- 2. Calculate a global spatial autocorrelation statistic and explain what it shows. -->
-<!-- 3. Create a local Moran's I map showing the four cluster types. -->
-<!-- 4. Create a local Getis-Ord hotspot map. -->
-<!-- 5. Compare these results to the output of our `y6_obesity_2014` values. Do both variables have clusters? Do we see similar clusters in similar locations? What might this tell us about the relationship between deprivation and obesity in children in London? -->
-<!-- 6. Run the analysis using a different neighbour definition. What happens? Do the results change? -->
+data:  as.vector(pull(ethnicity_london_sdf, asian_bangladeshi_prop))  
+weights: ward_spatial_weights_queen    
+
+Moran I statistic standard deviate = 33.368, p-value &lt; 2.2e-16
+alternative hypothesis: greater
+sample estimates:
+Moran I statistic       Expectation          Variance 
+     0.7388275913     -0.0014224751      0.0004921516 </code></pre>
+</div>
+</div>
+<p>The Moran’s I statistic calculated should be 0.73. With <span class="math inline">\(1\)</span> = clustered, <span class="math inline">\(0\)</span> = no pattern, <span class="math inline">\(-1\)</span> = dispersed, this means we can confirm that the population in London that self-identifies as Asian-Bangladeshi is positively autocorrelated. In other words, Asian-Bangladeshi’s do spatially cluster. We can also consider the pseudo <span class="math inline">\(p\)</span>-value as a measure of the statistical significance of the model - at <span class="math inline">\(&lt; 2.2e-16\)</span>, which confirm our result is statistically significant.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Before we run our local spatial autocorrelation tests, let’s just take a second to think through what our results have shown. From our global statistical tests, we can confirm that:</p>
+<ul>
+<li>There is clustering in our dataset.</li>
+<li>Similar values are clustering.</li>
+<li>High values are clustering.</li>
+</ul>
+<p>We can conclude already that Wards with a relatively large proportion of people that self-identify as Asian-Bangladeshi’s tend to cluster in the same area. What we do not know yet is <strong>where</strong> these clusters are occurring. To help with this, we need to run our <strong>local</strong> models to identify where these clusters are located.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="local-morans-i" class="level3" data-number="1.6.5">
+<h3 data-number="1.6.5" class="anchored" data-anchor-id="local-morans-i"><span class="header-section-number">7.6.5</span> Local Moran’s I</h3>
+<p>A local Moran’s I test deconstructs the global Moran’s I down to its components and then constructs a localised measure of autocorrelation, which can show different cluster types. To run a local Moran’s I test, the code is similar to above:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-local-moran-queen_5e28f11cd4b4f0064cb46a83d4090d50">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Local Moran's I</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>local_moran_queen <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(asian_bangladeshi_prop) <span class="sc">|&gt;</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.vector</span>() <span class="sc">|&gt;</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">localmoran</span>(ward_spatial_weights_queen)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect result</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(local_moran_queen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         Ii         E.Ii   Var.Ii      Z.Ii Pr(z != E(Ii))
+1 25.938848 -0.030858912 3.812461 13.300389   2.302674e-40
+2  3.513144 -0.002819111 0.359639  5.862879   4.549109e-09
+3  4.984015 -0.008689846 1.100739  4.758760   1.947861e-06
+4 13.993342 -0.014330767 1.805854 10.423767   1.931491e-25
+5 23.708775 -0.063683806 7.658797  8.590013   8.695953e-18
+6 24.269894 -0.047606581 5.698760 10.186588   2.276128e-24</code></pre>
+</div>
+</div>
+<p>As you should see, we ae not given a single statistic as we did with our global test, but rather a table of different statistics that are all related back to each of the Wards in our dataset.</p>
+<p>If we look at the help page for the <code>localmoran</code> function (run <code>?localmoran</code> in your console) we can find out what each of these statistics mean:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ii</td>
+<td style="text-align: left;">Local Moran’s I statistic</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">E.Ii</td>
+<td style="text-align: left;">Expectation of local Moran’s I statistic</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Var.Ii</td>
+<td style="text-align: left;">Variance of local Moran’s I statistic</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Z.Ii</td>
+<td style="text-align: left;">Standard deviation of local Moran’s I statistic</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pr()</td>
+<td style="text-align: left;"><span class="math inline">\(p\)</span>-value of local Moran’s I statistic</td>
+</tr>
+</tbody>
+</table>
+<p>We therefore have a Moran’s I statistic for each of our Wards, as well as a significance value plus a few other pieces of information that can help us create some maps showing our clusters. To be able to do this, we need to join our local Moran’s I output back into our <code>ethnicity_london_sdf</code> spatial dataframe, which will then allow us to map these results.</p>
+<p>To create this join, we first <strong>coerce</strong> our local Moran’s I output into a dataframe that we then join to our <code>ethnicity_london_sdf</code> spatial dataframe using the familiar <code>mutate()</code> function from the <code>dplyr</code> library. In our case, we do not need to provide an <strong>attribute</strong> to join these two dataframes together as we use the computer’s logic to join the data in the order in which it was created:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-local-moran-join_0e656d737d1768289a42831999e785e1">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># coerce to dataframe</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>local_moran_queen <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(local_moran_queen)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># update the names for easier reference</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(local_moran_queen) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"LMI_Ii"</span>, <span class="st">"LMI_eIi"</span>, <span class="st">"LMI_varIi"</span>, <span class="st">"LMI_zIi"</span>, <span class="st">"LMI_sigP"</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co"># join</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>ethnicity_london_sdf <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(local_moran_queen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We now have the data we need to plot our local spatial autocorrelation maps. We will first plot the most simple maps to do with our local Moran’s I test: the local Moran’s I statistic.</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/fig-07-map-local-moran_7cbc143c8cab0e85de42e830b2c0f99f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># map the local Moran's I statistic</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(ethnicity_london_sdf) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="st">"LMI_Ii"</span>, <span class="at">style =</span> <span class="st">"pretty"</span>, <span class="at">midpoint =</span> <span class="dv">0</span>, <span class="at">title =</span> <span class="st">"Local Moran's I statistic"</span>) <span class="sc">+</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">main.title =</span> <span class="st">"Spatial Autocorrelation Asian Bangladeshi's in London"</span>,</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">main.title.fontface =</span> <span class="dv">2</span>, <span class="at">fontfamily =</span> <span class="st">"Helvetica"</span>,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title.size =</span> <span class="dv">1</span>,</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title.fontface =</span> <span class="dv">2</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">type =</span> <span class="st">"arrow"</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>), <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-07-map-local-moran" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="07-autocorrelation_files/figure-html/fig-07-map-local-moran-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;16: Cluster map of the self-identified Asian-Bangladeshi population group.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>From the map, it is possible to observe the variations in autocorrelation across space. We can interpret that there seems to be a geographic pattern to the autocorrelation. However, it is not possible to understand if these are clusters of high or low values or which ones are statistically signficant. To be able to interpret this confidently, we also need to know the significance of the patterns we see in our map and therefore need to map the <span class="math inline">\(p\)</span>-value of local Moran’s I statistic.</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/fig-07-map-local-moran-significance_ebc4c7fe2b2ce7d88e58c350e8885111">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># significance breaks</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="dv">1</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># colour palette</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>colours <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#ffffff"</span>, <span class="st">"#a6bddb"</span>, <span class="st">"#2b8cbe"</span>)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># map our local # map the local Moran's I statistic</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(ethnicity_london_sdf) <span class="sc">+</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="st">"LMI_sigP"</span>,</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="st">"fixed"</span>, <span class="at">breaks =</span> breaks,</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">rev</span>(colours), <span class="at">title =</span> <span class="st">"p-value of Local Moran's I stat"</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">main.title =</span> <span class="st">"Spatial Autocorrelation Asian Bangladeshi's in London"</span>,</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">main.title.fontface =</span> <span class="dv">2</span>, <span class="at">fontfamily =</span> <span class="st">"Helvetica"</span>,</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title.size =</span> <span class="dv">1</span>,</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title.fontface =</span> <span class="dv">2</span></span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">type =</span> <span class="st">"arrow"</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>), <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-07-map-local-moran-significance" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="07-autocorrelation_files/figure-html/fig-07-map-local-moran-significance-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;17: Significant cluster map of the self-identified Asian-Bangladeshi population group.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Using our significance map, we can interpret the above clusters present in our local Moran’s I statistic more confidently. As evident, we do have several clusters that are statistically significant to the <span class="math inline">\(p\)</span>-value &lt; 0.05.</p>
+<p>Ideally we would combine these two outputs to see what values cluster together as well as which clusters are significant. We can do this with a cluster map of our <strong>local Moran’s I statistic (Ii)</strong> which will show areas of different types of clusters, including:</p>
+<ul>
+<li><strong>HIGH-HIGH</strong>: A Ward with a relatively high proportion of residents that self-identify as Asian-Bangladeshi that is also surrounded by other Wards with a relatively high proportion of residents that self-identify as Asian-Bangladeshi.</li>
+<li><strong>HIGH-LOW</strong>: A Ward with a relativley high proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively low proportion of residents that self-identify as Asian-Bangladeshi.</li>
+<li><strong>LOW-HIGH</strong>: A Ward with a relativley low proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively high proportion of residents that self-identify as Asian-Bangladeshi.</li>
+<li><strong>LOW-LOW</strong>: A Ward with a relatively low proportion of residents that self-identify as Asian-Bangladeshi that is also surrounded by other Wards with a relatively low proportion of residents that self-identify as Asian-Bangladeshi.</li>
+</ul>
+<p>Our HIGH-HIGH and LOW-LOW will show our clusters, whereas the other two cluster types reveal anomalies in our variable. To create a map that shows this, we need to quantify the relationship each of our Wards have with the Wards around them to determine their cluster type. We do this using their observed value and their local Moran’s I statistic and their deviation around their respective means:</p>
+<ul>
+<li>If a Ward’s observed value is higher than the observed mean and it’s local Moran’s I statistic is higher than the LMI mean, it is designated as <strong>HIGH-HIGH</strong>.</li>
+<li>If a Ward’s observed value is lower than the observed mean and it’s local Moran’s I statistic is lower than the LMI mean, it is designated as <strong>LOW-LOW</strong>.</li>
+<li>If a Ward’s observed value is lower than the observed mean but it’s local Moran’s I statistic is higher than the LMI mean, it is designated as <strong>LOW-HIGH</strong>.</li>
+<li>If a Ward’s observed value is higher than the observed mean but it’s local Moran’s I statistic is lower than the LMI mean, it is designated as <strong>HIGH-LOW</strong>.</li>
+<li>If a Ward’s LMI was found not to be significant, the Ward will be mapped as <strong>not significant</strong>.</li>
+</ul>
+<p>To create this cluster map, we need to take several additional steps. We firstly need, for each Ward, whether its observed value is higher or lower than the mean observed. We then need to know, for each Ward, whether its LMI value is higher or lower than the mean LMI. Finally, we can use the values of these two columns to assign each Ward with a cluster type.</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/fig-07-map-local-moran-cluster-type_520b2f8c855ca4c5fc55ae058bd5c92f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># significance breaks</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>ethnicity_london_sdf <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">obs_diff =</span> (asian_bangladeshi_prop <span class="sc">-</span> <span class="fu">mean</span>(ethnicity_london_sdf<span class="sc">$</span>asian_bangladeshi_prop)))</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># compare local LMI value with mean LMI value</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>ethnicity_london_sdf <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">LMI_diff =</span> (ethnicity_london_sdf<span class="sc">$</span>LMI_Ii <span class="sc">-</span> <span class="fu">mean</span>(ethnicity_london_sdf<span class="sc">$</span>LMI_Ii)))</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co"># set significance threshold</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>signif <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co"># generate column with cluster type, using values above</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>ethnicity_london_sdf <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cluster_type =</span> <span class="fu">case_when</span>(</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>    obs_diff <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> LMI_diff <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> LMI_sigP <span class="sc">&lt;</span> signif <span class="sc">~</span> <span class="st">"High-High"</span>,</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>    obs_diff <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> LMI_diff <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> LMI_sigP <span class="sc">&lt;</span> signif <span class="sc">~</span> <span class="st">"Low-Low"</span>,</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>    obs_diff <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> LMI_diff <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> LMI_sigP <span class="sc">&lt;</span> signif <span class="sc">~</span> <span class="st">"Low-High"</span>,</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>    obs_diff <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> LMI_diff <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> LMI_sigP <span class="sc">&lt;</span> signif <span class="sc">~</span> <span class="st">"High-Low"</span>,</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>    LMI_sigP <span class="sc">&gt;</span> signif <span class="sc">~</span> <span class="st">"No Significance"</span></span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>  ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now we have a column detailing our cluster types, we can create a cluster map that details our four cluster types as well as those that are not significant. Creating a categorical map in R and using <code>tmap</code> is a little tricky and we will need to do some preparing of our colour palettes to ensure our data is mapped correctly. To do this, we first need to figure out how many cluster types we have in our <code>cluster_type</code> field:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-local-moran-cluster-types_a3453f0525cbb7501d3aaab0be0a394c">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count the cluster types</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(ethnicity_london_sdf, cluster_type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 4 features and 2 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 503575 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid
+     cluster_type   n                          SHAPE
+1       High-High  45 MULTIPOLYGON (((537017.7 17...
+2        High-Low   9 MULTIPOLYGON (((533648.3 18...
+3         Low-Low   1 MULTIPOLYGON (((533386.7 18...
+4 No Significance 649 MULTIPOLYGON (((520238.1 16...</code></pre>
+</div>
+</div>
+<p>We can see that we have three out of the four possible cluster types in our dataset — alongside the <code>No Significance</code> value. We therefore need to ensure our palette includes three colours for these cluster types, plus a white colour for <code>No Significance</code>:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-local-moran-cluster-types-colours_fc6f3673ba23e498e852d0aa8702815f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create palette</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#d7191c"</span>, <span class="st">"#fdae61"</span>, <span class="st">"#2c7bb6"</span>, <span class="st">"#F5F5F5"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now we can finally map our clusters:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/fig-07-cluster-plot_17a5e4954cd93a9ad30a6f2a5e7e641a">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the different clusters</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(ethnicity_london_sdf) <span class="sc">+</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">col =</span> <span class="st">"cluster_type"</span>, <span class="at">palette =</span> pal, <span class="at">title =</span> <span class="st">"Cluster Type"</span>) <span class="sc">+</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">main.title =</span> <span class="st">"Cluster Map of Asian Bangladeshi's in London"</span>,</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">main.title.fontface =</span> <span class="dv">2</span>, <span class="at">fontfamily =</span> <span class="st">"Helvetica"</span>, <span class="at">legend.outside =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title.size =</span> <span class="dv">1</span>,</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title.fontface =</span> <span class="dv">2</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">type =</span> <span class="st">"arrow"</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>), <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-07-cluster-plot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="07-autocorrelation_files/figure-html/fig-07-cluster-plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;18: Cluster types map of the self-identified Asian-Bangladeshi population group.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>And there we have it: within one map we can visualise both the relationship of our Wards to their respective neighbourhoods and the significance of this relationship from our local Moran’s I test. This type of map is called a <a href="https://geodacenter.github.io/workbook/6a_local_auto/lab6a.html">LISA map</a> and is a great way of showing how a variable is actually clustering.</p>
+</section>
+<section id="getis-ord-gi" class="level3" data-number="1.6.6">
+<h3 data-number="1.6.6" class="anchored" data-anchor-id="getis-ord-gi"><span class="header-section-number">7.6.6</span> Getis-Ord-Gi*</h3>
+<p>The final test we will run today is the local Getis-Ord, which will produce the <span class="math inline">\(Gi*\)</span> statistic. This statistic will identify hot- and coldspots by looking at the neighbours within a defined proximity to identify where either high or low values cluster spatially and recognising statistically significant hotspots as those areas of high values where other areas within a neighbourhood range also share high values too (and vice versa for coldspots).</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-local-gi-queen_b195aa982d13547c5fa7779d05bc7a30">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gi* test</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>gi_queen <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pull</span>(asian_bangladeshi_prop) <span class="sc">|&gt;</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.vector</span>() <span class="sc">|&gt;</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">localG</span>(ward_spatial_weights_queen)</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="co"># join</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>ethnicity_london_sdf <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">asian_bangladeshi_gi =</span> <span class="fu">as.numeric</span>(gi_queen))</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>ethnicity_london_sdf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 704 features and 41 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 503575 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid
+First 10 features:
+      WD22CD                  WD22NM WD22NMW   LAD22CD       LAD22NM  BNG_E
+1  E05009317           Bethnal Green         E09000030 Tower Hamlets 535607
+2  E05009318 Blackwall &amp; Cubitt Town         E09000030 Tower Hamlets 538100
+3  E05009319                Bow East         E09000030 Tower Hamlets 536928
+4  E05009320                Bow West         E09000030 Tower Hamlets 536261
+5  E05009321           Bromley North         E09000030 Tower Hamlets 537617
+6  E05009322           Bromley South         E09000030 Tower Hamlets 537535
+7  E05009323            Canary Wharf         E09000030 Tower Hamlets 537488
+8  E05009324          Island Gardens         E09000030 Tower Hamlets 537960
+9  E05009325                Lansbury         E09000030 Tower Hamlets 538149
+10 E05009326               Limehouse         E09000030 Tower Hamlets 536542
+    BNG_N     LONG     LAT Shape_Leng                               GlobalID
+1  182735 -0.04653 51.5272   4596.711 {ECA3FE65-ECBD-416D-8ACD-06CFCE763148}
+2  180056 -0.01167 51.5026   8655.302 {FC5D2F6D-B45D-425F-9FC8-AC9302A49D63}
+3  183769 -0.02710 51.5362   6838.744 {F7195489-A08A-4CDB-9AD3-589F9E8D5720}
+4  183181 -0.03694 51.5311   6114.871 {7FA851A2-53A2-4B25-A116-A8ED23B50B96}
+5  182704 -0.01759 51.5265   3892.041 {479BB007-2506-4F94-B4EF-9BED621B387A}
+6  182093 -0.01901 51.5210   3603.544 {BDAB15AA-F556-40FA-A5A4-77B8C1C898F2}
+7  179863 -0.02056 51.5010   5934.088 {F8FE1F74-465C-4409-9CA2-23FB59C0B870}
+8  178641 -0.01424 51.4899   4450.479 {A14A94A1-FF5B-46B6-9640-3AFAB6FAB091}
+9  181610 -0.01035 51.5165   5979.077 {89F93DA3-1DB3-420F-AC37-453F49482043}
+10 180835 -0.03380 51.5099   3275.725 {4CE013FC-4E13-4DFF-9CF8-153E4D4362EF}
+                  ward22nm all_pop white_british white_irish white_gypsy
+1            Bethnal Green   19703          6870         338           7
+2  Blackwall &amp; Cubitt Town   13956          4365         208           2
+3                 Bow East   14781          7055         280          15
+4                 Bow West   12939          6167         260          12
+5            Bromley North    9329          2208         111          22
+6            Bromley South    8748          1979          75          16
+7             Canary Wharf   12831          3563         185           2
+8           Island Gardens   13409          5030         188           2
+9                 Lansbury   14993          4140         125          12
+10               Limehouse    6242          2354         135           1
+   white_other mixed_white_asian mixed_white_african mixed_white_caribbean
+1         2042               281                 124                   174
+2         2454               207                 103                   191
+3         1539               179                 105                   302
+4         1229               166                  73                   208
+5          688                82                  40                   144
+6          609                71                  65                   105
+7         2519               185                  96                   132
+8         2543               184                  68                   128
+9         1188                88                 107                   293
+10        1095                72                  46                    43
+   mixed_other asian_bangladeshi asian_chinese asian_indian asian_pakistani
+1          226              6406           466          364             169
+2          189              1995          1247          962             172
+3          222              2529           227          302              85
+4          185              2746           232          225              69
+5          131              3901           226          165              80
+6           71              3860           214          123              94
+7          190              2017          1232          847             123
+8          146              1854          1000          858             124
+9          115              5865           352          201             132
+10          82              1113           369          273              39
+   asian_other black_african black_caribbean black_other other_arab other
+1          436           705             320         315        202   257
+2          499           588             246         147        169   213
+3          233           572             578         264        122   172
+4          214           380             362         195         80   136
+5          169           536             357         224         97   149
+6          226           487             308         240         98   106
+7          452           435             219         174        212   247
+8          404           311             203          84        117   166
+9          318           891             477         375        126   188
+10         156           203              89          59         54    60
+                            SHAPE asian_bangladeshi_prop    LMI_Ii      LMI_eIi
+1  MULTIPOLYGON (((536275 1824...              0.3251282 25.938848 -0.030858912
+2  MULTIPOLYGON (((538731.4 17...              0.1429493  3.513144 -0.002819111
+3  MULTIPOLYGON (((537638.7 18...              0.1710980  4.984015 -0.008689846
+4  MULTIPOLYGON (((537375.7 18...              0.2122266 13.993342 -0.014330767
+5  MULTIPOLYGON (((538299.6 18...              0.4181584 23.708775 -0.063683806
+6  MULTIPOLYGON (((538284.3 18...              0.4412437 24.269894 -0.047606581
+7  MULTIPOLYGON (((538157 1805...              0.1571974  4.818142 -0.004733799
+8  MULTIPOLYGON (((538731.4 17...              0.1382653  1.345635 -0.001731413
+9  MULTIPOLYGON (((538302.5 18...              0.3911826 21.971018 -0.036810631
+10 MULTIPOLYGON (((536349.2 18...              0.1783082 14.567509 -0.009577283
+   LMI_varIi   LMI_zIi     LMI_sigP  obs_diff   LMI_diff cluster_type
+1  3.8124609 13.300389 2.302674e-40 0.2987531 25.2000201    High-High
+2  0.3596390  5.862879 4.549109e-09 0.1165742  2.7743160    High-High
+3  1.1007387  4.758760 1.947861e-06 0.1447230  4.2451875    High-High
+4  1.8058540 10.423767 1.931491e-25 0.1858516 13.2545147    High-High
+5  7.6587973  8.590013 8.695953e-18 0.3917834 22.9699475    High-High
+6  5.6987604 10.186588 2.276128e-24 0.4148687 23.5310667    High-High
+7  0.6022276  6.214780 5.139675e-10 0.1308224  4.0793141    High-High
+8  0.2212850  2.864242 4.180087e-03 0.1118903  0.6068074    High-High
+9  4.4760723 10.402283 2.420639e-25 0.3648075 21.2321905    High-High
+10 1.2121599 13.240085 5.149045e-40 0.1519332 13.8286817    High-High
+   asian_bangladeshi_gi
+1             13.300389
+2              5.862879
+3              4.758760
+4             10.423767
+5              8.590013
+6             10.186588
+7              6.214780
+8              2.864242
+9             10.402283
+10            13.240085</code></pre>
+</div>
+</div>
+<p>By printing the results of our test, we can see that the local Getis-Ord test is a bit different from a local Moran’s I test as it only contains a single value: the z-score. The z-score is a standardised value relating to whether high values or low values are clustering together, which we call the <span class="math inline">\(Gi*\)</span> statistic. Now we have joined this output, a list of our <span class="math inline">\(Gi*\)</span> values, to our <code>ethnicity_london_sdf</code> spatial dataframe and map the result:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/fig-07-cluster-plot-gi_a9e7dcd4b43c8cc205d7247cb18e8bd0">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the different clusters</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(ethnicity_london_sdf) <span class="sc">+</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="st">"asian_bangladeshi_prop"</span>, <span class="at">style =</span> <span class="st">"pretty"</span>, <span class="at">midpoint =</span> <span class="dv">0</span>, <span class="at">title =</span> <span class="st">"Local Gi* statistic"</span>) <span class="sc">+</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">main.title =</span> <span class="st">"Hot/Cold Spot Map of Asian-Bangladeshi's"</span>,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">main.title.fontface =</span> <span class="dv">2</span>, <span class="at">fontfamily =</span> <span class="st">"Helvetica"</span>,</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.outside.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title.size =</span> <span class="dv">1</span>,</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.title.fontface =</span> <span class="dv">2</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">type =</span> <span class="st">"arrow"</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>), <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-07-cluster-plot-gi" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="07-autocorrelation_files/figure-html/fig-07-cluster-plot-gi-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;19: Local <span class="math inline">\(Gi*\)</span> map of the self-identified Asian-Bangladeshi population group.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Our map shows quite clear hot spots of self-identified Asian-Bangladeshi’s across London.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>If we want to only map the statistically significant clusters, we need to use these <a href="https://en.wikipedia.org/wiki/Standard_score">z-scores</a> to filter out only statistically significant clusters. When using a 95 percent confidence level your values should be between <code>-1.96</code> and <code>+1.96</code> standard deviations.</p>
+</div>
+</div>
+</div>
 </section>
 </section>
-<section id="wm-w07" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="wm-w07"><span class="header-section-number">7.7</span> Want more? [Optional]</h2>
+<section id="assignment-w07" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="assignment-w07"><span class="header-section-number">7.7</span> Assignment</h2>
+<p>Through conducting our spatial autocorrelation tests, we can visually confirm the presence of clusters in our <code>asian_bangladeshi_prop</code> variable and provide a significance value associated with these tests.</p>
+<p>Now you have the code, you will be able to repeat this analysis on any variable in the future. For this week’s assignment, we therefore want you to find out whether also our <code>white_british</code> variable contains spatial clustering.</p>
+<p>In order to do this, you have to:</p>
+<ol type="1">
+<li>Create a choropleth map showing the distribution of the variable values.</li>
+<li>Calculate a global spatial autocorrelation statistic and explain what it shows.</li>
+<li>Create a local Moran’s I map showing the cluster types.</li>
+<li>Create a local Getis-Ord hotspot map.</li>
+<li>Compare these results to the output of our <code>asian_bangladeshi_prop</code> values. Do both variables have clusters? Do we see similar clusters in similar locations?</li>
+<li>Run the analysis using a different neighbour definition. What happens? Do the results change?</li>
+</ol>
+</section>
+<section id="wm-w07" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="wm-w07"><span class="header-section-number">7.8</span> Want more? [Optional]</h2>
 <section id="more-spatial-autocorrelation" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="more-spatial-autocorrelation">More spatial autocorrelation</h3>
 <p>If you are interested in moving beyond spatial autocorrelation, for instance how to account for spatial autocorrelation in statistical models (e.g.&nbsp;with Geographically Weighted Regression or Spatial Regression), have a look at the workbook <a href="https://profrichharris.github.io/MandM/themap.html">Mapping and Modelling Geographic Data in R</a> by Bristol-based Professor <a href="https://www.bristol.ac.uk/people/person/Richard-Harris-871b21a9-0f5f-4bc8-9a99-8ace550d9903/">Richard Harris</a>. Start with <a href="https://profrichharris.github.io/MandM/themap.html">The Spatial Variable</a> section, move to the <a href="https://profrichharris.github.io/MandM/autocorrelation.html">Measuring spatial autocorrelation</a> section before looking at the <a href="https://profrichharris.github.io/MandM/gwstats.html">Geographically Weighted Statistics</a> and <a href="https://profrichharris.github.io/MandM/spregress.html">Spatial Regression</a> sections.</p>
 </section>
 </section>
-<section id="byl-w07" class="level2" data-number="1.8">
-<h2 data-number="1.8" class="anchored" data-anchor-id="byl-w07"><span class="header-section-number">7.8</span> Before you leave</h2>
+<section id="byl-w07" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="byl-w07"><span class="header-section-number">7.9</span> Before you leave</h2>
 <p>And that is how you can measure spatial dependence in your dataset through different spatial autocorrelation measures. Next week we will focus on the last topic within our set of core spatial analysis methods and techniques, but <a href="https://www.youtube.com/watch?v=fCZVL_8D048">this week we have covered enough</a>!</p>
 
 
