@@ -286,8 +286,8 @@ Within general data analysis, when it comes to analysing the distribution of you
 
 We looked at how we can use R to extract some of these summary statistics briefly in [Week 4's computer tutorial](04-statistics.html#atomic-vectors), but let's have a look at how we can add further to this EDA, including creating some statistical charts of our data's distribution. A simple and straightforward way is by using the `summary()` function.
 
-::: {.callout-warning}
-The `summary()` function can also be called on the dataset as a whole and will generate summary statistics for each numeric variable. 
+::: {.callout-tip}
+The `summary()` function can be called on a dataset as a whole and will generate summary statistics for each numeric variable. 
 :::
 
 ```{r}
@@ -364,14 +364,18 @@ var_fields <- names(ethnicity_london_sdf)[14:31]
 
 # map all our variables of interest at once
 tm_shape(ethnicity_london_sdf) +
+  # add Ward boundaries
   tm_polygons("gray", border.col = "gray") +
 tm_shape(ethnicity_london_sdf) +
+  # add all variables of interest
   tm_polygons(col = var_fields) +
+  # add layout options
   tm_layout(legend.show = FALSE) +
+  # add 4 columns
   tm_facets(ncol = 4)
 ```
 
-Despite these maps being a little small and not containing any labels, it seems that different population groups indeed concentrate in different parts of London. Let's zoom into the Asian-Bangladeshi population group:
+Despite these maps being a little small and not containing any labels, it seems that different population groups indeed concentrate in different parts of London. Let's zoom into the Asian-Bangladeshi population group and add a legend:
 
 ```{r tidy='styler'}
 #| label: fig-07-facet-map-asian-bangladeshi
@@ -392,7 +396,7 @@ tm_shape(ethnicity_london_sdf) +
 ```
 
 ::: {.callout-warning}
-Please remember, whereas the above map is fine for a quick inspection, it is technically incorrect because we are showing absolute numbers on a choropleth. This is something we should never do, unless the spatial units are identical in size (e.g. a hexagonal tessellation of an area), because larger areas will draw attention and affect the visualisation. Much better would be to normalise these counts by the total number of people living within each of the Wards. 
+Please remember, whereas the above map is fine for a quick inspection, it is technically incorrect because we are showing absolute numbers on a choropleth. This is something we should never do, unless the spatial units are identical in size (e.g. a hexagonal tessellation of an area), because larger areas will draw attention and affect the visualisation. To be fair, even for a quick inspection, it would be much better to normalise these counts by the total number of people living within each of the Wards to get a more honoust picture of the distribution.
 :::
 
 The thing with spatial distributions is that we can quickly pick up on spatial patterns present within our data just by looking at the data. For example, we can clearly see some concentrations of people that self-identify as Asian-Bangladeshi's in East London. The question now is whether these clusters are significant from a statistical point of view. This brings us to measuring spatial correlation.
@@ -440,10 +444,11 @@ knitr::include_graphics('images/w07/mc-sim.png')
 
 If our slope is an outlier, i.e. not a value we would expect to compute if the data were randomly distributed, we are more confidently able to confirm our slope is reflective of our data's clustering and is significant. Our *pseudo-*$p$-values are then computed from our simulation results:
 
-<!-- <center>\(\frac{N_{extreme} + 1}{N + 1}\)</center> -->
-<!-- <br> -->
+$$
+\frac{N_{extreme} + 1}{N + 1}
+$$
 
-<!-- Where \({N_{extreme}}\) is the number of simulated Moran's I values that were more extreme that our observed statistic and \({N}\) is the total number of simulations. In the example above, from [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html), only 1 out the 199 simulations was more extreme than the observed local Moran's I statistic. Therefore \({N_{extreme}}\) = 1 , so $p$ is equal to (1+1) / (199 + 1) = 0.01. This means that "there is a 1% probability that we would be wrong in rejecting the null hypothesis". This approach is known as a **Monte Carlo simulation** or permutation bootstrap test. -->
+Where ${N_{extreme}}$ is the number of simulated Moran's I values that were more extreme that our observed statistic and ${N}$ is the total number of simulations. In the example above, from [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html), only 1 out the 199 simulations was more extreme than the observed local Moran's I statistic. Therefore ${N_{extreme}}$ = 1 , so $p$ is equal to $(1+1) / (199 + 1) = 0.01$. This means that "there is a 1% probability that we would be wrong in rejecting the null hypothesis". This approach is known as a **Monte Carlo simulation** or permutation bootstrap test.
 
 ### Defining neighbours
 For any spatial autocorrelation test that you want to conduct, you will always need one critical piece of information: *how do we define 'neighbours' in our dataset to enable the value comparison.* Every observation in a dataset will need to have a set of neighbours to which its value is compared. To enable this, we need to determine how many or what type of neighbours should be taken into account for each observation when conducting a spatial autocorrelation test. These 'neighbouring' observations can be defined in a multitude of ways, based either on geometry or proximity, and include:
@@ -467,94 +472,157 @@ Have a look at Esri's Help Documentation on [Selecting a conceptualization of sp
 
 For our analysis into the clustering of population groups, we will primarily use the **Queen contiguity**. This approach is "*effective when polygons are similar in size and distribution, and when spatial relationships are a function of polygon proximity (the idea that if two polygons share a boundary, spatial interaction between them increases)*" ([Esri, 2024](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/modeling-spatial-relationships.htm#GUID-729B3B01-6911-41E9-AA99-8A4CF74EEE27)).
 
-<!-- ### Spatial weights matrix -->
-<!-- Before we can calculate Moran’s I and any similar statistics, we need to first define our **spatial weights matrix**. This is known mathematically as \(W_{ij}\) and this will tell our code which unit neighbours which, according to our neighbour definition. For each neighbour definition, there is a different approach to implementing code to calculate the \(W_{ij}\) spatial weights matrix.  -->
+### Spatial weights matrix
+Before we can calculate Moran’s I and any similar statistics, we need to first define our **spatial weights matrix**. This is known mathematically as $W_{ij}$ and this will tell our code which unit neighbours which, according to our neighbour definition. For each neighbour definition, there is a different approach to implementing code to calculate the $W_{ij}$ spatial weights matrix. We will look at three approaches:
 
-<!-- Here, we will look at three approaches: -->
+1. Creating a Queen $W_{ij}$ spatial weights matrix
+2. Creating a Rook $W_{ij}$ spatial weights matrix
+3. Creating a Fixed Distance $W_{ij}$ spatial weights matrix
 
-<!-- 1. Creating a Queen \(W_{ij}\) spatial weights matrix -->
-<!-- 2. Creating a Rook \(W_{ij}\) spatial weights matrix -->
-<!-- 3. Creating a Fixed Distance \(W_{ij}\) spatial weights matrix -->
+For either approach, we use a single line of code to create the relevant $W_{ij}$ spatial weights matrix:
 
-<!-- For either approach, we use a single line of code to create the relevant \(W_{ij}\) spatial weights matrix: -->
+```{r}
+#| label: 07-who-is-your-neighbour
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# Queens neighbours
+ward_neighbours_queen <- ethnicity_london_sdf |> poly2nb(queen=T)
 
-<!-- ```{r 07-defining-neighbours, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
-<!-- # create a neighbours list based on the Queen neighbour definition -->
-<!-- Ward_neighbours_queen <- obesity_Ward_sdf %>% poly2nb(., queen=T) -->
+# Rook neigbhours
+ward_neighbours_rook <- ethnicity_london_sdf |> poly2nb(queen=F)
 
-<!-- # create a neighbours list based on the Rook neighbour definition -->
-<!-- Ward_neighbours_rook <- obesity_Ward_sdf %>% poly2nb(., queen=F) -->
+# Fixed distance neighbours
+ward_neighbours_fd <- dnearneigh(st_geometry(st_centroid(ethnicity_london_sdf)),0, 4000)
+```
 
-<!-- # creates centroid and joins neighbours within 0 and 3000 'units' of the CRS, i.e. metres -->
-<!-- Ward_neighbours_fd <- dnearneigh(st_geometry(st_centroid(obesity_Ward_sdf)),0, 3000) -->
-<!-- ```  -->
+Creating our neighbours list through a single line of code, as above, does not really tell us much about the differences between these different definitions. It would be useful to the links between neighbours for our three definitions and visualise their distribution across space. To be able to do this, we will use a few lines of code to generate a visualisation based on mapping the defined connections between the centroids of our Wards.
 
-<!-- Creating our neighbours list through a single line of code, as above, does not really tell us much about the differences between these conceptualisations. It would be useful to the links between neighbours for our three definitions and visualise their distribution across space. To be able to do this, we will use a few lines of code to generate a visualisation based on mapping the defined connections between the centroids of our Wards. -->
+::: {.callout-note}
+A centroid, in its most simplest form is the central point of an areal unit. How this central point is defined can be weighted by different approaches to understanding geometries or by using an additional variable. In our case, our centroids will reflect in the geometric middle point of our Wards.
+:::
 
-<!-- :::note -->
-<!-- **Note** <br /> -->
-<!-- A centroid, in its most simplest form is the central point of an areal unit. How this central point is defined can be weighted by different approaches to understanding geometries or by using an additional variable. In our case, our centroids will reflect in the 'central' point of our Wards, determined by its geometric boundaries. -->
-<!-- ::: -->
+We can calculate the centroids of our Wards using one of the **geometric** tools from the `sf` library: `sf_centroid()`.
 
-<!-- We can calculate the centroids of our Wards using one of the **geometric** tools from the `sf` library: `sf_centroid()`: -->
+```{r}
+#| label: 07-get-them-centroids
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# calculate the centroids of all of the Wards in London
+ward_centroid <- ethnicity_london_sdf |>
+  st_centroid()
+```
 
-<!-- ```{r 07-calc-centroids, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
-<!-- # calculate the centroids of all of the Wards in London -->
-<!-- Ward_centroid <- obesity_Ward_sdf %>% st_centroid() -->
-<!-- ```  -->
+::: {.callout-note}
+We actually already used this function above as the creation of the fixed distance spatial weights matrix requires a point geometry and then calculates which other point geometries are within the specified distance.
+:::
 
-<!-- You can `plot()` the `Ward_centroid` using the console to see what they look like as spatial data. Now we have our Ward centroids, we can go ahead and plot the centroids and the defined neighbour connections between them from each of our neighbour definitions. To do so, we will use the `plot()` function, provide the relationships via our `Ward_neighbours_X` list and then the geometry associated with these lists from our `Ward_centroid()`: -->
+Now we have our Ward centroids, we can go ahead and plot the centroids and the defined neighbour connections between them from each of our neighbour definitions. To do so, we will use the `plot()` function, provide the relationships via our `ward_neighbours_*` lists and then the geometry associated with these lists from our `ward_centroid` object:
 
-<!-- ```{r 07-plotting-neighbours-1, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # plot neighbours: Queen -->
-<!-- plot(Ward_neighbours_queen, st_geometry(Ward_centroid), col="red", pch=20, cex=0.5) -->
-<!-- ```  -->
+```{r}
+#| label: fig-07-plot-them-neighbours-queen
+#| fig-cap: "2022 Wards with a **Queen** neighbourhood definition."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# plot neighbours: Queen
+plot(ward_neighbours_queen, st_geometry(ward_centroid), col="red", pch=20, cex=0.5)
+```
 
-<!-- ```{r 07-plotting-neighbours-2, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # plot neighbours: Rook -->
-<!-- plot(Ward_neighbours_rook, st_geometry(Ward_centroid), col="blue", pch=20, cex=0.5) -->
-<!-- ```  -->
+```{r}
+#| label: fig-07-plot-them-neighbours-rook
+#| #| fig-cap: "2022 Wards with a **Rook** neighbourhood definition."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# plot neighbours: Rook
+plot(ward_neighbours_rook, st_geometry(ward_centroid), col="blue", pch=20, cex=0.5)
+```
 
-<!-- ```{r 07-plotting-neighbours-3, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # plot neighbours: Fixed Distance -->
-<!-- plot(Ward_neighbours_fd, st_geometry(Ward_centroid), col="green", pch=20, cex=0.5) -->
-<!-- ```  -->
+```{r}
+#| label: fig-07-plot-them-neighbours-fixed
+#| fig-cap: "2022 Wards with a **Fixed distance** neighbourhood definition."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# plot neighbours: Fixed distance
+plot(ward_neighbours_fd, st_geometry(ward_centroid), col="red", pch=20, cex=0.5)
+```
 
-<!-- When comparing these different maps, we can see that there is definitely a difference in the number of neighbours when we use our different approaches. It seems our fixed distance neighbour conceptualisation has much connections in the center of London versus areas on the outskirts. We can see that our contiguity approaches provide a more equally distributed connection map, with our Queen conceptualisation having a few more links that our Rook. -->
+::: {.callout-note}
+In this example we use four kilometres as a distance threshold (i.e. centroids are considered neighbours if they are within three kilometres from one another, however, this is an arbitrary distance. When using a fixed distance make sure you have a good reason to select the distance (e.g. used in a paper that used the same administrative geographies).
+:::
 
-<!-- We can also type the different neighbours objects into the console to find out the total number of "non-zero links" (i.e. total number of connections) present within the conceptualisation. You should see that Queen has 3560 non-zero links, Rook has 3474 and Fixed Difference has 8238. Whilst this code simply explores these conceptualisations it helps us understand further how our different neighbourhood conceptualisations can ultimately impact our overall analysis. -->
+When comparing these different maps, we can see that there is definitely a difference in the number of neighbours when we use our different approaches. It seems our fixed distance neighbour conceptualisation has many connections in the centre of London versus areas on the outskirts. We can see that our contiguity approaches provide a more equally distributed connection map, with our Queen conceptualisation having a few more links that our Rook.
 
-<!-- With our neighbours now defined, we will go ahead and create our final (two) spatial weights objects that will be needed for our spatial autocorrelation code. At the moment, we currently have our neighbours defined as a "list" but we need to convert it to a "neighbours" object using the `nb2listw()` function: -->
+::: {.callout-warning}
+Whichever form of neighbours you are using, **always** check the results, especially those of the contiguity based approaches. If the spatial file that you are using is not in good shape (e.g. polygons seem to touch upon visual inspection but actually do not), your results will be compromised. 
+:::
 
-<!-- ```{r 07-creating-neighbours, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
-<!-- # create a neighbours list -->
-<!-- Ward_spatial_weights_queen <- Ward_neighbours_queen %>% nb2listw(., style="C") -->
+We can also type the different neighbours objects into the console to find out the total number of non-zero links (i.e. total number of connections) present within the conceptualisation. You should see that Queen has 4022 non-zero links, Rook has 3854 and Fixed Difference has 12462 Whilst this code simply explores these conceptualisations it helps us understand further how our different neighbourhood conceptualisations can ultimately impact our overall analysis.
 
-<!-- # creates a neighbours list  -->
-<!-- Ward_spatial_weights_fd <- Ward_neighbours_fd %>% nb2listw(., style = 'B') -->
-<!-- ```  -->
+::: {.callout-note}
+Remember: the number of links essentially determines the value of the **spatial lag** variable --- i.e. the value of a certain variable in comparison with its neighbours.
+:::
 
-<!-- :::note -->
-<!-- **Note** <br /> -->
-<!-- If you did not remove the `NAs` in our obesity column than the following code will not run. Make sure you have done this. If not, do it now and re-run your spatial weights matrix generation code again. -->
-<!-- ::: -->
+With our neighbours now defined, we will go ahead and create our final spatial weights objects that will be needed for our spatial autocorrelation code. At the moment, we have our neighbours defined as a *list* but we need to convert it to a *neighbours* object using the `nb2listw()` function:
 
-<!-- ### Global Moran's I -->
-<!-- With a Global Moran’s I we test how “random” the spatial distribution of these values is, producing a global Moran's statistic from the lag approach explained earlier.  -->
+```{r}
+#| label: 07-meeting-the-neigbhours-queen
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# create a neighbours list - Queen
+ward_spatial_weights_queen <- ward_neighbours_queen |> nb2listw(style = 'C' )
 
-<!-- The global Moran’s I statistic is a metric between -1 and 1: -->
+# create a neighbours list - Rook
+ward_spatial_weights_queen <- ward_neighbours_rook |> nb2listw(style = 'C' )
 
-<!-- * -1 is a completely even spatial distribution of values -->
-<!-- * 0 is a “random” distribution -->
-<!-- * 1 is a “non-random” distribution of clearly defined clusters -->
+# create a neighbours list
+ward_spatial_weights_fd <- ward_neighbours_fd |> nb2listw(style = 'C', zero.policy = TRUE)
+```
 
-<!-- Before we run our global Moran's I test, we will first create a spatial lag model plot which looks at each of the values plotted against their spatially lagged values. The graph will show quickly whether we are likely to expect our test to return a positive, zero or negative statistic: -->
+::: {.callout-note}
+For the fixed distance measure we need to specify an addition parameter (`zero.policy`). This is because it is possible that there are Wards without **any** neighbour (i.e. there is a Ward with a centroid that is not within our specified distance). This is not ideal, because you would want every unit to have at least one neighbour. We do not need this parameter in case of the contiguity based measures today because every Ward polygon touches at least one other Ward polygon.
+:::
 
-<!-- ```{r 07-scatter-plot-MI, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- obesity_MI_sp <- moran.plot(obesity_Ward_sdf$y6_obesity_2014, listw = Ward_spatial_weights_queen) -->
-<!-- ```  -->
+### Global Moran's I
+With a Global Moran’s I we test how random the spatial distribution of our values are, producing a global Moran's statistic from the lag approach explained earlier.
 
-<!-- We can see that there is a positive relationship between our `y6_obesity_2014` variable and the spatially lagged `y6_obesity_2014` variable, therefore we are expecting our global Moran's I test to produce a statistic reflective of the slope visible in our scatter plot. Now we can run the global Moran's I spatial autocorrelation test and print the result: -->
+The global Moran’s I statistic is a metric between $-1$ and $1$:
+
+- $-1$ suggests a completely even spatial distribution of values
+- $0$ suggests a *random* distribution
+- $1$ suggests a *non-random* distribution of clearly defined clusters
+
+Before we run our global Moran's I test, we will first create a spatial lag model plot which looks at each of the values plotted against their spatially lagged values. The graph will show quickly whether we are likely to expect our test to return a positive, zero, or negative statistic:
+
+```{r}
+#| label: fig-07-plot-moran-queens
+#| fig-cap: "Plot of lagged values versus polygon values using the Queen neigbhourhood definition."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# Moran's plot
+moran.plot(ethnicity_london_sdf$asian_bangladeshi, listw = ward_spatial_weights_queen)
+```
+
+We can see that there is a positive relationship between our `asian_bangladeshi` variable and the spatially lagged `asian_bangladeshi` variable, therefore we are expecting our global Moran's I test to produce a statistic reflective of the slope visible in our scatter plot. Now we can run the global Moran's I spatial autocorrelation test:
 
 <!-- ```{r 07-run-GMI, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
 <!-- # run the global Moran's I test on our y6_obesity_2014 data -->
