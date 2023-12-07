@@ -68,8 +68,11 @@ htmlredir = 'docs/index.html'
 with open(htmlredir) as file:
     html_content = file.read()
 
-    # update redirect
+    # update redirect / if to W01
     html_content = html_content.replace('01-introduction.html', \
+                                        '00-index.html')
+    # update redirect / if to W06
+    html_content = html_content.replace('06-operations.html', \
                                         '00-index.html')
 
     # write
