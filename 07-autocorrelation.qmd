@@ -421,6 +421,8 @@ Three of the most frequently used tests are the Global Moran's I, the. Local Mor
 In each of these cases, our $p$-values are pseudo $p$-values, generated through simulations such as those outlined in the lecture. Our pseudo $p$-values allow us to interpret our relationships with a level of confidence. If we find that our relationships do not have any significance, then we cannot be confident in presenting them as true results.
 ::: 
 
+<!-- normalise values by total population -->
+
 ### Spatial lag
 Underlying our global Moran's I test is the concept of a **spatial lag model**. A spatial lag model plots each value against the mean of its neighbours' values, defined by our selected approach. This creates a scatter plot, from which our Moran's I statistic can be derived.
 
@@ -538,7 +540,7 @@ plot(ward_neighbours_queen, st_geometry(ward_centroid), col="red", pch=20, cex=0
 
 ```{r}
 #| label: fig-07-plot-them-neighbours-rook
-#| #| fig-cap: "2022 Wards with a **Rook** neighbourhood definition."
+#| fig-cap: "2022 Wards with a **Rook** neighbourhood definition."
 #| classes: styled-output
 #| echo: True
 #| eval: True

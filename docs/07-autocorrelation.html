@@ -1013,6 +1013,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
+<!-- normalise values by total population -->
 <section id="spatial-lag" class="level3" data-number="1.6.1">
 <h3 data-number="1.6.1" class="anchored" data-anchor-id="spatial-lag"><span class="header-section-number">7.6.1</span> Spatial lag</h3>
 <p>Underlying our global Moran’s I test is the concept of a <strong>spatial lag model</strong>. A spatial lag model plots each value against the mean of its neighbours’ values, defined by our selected approach. This creates a scatter plot, from which our Moran’s I statistic can be derived.</p>
@@ -1160,7 +1161,7 @@ are constant over geometries of x</code></pre>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/fig-07-plot-them-neighbours-rook_b55d5091bafaa14fb7ed91e7bc01fb6f">
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/fig-07-plot-them-neighbours-rook_b0ecf44bab1fdbd99df42a52e3d31883">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1172,7 +1173,7 @@ are constant over geometries of x</code></pre>
 <div id="fig-07-plot-them-neighbours-rook" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="07-autocorrelation_files/figure-html/fig-07-plot-them-neighbours-rook-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;13: <strong>?(caption)</strong></figcaption>
+<figcaption class="figure-caption">Figure&nbsp;13: 2022 Wards with a <strong>Rook</strong> neighbourhood definition.</figcaption>
 </figure>
 </div>
 </div>
