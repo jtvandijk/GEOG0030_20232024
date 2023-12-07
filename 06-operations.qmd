@@ -773,7 +773,7 @@ Now we worked through all this, for this week's assignment:
 3.  There are clear differences between using different buffer distances. What do you think could explain the substantial differences in counts as we increase the distance from 100 to 200m?
 
 ## Want more? [Optional] {#wm-w06}
-#### Reproducible research {.unnumbered}
+### Reproducible research {.unnumbered}
 The book [Data Skills for Reproducible Research](https://psyteachr.github.io/reprores-v3/index.html) provides an excellent overview of skills needed for reproducible and open research using R and the `tidyverse` packages. To get started: have a look at [Chapter 2: Reproducible Workflows](https://psyteachr.github.io/reprores-v3/repro.html), [Chapter 7: Data Wrangling](https://psyteachr.github.io/reprores-v3/dplyr.html), and [Chapter 8: Iterations and Functions](https://psyteachr.github.io/reprores-v3/func.html). 
 
 Another great tool can be found in the `targets` package. The targets package is a [Make](https://www.gnu.org/software/make/)-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the [Walkthrough](https://books.ropensci.org/targets/walkthrough.html) chapter to see `targets` in action. 

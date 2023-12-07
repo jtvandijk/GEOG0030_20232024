@@ -19,3 +19,7 @@ div.sidebar-header {
   // background-color: #f7fcf5;
   // border-radius: 4px;
 }
+
+main p {
+  text-align: justify;
+}
