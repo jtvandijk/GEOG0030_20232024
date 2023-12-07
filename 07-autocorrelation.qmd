@@ -81,7 +81,7 @@ For the data on ethnic groups we turn to the [London Datastore](https://data.lon
 3. Type *2021 census Wards ethnicity* into the search field.
 4. Download the `Ethnic group.xlsx` file containing Ward codes and counts of number of individuals who self-identify with a particular population group.
 
-Open de file in Excel, and look at the first tab (**Front Page**). You will notice that under **Geography** 2022 Wards are listed. This is good because these are the ones we just downloaded. The actual data that we want to use can be found on the **2021** tab, which refers to the 2021 Census results.
+Open de file in Excel, and look at the first tab (**Front Page**). You will notice that under **Geography** 2022 Wards are listed. This is good because these are the ones we just downloaded. The actual data that we want to use can be found on the **2021** tab, which contains the 2021 Census results.
 
 ```{r}
 #| label: fig-ethnic-excel
@@ -106,10 +106,10 @@ After this, let's load our London MSOA file:
 #| tidy: True
 #| filename: "R code"
 # read in our Ward GeoPackage
-ward_london <- st_read("data/raw/boundaries/WARDS2022.gpkg")
+ward_gb <- st_read("data/raw/boundaries/WARDS2022.gpkg")
 ```
 
-Check the **CRS** of our `ward_london` spatial dataframe:
+Check the **CRS** of our `ward_gb` spatial dataframe:
 
 ```{r}
 #| label: 07-crs-wardshp
@@ -119,7 +119,7 @@ Check the **CRS** of our `ward_london` spatial dataframe:
 #| tidy: True
 #| filename: "R code"
 # inspect CRS
-st_crs(ward_london)
+st_crs(ward_gb)
 ```
 
 This all looks good, so we can move to also load the `csv` we just created:
@@ -153,7 +153,7 @@ ethnicity_london <- ethnicity_london |>
   select(-3,-4,-9)
 
 # rename columns
-names(ethnicity_london) <- c('ward22nm','ward22cd','all_pop','white_british','white_irish',
+names(ethnicity_london) <- c('ward22cd','ward22nm','all_pop','white_british','white_irish',
                              'white_gypsy','white_other','mixed_white_asian', 'mixed_white_african',
                              'mixed_white_caribbean','mixed_other','asian_bangladeshi',
                              'asian_chinese','asian_indian','asian_pakistani','asian_other',
@@ -162,25 +162,146 @@ names(ethnicity_london) <- c('ward22nm','ward22cd','all_pop','white_british','wh
 
 If you like, you can also write out the final `csv` using the `write_csv()` function.
 
-<!-- ### Data preparation {#data-preparation-w07} -->
+### Data preparation {#data-preparation-w07}
+We now need to join our population group dataset to our Ward spatial layer. Because the Ward dataset contains every the geometry of every single Ward in Great Britain, we can use an `inner_join` so that only the geometries of those Wards that also appear in the `ethnicity_london` object are retained.
 
-<!-- Have a look at your newly created Ward dataframe using the `plot()` function, for instance. -->
+```{r tidy='styler'}
+#| label: 07-join-pop-shp
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# inner join
+ethnicity_london_sdf <- ward_gb |>
+  inner_join(ethnicity_london, by = c('WD22CD' = 'ward22cd'))
+```
 
-<!-- ## Statistical distributions -->
-<!-- Today, we are interested in looking at spatial autocorrelation: the effect of spatial processes on distributions. We will be using our newly created `obesity_Ward_sdf` to look at this in action, whilst also answering questions on the overall distribution and factors of childhood obesity. -->
+Have a look at your newly created Ward dataframe using the `plot()` function.
 
-<!-- Within general data analysis, when it comes to analysing the distribution of your data, you are looking to conduct what is known as **Exploratory Data Analysis** (EDA) which is where we look to summarise the main characteristics of our data. EDA was promoted by prominent statistician [John Tukey](https://en.wikipedia.org/wiki/John_Tukey) to encourage data analysts to explore their data outside of traditional formal modelling and come up with new areas of investigation and hypotheses. Tukey promoted the use of five summary statistics: **the max-min, the median, and the quartiles**, which, in comparison to the mean and standard deviation, provide a more robust understanding of a data's distribution, particularly if the data is skewed. -->
+```{r}
+#| label: fig-07-quick-plt
+#| fig-cap: "Quick plot of the filtered Ward spatial dataframe."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# inspect
+plot(ethnicity_london_sdf, max.plot=1)
+```
+This is looking reasonably okay, however, it is clear that there are some data missing from the [City of London](https://en.wikipedia.org/wiki/City_of_London). The reason for this is that the dataset we downloaded only contains an overall value for the City of London not a value for every individual Ward. If we only were interested in plotting some data, we could simply add a layer with **no data** to colour in the empty City of London area, but for measuring spatial autocorrelation it is essential that there are no holes in the spatial data that should not be there. We will fix this by extracting the Wards pertaining to the City of London and adding these to our spatial dataframe.
 
-<!-- We looked at how we can use R to extract some of these summary statistics briefly in Week 4, but let's have a look at how we can add further to this EDA, including creating some statistical charts of our data's distribution.  -->
+```{r}
+#| label: 07-city-of-london
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# filter Wards pertaining to City of London
+city_of_london_sdf <- ward_gb |>
+  filter(LAD22NM == 'City of London')
+```
 
-<!-- In your script, below your joining of our dataframes, summarise our `y6_obesity_2014` distribution  -->
+We have effectively taken out the **25** 2022 Wards that fall with in the City of London Local Authority District. We now need to assign our ethnic group data to this. We will add the data and equally divide the counts across the Wards.
 
-<!-- ```{r 07-summ-distr, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # summarise our y6_obesity_2014 data -->
-<!-- summary(obesity_Ward_sdf$y6_obesity_2014) -->
-<!-- ```  -->
+::: {.callout-warning}
+This is a bit of a lazy approach. Much better would be to actually try and find the actual Ward counts from the 2021 Census. 
+:::
 
-<!-- This `summary()` function can also be called on the dataset as a whole and will generate summary statistics for each individual numeric variable. You can execute this in your console if you like to get an understanding of all of variables - although we will focus on obesity for much of this practical. We can see that our **median** and **mean** are quite close to one another. We can also see that the quartiles are nearly the same amount apart from the mean, so we can start to think that our data is normally distribution. To confirm this, we can do the next best thing, which is plot our distribution using a **histogram**, using the base R `hist()` command: -->
+To join the `ethnicity_london` dataset to the City of London wards is a bit tricky --- because the dataset does not contain the actual Wards codes. Fortunately for us, the London Data Store was a bit cheeky and in the file they created they put the Local Authority District code of the City of London into the Ward column. We can use this to join our datasets together with `left_join`.
+
+```{r tidy='styler'}
+#| label: 07-join-city-shp
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# inner join
+city_of_london_sdf <- city_of_london_sdf |>
+  left_join(ethnicity_london, by = c('LAD22CD' = 'ward22cd'))
+
+# inspect
+head(city_of_london_sdf)
+```
+
+This seems to have worked quite nicely, except that now all our data points have been duplicated. We need to fix this by dividing all counts by 25 (the number of wards) to equally divide the counts across the City of London. If we have to do this for every column individually there is a lot of typing involved, but fortunately we can use the `mutate_at()` function from the `dplyr` library to do this for the columns in one go. You can use the `names()` function to identify the columns you need to divide by 25.
+
+::: {.callout-note}
+Check the documentation of the `mutate_at()` function to see how it works in detail, but essentially you provide a function, in this case "divide a number by the total number of Wards" and do this for all columns that are specified.
+:::
+
+```{r}
+#| label: 07-city-of-london-divvie-up
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# divide counts by Wards
+city_of_london_sdf <- city_of_london_sdf |>
+  mutate_at(c(13:31), function(x) as.integer(x/nrow(city_of_london_sdf)))
+
+# inspect
+head(city_of_london_sdf)
+```
+
+That is much better. The last thing we now need to do is to combine our `city_of_london_sdf` with our
+`ethnicity_london_sdf`. Because both spatial dataframe contain the exact same data and column names, we can simply **bind** them together.
+
+```{r}
+#| label: 07-city-of-london-bind
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# bind spatial dataframes
+ethnicity_london_sdf <- ethnicity_london_sdf |>
+  rbind(city_of_london_sdf)
+```
+
+Let's check whether our approach worked by plotting the updated spatial dataframe:
+
+```{r}
+#| label: fig-07-quick-plt-again
+#| fig-cap: "Quick plot of the full Ward spatial dataframe."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# inspect
+plot(ethnicity_london_sdf, max.plot=1)
+```
+
+This looks much better: there are no more obvious holes in our spatial dataframe and we can move on.
+
+## Statistical distributions
+Today, we are interested in looking at spatial autocorrelation: the effect of spatial processes on distributions. We will be using our newly created `ethnicity_london_sdf` to look at this in action.
+
+Within general data analysis, when it comes to analysing the distribution of your data, you are looking to conduct what is known as **Exploratory Data Analysis** (EDA) which is where we look to summarise the main characteristics of our data. EDA was promoted by prominent statistician [John Tukey](https://en.wikipedia.org/wiki/John_Tukey) to encourage data analysts to explore their data outside of traditional formal modelling and come up with new areas of investigation and hypotheses. Tukey promoted the use of five summary statistics: the **maximum**, the **minimum**, the **median**, and the **quartiles**, which, in comparison to the mean and standard deviation, provide a more robust understanding of a data's distribution, particularly if the data is skewed.
+
+We looked at how we can use R to extract some of these summary statistics briefly in [Week 4's computer tutorial](04-statistics.html#atomic-vectors), but let's have a look at how we can add further to this EDA, including creating some statistical charts of our data's distribution. A simple and straightforward way is by using the `summary()` function.
+
+::: {.callout-warning}
+The `summary()` function can also be called on the dataset as a whole and will generate summary statistics for each numeric variable. 
+:::
+
+```{r}
+#| label: 07-summarise-sdf
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# summarise dataframe, but exclude geometry column
+summary(ethnicity_london_sdf |> st_drop_geometry())
+```
+
+
 
 <!-- ```{r 07-hist, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
 <!-- # plot the histogram of our y6_obesity_2014 data -->

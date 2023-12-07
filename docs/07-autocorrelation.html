@@ -256,12 +256,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#clustering-of-population-groups" id="toc-clustering-of-population-groups" class="nav-link" data-scroll-target="#clustering-of-population-groups"><span class="header-section-number">7.3</span> Clustering of population groups</a>
   <ul class="collapse">
   <li><a href="#setup-w07" id="toc-setup-w07" class="nav-link" data-scroll-target="#setup-w07"><span class="header-section-number">7.3.1</span> Spatial analysis set up</a></li>
+  <li><a href="#data-preparation-w07" id="toc-data-preparation-w07" class="nav-link" data-scroll-target="#data-preparation-w07"><span class="header-section-number">7.3.2</span> Data preparation</a></li>
   </ul></li>
-  <li><a href="#wm-w07" id="toc-wm-w07" class="nav-link" data-scroll-target="#wm-w07"><span class="header-section-number">7.4</span> Want more? [Optional]</a>
+  <li><a href="#statistical-distributions" id="toc-statistical-distributions" class="nav-link" data-scroll-target="#statistical-distributions"><span class="header-section-number">7.4</span> Statistical distributions</a></li>
+  <li><a href="#wm-w07" id="toc-wm-w07" class="nav-link" data-scroll-target="#wm-w07"><span class="header-section-number">7.5</span> Want more? [Optional]</a>
   <ul class="collapse">
   <li><a href="#more-spatial-autocorrelation" id="toc-more-spatial-autocorrelation" class="nav-link" data-scroll-target="#more-spatial-autocorrelation">More spatial autocorrelation</a></li>
   </ul></li>
-  <li><a href="#byl-w07" id="toc-byl-w07" class="nav-link" data-scroll-target="#byl-w07"><span class="header-section-number">7.5</span> Before you leave</a></li>
+  <li><a href="#byl-w07" id="toc-byl-w07" class="nav-link" data-scroll-target="#byl-w07"><span class="header-section-number">7.6</span> Before you leave</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -351,7 +353,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Type <em>2021 census Wards ethnicity</em> into the search field.</li>
 <li>Download the <code>Ethnic group.xlsx</code> file containing Ward codes and counts of number of individuals who self-identify with a particular population group.</li>
 </ol>
-<p>Open de file in Excel, and look at the first tab (<strong>Front Page</strong>). You will notice that under <strong>Geography</strong> 2022 Wards are listed. This is good because these are the ones we just downloaded. The actual data that we want to use can be found on the <strong>2021</strong> tab, which refers to the 2021 Census results.</p>
+<p>Open de file in Excel, and look at the first tab (<strong>Front Page</strong>). You will notice that under <strong>Geography</strong> 2022 Wards are listed. This is good because these are the ones we just downloaded. The actual data that we want to use can be found on the <strong>2021</strong> tab, which contains the 2021 Census results.</p>
 <div class="cell" data-hash="07-autocorrelation_cache/html/fig-ethnic-excel_0555d6c19284c02f1b8c70fe6aa1b7e1">
 <div class="cell-output-display">
 <div id="fig-ethnic-excel" class="quarto-figure quarto-figure-center anchored">
@@ -369,13 +371,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Save the file as <code>csv</code> into your <code>data</code> folder as <code>WARD2021_ethnic_group.csv</code>.</li>
 </ol>
 <p>After this, let’s load our London MSOA file:</p>
-<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-load-shp_6b64b33951423c4ab0f6f814ce951832">
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-load-shp_85a451d9cc31bed1fa39feba887c3cb8">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in our Ward GeoPackage</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ward_london <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/raw/boundaries/WARDS2022.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ward_gb <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/raw/boundaries/WARDS2022.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `WD_DEC_22_GB_BGC' from data source 
@@ -388,14 +390,14 @@ Bounding box:  xmin: 5512.998 ymin: 5352.6 xmax: 655653.8 ymax: 1220299
 Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
-<p>Check the <strong>CRS</strong> of our <code>ward_london</code> spatial dataframe:</p>
-<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-crs-wardshp_8e64499a2397faa49724ee2c4d62d2fa">
+<p>Check the <strong>CRS</strong> of our <code>ward_gb</code> spatial dataframe:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-crs-wardshp_c6b3f76120850a1aa0b3d64fd008fd29">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect CRS</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(ward_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(ward_gb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Coordinate Reference System:
@@ -474,7 +476,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-drop-rename-cols_a9bf7c057728f7bc00ce649681f00373">
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-drop-rename-cols_776e17a91575ed2f40b0df1f7cd1adb3">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -484,7 +486,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">9</span>)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># rename columns</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ethnicity_london) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ward22nm"</span>, <span class="st">"ward22cd"</span>, <span class="st">"all_pop"</span>, <span class="st">"white_british"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ethnicity_london) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ward22cd"</span>, <span class="st">"ward22nm"</span>, <span class="st">"all_pop"</span>, <span class="st">"white_british"</span>,</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"white_irish"</span>, <span class="st">"white_gypsy"</span>, <span class="st">"white_other"</span>, <span class="st">"mixed_white_asian"</span>, <span class="st">"mixed_white_african"</span>,</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mixed_white_caribbean"</span>, <span class="st">"mixed_other"</span>, <span class="st">"asian_bangladeshi"</span>, <span class="st">"asian_chinese"</span>,</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"asian_indian"</span>, <span class="st">"asian_pakistani"</span>, <span class="st">"asian_other"</span>, <span class="st">"black_african"</span>, <span class="st">"black_caribbean"</span>,</span>
@@ -492,18 +494,325 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 </div>
 </div>
 <p>If you like, you can also write out the final <code>csv</code> using the <code>write_csv()</code> function.</p>
-<!-- ### Data preparation {#data-preparation-w07} -->
-<!-- Have a look at your newly created Ward dataframe using the `plot()` function, for instance. -->
-<!-- ## Statistical distributions -->
-<!-- Today, we are interested in looking at spatial autocorrelation: the effect of spatial processes on distributions. We will be using our newly created `obesity_Ward_sdf` to look at this in action, whilst also answering questions on the overall distribution and factors of childhood obesity. -->
-<!-- Within general data analysis, when it comes to analysing the distribution of your data, you are looking to conduct what is known as **Exploratory Data Analysis** (EDA) which is where we look to summarise the main characteristics of our data. EDA was promoted by prominent statistician [John Tukey](https://en.wikipedia.org/wiki/John_Tukey) to encourage data analysts to explore their data outside of traditional formal modelling and come up with new areas of investigation and hypotheses. Tukey promoted the use of five summary statistics: **the max-min, the median, and the quartiles**, which, in comparison to the mean and standard deviation, provide a more robust understanding of a data's distribution, particularly if the data is skewed. -->
-<!-- We looked at how we can use R to extract some of these summary statistics briefly in Week 4, but let's have a look at how we can add further to this EDA, including creating some statistical charts of our data's distribution.  -->
-<!-- In your script, below your joining of our dataframes, summarise our `y6_obesity_2014` distribution  -->
-<!-- ```{r 07-summ-distr, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # summarise our y6_obesity_2014 data -->
-<!-- summary(obesity_Ward_sdf$y6_obesity_2014) -->
-<!-- ```  -->
-<!-- This `summary()` function can also be called on the dataset as a whole and will generate summary statistics for each individual numeric variable. You can execute this in your console if you like to get an understanding of all of variables - although we will focus on obesity for much of this practical. We can see that our **median** and **mean** are quite close to one another. We can also see that the quartiles are nearly the same amount apart from the mean, so we can start to think that our data is normally distribution. To confirm this, we can do the next best thing, which is plot our distribution using a **histogram**, using the base R `hist()` command: -->
+</section>
+<section id="data-preparation-w07" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="data-preparation-w07"><span class="header-section-number">7.3.2</span> Data preparation</h3>
+<p>We now need to join our population group dataset to our Ward spatial layer. Because the Ward dataset contains every the geometry of every single Ward in Great Britain, we can use an <code>inner_join</code> so that only the geometries of those Wards that also appear in the <code>ethnicity_london</code> object are retained.</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-join-pop-shp_153b0f079f47681bc3386c80a86dd45f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inner join</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>ethnicity_london_sdf <span class="ot">&lt;-</span> ward_gb <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(ethnicity_london, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"WD22CD"</span> <span class="ot">=</span> <span class="st">"ward22cd"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Have a look at your newly created Ward dataframe using the <code>plot()</code> function.</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/fig-07-quick-plt_33f6cc21578cd17fcbbd2b20f68e8efc">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ethnicity_london_sdf, <span class="at">max.plot =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-07-quick-plt" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="07-autocorrelation_files/figure-html/fig-07-quick-plt-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Quick plot of the filtered Ward spatial dataframe.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This is looking reasonably okay, however, it is clear that there are some data missing from the <a href="https://en.wikipedia.org/wiki/City_of_London">City of London</a>. The reason for this is that the dataset we downloaded only contains an overall value for the City of London not a value for every individual Ward. If we only were interested in plotting some data, we could simply add a layer with <strong>no data</strong> to colour in the empty City of London area, but for measuring spatial autocorrelation it is essential that there are no holes in the spatial data that should not be there. We will fix this by extracting the Wards pertaining to the City of London and adding these to our spatial dataframe.</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-city-of-london_97fff06b7c020a6d7e6fb0ebbac30ecf">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter Wards pertaining to City of London</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>city_of_london_sdf <span class="ot">&lt;-</span> ward_gb <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(LAD22NM <span class="sc">==</span> <span class="st">"City of London"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We have effectively taken out the <strong>25</strong> 2022 Wards that fall with in the City of London Local Authority District. We now need to assign our ethnic group data to this. We will add the data and equally divide the counts across the Wards.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This is a bit of a lazy approach. Much better would be to actually try and find the actual Ward counts from the 2021 Census.</p>
+</div>
+</div>
+</div>
+<p>To join the <code>ethnicity_london</code> dataset to the City of London wards is a bit tricky — because the dataset does not contain the actual Wards codes. Fortunately for us, the London Data Store was a bit cheeky and in the file they created they put the Local Authority District code of the City of London into the Ward column. We can use this to join our datasets together with <code>left_join</code>.</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-join-city-shp_35b6cbeb5463d8bb3e3c99ee4e80c618">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inner join</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>city_of_london_sdf <span class="ot">&lt;-</span> city_of_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(ethnicity_london, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"LAD22CD"</span> <span class="ot">=</span> <span class="st">"ward22cd"</span>))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(city_of_london_sdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 31 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 531866.1 ymin: 180540.4 xmax: 533617.7 ymax: 182084.5
+Projected CRS: OSGB36 / British National Grid
+     WD22CD       WD22NM WD22NMW   LAD22CD        LAD22NM  BNG_E  BNG_N
+1 E05009288   Aldersgate         E09000001 City of London 532169 181721
+2 E05009289      Aldgate         E09000001 City of London 533397 181175
+3 E05009290    Bassishaw         E09000001 City of London 532438 181495
+4 E05009291 Billingsgate         E09000001 City of London 533151 180754
+5 E05009292  Bishopsgate         E09000001 City of London 533207 181664
+6 E05009293 Bread Street         E09000001 City of London 532224 181151
+      LONG     LAT Shape_Leng                               GlobalID
+1 -0.09645 51.5190   1726.380 {E218C4C6-CC77-423C-9312-010363F61625}
+2 -0.07896 51.5138   1895.285 {E968A26F-9AF6-460A-A075-7F8AB975CB16}
+3 -0.09266 51.5169   1428.356 {8B433738-7452-4891-A3B0-17498C13F8AD}
+4 -0.08267 51.5100   1670.199 {7FF90094-80A5-466D-AE07-B30EC9966CCC}
+5 -0.08152 51.5182   2748.846 {DBE8B6D5-0C08-4FB5-9C36-D2F7483B4792}
+6 -0.09587 51.5138   2082.841 {1EC7A9B3-EAB0-4CC5-8627-354BA7865D6C}
+                     ward22nm all_pop white_british white_irish white_gypsy
+1 City of London (aggregated)    7375          4243         180           3
+2 City of London (aggregated)    7375          4243         180           3
+3 City of London (aggregated)    7375          4243         180           3
+4 City of London (aggregated)    7375          4243         180           3
+5 City of London (aggregated)    7375          4243         180           3
+6 City of London (aggregated)    7375          4243         180           3
+  white_other mixed_white_asian mixed_white_african mixed_white_caribbean
+1        1373               111                  37                    38
+2        1373               111                  37                    38
+3        1373               111                  37                    38
+4        1373               111                  37                    38
+5        1373               111                  37                    38
+6        1373               111                  37                    38
+  mixed_other asian_bangladeshi asian_chinese asian_indian asian_pakistani
+1         103               232           263          216              16
+2         103               232           263          216              16
+3         103               232           263          216              16
+4         103               232           263          216              16
+5         103               232           263          216              16
+6         103               232           263          216              16
+  asian_other black_african black_caribbean black_other other_arab other
+1         213            98              46          49         69    85
+2         213            98              46          49         69    85
+3         213            98              46          49         69    85
+4         213            98              46          49         69    85
+5         213            98              46          49         69    85
+6         213            98              46          49         69    85
+                           SHAPE
+1 MULTIPOLYGON (((532248.7 18...
+2 MULTIPOLYGON (((533466.1 18...
+3 MULTIPOLYGON (((532536.2 18...
+4 MULTIPOLYGON (((533320.1 18...
+5 MULTIPOLYGON (((533404.6 18...
+6 MULTIPOLYGON (((532025 1813...</code></pre>
+</div>
+</div>
+<p>This seems to have worked quite nicely, except that now all our data points have been duplicated. We need to fix this by dividing all counts by 25 (the number of wards) to equally divide the counts across the City of London. If we have to do this for every column individually there is a lot of typing involved, but fortunately we can use the <code>mutate_at()</code> function from the <code>dplyr</code> library to do this for the columns in one go. You can use the <code>names()</code> function to identify the columns you need to divide by 25.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Check the documentation of the <code>mutate_at()</code> function to see how it works in detail, but essentially you provide a function, in this case “divide a number by the total number of Wards” and do this for all columns that are specified.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-city-of-london-divvie-up_41320e3b653b0b26fb477f4e8b3d86be">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># divide counts by Wards</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>city_of_london_sdf <span class="ot">&lt;-</span> city_of_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_at</span>(<span class="fu">c</span>(<span class="dv">13</span><span class="sc">:</span><span class="dv">31</span>), <span class="cf">function</span>(x) <span class="fu">as.integer</span>(x<span class="sc">/</span><span class="fu">nrow</span>(city_of_london_sdf)))</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(city_of_london_sdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 6 features and 31 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 531866.1 ymin: 180540.4 xmax: 533617.7 ymax: 182084.5
+Projected CRS: OSGB36 / British National Grid
+     WD22CD       WD22NM WD22NMW   LAD22CD        LAD22NM  BNG_E  BNG_N
+1 E05009288   Aldersgate         E09000001 City of London 532169 181721
+2 E05009289      Aldgate         E09000001 City of London 533397 181175
+3 E05009290    Bassishaw         E09000001 City of London 532438 181495
+4 E05009291 Billingsgate         E09000001 City of London 533151 180754
+5 E05009292  Bishopsgate         E09000001 City of London 533207 181664
+6 E05009293 Bread Street         E09000001 City of London 532224 181151
+      LONG     LAT Shape_Leng                               GlobalID
+1 -0.09645 51.5190   1726.380 {E218C4C6-CC77-423C-9312-010363F61625}
+2 -0.07896 51.5138   1895.285 {E968A26F-9AF6-460A-A075-7F8AB975CB16}
+3 -0.09266 51.5169   1428.356 {8B433738-7452-4891-A3B0-17498C13F8AD}
+4 -0.08267 51.5100   1670.199 {7FF90094-80A5-466D-AE07-B30EC9966CCC}
+5 -0.08152 51.5182   2748.846 {DBE8B6D5-0C08-4FB5-9C36-D2F7483B4792}
+6 -0.09587 51.5138   2082.841 {1EC7A9B3-EAB0-4CC5-8627-354BA7865D6C}
+                     ward22nm all_pop white_british white_irish white_gypsy
+1 City of London (aggregated)     295           169           7           0
+2 City of London (aggregated)     295           169           7           0
+3 City of London (aggregated)     295           169           7           0
+4 City of London (aggregated)     295           169           7           0
+5 City of London (aggregated)     295           169           7           0
+6 City of London (aggregated)     295           169           7           0
+  white_other mixed_white_asian mixed_white_african mixed_white_caribbean
+1          54                 4                   1                     1
+2          54                 4                   1                     1
+3          54                 4                   1                     1
+4          54                 4                   1                     1
+5          54                 4                   1                     1
+6          54                 4                   1                     1
+  mixed_other asian_bangladeshi asian_chinese asian_indian asian_pakistani
+1           4                 9            10            8               0
+2           4                 9            10            8               0
+3           4                 9            10            8               0
+4           4                 9            10            8               0
+5           4                 9            10            8               0
+6           4                 9            10            8               0
+  asian_other black_african black_caribbean black_other other_arab other
+1           8             3               1           1          2     3
+2           8             3               1           1          2     3
+3           8             3               1           1          2     3
+4           8             3               1           1          2     3
+5           8             3               1           1          2     3
+6           8             3               1           1          2     3
+                           SHAPE
+1 MULTIPOLYGON (((532248.7 18...
+2 MULTIPOLYGON (((533466.1 18...
+3 MULTIPOLYGON (((532536.2 18...
+4 MULTIPOLYGON (((533320.1 18...
+5 MULTIPOLYGON (((533404.6 18...
+6 MULTIPOLYGON (((532025 1813...</code></pre>
+</div>
+</div>
+<p>That is much better. The last thing we now need to do is to combine our <code>city_of_london_sdf</code> with our <code>ethnicity_london_sdf</code>. Because both spatial dataframe contain the exact same data and column names, we can simply <strong>bind</strong> them together.</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-city-of-london-bind_47204963256dfb2f25e8fad54fe54b06">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bind spatial dataframes</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ethnicity_london_sdf <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbind</span>(city_of_london_sdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Let’s check whether our approach worked by plotting the updated spatial dataframe:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/fig-07-quick-plt-again_ba94a30dcba002f009b105069ef2913a">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ethnicity_london_sdf, <span class="at">max.plot =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-07-quick-plt-again" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="07-autocorrelation_files/figure-html/fig-07-quick-plt-again-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Quick plot of the full Ward spatial dataframe.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This looks much better: there are no more obvious holes in our spatial dataframe and we can move on.</p>
+</section>
+</section>
+<section id="statistical-distributions" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="statistical-distributions"><span class="header-section-number">7.4</span> Statistical distributions</h2>
+<p>Today, we are interested in looking at spatial autocorrelation: the effect of spatial processes on distributions. We will be using our newly created <code>ethnicity_london_sdf</code> to look at this in action.</p>
+<p>Within general data analysis, when it comes to analysing the distribution of your data, you are looking to conduct what is known as <strong>Exploratory Data Analysis</strong> (EDA) which is where we look to summarise the main characteristics of our data. EDA was promoted by prominent statistician <a href="https://en.wikipedia.org/wiki/John_Tukey">John Tukey</a> to encourage data analysts to explore their data outside of traditional formal modelling and come up with new areas of investigation and hypotheses. Tukey promoted the use of five summary statistics: the <strong>maximum</strong>, the <strong>minimum</strong>, the <strong>median</strong>, and the <strong>quartiles</strong>, which, in comparison to the mean and standard deviation, provide a more robust understanding of a data’s distribution, particularly if the data is skewed.</p>
+<p>We looked at how we can use R to extract some of these summary statistics briefly in <a href="04-statistics.html#atomic-vectors">Week 4’s computer tutorial</a>, but let’s have a look at how we can add further to this EDA, including creating some statistical charts of our data’s distribution. A simple and straightforward way is by using the <code>summary()</code> function.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The <code>summary()</code> function can also be called on the dataset as a whole and will generate summary statistics for each numeric variable.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-summarise-sdf_93f5d2bfe261f6e3b7836cfcfff44c32">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summarise dataframe, but exclude geometry column</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ethnicity_london_sdf <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_drop_geometry</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    WD22CD             WD22NM            WD22NMW            LAD22CD         
+ Length:704         Length:704         Length:704         Length:704        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+   LAD22NM              BNG_E            BNG_N             LONG         
+ Length:704         Min.   :505661   Min.   :157756   Min.   :-0.47645  
+ Class :character   1st Qu.:523789   1st Qu.:174575   1st Qu.:-0.21930  
+ Mode  :character   Median :531040   Median :181022   Median :-0.11311  
+                    Mean   :530499   Mean   :180206   Mean   :-0.12106  
+                    3rd Qu.:537483   3rd Qu.:186252   3rd Qu.:-0.02262  
+                    Max.   :557943   Max.   :199291   Max.   : 0.27621  
+      LAT          Shape_Leng        GlobalID           ward22nm        
+ Min.   :51.30   Min.   :  965.1   Length:704         Length:704        
+ 1st Qu.:51.46   1st Qu.: 4888.3   Class :character   Class :character  
+ Median :51.51   Median : 6496.1   Mode  :character   Mode  :character  
+ Mean   :51.51   Mean   : 7213.4                                        
+ 3rd Qu.:51.56   3rd Qu.: 8619.1                                        
+ Max.   :51.68   Max.   :35083.0                                        
+    all_pop      white_british    white_irish    white_gypsy    
+ Min.   :   51   Min.   :   10   Min.   :   1   Min.   :  0.00  
+ 1st Qu.: 9641   1st Qu.: 3102   1st Qu.: 148   1st Qu.:  3.00  
+ Median :11712   Median : 4854   Median : 227   Median :  8.00  
+ Mean   :11611   Mean   : 5212   Mean   : 250   Mean   : 11.63  
+ 3rd Qu.:14467   3rd Qu.: 7077   3rd Qu.: 323   3rd Qu.: 14.00  
+ Max.   :21292   Max.   :14727   Max.   :1345   Max.   :216.00  
+  white_other     mixed_white_asian mixed_white_african mixed_white_caribbean
+ Min.   :  11.0   Min.   :  0.0     Min.   :  1.0       Min.   :  1.00       
+ 1st Qu.: 767.5   1st Qu.:101.0     1st Qu.: 48.0       1st Qu.: 85.75       
+ Median :1299.5   Median :142.0     Median : 79.0       Median :140.00       
+ Mean   :1468.7   Mean   :144.2     Mean   : 93.0       Mean   :169.62       
+ 3rd Qu.:2057.2   3rd Qu.:185.2     3rd Qu.:125.2       3rd Qu.:223.00       
+ Max.   :4708.0   Max.   :442.0     Max.   :403.0       Max.   :800.00       
+  mixed_other    asian_bangladeshi asian_chinese     asian_indian   
+ Min.   :  1.0   Min.   :   3.0    Min.   :   0.0   Min.   :   3.0  
+ 1st Qu.:109.0   1st Qu.:  42.0    1st Qu.:  83.0   1st Qu.: 191.0  
+ Median :158.5   Median :  92.5    Median : 140.5   Median : 323.5  
+ Mean   :168.8   Mean   : 315.5    Mean   : 176.5   Mean   : 771.1  
+ 3rd Qu.:225.2   3rd Qu.: 201.0    3rd Qu.: 214.2   3rd Qu.: 765.2  
+ Max.   :469.0   Max.   :6852.0    Max.   :1344.0   Max.   :7763.0  
+ asian_pakistani   asian_other     black_african    black_caribbean 
+ Min.   :   0.0   Min.   :   1.0   Min.   :   3.0   Min.   :   1.0  
+ 1st Qu.:  60.0   1st Qu.: 251.8   1st Qu.: 278.8   1st Qu.: 132.5  
+ Median : 120.5   Median : 430.5   Median : 569.0   Median : 286.0  
+ Mean   : 317.9   Mean   : 566.0   Mean   : 815.2   Mean   : 489.5  
+ 3rd Qu.: 331.8   3rd Qu.: 712.8   3rd Qu.:1123.8   3rd Qu.: 676.2  
+ Max.   :3633.0   Max.   :3225.0   Max.   :5297.0   Max.   :3523.0  
+  black_other       other_arab          other       
+ Min.   :   1.0   Min.   :   1.00   Min.   :   0.0  
+ 1st Qu.:  65.0   1st Qu.:  46.75   1st Qu.: 112.0  
+ Median : 174.0   Median :  91.00   Median : 199.0  
+ Mean   : 241.6   Mean   : 150.59   Mean   : 248.6  
+ 3rd Qu.: 339.0   3rd Qu.: 169.00   3rd Qu.: 339.8  
+ Max.   :1563.0   Max.   :1693.00   Max.   :1411.0  </code></pre>
+</div>
+</div>
 <!-- ```{r 07-hist, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
 <!-- # plot the histogram of our y6_obesity_2014 data -->
 <!-- hist(obesity_Ward_sdf$y6_obesity_2014) -->
@@ -871,16 +1180,15 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 <!-- 5. Compare these results to the output of our `y6_obesity_2014` values. Do both variables have clusters? Do we see similar clusters in similar locations? What might this tell us about the relationship between deprivation and obesity in children in London? -->
 <!-- 6. Run the analysis using a different neighbour definition. What happens? Do the results change? -->
 </section>
-</section>
-<section id="wm-w07" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="wm-w07"><span class="header-section-number">7.4</span> Want more? [Optional]</h2>
+<section id="wm-w07" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="wm-w07"><span class="header-section-number">7.5</span> Want more? [Optional]</h2>
 <section id="more-spatial-autocorrelation" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="more-spatial-autocorrelation">More spatial autocorrelation</h3>
 <p>If you are interested in moving beyond spatial autocorrelation, for instance how to account for spatial autocorrelation in statistical models (e.g.&nbsp;with Geographically Weighted Regression or Spatial Regression), have a look at the workbook <a href="https://profrichharris.github.io/MandM/themap.html">Mapping and Modelling Geographic Data in R</a> by Bristol-based Professor <a href="https://www.bristol.ac.uk/people/person/Richard-Harris-871b21a9-0f5f-4bc8-9a99-8ace550d9903/">Richard Harris</a>. Start with <a href="https://profrichharris.github.io/MandM/themap.html">The Spatial Variable</a> section, move to the <a href="https://profrichharris.github.io/MandM/autocorrelation.html">Measuring spatial autocorrelation</a> section before looking at the <a href="https://profrichharris.github.io/MandM/gwstats.html">Geographically Weighted Statistics</a> and <a href="https://profrichharris.github.io/MandM/spregress.html">Spatial Regression</a> sections.</p>
 </section>
 </section>
-<section id="byl-w07" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="byl-w07"><span class="header-section-number">7.5</span> Before you leave</h2>
+<section id="byl-w07" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="byl-w07"><span class="header-section-number">7.6</span> Before you leave</h2>
 <p>And that is how you can measure spatial dependence in your dataset through different spatial autocorrelation measures. Next week we will focus on the last topic within our set of core spatial analysis methods and techniques, but <a href="https://www.youtube.com/watch?v=fCZVL_8D048">this week we have covered enough</a>!</p>
 
 

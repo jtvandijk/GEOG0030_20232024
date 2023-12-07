@@ -9,8 +9,6 @@ stringr
 forcats
 sf
 tmap
-janitor
 sp
 spData
 spdep
-RColorBrewer
