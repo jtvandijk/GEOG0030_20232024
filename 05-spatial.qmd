@@ -19,7 +19,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 ## Crime in London III
 To analyse crime over space, we will go through several steps of data preparation and data linkage to ultimately aggregate our data to the **Middle layer Super Output Area** (MSOA) level. After this, we will map the crime rate for 2021 using the `tmap` library.
 
-::: { .callout-note}
+::: {.callout-note}
 OAs, LSOAs and MSOAs make up the different levels of the census statistical geographies. Middle layer Super Output Areas (MSOAs) are made up of groups of LSOAs, usually four or five. They comprise between 2,000 and 6,000 households and have a usually resident population between 5,000 and 15,000 persons. For details see the explanation on the webapge of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies#middle-layer-super-output-areas-msoas)
 :::
 
@@ -142,7 +142,7 @@ plot(msoa_population)
 
 You should see your `msoa_population` plot appear in your **Plots** window. As you will see, your MSOA dataset is plotted 'thematically' by each of the fields within the dataset, including the `pop2021` field. 
 
-::: { .callout-warning}
+::: {.callout-warning}
 This `plot()` function is not to be used to make maps but can be used as a quick way of inspecting your spatial data.
 :::
 
@@ -229,7 +229,7 @@ Now we have our data loaded, our next step is to process our data to create what
 
 From [Week 3's practical](03-cartography.html), we know we can map our points using the coordinates and then provide a count by using a **point-in-polygon** operation, but because the crime data already have an LSOA code we will be using an **Attribute Join** today to show you the use of **lookup tables**. 
 
-::: { .callout-warning}
+::: {.callout-warning}
 In situations like this when you actually have the point location data, the best solution is probably to conduct a point-in-polygon analysis yourself rather than relying on a **lookup table**. However, because we do not always have access to point location data and you are likely to encounter situations where you need a **lookup** table, there won't be any point-in-polygon action today.
 :::
 
@@ -241,7 +241,7 @@ To get the number of crimes that occurred in each 2021 MSOA linked to our popula
 
 From a GIScience perspective, there are many ways to do this but today we will be using **look-up tables**. Look-up tables are an extremely common tool in database management and programming, providing a robust approach to storing additional information about a feature (such as a row within a dataframe) in a separate table that can quite literally be 'looked up' when needed for a specific application. 
 
-::: { .callout-note}
+::: {.callout-note}
 The [data.police.uk](https://data.police.uk/) website suggests that only from June 2023, the 2021 LSOA codes are used by default.
 :::
 
@@ -270,7 +270,7 @@ lsoa_lookup <- read_csv("data/raw/boundaries/lsoa11_lsoa21.csv")
 
 Now we have our lookup table, we can assign a relevant 2021 LSOA code to each of the 2011 LSOA codes in our `all_theft_df` dataframe. To do so, we are going to use one of the `join()` functions from the `dplyr` library.
 
-::: { .callout-note}
+::: {.callout-note}
 We have already learnt how to complete **Attribute Joins** in QGIS via the **Joins** tab in the Properties window so it should come of no surprise that we can do exactly the same process within R. To conduct a join between two dataframes, we use the same principles of selecting a **unique but matching** field within our dataframes to join them together.
 
 Within R, you have two main options to complete a dataframe join:
@@ -294,7 +294,7 @@ Within R, you have two main options to complete a dataframe join:
 
 As we have seen from the list of fields above, we know that we have at least **two** fields that should match across the datasets: our **LSOA codes** and **LSOA names**. We of course need to identify the precise fields that contain these values in each of our dataframes, i.e. `LSOA11CD` and `LSOA11NM` in our `lsoa_lookup` dataframe and `lsoa_code` and `lsoa_name` in our `all_theft_df` dataframe, but once we know what fields we can use, we can go ahead and join our two dataframes together.
 
-::: { .callout-warning}
+::: {.callout-warning}
 If you have a **one-to-one** lookup table, e.g. one `LSOA11` geography corresponds to exactly one `LSOA21` entry, this process is very easy. However, between the 2011 and 2021 Census different changes have happened: some `LSOA11` have been split into multiple `LSOA21` polygons and in other cases `LSOA11` have been merged together into a single `LSOA21` polygon. This means we need to do some extra work to make sure we not accidentally adjust the number of crimes that are captured in the data.
 :::
 
@@ -345,7 +345,7 @@ lsoa_lookup <- rbind(lsoa_lookup_same,
 lsoa_lookup
 ```
 
-::: { .callout-note}
+::: {.callout-note}
 The code above uses something called a **pipe** function: `|>`. A pipe is used to push the outcome of one function/process into another automatically. It might sound a little confusing at first, but once you start using it, it really can make your code quicker and easier to read and write. Most importantly: it stops us from having to create lots of additional variables to store outputs along the way.
 :::
 
@@ -364,7 +364,7 @@ all_theft_df_join <- all_theft_df |>
   filter(!is.na(LSOA21CD))
 ``` 
 
-::: { .callout-tip}
+::: {.callout-tip}
 Besides joining our LSOA lookup table to our data, we also filter effectively out all crime records that still not have not been assigned a 2021 LSOA code.
 :::
 
@@ -401,7 +401,7 @@ nrow(all_theft_df)
 sum(all_theft_df_join$n)
 ```
 
-::: { .callout-warning}
+::: {.callout-warning}
 Whereas the number of crimes is very similar, there is still a difference of **5** crimes. This difference is caused by our last `filter()`, where 2011 LSOAs that have not been assigned a 2021 LSOA code are filtered out. In these cases there is actually a recording error and no valid 2011 LSOA code is used. We therefore choose to ignore these 5 data points. 
 :::
 
@@ -508,7 +508,7 @@ And with a slice, we can use the minus to slice **out** parts of our vector, for
 simple_vector[-2:-5]
 ```
 
-::: { .callout-note}
+::: {.callout-note}
 This use of **square brackets** for selection syntax is common across many programming languages, including Python, but there are often some differences you will need to be aware of if you pursue other languages. For example:
 
 - Python always starts its index from `0`, whereas R's index starts at `1`.
@@ -680,7 +680,7 @@ dplyr::select(lsoa_lookup, -LSOA11CD)
 
 In addition to these index-based functions, within `dplyr`, we also have `filter()` that enables us to easily filter rows within our dataframe based on specific conditions. In addition, `dplyr` provides lots of functions that we can use directly with these selections to apply certain data wrangling processes to only specific parts of our dataframe, such as `mutate()` or `count()`.
 
-::: { .callout-note}
+::: {.callout-note}
 We will be using quite a few of these functions in the remainder of this module, so it is highly recommend to download the `dplyr` [cheat sheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf) to keep track of the most common functions.
 :::
 
@@ -794,7 +794,7 @@ For making our maps, we will be using one of two main visualisation libraries th
 
 We can use this function to plot the theft crime rate really quickly. Within your script, use the `qtm` function to create a map of theft crime rate in London in 2021.
 
-::: { .callout-note}
+::: {.callout-note}
 Before continuing do confirm whether your `theft_msoa_sdf` is indeed still of class `sf`. In some instances it is possible that this changed when manipulating the attributes. You can simply check this by running `class(theft_msoa_sdf)`. If your dataframe is not of class `sf`, you can force it into one by running `theft_msoa_sdf <- st_as_sf(theft_msoa_sdf))`.
 :::
 
@@ -824,7 +824,7 @@ qtm(theft_msoa_sdf, fill="crime_rate", borders = "white")
 
 The map does not really look great. We can continue to add and change parameters in our `qtm()` function to create a map we are satisfied  with. However, the issue with the `qtm()` function is that it is quite limited in its functionality and mostly used to quickly inspect your data. Instead, when we want to develop more complex maps using the `tmap` library, we want to use their main plotting method which uses a function called `tm_shape()`, which we build on using the [layered grammar of graphics](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149) approach.
 
-::: { .callout-tip}
+::: {.callout-tip}
 When it comes to setting colours within a map or any graphic, we can either pass through a colour as a **word**, a **HEX code** or a pre-defined **palette**. You can find out more [here](http://www.sthda.com/english/wiki/colors-in-r), which is a great quick reference to just some of the possible colours and palettes you will be able to use in R.
 :::
 
@@ -849,7 +849,7 @@ tm_shape(theft_msoa_sdf) +
 
 As you should now see, we have now mapped the spatial polygons of our `theft_msoa_sdf` spatial dataframe. However, this is not the map we want: we want to have our polygons represented by a choropleth map where the colours reflect the theft crime rate, rather than the default grey polygons we see before us. To do so, we use the `col=` parameter that is within our `tm_polygons()` shape. 
 
-::: { .callout-tip}
+::: {.callout-tip}
 The `col` parameter within `tm_polygons()` is used to fill our polygons with a specific fill type, of either:
 
 - a single color value (e.g. `red`)
@@ -1013,7 +1013,7 @@ Now we have prepared our dataset and made our first maps in R, we can play with 
 2. We have used a `quantile` method to classify our data. Do you think that is appropriate? Any other ways you could think of on representing these MSOA crime rates better?
 
 ## Want more? [Optional] {#wm-w05}
-### Git and Github
+### Git and Github {.unnumbered}
 [Git](https://git-scm.com/) is a version control system, originally developed to help groups of developers work collaboratively on big software projects. One way to think about it is in terms of 'Track Changes' used for documents, only this time it is applied to code - and much more powerful. A great resource to help you get started with Git is [Happy Git and GitHub for the useR](https://happygitwithr.com/index.html). Highly recommended.
 
 ## Before you leave {#byl-w05}

@@ -1,4 +1,4 @@
-# GEOG0030 Geocomputation 2023-2024 { .unnumbered}
+# GEOG0030 Geocomputation 2023-2024 {.unnumbered}
 
 ```{r} 
 #| label: 00-welcome
@@ -12,13 +12,13 @@ knitr::include_graphics('images/w00/geocomputation-welcome.png')
 This page is currently unfinished and receiving updates for the 2023-2024 academic year. Refer to the [GEOG0030: Geocomputation 2022-2023](https://jtvandijk.github.io/GEOG0030_20222023/) workbook for the 2022-2023 content.
 :::
 
-## Welcome { .unnumbered}
+## Welcome {.unnumbered}
 Welcome to **Geocomputation**. This module will introduce you both to the principles of spatial analysis as well as provide you with a comprehensive introduction to the use of programming. Over the next ten weeks, you will learn about the theory, methods and tools of spatial analysis through relevant case studies. We will start by using QGIS before moving to the R programming language. You will learn how to find, manage and clean spatial, demographic and socioeconomic datasets, and then analyse them using core spatial analysis techniques. 
 
-## Moodle { .unnumbered}
+## Moodle {.unnumbered}
 [Moodle](https://moodle.ucl.ac.uk/) is the central point of contact for GEOG0030 and it is where all important information will be communicated such as key module and assessment information. This workbook contains links to all reading material as well as the contents for all computer tutorials
 
-## Module overview { .unnumbered}
+## Module overview {.unnumbered}
 The topics covered over the next ten weeks are:
 
 | Week | Section  | Topic |
@@ -35,7 +35,7 @@ The topics covered over the next ten weeks are:
 | 9    | Advanced Spatial Analysis | [Rasters, Zonal Statistics and Interpolation]({{< var urls.w09 >}}) | 
 | 10   | Advanced Spatial Analysis | [Transport Network Analysis]({{< var urls.w10 >}}) | 
 
-## Troubleshooting { .unnumbered}
+## Troubleshooting {.unnumbered}
 Spatial analysis can yield fascinating insights into geographical relationships, albeit at times it can be challenging, particularly when we combine this with learning how to program at the same time. You will most likely encounter error messages, experience software crashes, and spend time to identify bugs in your code. However, the rewards of learning how to programmatically solve complex spatial problems will be very much worth it in the end.
 
 If you need specific assistance with this module, please:
@@ -45,7 +45,7 @@ If you need specific assistance with this module, please:
 - Attend the scheduled Geocomputation **Additional Support Hours**.
 - Book a slot in our [Academic Support and Feedback hours](https://outlook.office.com/bookwithme/user/8561a481703d4feda7a704ab81b62c8d@ucl.ac.uk?anonymous&ep=plink). 
 
-## Acknowledgements { .unnumbered}
+## Acknowledgements {.unnumbered}
 This year's workbook is compiled using:
 
 - The [GEOG0030: Geocomputation 2022-2023](https://jtvandijk.github.io/GEOG0030_20222023/) workbook by [Justin van Dijk](https://www.mappingdutchman.com)
@@ -56,8 +56,8 @@ This year's workbook also takes inspiration and design elements from:
 
 - The [Spatial Data Science for Social Geography](https://martinfleischmann.net/sds/) course by [Martin Fleischmann](https://martinfleischmann.net/)
 
-## Major updates { .unnumbered}
-::: { .callout-note}
+## Major updates {.unnumbered}
+::: {.callout-note}
 This year's version features the following **major** updates:
 
 - Full rewrite of the workbook using `Quarto`.

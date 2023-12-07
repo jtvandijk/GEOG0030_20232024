@@ -22,14 +22,14 @@ Over the next few weeks, we will be taking a closer look at many of the foundati
 ## Software 
 This module primarily uses the [R](https://www.r-project.org/) programming language, although we will start by using [QGIS](https://qgis.org/en/site/) over the next two weeks to provide you with a visual introduction to the principles of spatial analysis.
 
-::: { .callout-note}
+::: {.callout-note}
 Please follow the instructions below to install both [QGIS](https://qgis.org/en/site/) and [R](https://www.r-project.org/) onto your own personal computer. If you cannot install the software on your personal computer or you are not planning to bring your own laptop to the computer practicals, please refer to the [UCL Desktop and RStudio Server](#ucl) section below. Please make sure that you have access to a working installation of QGIS and R (including relevant packages) **before** the first hands-on practical session next week.
 :::
 
 ### QGIS Installation
 QGIS is an open-source graphic user interface GIS with many community developed add-on packages (or plugins) that provide additional functionality to the software. You can download and install QGIS on your personal machine by going to the QGIS website: [[Link]](https://qgis.org/en/site/forusers/download.html). 
 
-::: { .callout-note}
+::: {.callout-note}
 We recommend installing the **Long Term Release** (*QGIS 3.28 LTR*) as this version should be the most current stable version. For Windows users: be aware that the QGIS installation can be a little slow.
 :::
 
@@ -53,7 +53,7 @@ After this, start RStudio to see if the installation was successful. If no error
 ### UCL Desktop and RStudio Server {#ucl}
 There are two alternatives to installing QGIS and R with RStudio onto your personal device. First, both programmes are available through [Desktop@UCL Anywhere](https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere) as well as all UCL computers on campus. Second, specifically to R, we have RStudio Server available which you can access through your web browser: [[Link]](https://rstudio.data-science.rc.ucl.ac.uk/)
 
-::: { .callout-note}
+::: {.callout-note}
 RStudio Server is a version of R 'in the cloud' which you can access through your web browser.
 :::
 
@@ -67,7 +67,7 @@ You should be able to log onto the RStudio server with your regular UCL *usernam
 knitr::include_graphics('images/w01/rstudio-interface.png')
 ```
 
-::: { .callout-note}
+::: {.callout-note}
 If it is the first time you log on to RStudio server you may only see the RStudio interface appear once you have clicked on the **start a new session** button. More importantly: if you are not on campus, RStudio server will only work with an active Virtual Private Network (VPN) connection that links your personal computer into UCL’s network. Details on setting up a VPN connection can be found in UCL's VPN connection guides: [[Link]](https://www.ucl.ac.uk/isd/services/get-connected/ucl-virtual-private-network-vpn) 
 :::
 
@@ -86,7 +86,7 @@ Now we have installed QGIS and R onto our machines / have access to QGIS and R t
 install.packages(c('tidyverse','sf','tmap','osmdata','terra','dodgr'))
 ```
 
-::: { .callout-warning}
+::: {.callout-warning}
 Even if you have used R or RStudio Server before and previously installed some of the packages in the above list, do re-install all packages by running the code above to make sure you have the latest versions. Legacy installations that have not been updated may cause errors when running the code in this workbook.
 :::
 
@@ -117,7 +117,7 @@ If you do get any of the messages below it means that the package was not proper
 - `Error: package '<packagename>' could not be loaded`
 - `Error in library(<packagename>) : there is no package called '<packagename>'` 
 
-::: { .callout-note}
+::: {.callout-note}
 Many packages depend on other packages (so-called *dependencies*). It happens at times when you install a package it does not install all dependencies. If you encounter any of the above errors in reference to a package that you did not explicitly install, it is probably a missing dependency. Simply install the dependency by typing `install.packages('<dependencyname>')` and try loading all packages again.
 :::
 

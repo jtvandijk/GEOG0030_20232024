@@ -1,21 +1,21 @@
 # Analysing Spatial Patterns I: Geometric Operations and Spatial Queries
-This week, we will be looking at the use of geometric operations and spatial queries within spatial data processing and analysis. Geometric operations and spatial queries are not really a theoretical topic per se but rather essential building blocks to overall spatial data processing and analysis such as calculating the area covered by an individual polygon in an areal unit dataset to running **buffer** and **point-in-polygon** calculations.
+This week, we look at geometric operations and spatial queries --- the fundamental building blocks when it comes to spatial data processing and analysis. This includes operations such as calculating the distances separating one or more spatial objects, running a **buffer** analysis, and conducting **point-in-polygon** calculations.
 
 ## Lecture slides {#slides-w06}
-The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var slides.week06 >}})
+The slides for this week's lecture can be downloaded here: [\[Link\]](%7B%7B%3C%20var%20slides.week06%20%3E%7D%7D)
 
 ## Reading list {#reading-w06}
 #### Essential readings
-- Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, **Chapter 4**: *Spatial data operations*. [[Link]](https://geocompr.robinlovelace.net/spatial-operations.html)
-- Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, **Chapter 5**: *Geometry operations*. [[Link]](https://geocompr.robinlovelace.net/geometry-operations.html)
-- Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, **Chapter 6**: *Reprojecting geographic data*. [[Link]](https://geocompr.robinlovelace.net/reproj-geo-data.html)
+- Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, **Chapter 4**: *Spatial data operations*. [\[Link\]](https://geocompr.robinlovelace.net/spatial-operations.html)
+- Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, **Chapter 5**: *Geometry operations*. [\[Link\]](https://geocompr.robinlovelace.net/geometry-operations.html)
+- Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, **Chapter 6**: *Reprojecting geographic data*. [\[Link\]](https://geocompr.robinlovelace.net/reproj-geo-data.html)
 
 #### Suggested readings
-- Houlden, V. *et al.* 2019. A spatial analysis of proximate greenspace and mental wellbeing in London. *Applied Geography* 109: 102036. [[Link]](https://doi.org/10.1016/j.apgeog.2019.102036)
-- Malleson, N. and Andresen, M. 2016. Exploring the impact of ambient population measures on London crime hotspots. *Journal of Criminal Justice* 46: 52-63. [[Link]](https://doi.org/10.1016/j.jcrimjus.2016.03.002)
+- Houlden, V. *et al.* 2019. A spatial analysis of proximate greenspace and mental wellbeing in London. *Applied Geography* 109: 102036. [\[Link\]](https://doi.org/10.1016/j.apgeog.2019.102036)
+- Malleson, N. and Andresen, M. 2016. Exploring the impact of ambient population measures on London crime hotspots. *Journal of Criminal Justice* 46: 52-63. [\[Link\]](https://doi.org/10.1016/j.jcrimjus.2016.03.002)
 
 ## Bike theft in London {#bike-theft-w06}
-This week, we will be investigating bike theft in London in 2021 and look to confirm the hypothesis *that bike theft primarily occurs near tube and train stations.* We will be investigating its distribution across London using the point data provided within our crime dataset. We will then compare this distribution to the location of train and tube stations using specific geometric operations and spatial queries that can compare the geometry of two (or more) datasets. We will also learn how to download data from OpenStreetMap as well as use an interactive version of `tmap` to explore the distribution of the locations of individual bike theft against the locations of these stations.
+This week, we will be investigating bike theft in London in 2021 and look to confirm the hypothesis *that bike theft primarily occurs near tube and train stations*. We will be investigating its distribution across London using the point data provided within our crime dataset. We will then compare this distribution to the location of train and tube stations using specific geometric operations and spatial queries that can compare the geometry of two (or more) datasets. We will also learn how to download data from OpenStreetMap as well as use an interactive version of `tmap` to explore the distribution of the locations of individual bike theft against the locations of these stations.
 
 ### Spatial analysis set up {#setup-w05}
 Open a new script within your GEOG0030 project and save this script as `wk6-bike-theft-analysis.r`. At the top of your script, add the following metadata:
@@ -71,16 +71,13 @@ library(osmdata)
 tmap_mode("plot")
 ```
 
-This week, we will start off using three datasets: the London MSOA boundaries for 2021, recorded crime in London for 2021 from [data.police.uk](https://data.police.uk/), and the locations of the train and tube stations from [Transport for London](https://tfl.gov.uk/). 
+This week, we will start off using three datasets: the London MSOA boundaries for 2021, recorded crime in London for 2021 from [data.police.uk](https://data.police.uk/), and the locations of the train and tube stations from [Transport for London](https://tfl.gov.uk/). We already downloaded the crime data for 2021 during [Week 4's computer tutorial](04-statistics.html#crime-data) and we also saved the 2021 London MSOA boundaries [last week](05-spatial.html#spatial-analysis-set-up), so we only need to download a dataset containing train and tube stations in London.
 
-We already downloaded the crime data for 2021 during [Week 4's computer tutorial](04-statistics.html#crime-data) and we also saved the 2021 London MSOA boundaries [last week](05-spatial.html#spatial-analysis-set-up), so we only need to download a dataset containing train and tube stations in London.
+| File                                | Type      | Link    |
+| :------                             | :------   | :------ |
+| Train and tube stations in London   | `kml`     | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/tfl-stations.zip) |
 
-#### File download
-| File                     | Type         | Link |
-| :------                  | :------      | :------ |
-| Train and tube stations in London       | `kml`        | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/tfl-stations.zip) |
-
-Once downloaded, move your `tfl_stations.kml` download to your `raw` data folder and create a new `transport` folder to contain it. After this, let's start by loading our London MSOA file:
+Once downloaded, move your `tfl_stations.kml` download to your `raw` data folder and create a new `transport` folder to contain it. After this, let's load our London MSOA file:
 
 ```{r}
 #| label: 06-load-shp
@@ -91,7 +88,7 @@ Once downloaded, move your `tfl_stations.kml` download to your `raw` data folder
 #| filename: "R code"
 # read in our MSOA GeoPackage
 msoa_london <- st_read("data/raw/boundaries/MSOA2021_London.gpkg")
-``` 
+```
 
 Check the **CRS** of our `msoa_london` spatial dataframe:
 
@@ -104,11 +101,9 @@ Check the **CRS** of our `msoa_london` spatial dataframe:
 #| filename: "R code"
 # inspect CRS
 st_crs(msoa_london)
-``` 
+```
 
-Of course it should be of no surprise that our `msoa_lon` spatial dataframe is in **OSGB36 / British National Grid **, however, it is always good to check. 
-
-Let's go ahead and read in our `tfl_stations` dataset as well:
+Of course it should be of no surprise that our `msoa_lon` spatial dataframe is projected in **OSGB36 / British National Grid**, however, it is always good to check and avoid problems down the line. Let's go ahead and read in our `tfl_stations` dataset as well:
 
 ```{r}
 #| label: 06-load-stations
@@ -119,9 +114,9 @@ Let's go ahead and read in our `tfl_stations` dataset as well:
 #| filename: "R code"
 # load stations
 london_stations <- read_sf("data/raw/transport/tfl_stations.kml")
-``` 
+```
 
-This dataset is provided as a `kml` file, which stands for **Keyhole Markup Language (KML)**. KML was originally created as a file format used to display geographic data in Google Earth. So we definitely need to check what CRS this dataset is in and decide whether we will need to do some reprojecting.
+This dataset is provided as a `kml` file, which stands for **Keyhole Markup Language (KML)**. KML was originally created as a file format used to display geographic data in Google Earth. So we definitely need to check what CRS this dataset is in and decide whether we need to reproject the data.
 
 ```{r}
 #| label: 06-crs-stations
@@ -132,9 +127,9 @@ This dataset is provided as a `kml` file, which stands for **Keyhole Markup Lang
 #| filename: "R code"
 # inspect CRS
 st_crs(london_stations)
-``` 
+```
 
-The result informs us that we are going to need to reproject our data in order to use this dataframe with our `msoa_london` spatial dataframe. Luckily in R and the `sf` library, this reprojection is a relatively straightforward transformation, requiring only one function: `st_transform()`. The function is very simple to use: you only need to provide the function with the dataset and the code for the new CRS you wish to use with the data:
+The result informs us that we are going to need to reproject our data in order to use this dataframe with our `msoa_london` spatial dataframe. Luckily in R and the `sf` library, this reprojection is a relatively straightforward with the `st_transform()` function. The function is very simple to use: you only need to provide the function with the input dataset that you want to reproject and the [EPSG code](https://epsg.io/) of the target CRS.
 
 ```{r}
 #| label: 06-crs-transform
@@ -145,9 +140,9 @@ The result informs us that we are going to need to reproject our data in order t
 #| filename: "R code"
 # reproject our data from WGS84 to BNG
 london_stations <- st_transform(london_stations, 27700)
-``` 
+```
 
-We can double-check whether our new variable is in the correct CRS by using the `st_crs()` command:
+We can double-check whether our new variable is in the correct CRS by using the `st_crs()` function again:
 
 ```{r}
 #| label: 06-crs-stations-after-trans
@@ -158,15 +153,16 @@ We can double-check whether our new variable is in the correct CRS by using the 
 #| filename: "R code"
 # inspect CRS
 st_crs(london_stations)
-``` 
+```
 
-You should see that our `london_stations` spatial dataframe is now in **OSGB36 / British National Grid**. We are now ready to load our final dataset - our collection of `csv's` that contain the crimedata for London for 2021. We can do this by repeating the steps we took during [Week 4's computer tutorial](04-statistics.html#crime-data):
+You should see that our `london_stations` spatial dataframe is now in **OSGB36 / British National Grid**. We are now ready to load our final dataset - our collection of `csv's` that contain the crime data for London for 2021. We can do this by running the code from [Week 4's computer tutorial](04-statistics.html#crime-data):
 
 ```{r tidy="styler"}
 #| label: 06-combine-csv
 #| classes: styled-output
 #| echo: True
 #| eval: True
+#| cache: True
 #| message: False
 #| filename: "R code"
 # create a list of all csv files in the crime folder
@@ -179,9 +175,10 @@ all_crime_df <- list.files(path="data/raw/crime/all-crime/", full.names=TRUE, re
 
 Now we have loaded all crime data again, we want to do three things:
 
-1. Extract only those crimes that are bicycle thefts.
-2. Convert our `csv` into a spatial dataframe that shows the locations of our crimes, as per the latitude and longitudes provided.
-3. Transform our data from **WGS84 / 4326** to **BNG / 27700**.
+1.  Extract only those crimes that are bicycle thefts.
+2.  Convert our `csv` into a spatial dataframe that shows the locations of our crimes, using
+the recorded latitude and longitudes.
+3.  Reproject the latitudes and longitudes from **WGS84: EPSG 4326** to **British National Grid: EPSG 27700**.
 
 ```{r tidy="styler"}
 #| label: 06-bike-theft
@@ -196,15 +193,15 @@ bike_theft <- all_crime_df |>
   filter(`Crime type` == "Bicycle theft" & !is.na(Longitude) & !is.na(Latitude)) |>
   # only keep the longitude and latitude columns
   dplyr::select(Longitude, Latitude) |>
-  # transform into a point spatial dataframe, projected in WGS84
+  # transform into a point spatial dataframe, set CRS to WGS84
   st_as_sf(coords = c("Longitude", "Latitude"), crs = 4236) |>
   # transform into BNG
   st_transform(27700)
-``` 
+```
 
-We now have our three datasets loaded, it is time for a little data checking. We can see just from our **Environment** window that in total, we have **302** train and tube stations and **20,768** crimes to look at in our analysis. We can double-check the (Attribute) tables of our newly created spatial dataframes to see what data we have to work with. You can either do this manually by clicking on the variable, or using commands such as `head()`, `summary()` and `names()` to get an understanding of our dataframe structures and the field names present. You can choose your approach, but make sure to look at your data.
+We now have our three datasets loaded, it is time for a little data inspection. We can see just from our **Environment** window that in total, we have **302** train and tube stations and **20,768** crimes to look at in our analysis. We can double-check the attributes of our newly created spatial dataframes to see what data we have to work with. You can either do this manually by clicking on the variable, or using commands such as `head()`, `summary()` and `names()` to get an understanding of our dataframe structures and the fieldnames present. 
 
-As you should remember from the code above, for our bicycle theft data, we actually only have our geometry column because this is all that we extracted from our collection of crime `csv` files. For our `london_stations` spatial dataframe, we have a little more information, including the name of the station, its address, and as its geometry.
+For our bicycle theft data, we actually only have a geometry column because this is all that we extracted from our collection of crime `csv` files. For our `london_stations` spatial dataframe, we have a little more information, including the name of the station, its address, and as its geometry.
 
 Now, let's map all three layers of data onto a single map using `tmap`:
 
@@ -223,9 +220,9 @@ tm_shape(msoa_london) + tm_fill() +
   tm_shape(london_stations) + tm_dots(col = "red") 
 ```
 
-Let's think about the distribution of our data: we can already see that our bike theft is clearly highly concentrated in the centre of London although we can certainly see some clusters in other areas. Let's go ahead and temporally remove the bike theft data from our map for now to see where our tube and train stations are located.
+Let's think about the distribution of our data: we can already see that our bike theft is clearly highly concentrated in the centre of London although we can certainly see some clusters in other areas. Let's go ahead and temporarily remove the bike theft data from our map for now to see where our tube and train stations are located.
 
-To remove the bike data, simply put a comment sign in front of that piece of code and re-run the code:
+To remove the bike data, simply comment out the (`#`) the relevant line of code:
 
 ```{r tidy="styler"}
 #| label: fig-map-all-input-no-bike
@@ -242,21 +239,21 @@ tm_shape(msoa_london) + tm_fill() +
   tm_shape(london_stations) + tm_dots(col = "red") 
 ```
 
-We can see our train and tube stations are only present in primarily the north of London and not really present in the south. This is not quite right and in fact our dataset only contains those train stations used by Transport for London within the tube network rather than all the stations in London. We will need to fix this before conducting our full analysis. But this isn't the only problem with our dataset. We can also see that both our `bike_theft` spatial dataframe and our `london_stations` spatial dataframe extend beyond our London boundaries.
+We can see our train and tube stations are only present in primarily the north of London and not really present in the south. This is not quite right and in fact it seems that our dataset only contains those train stations used by Transport for London within the underground network rather than all the stations in London. We will need to fix this before conducting our full analysis. A second issue with our dataset is that the `london_stations` spatial dataframe extends beyond our London boundaries. The same applies to our `bike_theft` spatial dataframe. 
 
 ### Data preparation {#data-preparation-w06}
-When we want to reduce a dataset to the spatial extent of another, there are two different approaches to conducting this in spatial analysis: a *subset* or a *clip*. Each deal with the geometry of the resulting dataset in slightly different ways.
+When we want to reduce a dataset to the spatial extent of another, there are two different approaches: a *subset* or a *clip*. Each deal with the geometry of the resulting dataset in slightly different ways.
 
-1. A *clip* works a bit like a cookie-cutter: it will take the geometry of the input layer (i.e. the layer you want to clip), places a 'cookie-cutter' layer on top (i.e. the layer you want to clip by) and then returns only the parts of the input layer contained within the cookie-cutter. This will mean that the geometry of our resulting layer will be modified, if it contains observation features that extend further than the ;cookie-cutter' extent it will literally 'cut' the geometry of our data.
-2. A *subset* operation is what is known in GIScience-speak as a *select by location query*. In this case, our subset will return the full geometry of each observation feature of the input layer that intersects with our second layer. Any geometry that does not intersect with our second layer will be removed from the geometry of our resulting layer.
+1.  A *subset* operation is what is known in GIScience-speak as a *select by location query*. In this case, our subset will return the full geometry of each observation feature of the input layer that intersects with our second layer. Any geometry that does not intersect with our second layer will be removed from the geometry of our resulting layer.
+2.  A *clip* works a bit like a cookie-cutter: it will take the geometry of the input layer (i.e. the layer you want to clip), places a 'cookie-cutter' layer on top (i.e. the layer you want to clip by) and then returns only the parts of the input layer contained within the cookie-cutter. This will mean that the geometry of our resulting layer will be modified, if it contains observation features that extend further than the 'cookie-cutter' extent it will literally 'cut' the geometry of our data.
 
-::: { .callout-tip}
-Because we are using point data, we can use either approach because it is not possible to split the geometry of a single point feature. When it comes to polygon and line data, not understanding the differences between the two approaches can lead you into difficulties with your data processing as there will be differences in the feature geometry between the clipped layer and the subset layer.
+::: callout-tip
+Because we are using point data, we can use either approach because it is not possible to split the geometry of a single point feature. When it comes to polygon and line data, the different approaches are likely to result in different results.
 :::
 
 Each approach is implemented differently in R. To **subset** our data, we only need to use the `base` R library to selection using `[]` brackets:
 
-```{r} 
+```{r}
 #| label: 06-subset-ldn-bt
 #| classes: styled-output
 #| echo: True
@@ -266,11 +263,12 @@ Each approach is implemented differently in R. To **subset** our data, we only n
 #| filename: "R code"
 # subset
 bike_theft <- bike_theft[msoa_london,]
+london_stations <- london_stations[msoa_london,]
 ```
 
-If we want to **clip** our data, we need to use the `st_intersection()` function from the `sf` library. 
+If we want to **clip** our data, we need to use the `st_intersection()` function from the `sf` library.
 
-```{r} 
+```{r}
 #| label: 06-clip-ldn-bt
 #| classes: styled-output
 #| echo: True
@@ -280,19 +278,20 @@ If we want to **clip** our data, we need to use the `st_intersection()` function
 #| filename: "R code"
 # clip
 bike_theft <- bike_theft |> st_intersection(msoa_london)
+london_stations <- london_stations |> st_intersection(msoa_london)
 ```
 
-::: { .callout-tip}
+::: callout-tip
 Out of the two, the **subset** approach is the fastest to use as R is simply comparing the geometries rather than also editing the geometries, but which approach you use with future data is always dependent on your data and the output you need.
 :::
 
-Before we go ahead and sort out our `london_stations` spatial dataframe, we are going to look at how we can **dissolve** our `msoa_london` spatial dataframe into a single feature. Reducing a spatial dataframe to a single observation is often required when using R and `sf`'s geometric operations to complete geometric comparisons. Sometimes, also, we simply want to map an outline of an area, such as London, rather than add in the additional spatial complexities of our MSOAs. To achieve just a single observation that represents the **outline geometry** of our dataset, we use the geometric operation `st_union()`. 
+Before we go ahead and sort out our `london_stations` spatial dataframe, we are going to look at how we can **dissolve** our `msoa_london` spatial dataframe into a single feature. Reducing a spatial dataframe to a single observation is often required when using R and `sf`'s geometric operations to complete geometric comparisons. In addition, sometimes we simply want to map an outline of an area, such as London, rather than add in the additional spatial complexities of internal boundaries. To achieve just a single observation that represents the **outline geometry** of our dataset, we use the geometric operation `st_union()`.
 
-::: { .callout-tip}
-You can also use the `st_union()` function to combine two datasets into one. This can be used to **merge** data together that are of the same spatial type.
+::: callout-tip
+You can also use the `st_union()` function to combine two spatial datasets into one. This can be used to **merge** data together that are of the same spatial type. E.g. if you have a file that contains the MSOAs pertaining to England and a file that contains the MSOAs pertaining to Wales, you can use `st_union` to create one file that contains the MSOAs for both countries.
 :::
 
-```{r} 
+```{r}
 #| label: 06-union-ldn-bt
 #| classes: styled-output
 #| echo: True
@@ -306,7 +305,7 @@ london_outline <- msoa_london |> st_union()
 
 You should see that our `london_outline` spatial data frame only has one observation. You can now go ahead and `plot()` your `london_outline` spatial dataframe from your console and see what it looks like:
 
-```{r} 
+```{r}
 #| label: fig-06-union-ldn-plot
 #| fig-cap: Quick plot of the London outline. 
 #| echo: True
@@ -317,9 +316,10 @@ You should see that our `london_outline` spatial data frame only has one observa
 plot(london_outline)
 ```
 
-Back to our train and tube stations. We have seen that our current `london_stations` spatial dataframe does not provide the coverage of train stations in London that we expected. To add in our missing data, we will be using [OpenStreetMap](https://www.openstreetmap.org/#map=6/54.910/-3.432). 
+### OpenStreetMap data
+Back to our train and tube stations. We have seen that our current `london_stations` spatial dataframe does not provide the coverage of train stations in London that we expected. To add in our missing data, we will be using [OpenStreetMap](https://www.openstreetmap.org/#map=6/54.910/-3.432).
 
-::: { .callout-note}
+::: callout-note
 OpenStreetMap (OSM) is a free editable map of the world,although its spatial coverage is still unequal across the world. In addition, as you will find if you use the data, the accuracy and quality of the data can often be quite questionable or simply missing attribute details that we would like to have, e.g. types of roads and their speed limits, to complete specific types of spatial analysis. As a result, do not expect OSM to contain every piece of spatial data that you would want.
 :::
 
@@ -327,7 +327,7 @@ Whilst there are [various approaches](https://wiki.openstreetmap.org/wiki/Downlo
 
 To use the library (and API), we need to know how to write and run a query, which requires identifying the `key` and `value` that we need within our query to select the correct data. Essentially every map element (whether a point, line or polygon) in OSM is *tagged* with different attribute data. In our case, we are looking for train stations, which fall under the key, `Public Transport`, with a value of `station` as outlined in their [wiki](https://wiki.OpenStreetMap.org/wiki/Key:public_transport). These `keys` and `values` are used in our queries to extract only map elements of that feature type - to find out how a feature is *tagged* in OSM is simply a case of reading through the OSM documentation and [becoming familiar](https://wiki.openstreetmap.org/wiki/Tags) with their `keys` and `values`.
 
-In addition to this key-value pair, we also need to obtain the **bounding box** of where we want our data to be extracted from, i.e. London, to prevent asking OSM to search the whole map of the world. Let's try to extract elements from OSM that are tagged as `public_transport = station` from OSM into an `osmdata_sf()` object:
+In addition to this key-value pair, we also need to obtain the **bounding box** of where we want our data to be extracted from to limit the search to the specific area of interest. Let's try to extract elements from OSM that are tagged as `public_transport = station` from OSM into an `osmdata_sf()` object:
 
 ```{r tidy='styler'}
 #| label: 06-osm-data-query
@@ -335,7 +335,7 @@ In addition to this key-value pair, we also need to obtain the **bounding box** 
 #| echo: True
 #| eval: True
 #| filename: "R code"
-# extract bounding box from London outline (WGS84)
+# extract latitude, longitude bounding box from London outline
 p_bbox <- st_bbox(st_transform(london_outline, 4326))
 
 # call OverPassQuery function
@@ -346,13 +346,13 @@ london_stations_osm <- opq(bbox = p_bbox) |>
   osmdata_sf()
 ```
 
-::: { .callout-warning}
-In some instances the OSM query will return an error, especially when several people from the same location are executing the exact same query at the same time. If that is the case you can download the `london_stations_osm` object here: [[Download]](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/london_stations_osm.RData). After downloading, you can copy the file to your working directory and load the object using the `load()` function.
+::: callout-warning
+In some instances the OSM query will return an error, especially when several people from the same location are executing the exact same query at the same time. If that is the case you can download the `london_stations_osm` object here: [\[Download\]](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/london_stations_osm.RData). After downloading, you can copy the file to your working directory and load the object using the `load()` function.
 :::
 
-When we download OSM data, and extract it as above, our query will return all elements tagged as our key-value pair into our `osmdata_sf()` OSM data object. This means all elements associated with our tag will be returned: any **points, lines and polygons**. We might think with our `public_transport = station` tag, we would only return point data representing our train and tube stations in London. But if we use the `summary()` function on our `london_stations_osm` OSM data object, we can see that not only a lot of other data is stored in our OSM data object (including the bounding box we used within our query, plus metadata about our query), but our query has also returned both **points** and **polygons** stored within this OSM data object as individual spatial data frames.
+When we download OSM data, and extract it as above, our query will return all elements tagged as our key-value pair into our `osmdata_sf()` OSM data object. This means all elements associated with our tag will be returned: any **points**, **lines** and **polygons**. We might think with our `public_transport = station` tag, we would only return point data representing our train and tube stations in London. But if we use the `summary()` function on our `london_stations_osm` OSM data object, we can see that not only a lot of other data is stored in our OSM data object (including the bounding box we used within our query, plus metadata about our query), but our query has also returned both **points** and **polygons** stored within this OSM data object as individual spatial data frames.
 
-To extract only the points of our tube and train stations from our `london_stations_osm` OSM data object, we simply need to extract this from the dataframe and store this under a separate variable. 
+To extract only the points of our tube and train stations from our `london_stations_osm` OSM data object, we simply need to extract this from the dataframe and store this under a separate variable.
 
 ```{r tidy='styler'}
 #| label: fig-06-osm-station-points
@@ -392,7 +392,7 @@ As we can see in our plot above, not all of our stations appear to be of the sam
 count(london_stations_osm, railway)
 ```
 
-As we can see, not everything in our `london_stations_osm` spatial dataframe is a `station` as recorded by OSM and we have a high number of `NAs` which are unlikely to actually represent stations in London. The number of points marked as `station` in the `railway` field are most likely the only points in our dataset that represent actual stations in London. There is still a difference between the official numbers and the OSM extract, but we will go on and use the best information we have from this attribute and our search and remove all other points from our OSM dataset:
+As we can see, not every feature in our `london_stations_osm` spatial dataframe is recorded as a `station` and we have a high number of `NAs` which are unlikely to represent actual stations. The number of points marked as `station` in the `railway` field are most likely the only points in our dataset that represent actual stations. There is still a difference between the official numbers and the OSM extract, but we will go on use this information to clean up the OSM dataset:
 
 ```{r}
 #| label: 06-osm-station-clean
@@ -406,23 +406,7 @@ As we can see, not everything in our `london_stations_osm` spatial dataframe is 
 london_stations_osm <- london_stations_osm |> filter(railway == "station")
 ```
 
-We have now cleaned our `london_stations_osm` spatial dataframe to remove all those points within our dataset that are not tagged as `railway == "station"`. Our `london_stations` spatial dataframe is of course an **authoritative** dataset from TfL, so we know at least that this data should be accurate. Therefore, it would be great if we could compare our two datasets to one another spatially to double-check that our `london_stations_osm` spatial dataframe contains all the data within our `london_stations` spatial dataframe.
-
-We can first look at this by comparing their distributions visually on a map. But first, as our `london_stations` spatial dataframe still extends outside of London, we will go ahead and clip this:
-
-```{r}
-#| label: 06-intersect-stations-osm
-#| classes: styled-output
-#| echo: True
-#| eval: True
-#| tidy: True
-#| message: False
-#| filename: "R code"
-# clip London stations
-london_stations <- london_stations |> st_intersection(london_outline)
-```
-
-Map our two spatial dataframes to compare their spatial cover
+We have now cleaned our `london_stations_osm` spatial dataframe to remove all those points within our dataset that are not tagged as `railway == "station"`. Our `london_stations` spatial dataframe is of course an authoritative dataset from TfL, so we hope that this data is accurate, albeit incomplete, and at very least does not contain stations that do not exist. Therefore, it would be helpful if we could compare our two datasets to one another spatially to double-check that our `london_stations_osm` spatial dataframe contains all the data found within our `london_stations` spatial dataframe. We can first look at this by comparing their distributions visually on a map. 
 
 ```{r tidy="styler"}
 #| label: fig-06-map-stations
@@ -491,8 +475,8 @@ The comparison looks pretty good but still the question is: can we be sure? Usin
 
 We will approach this question in two different ways to highlight the differences between geometric operations and spatial queries:
 
-1. We will use **geometric operations** to generate geometries that highlight missing stations from our `london_stations` spatial dataframe (i.e. ones that are not present in the`london_stations_osm` spatial dataframe.)
-2. We will use **spatial queries** to provide us with a list of features in our `london_stations` spatial dataframe that do not meet our spatial requirements (i.e. are not present in the`london_stations_osm` spatial dataframe.)
+1.  We will use **geometric operations** to generate geometries that highlight missing stations from our `london_stations` spatial dataframe (i.e. ones that are not present in the`london_stations_osm` spatial dataframe).
+2.  We will use **spatial queries** to provide us with a list of features in our `london_stations` spatial dataframe that do not meet our spatial requirements (i.e. are not present in the`london_stations_osm` spatial dataframe).
 
 #### Geometric operations
 As highlighted above, the offset between our spatial dataframes adds a little complexity to our geometric operations code. To be able to make our direct spatial comparisons across our spatial dataframes, what we first need to do is try to **snap** the geometry of our `london_stations` spatial dataframe to our `london_stations_osm` spatial dataframe for points within a given distance threshold. This will mean that any points in the `london_stations` spatial dataframe that are within a specific distance of the `london_stations_osm` spatial dataframe will have their geometry changed to that of the `london_stations_osm` spatial dataframe.
@@ -520,11 +504,7 @@ Snap our our `london_stations` spatial dataframe to our `london_stations_osm` sp
 london_stations_snap <- london_stations |> st_snap(london_stations_osm, 150)
 ```
 
-Now we have out snapped geometry, we can look to compare our two datasets to calculate whether or not our `london_stations_osm` spatial dataframe is missing any data from our `london_stations_snap` spatial dataframe.
-
-To do so, we will use the `st_difference()` function which will return us the geometries of those points in our `london_stations_snap` spatial dataframe that are missing in our our `london_stations_osm` spatial dataframe. However, to use this function successfully we need to convert our our `london_stations_osm` spatial dataframe into a single geometry first.
-
-To simplify our `london_stations_osm` spatial dataframe into a single geometry, we simply use the `st_union()` code we used with our London outline above:
+Now we have out snapped geometry, we can look to compare our two datasets to calculate whether or not our `london_stations_osm` spatial dataframe is missing any data from our `london_stations_snap` spatial dataframe. To do so, we will use the `st_difference()` function which will return us the geometries of those points in our `london_stations_snap` spatial dataframe that are missing in our our `london_stations_osm` spatial dataframe. However, to use this function successfully we need to convert our our `london_stations_osm` spatial dataframe into a single geometry first. To simplify our `london_stations_osm` spatial dataframe into a single geometry, we simply use the `st_union()` code we used with our London outline above:
 
 ```{r}
 #| label: 06-single-geometry
@@ -558,23 +538,23 @@ tm_shape(london_stations_osm) + tm_dots(col = "black") +
     tm_basemap(c(StreetMap = "OpenStreetMap"))
 ```
 
-When you investigate the  missing stations, you can actually see that our `london_stations_osm` spatial dataframe dataset is actually more accurate than the TfL locations. All 'missing' stations are not in fact missing but simply at a greater offset than 150m. We can safely suggest that we can move forward with only using the `london_stations_osm` spatial dataframe and do not need to follow through with adding any more data to this dataset.
+When you investigate the missing stations, you can actually see that our `london_stations_osm` spatial dataframe dataset is actually more accurate than the TfL locations. All 'missing' stations are not in fact missing but simply at a greater offset than 150m. We can safely suggest that we can move forward with only using the `london_stations_osm` spatial dataframe and do not need to follow through with adding any more data to this dataset.
 
 #### Spatial queries
 Before we go ahead and move forward with our analysis, we will have a look at how we can implement the above quantification using spatial queries instead of geometric operations. Usually, when we want to find out if two spatial dataframes have the same or similar geometries, we would use one of the following queries:
 
-- `st_equals()`
-- `st_intersects()`
-- `st_crosses()`
-- `st_overlaps()`
-- `st_touches()`
+-   `st_equals()`
+-   `st_intersects()`
+-   `st_crosses()`
+-   `st_overlaps()`
+-   `st_touches()`
 
-Ultimately which query or spatial relationship conceptualisation you would choose would depend on the qualifications you are trying to place on your dataset. In our case, considering our `london_stations` spatial dataframe and our `london_stations_osm` spatial dataframe, we have to consider **the offset between our datasets**. We could, of course, *snap* our spatial dataframe as above but wouldn't it be great if we could skip this step?
+Ultimately which query or spatial relationship conceptualisation you would choose would depend on the qualifications you are trying to place on your dataset. In our case, considering our `london_stations` spatial dataframe and our `london_stations_osm` spatial dataframe, we again have to consider **the offset between our datasets**. We could, of course, *snap* our spatial dataframe as above but wouldn't it be great if we could skip this step?
 
 To do so, instead of *snapping* the `london_stations` spatial dataframe to the `london_stations_osm` spatial dataframe, we can use the `st_is_within_distance()` spatial query to ask whether our points in our `london_stations` spatial dataframe are within 150m of our `london_stations_osm` spatial dataframe. This ultimately means we can skip the snapping and `st_difference()` steps and complete our processing in two simple steps.
 
-::: { .callout-tip}
-One thing to be aware of when running spatial queries in R and `sf` is that whichever spatial dataframe is the comparison geometry (i.e. spatial dataframe `y` in our queries), this spatial dataframe **must** be a **single geometry** (as we saw above in our `st_difference()` geometric operation). If it is not a single geometry, then the query will be run `x` number of observations * `y` spatial dataframe number of observations times, which is not the output that we want. By converting our comparison spatial dataframe to a single geometry, the query is only run for the number of observations in `x`.
+::: callout-tip
+One thing to be aware of when running spatial queries in R and `sf` is that whichever spatial dataframe is the comparison geometry (i.e. spatial dataframe `y` in our queries), this spatial dataframe **must** be a **single geometry** (as we saw above in our `st_difference()` geometric operation). If it is not a single geometry, then the query will be run `x` number of observations times `y` spatial dataframe number of observations times, which is not the output that we want. By converting our comparison spatial dataframe to a single geometry, the query is only run for the number of observations in `x`.
 
 You should also be aware that any of our spatial queries will return **one** of **two potential outputs**: a **list** detailing the **indexes** of all those observation features in `x` that do intersect with `y`, or a **matrix** that contains a `TRUE` or `FALSE` statement about this relationship. To define whether we want a list or a matrix output, we set the `sparse` parameter within our query to `TRUE` or `FALSE` respectively.
 :::
@@ -610,10 +590,7 @@ We can go ahead and `count()` the results of our query.
 count(london_stations, in_osm_data)
 ```
 
-Great - we can see we have **3** stations missing (3 `FALSE` observations), just like we had in our geometric operations approach. 
-
-#### File export
-Now we have done our checks and we know that we can move forward with using our tube and train station file, we should save a copy for usage at a later stage. Save your `london_stations_osm` spatial dataframe under the `transport` folder in your `raw` directory as a shapefile:
+Great - we can see we have **3** stations missing (`FALSE` observations), just like we had in our geometric operations approach. Now we have done our checks and we know that we can move forward with using our tube and train station file, we should save a copy for usage at a later stage. Save your `london_stations_osm` spatial dataframe under the `transport` folder in your `raw` directory as a shapefile:
 
 ```{r}
 #| label: 06-write-to-file
@@ -631,9 +608,7 @@ st_write(london_stations_osm, "data/raw/transport/osm_stations.gpkg")
 We now have our London bike theft and train stations ready for analysis and we just need to complete one last step of processing with this dataset to find out *whether or not bike theft occurs more often near to a train station*. As above, we can use both geometric operations or spatial queries to complete this analysis.
 
 #### Geometric operations
-Our first approach using geometric operations will involve the creation of a **buffer** around each train station to then identify which bike thefts occur within 400m of a train or tube station.
-
-When it comes to buffers, we need to consider two main things: what distance will we use (and are we in the right CRS to use a buffer) and whether we want individual buffers or a single buffer.
+Our first approach using geometric operations will involve the creation of a **buffer** around each train station to then identify which bike thefts occur within 400m of a train or tube station.When it comes to buffers, we need to consider two main things: what distance will we use (and are we in the right CRS to use a buffer) and whether we want individual buffers or a single buffer.
 
 ```{r}
 #| label: fig-buffer-buffer
@@ -658,7 +633,7 @@ station_400m_buffer <- london_stations_osm |> st_buffer(dist = 400) |> st_union(
 
 You can then go ahead and plot our buffer to see the results, entering `plot(station_400m_buffer)` within the console:
 
-```{r} 
+```{r}
 #| label: fig-06-quick-buffer-plot
 #| fig-cap: Quick plot of the stations with their 400m buffers 
 #| echo: True
@@ -671,7 +646,7 @@ plot(station_400m_buffer)
 
 To find out which bike thefts have occurred within 400m of a station, we will use the `st_intersects()` function.
 
-::: { .callout-tip}
+::: callout-tip
 One thing to note is that there is a difference between `st_intersects()` and the `st_intersections()` function we have been used so far. Unlike the `st_intersections()` function which creates a 'clip' of our dataset, i.e. produces a new spatial dataframe containing the clipped geometry, the `st_intersects()` function simply identifies whether "x and y geometry share any space". As explained above, as with all spatial queries, the `st_intersects()` function can produce two different outputs: either a list detailing the **indexes** of all those observation features in `x` that do intersect with `y` or a matrix that contains a `TRUE` or `FALSE` statement about this relationship. As with our previous spatial query, we will continue to use the matrix approach: this means for every single bike theft in London, we will know whether or not it occurred within our chosen distance of a train station. We can then join this as a new column to our `bike_theft` spatial dataframe.
 :::
 
@@ -711,12 +686,12 @@ tm_shape(london_outline) + tm_borders() +
   tm_credits("© OpenStreetMap contributors")
 ```
 
-It should be of no surprise that visually we can of course see some defined clusters of our points around the various train stations. We can then utilise this resulting dataset to calculate the percentage of bike thefts have occured at this distance, but first we will look at the spatial query approach to obtaining the same data.
+It should be of no surprise that visually we can of course see some defined clusters of our points around the various train stations. We can then utilise this resulting dataset to calculate the percentage of bike thefts have occurred at this distance, but first we will look at the spatial query approach to obtaining the same result.
 
 #### Spatial queries
 Like earlier, we can use the `st_is_within_distance()` function to identify those bike thefts that fall within 400m of a tube or train station in London.
 
-We will again need to use the **single geometry** version of our `london_stations_osm` spatial dataframe for this comparison with `sparse = FALSE` to create a matrix that we simply join back to our `bike_theft` spatial dataframe as a new column:
+We will again need to use the **single geometry** version of our `london_stations_osm` spatial dataframe for this comparison with `sparse = FALSE` to create a matrix that we assign to our `bike_theft` spatial dataframe as a new column:
 
 ```{r}
 #| label: 06-distance-spatial-query
@@ -734,7 +709,7 @@ bike_theft$d400_sq <- bike_theft |> st_is_within_distance(london_stations_osm_co
 We can `count` or map the outputs of our two different approaches to check that we have the same output. If you were to do this you will see that we have achieved the exact same output with fewer lines of code and, as a result, quicker processing. However, unlike with the geometric operations, we do not have a buffer to visualise this distance around a train station, which we might want to do, for example, for maps in a report or presentation. Once again, it will be up to you to determine which approach you prefer to use. Some people prefer using the more visual techniques of **geometric operations**, whereas others might find **spatial queries** to answer the same questions.
 
 #### Theft at train and tube locations?
-Now we have, for each bike theft in our `bike_theft` spatial dataframe, an attribute of whether it occurs within 400m of a train or tube station. We can quite quickly use the `count()` function to find out just how many thefts these clusters of theft represent.
+Now we have for each bike theft in our `bike_theft` spatial dataframe an attribute that contains information about whether the theft occurred within 400m of a train or tube station or not. We can use the `count()` function to find out just how many thefts fall in each of these categories.
 
 ```{r}
 #| label: 06-intersect-count
@@ -748,15 +723,13 @@ Now we have, for each bike theft in our `bike_theft` spatial dataframe, an attri
 count(bike_theft, d400_sq)
 ```
 
-Almost 50 per cent of bike thefts occur within 400m of a train station. Our main hypothesis that *bike thefts occur primarily near train and tube stations * is perhaps not quite proven, but so far we have managed to quantify that a substantial amount of bike thefts do occur within 400m of these areas.
+Almost 50 per cent of bike thefts occur within 400m of a train station. Our main hypothesis that *bike thefts occur primarily near train and tube stations* is perhaps not quite proven, but so far we have managed to quantify that a substantial amount of bike thefts do occur within 400m of these areas.
 
-In a final step, we will conduct a very familiar procedure: aggregating our data to the MSOA level. At the moment, we have now calculated for each bike theft whether or not it occurs within 400m of a tube or train station. We can use this to see if specific MSOAs are **hotspots** of bike crimes near stations across London. To do this, we will be using the same process we used in in previous weeks: counting **the number of points in each of our polygons**.
+In a final step, we will conduct a very familiar procedure: aggregating our data to the MSOA level. At the moment, we have now calculated for each bike theft whether or not it occurs within 400m of a tube or train station. We can use this to see if specific MSOAs are hotspots of bike crimes near stations across London. To do this, we will be using the same process we used in in previous weeks: counting **the number of points in each of our polygons**.
 
 To create a point-in-polygon count within `sf`, we use the `st_intersects()` function again but instead of using the matrix output of `TRUE` or `FALSE` that we have used before, what we actually want to extract from our function is the total number of points it identifies as intersecting with our `msoa_london` spatial dataframe. To achieve this, we use the `lengths()` function from the `base` R package to count the number of wards returned within the index list its `sparse` output creates.
 
-Remember, this `sparse` output creates a list of the bike thefts (by their index) that intersect with each MSOA. The `lengths()` function will return the length of this list, i.e. how many bike thefts each MSOA contains or, in other words, a **point-in-polygon** count. This time around therefore we do not set the `sparse` function to `FALSE` but leave it as `TRUE` (its default) by not entering the parameter. As a result, we can calculate the number of bike thefts per MSOA and the number of bike thefts within 400m of a station per MSOA and use this to generate a **theft rate** for each MSOA of the number of bikes thefts that occur near a train station for identification of these **hotspots**. 
-
-Calculate the number of bike thefts per MSOA and the number of bike thefts within 400m of a station per MSOA using the PIP operation via `st_intersects()`:
+Remember, this `sparse` output creates a list of the bike thefts (by their index) that intersect with each MSOA. The `lengths()` function will return the length of this list, i.e. how many bike thefts each MSOA contains or, in other words, a **point-in-polygon** count. This time around therefore we do not set the `sparse` function to `FALSE` but leave it as `TRUE` (its default) by not entering the parameter. As a result, we can calculate the number of bike thefts per MSOA and the number of bike thefts within 400m of a station per MSOA and use this to generate a **theft rate** for each MSOA of the number of bikes thefts that occur near a train station for identification of these **hotspots**.
 
 ```{r}
 #| label: 06-intersect-point-in-poly
@@ -773,9 +746,7 @@ msoa_london$total_bike_theft <- lengths(st_intersects(msoa_london, bike_theft))
 msoa_london$station_bike_theft <- lengths(st_intersects(msoa_london, filter(bike_theft, d400_sq == TRUE)))
 ```
 
-As you can see from the code above, we have now calculated our total bike theft and bike theft near a train station for each MSOA. The final step in our processing therefore is to create our rate of potentially station-related bike theft = bike theft near train station / total bike theft.
-
-::: { .callout-note}
+::: callout-note
 We are looking specifically at the phenomena of whether bike theft occurs near to a train or tube station or not. By normalising by the total bike theft, we are creating a rate that shows specifically where there are hotspots of bike theft near train stations. This, however, will be of course influenced by the number of train stations within a MSOA, the size of the MSOA, and of course the number of bikes and potentially daytime and residential populations within an area.
 :::
 
@@ -797,8 +768,15 @@ msoa_london <- msoa_london |>
 ## Assignment {#assignment-w06}
 Now we worked through all this, for this week's assignment:
 
-1. Create a proper map of the rate of bike thefts within **400m** of a train or tube station.
-2. Re-run the above analysis at four more distances: **100m**, **200m**, **300m**, **500m** and calculate the percentage of bike theft at these different distances. You can choose whether you would like to use the **geometric operations** or **spatial queries** approach. What do you think could explain the substantial differences in counts as we increase away from the train station from 100 to 200m?
+1.  Create a proper map of the rate of bike thefts within **400m** of a train or tube station.
+2.  Re-run the above analysis at four more distances: **100m**, **200m**, **300m**, **500m** and calculate the percentage of bike theft at these different distances. You can choose whether you would like to use the **geometric operations** or **spatial queries** approach.
+3.  There are clear differences between using different buffer distances. What do you think could explain the substantial differences in counts as we increase the distance from 100 to 200m?
+
+## Want more? [Optional] {#wm-w06}
+#### Reproducible research {.unnumbered}
+The book [Data Skills for Reproducible Research](https://psyteachr.github.io/reprores-v3/index.html) provides an excellent overview of skills needed for reproducible and open research using R and the `tidyverse` packages. To get started: have a look at [Chapter 2: Reproducible Workflows](https://psyteachr.github.io/reprores-v3/repro.html), [Chapter 7: Data Wrangling](https://psyteachr.github.io/reprores-v3/dplyr.html), and [Chapter 8: Iterations and Functions](https://psyteachr.github.io/reprores-v3/func.html). 
+
+Another great tool can be found in the `targets` package. The targets package is a [Make](https://www.gnu.org/software/make/)-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the [Walkthrough](https://books.ropensci.org/targets/walkthrough.html) chapter to see `targets` in action. 
 
 ## Before you leave {#byl-w06}
-And that is how you can conduct basic geometric operations and spatial queries using R and `sf`. Of course: more RGIS in the coming weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Ydg4T2MP7Z8). Time to check out that reading list?
+And that is how you can conduct basic geometric operations and spatial queries using R and `sf`. More RGIS coming in the next few weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Ydg4T2MP7Z8). Time to check out that reading list?

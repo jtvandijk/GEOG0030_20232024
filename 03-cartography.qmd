@@ -21,14 +21,14 @@ Over the next few weeks, we will explore the spatial patterns of crime across Lo
 
 Against this background, we are actually going to answer a very simple question today: does our perception of crime rates (and its distribution) in London vary at different scales? Here we are looking to test whether we would make the [ecological fallacy](https://en.wikipedia.org/wiki/Ecological_fallacy) mistake of assuming patterns at the LSOA level are the same at the Borough level by looking to directly account for the impact of the [Modifiable Area Unit Problem](https://en.wikipedia.org/wiki/Modifiable_areal_unit_problem) within our results. Here we will be looking specifically at a specific type of crime: *Theft from a person*.
 
-::: { .callout-warning}
+::: {.callout-warning}
 The datasets you will create in this practical will be used in other practicals, so make sure to follow every step and export your data to your `data` folder at the end of the practical.
 :::
 
 ### Crime data 
 For our crime data, we will use data directly from the **Police Data Portal**, which you can find at [data.polic.uk](https://data.police.uk/). This data portal allows you to access and generate tabular data for crime recorded in the UK across different the different police forces since 2017. 
 
-::: { .callout-note}
+::: {.callout-note}
 In the United Kingdom, there are 45 territorial police forces (TPF) and 3 special police forces (SPF). Each TPF covers a specific area in the UK (e.g. the *West Midlands Police Force*), whilst the SPFs are cross-jurisdiction and cover specific types of crime, such as the [British Transport Police](https://www.btp.police.uk/). Therefore, when we want to download data for a specific area, we need to know which police force covers our area interest.
 ::: 
 
@@ -44,7 +44,7 @@ Normally, we would now head to the **Police Data Portal** and download our crime
 | :------                         | :------  | :------ |
 | Theft from persons in 2021      | `csv`    | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/crime-theft-2021-london.zip) |
 
-::: { .callout-note}
+::: {.callout-note}
 When mapping the data from the provided longitude and latitude coordinates, it is important to know that these locations represent the approximate location of a crime — not the exact place where it happened. This displacement is introduced on purpose to preserve anonymity of the individuals involved. The process by how this displacement occurs is standardised. There is a list of anonymous map points to which the exact location of each crime is compared against this master list to find the nearest map point. The co-ordinates of the actual crime are then replaced with the co-ordinates of the map point. Each map point is specifically chosen to avoid associating that point with an exact household.
 :::
 
@@ -96,7 +96,7 @@ We now need to create our Borough population spatial layer. To do so, we need to
 - Make sure this dataset is loaded into your **Layers** / added to the map.
 - Remove the original Borough and population data layers.
 
-::: { .callout-warning}
+::: {.callout-warning}
 Because the population file that we downloaded does not contain Borough codes, we need to use the Borough names to join the two files together. Whilst it works here and we can easily manually check whether the join was successful because there are only 33 records, codes are preferred as there is much less room for error and incomplete joins. This means it is often worth it to spend a bit more time and find these codes over relying on names.
 :::
 
@@ -109,7 +109,7 @@ We will now load and map our crime data. We will load this data using the **Deli
     - Your file format should be set to `csv`. In **Record and Fields Options** tick `Decimal separator is comma`, `First record has field names`, `Detect field types` and `Discard empty fields`. 
     - Under **Geometry Definition**, select `Point coordinates` and set the **X field** to `Longitude` and the **Y field** to `Latitude`. The **Geometry CRS** should be: `EPSG:4326 - WGS84`. Click **Add**. 
 
-::: { .callout-warning}
+::: {.callout-warning}
 When you click **Add**, you should have gotten a pop-up from QGIS asking about transformations. Transformations are algorithms that convert data from one CRS to another. QGIS knows that the **Project CRS** is **British National GRid** but the **Layer** you are trying to add has a **WGS84** CRS. QGIS is asking you what transformation it should use to project the Layer in the Project CRS. This is one of the key strengths of QGIS: it can project data 'on the fly'. What this means is that QGIS will automatically convert all Layers to the **Project CRS** once it knows which transformation you would like to use so that they will all be rendered in the correct position with respect to each other. More details on this can be found in QGIS' [user manual section on working with projections](https://docs.qgis.org/3.28/en/docs/user_manual/working_with_projections/working_with_projections.html).
 :::
 
@@ -152,7 +152,7 @@ Whilst it is great that we have got our `theft2021`, what we actually need is a 
      
 5. With the **Attribute Table** of your `borough-theft2021` layer still open, click on the **pencil** icon at the top left corner. This pencil switches on the **Editing** mode. 
 
-::: { .callout-note}
+::: {.callout-note}
 The *Editing mode* allows you to edit both the **Attribute Table** values and the **geometry** of your data. When it comes to the **Attribute Table**, it means you can directly edit existing values in the table **or** create and add new fields to the table. Whilst you can actually do the latter outside of the *Editing mode*, this *Editing mode* means you can reverse any edits you make and they are not permanent just in case you make a mistake.
 Using the *Editing mode* is the safest approach to editing your table, however, it might not always be the approach you use when generating new fields.
 :::
@@ -173,7 +173,7 @@ The empty field has *NULL* populated for each row, so we need to find a way to g
     - Once done, click **OK**.
 10. Click on the **Save** button to save these edits. Click again on the **Pencil** button to exit *Editing mode*.
 
-::: { .callout-tip}
+::: {.callout-tip}
 The `crime-rate` is stored as a decimal as this is required for the calculation to succeed, but ultimately you cannot have half a crime. You can transform the decimal number to an `integer` by forcing the `crime-rate` column to a new field using the same **Field Calculator**. Instead of ticking the **Update existing field** box you would now keep the **Create a new field** box ticked. Name the new field `crime-rate-int`, make sure the **Output field type** is set to `Whole number (integer)`, and use the following expression to create a new field with an integer value: `to_int("crime-rate")`. Save your changes by clicking on the **Save** button.
 :::
 
@@ -198,7 +198,7 @@ Now you have both datasets ready, it is time to style the maps. Remember to use 
 knitr::include_graphics('images/w03/map-styled.png')
 ```
 
-::: { .callout-tip}
+::: {.callout-tip}
 If you have used ArcMap before, **Print Layout**  is similar to switch the view of your map canvas to a print layout within the main window but in QGIS's case, it loads up a new window.
 ::: 
 
@@ -208,7 +208,7 @@ On the **right-hand** side of the window, you will find two set of panels. The u
 
 In the **bottom part** of the window, you can find a status bar with mouse position, current page number, a combo box to set the zoom level and the number of selected items if applicable. In the **upper part** of the  window, you can find menus and other toolbars. All print layout tools are available in menus and as icons in a toolbar.
 
-::: { .callout-tip}
+::: {.callout-tip}
 Working with maps in the Print Layout is simple but it can be a little fiddly and, to make more complicated maps, requires you to understand how to use certain aspects of Print Layout, such as locking items. If you get stuck, have a look at the [training manual](https://docs.qgis.org/3.28/en/docs/training_manual/map_composer/map_composer.html) or the detailed [documentation](https://docs.qgis.org/3.28/en/docs/user_manual/print_composer/index.html). 
 :::
 
@@ -264,7 +264,7 @@ Now we are finished with the Borough map, we want to make sure we do not change 
 
 We now just need to add a second legend for our Borough map. 
 
-::: { .callout-note}
+::: {.callout-note}
 If we had **standardised** our values across our two maps, then we would only need to use one legend. However, in this case, as there are large differences in the value ranges, we need to have two legends. 
 ::: 
 
@@ -294,7 +294,7 @@ The only thing outstanding is to export our map to a file. Go to **Layout** -> *
 1. Looking at the maps you have created, how does your perception of crime (and its distribution) in London vary at different scales?
 2. At the moment, we have looked at the crime rate as a relative amount. We therefore use a sequential colour scheme that shows, predominantly, where the crime rate is the highest. Alternatively, we could use a diverging colour scheme that could show us where the crime rate is lower and/or higher than a critical mid-point, such as the average crime rate across the Boroughs and LSOAs. Create a map of crime in London, at both the Borough and LSOA levels that shows for each of these administrative geographies the **percentage difference** from the overall mean crime rate.
 
-::: { .callout-tip}
+::: {.callout-tip}
 - You will need to start by calculating the average crime rate for both datasets and subsequently calculate the difference from these values for each geography.
 - All calculations can be done using the field calculator in QGIS, but you might have to think through writing the right expression.
 :::

@@ -74,13 +74,13 @@ We will see how we use these windows as we progress through this tutorial and un
 ## RStudio console
 We will first start off with using **RStudio's console** to test out some of R's in-built functionality by creating a few variables as well as a dummy dataset that we will be able to analyse. 
 
-::: { .callout-tip}
+::: {.callout-tip}
 You might need to click on the console window to get it to expand; you can then drag it to take up a larger space in your RStudio window.
 :::
 
 In your console, let us go ahead and conduct some quick maths. At their most basic, all programming languages can be used like calculators.
 
-::: { .callout-warning}
+::: {.callout-warning}
 In your RStudio console, you should see a prompt sign `>` on the left hand side. This is where we can directly interact with R. Anything that appears as red in the command line means it is an error (or a warning) so you will likely need to correct your code. If you just see a `>` it means you can type in your next line, whilst a `+` means that you have not finished the previous line of code. As will become clear, `+` signs often appear if you do not close brackets or you did not properly finish your command in a way that R expected.
 :::
 
@@ -253,7 +253,7 @@ You can type `?print` into the console to find out more about the `print()` func
 
 This can be used with any function to get access to their documentation which is essential to know how to use the function correctly and understand its output. 
 
-::: { .callout-note}
+::: {.callout-note}
 In many cases, a function will take more than one argument or parameter, so it is important to know what you need to provide the function with in order for it to work. For now, we are using functions that only need one *required* argument although most functions will also have several *optional* or *default* parameters.
 :::
 
@@ -331,7 +331,7 @@ is.integer(ten)
 
 You should see we get the answer `FALSE`: as we know from our earlier `typeof()` function our variable ten is stored as a double and therefore cannot be an integer.
 
-::: { .callout-note}
+::: {.callout-note}
 Whilst knowing how to distinguish between different data types might not seem important now, the difference of a double versus an integer can quite easily lead to unexpected errors.
 :::
 
@@ -413,7 +413,7 @@ There is one final function that we often want to use with our variables when we
 attributes(two_str_variable)
 ```
 
-::: { .callout-note}
+::: {.callout-note}
 In addition to make notes about the functions you are coming across in the workshop, you should notice that with each line of code in the examples, an additional **comment** is used to explain what the code does. Comments are denoted using the hash symbol `#`. This comments out that particular line so that R ignores it when the code is run. These comments will help you in future when you return to scripts a week or so after writing the code as well as help others understand what is going on when sharing your code. It is good practice to get into writing comments **as you code** and not leave it to do retrospectively. Whilst we are using the console, using comments is not necessary but as we start to build up a script later on, you will find them essential to help understand your workflow in the future.
 :::
 
@@ -548,7 +548,7 @@ print(giss_year_nos)
 
 The thing about matrices is that, for us, they do not have a huge amount of use. If we were to look at this matrix in isolation from what we know it represents, we would not really know what to do with it. As a result, we tend to primarily use **dataframes** in R as they offer the opportunity to add **field names** to our columns to help with their interpretation.
 
-::: { .callout-note}
+::: {.callout-note}
 The function we just used above, `matrix()`, was the first function that we used that took more than one argument. In this case, the arguments the matrix needed to run were: 
 
 1. What data or dataset should be stored in the matrix.
@@ -685,7 +685,7 @@ We can see we have **four rows** and **three columns**.  We can also finally use
 attributes(giss_df)
 ```
 
-::: { .callout-warning}
+::: {.callout-warning}
 Some important notes to keep in mind:
 
 - R is case-sensitive so you need to make sure that you capitalise everything correctly if required.
@@ -699,7 +699,7 @@ During [Week 1's computer tutorial](01-introduction.html#r-package-installation)
 
 The tidyverse itself is treated and loaded as a single package, but this means if you load the `tidyverse` package within your script (through `library(tidyverse)`), you will directly have access to all the functions that are part of each of the packages that are within the overall `tidyverse.` This means you do not have to load each package separately. 
 
-::: { .callout-tip}
+::: {.callout-tip}
 For more information on the `tidyverse` have a look at [www.tidyverse.org](https://www.tidyverse.org/).
 :::
 
@@ -717,7 +717,7 @@ There are some specific functions in the `tidyverse` suite of packages that will
 
 These functions all complete very fundamental tasks that we need to manipulate and wrangle our data.
 
-::: { .callout-note}
+::: {.callout-note}
 The code you just ran asked **R** to load all functions of the `tidyverse`. However: these functions are only available for the duration of your R sessions. When you restart your R session, you will have to load these functions again if you want to use them. Another thing to be aware of when loading libraries is that sometimes these functions share a name with aniother function from one of the `base` **R** packages. For instance, there is a `select()` function in the `stats` package that conducts linear filtering on a time series. However, after we load the `tidyverse` package and we would type `select()` this function will select columns from a dataframe. We therefore sometimes need to specify which function exactly we want. This can be done with a simple command (`library::function`): `stats::select` to filter on a time series and `dplyr::select` to select columns in a dataframe.
 :::
 
@@ -728,7 +728,7 @@ To put it succinctly, **projects** in RStudio keep all the files associated with
 
 Click on **File** -> **New Project** -> **Existing Directory** and browse to your **GEOG0030** folder. Click on **Create Project**. You should now see your main window switch to this new project and if you check your **Files** window, you should now see a new **R Project** called **GEOG0030**.
 
-::: { .callout-warning}
+::: {.callout-warning}
 Please ensure that **folder names** and **file names** do not contain spaces or special characters such as `*` `.` `"` `/` `\` `[` `]` `:` `;` `|` `=` `,` `<` `?` `>` `&` `$` `#` `!` `'` `{` `}` `(` `)`. Different operating systems and programming languages deal differently with spaces and special characters and as such including these in your folder names and file names can cause many problems and unexpected errors. As an alternative to using white space you can use an underscore `_` or hyphen `-` if you like.
 :::
 
@@ -773,7 +773,7 @@ Now we have our title, the **second** bit of code we want to include in our scri
 library(tidyverse)
 ```
 
-::: { .callout-tip}
+::: {.callout-tip}
 By loading simply the `tidyverse` we gain access to several useful functions. However, when developing a script you might realise that you need to load other libraries as well. When you do this, **always add your library to the top of your script**. If you ever share your script, it helps the person you are sharing with to recognise quickly if they need to install any additional packages prior to running the code. It also means your libraries do not get lost in the multiple lines of code you are writing.
 :::
 
@@ -835,7 +835,7 @@ We can look at the help documentation to understand what we need to provide the 
 crime_csv <- read_csv("data/raw/crime/all-crime/2021-01/2021-01-metropolitan-street.csv")
 ```
 
-::: { .callout-warning}
+::: {.callout-warning}
 If using a Windows machine, you will need to substitute your forward-slashes (`/`) with two backslashes (`\\`) whenever you are dealing with file paths.
 :::
 
@@ -876,7 +876,7 @@ all_crime_df <- list.files(path="data/raw/crime/all-crime/", full.names=TRUE, re
 
 Depending on your computer, this might take a little time to process because we have a lot of data to get through. You should see a new dataframe appear in your global environment called `all_crime_df`, for which we now have **1,079,267** observations.
 
-::: { .callout-note}
+::: {.callout-note}
 It is a little difficult to explain the code above without going into too much detail and at this stage you are not expected to fully understand what is happening here, but essentially what the code does is:
 
 1. List all the files found in the filepath: `data/raw/crime/all-crime/`
@@ -933,7 +933,7 @@ We now have our dataframe ready for filtering. To do so, we will use the `filter
 all_theft_df <- dplyr::filter(all_crime_df, crime_type == "Theft from the person")
 ```
 
-::: { .callout-note}
+::: {.callout-note}
 If two functions from different packages have the same name, R default to use the function from the package that got loaded last. To avoid confusion, however, it can be a good idea at times to specify the library from which a function should be taken. In this case, we can make it clear that we want to use `filter()` from the `dplyr` package instead of the default `stats` library.
 :::
 
@@ -950,7 +950,7 @@ You should now see the new variable appear in your environment with **38,229** o
 write_csv(all_theft_df,"data/raw/crime/crime-theft-2021-london.csv")
 ```
 
-::: { .callout-note}
+::: {.callout-note}
 Remember that if using a Windows machine, you might need to substitute your forward-slashes (`/`) with two backslashes (`\\`) whenever you are dealing with file paths!
 :::
 
@@ -1003,18 +1003,13 @@ Now we have prepared our dataset, we can conduct some analysis:
 barplot(month_theft_df$crime_totals, main="Theft from persons in London by month in 2021", names.arg = c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"))
 ```
 
-::: { .callout-note}
+::: {.callout-note}
 Do not forget to save your script so you can go back to it at a later time. When you close R and are asked if you want to save your workspace: this is not per se necessary. Saving the workspace will keep any variables generated during your current session saved and available in a future session, but so will re-running your script.
 :::
 
 ## Want more? [Optional] {#wm-w04}
-### Data visualisation
+### Data visualisation {.unnumbered}
 The barplot we have made above is very basic and there are better ways to make nice visualisations. For this we can turn to other R packages that have been developed. In fact, there are many hundreds of packages in R each designed for a specific purpose, some of which you can use to create plots in R. One of those packages is called `ggplot2`. The `ggplot2` package is an implementation of the Grammar of Graphics ([Wilkinson 2005](https://en.wikipedia.org/wiki/Leland_Wilkinson)): a general scheme for data visualisation that breaks up graphs into semantic components such as scales and layers. `ggplot2` can serve as a replacement for the base graphics in R and contains a number of default options that match good visualisation practice. You provide the data, tell `ggplot2` how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details. An excellent introduction to `ggplot2` can be found in the online, freely available book [R for Data Science](https://r4ds.hadley.nz/); written by Hadley Wickham, core developer of `ggplot2` and the `tidyverse`. Have a particularly close look at [**Chapter 2**: *Data vizualisation*](https://r4ds.hadley.nz/data-visualize).
-
-### Reproducible research
-The book [Data Skills for Reproducible Research](https://psyteachr.github.io/reprores-v3/index.html) provides an excellent overview of skills needed for reproducible and open research using the statistical programming language R and `tidyverse` packages. To get started: have a look at [Chapter 2: Reproducible Workflows](https://psyteachr.github.io/reprores-v3/repro.html), [Chapter 7: Data Wrangling](https://psyteachr.github.io/reprores-v3/dplyr.html), and [Chapter 8: Iterations and Functions](https://psyteachr.github.io/reprores-v3/func.html). 
-
-Another great tool can be found in the `targets` package. The targets package is a [Make](https://www.gnu.org/software/make/)-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the [Walkthrough](https://books.ropensci.org/targets/walkthrough.html) chapter to see `targets` in action. 
 
 ## Before you leave {#byl-w04}
 We have managed to take a dataset of over one million records and clean and filter it to create a barplot on theft crime in London. Of course, there is a lot more research and exploratory data analysis that can be done, but this first chart is certainly a step in the right direction. Next week, we will be doing a lot more with our dataset, but hopefully this week has shown you want you can achieve with just a few lines of code. [That concludes the tutorial for this week](https://www.youtube.com/watch?v=NKyYr2pbXUM). Back to the reading list you go!
