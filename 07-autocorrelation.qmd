@@ -301,178 +301,171 @@ The `summary()` function can also be called on the dataset as a whole and will g
 summary(ethnicity_london_sdf |> st_drop_geometry())
 ```
 
+This gives us an overview of all variables, but let's have a look at our population group of interest for today's practical by creating a [histogram](https://en.wikipedia.org/wiki/Histogram).
 
+```{r}
+#| label: fig-07-quick-hist
+#| fig-cap: "Histogram of the distribution of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# histogram
+hist(ethnicity_london_sdf$asian_bangladeshi)
+```
 
-<!-- ```{r 07-hist, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # plot the histogram of our y6_obesity_2014 data -->
-<!-- hist(obesity_Ward_sdf$y6_obesity_2014) -->
-<!-- ```  -->
+We can actually see our data has a strong negative skew, with a some Wards having a high number of self-identified Asian-Bangladeshi's residing in them. This might be a first hint at some form of clustering taking place.
 
-<!-- We can actually see our data has a slight negative skew, which makes sense given that our median is higher than our mean. -->
+Another type of chart we can create just using the `base` R library is a **boxplot**. A boxplot shows the core characteristics of the distributions within a dataset, including the interquartile range. 
 
-<!-- ```{r 07-data-distro, echo=FALSE, fig.align='center', cache=TRUE, fig.cap='Cheatsheet on data distributions: negative skew, normal, positive skew.'} -->
-<!-- knitr::include_graphics('images/w07/distributions.png') -->
-<!-- ``` -->
+```{r}
+#| label: fig-boxplot
+#| echo: False 
+#| fig-cap: "Simple boxplot. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w07/boxplot.png){target='_blank'}"
+knitr::include_graphics('images/w07/boxplot.png')
+```
 
-<!-- We can further customise our histograms if we want to make them more aesthetically pleasing and update the title and axis labeling: -->
+Plot the boxplot of our `asian_bangladeshi` variable: 
 
-<!-- ```{r 07-hist-2, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # pretty histogram -->
-<!-- hist(obesity_Ward_sdf$y6_obesity_2014, breaks=20, col="grey", main="Distribution of Obesity in Year 6 children, London Wards in 2014", xlab="Percentage of obese Year 6 children in the Ward") -->
-<!-- ```  -->
+```{r}
+#| label: fig-07-quick-boxplot
+#| fig-cap: "Boxplot of the distribution of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# histogram
+boxplot(ethnicity_london_sdf$asian_bangladeshi)
+```
 
-<!-- We can also export this histogram and save it as a `png` by storing the histogram code to a variable and saving this variable to a file. The code to do so is a little different: we essentially first "open up" a file, called what we want to name our plot. We then run the code to plot our data, which will place the output "within" the file and then "close' the file down. -->
+Again, it is clear that the majority of Wards have a relatively low nuber of individuals that self-identify as Asian-Bangladeshi, but there is a good number of outliers. This raises the question whether these outliers are random or also clustered in space.
 
-<!-- ```{r 07-hist-3, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE, eval=FALSE} -->
-<!-- # open an empty png -->
-<!-- png("data/graphs/Y6_obesity_distribution.png") -->
+::: {.callout-tip}
+There is actually a lot more we can do in terms of visualising our data's distribution and the best way forward would be to become more familiar with the `ggplot2` library. `ggplot2` is the main visualisation for both statistical and, increasingly, spatial graphs, charts and maps. Refer back to [Week 4's optional suggestions](04-statistics.html#wm-w04) on how to start with `ggplot2`.
+:::
 
-<!-- # pretty histogram -->
-<!-- hist(obesity_Ward_sdf$y6_obesity_2014, breaks=20, col="grey", main="Distribution of Obesity in Year 6 children, London Wards in 2014", xlab="Percentage of obese Year 6 children in the Ward") -->
+## Spatial distributions
+Whilst statistical analysis of distributions focus on tests and charts, when we want to understand the spatial distribution of our phenomena, we have a very simple solution: we make a map. In our case, we are looking at areal unit data and therefore we can use a choropleth map to study our data across the Wards. In fact, we can actually create a sequence of maps not only covering the self-identified Asian-Bangladeshi's but also other population groups.
 
-<!-- # close the png -->
-<!-- dev.off() -->
-<!-- ```  -->
+```{r tidy='styler'}
+#| label: fig-07-facet-map
+#| fig-cap: "Facet map of all our population groups."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# store variables of interest as separate variable
+var_fields <- names(ethnicity_london_sdf)[14:31]
 
-<!-- Another type of chart we can create just using the base R library is a **boxplot**. -->
+# map all our variables of interest at once
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons("gray", border.col = "gray") +
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons(col = var_fields) +
+  tm_layout(legend.show = FALSE) +
+  tm_facets(ncol = 4)
+```
 
-<!-- ```{r 07-boxplot-img, echo=FALSE, out.width = "650pt", fig.align='center', cache=TRUE, fig.cap='Simple boxplot.'} -->
-<!-- knitr::include_graphics('images/w07/boxplot.png') -->
-<!-- ``` -->
+Despite these maps being a little small and not containing any labels, it seems that different population groups indeed concentrate in different parts of London. Let's zoom into the Asian-Bangladeshi population group:
 
-<!-- A boxplot shows the core characteristics of the distributions within a dataset, including the interquartile range. Plot the boxplot of our `y6_obesity_2014` variable: -->
+```{r tidy='styler'}
+#| label: fig-07-facet-map-asian-bangladeshi
+#| fig-cap: "Quick map of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# map a specific variable
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons("gray", border.col = "gray") +
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons(col = "asian_bangladeshi", n = 5, style = "jenks") +
+  tm_layout(legend.outside = TRUE,
+            legend.outside.position = "right") +
+  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+```
 
-<!-- ```{r 07-boxplot, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # plot the boxplot of our y6_obesity_2014 data -->
-<!-- boxplot(obesity_Ward_sdf$y6_obesity_2014) -->
-<!-- ```  -->
+::: {.callout-warning}
+Please remember, whereas the above map is fine for a quick inspection, it is technically incorrect because we are showing absolute numbers on a choropleth. This is something we should never do, unless the spatial units are identical in size (e.g. a hexagonal tessellation of an area), because larger areas will draw attention and affect the visualisation. Much better would be to normalise these counts by the total number of people living within each of the Wards. 
+:::
 
-<!-- :::tip -->
-<!-- **Tip** <br/> -->
-<!-- There is actually a lot more we can do in terms of visualising our data's distribution and the best way forWard would be to become more familiar with the `ggplot2` library. `ggplot2` is the main visualisation for both statistical and, increasingly, spatial graphs, charts and maps. -->
-<!-- ::: -->
+The thing with spatial distributions is that we can quickly pick up on spatial patterns present within our data just by looking at the data. For example, we can clearly see some concentrations of people that self-identify as Asian-Bangladeshi's in East London. The question now is whether these clusters are significant from a statistical point of view. This brings us to measuring spatial correlation.
 
-<!-- ## Assignment 1 {#assignment-1-w07} -->
-<!-- Your first assignment this week is to go ahead and test each of our variables to determine their distribution. Make a note of which ones are normally distributed and which are not (and their skew). Understanding your data's distribution is important if you want to test the relationships between different variables.  -->
+## Spatial autocorrelation
+We can assess the distribution of our data using what is known as spatial autocorrelation tests, which can be conducted on both a global (identify if the data is clustered) and local (identify the precise clusters) scales. Whilst these different tests quantify how clustered, how random, or how dispersed, these distributions are through various approaches, ultimately they provide us with statistical and spatial information that can be used to create quantifiable descriptions of a variable's distribution and how it vary over space.
 
-<!-- ## Spatial distributions -->
-<!-- Whilst statistical analysis of distributions focus on tests and charts, when we want to understand the spatial distribution of our phenomena, we have a very simple solution: we make a map. In our case, we are looking at areal unit data and therefore we can use a choropleth map to study our data across the Wards:  -->
+As discussed in this week's lecture, we have several types of tests that look to quantify spatial autocorrelation. Of these tests, there are two main categories:
 
-<!-- ```{r 07-facet-map, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler', eval=TRUE} -->
-<!-- # store our variables of interest as a variable -->
-<!-- var_fields <- names(obesity_Ward_sdf)[10:17] -->
+- Measures of **global spatial aucorrelation**: tests that provide us with a statistic to tell whether spatial autocorrelation is present in our dataset.
+- Measures of **local spatial autocorrelation**: tests that break down the global patterns and essentially tell us where we can find clusters and outliers.
 
-<!-- # map all our variables of interest at once -->
-<!-- tm_shape(obesity_Ward_sdf) +  -->
-<!--   tm_polygons("gray", border.col = "gray") +  -->
-<!-- tm_shape(obesity_Ward_sdf) +  -->
-<!--   tm_polygons(col = var_fields) +  -->
-<!--   tm_layout(legend.show = FALSE, -->
-<!--             panel.labels = c("Yr 6 Obesity", "IDACI", "Median House Price",  -->
-<!--                              "Mean Household Income", "Percent No Adult Employment",  -->
-<!--                              "Percent No Qualifications", "Percent Deficient in Greenspace",  -->
-<!--                              "PTAL")) +  -->
-<!--   tm_facets(ncol = 3) -->
-<!-- ```  -->
+Three of the most frequently used tests are the Global Moran's I, the. Local Moran's I, and the Local Getis-Ord:
 
-<!-- And specifically, we can create a single output choropleth map for each of our variables to visually understand their distribution: -->
+|Test | Scale | Test | Output | Significance Value |
+| :---- | :---| :--------------| :--------------| :---|
+| Global Moran's I | Global | Tests how "random" the spatial distribution of values are, producing a correlation coefficient for the relationship between a variable (like income) and its surrounding values. | **Moran's I statistic:** <br> Metric between -1 and 1. <br> -1 = dispersed <br> 0 = CSR <br> 1 = clustered | Yes - $p$-value |
+| Local Moran's I | Local | Tests the difference between a unit of analysis and its neighbour(s).  | **Local Moran's I statistic:** <br> 1. Can be used alongside the mean of values to generate cluster type generations. <br>i.e. High-High, High-Low, Low-High, Low-Low, Insignificant. <br> 2. Can also use standard deviation of main local statistic to show just high and low clusters  | Yes - $p$-value |
+| Local Getis-Ord | Local |  Identifies statistically significant hot spots and cold spots using the local Getis-Ord Gi* statistic.  | Can use the standard deviation of statistic to identify hot and cold spots | Yes - $p$-value |
 
-<!-- ```{r 07-tmap-check, warnings=FALSE, message=FALSE, cache=FALSE, echo=FALSE} -->
-<!-- # ensure tmap mode is set to plot  -->
-<!-- tmap_mode("plot") -->
-<!-- ``` -->
+::: {.callout-note}
+In each of these cases, our $p$-values are pseudo $p$-values, generated through simulations such as those outlined in the lecture. Our pseudo $p$-values allow us to interpret our relationships with a level of confidence. If we find that our relationships do not have any significance, then we cannot be confident in presenting them as true results.
+::: 
 
-<!-- ```{r 07-obesity-map, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler', eval=TRUE} -->
-<!-- # child obesity map -->
-<!-- tm_shape(london_Ward_shp) +  -->
-<!--   tm_polygons("gray", border.col = "gray") +  -->
-<!-- tm_shape(obesity_Ward_sdf) +  -->
-<!--   tm_polygons(col = "y6_obesity_2014", n = 5, style = "jenks",  -->
-<!--               title = "Percentage of children ", palette="Purples",  -->
-<!--               border.col = "white") +  -->
-<!--   tm_layout(main.title = 'Obesity of Year 6 children in London Wards in 2014',  -->
-<!--             main.title.fontface = 2, fontfamily = "Helvetica",  -->
-<!--             legend.outside = TRUE,  -->
-<!--             legend.outside.position = "right",  -->
-<!--             legend.title.size = 1,  -->
-<!--             legend.title.fontface = 2) +  -->
-<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
-<!-- ```  -->
+### Spatial lag
+Underlying our global Moran's I test is the concept of a **spatial lag model**. A spatial lag model plots each value against the mean of its neighbours' values, defined by our selected approach. This creates a scatter plot, from which our Moran's I statistic can be derived.
 
-<!-- The thing with spatial distributions is that we can quickly pick up on spatial patterns present within our data just by looking at the data. For example, in our obesity example, we can see there are clusters of high levels of obesity in East London, whilst there are clusters of low levels of obesity in the south east and south west areas of London. Let's analyse these clusters statistically by looking at spatial autocorrelation. -->
+An Ordinary Least Squares (OLS) regression is used to fit the data and produce a slope, which determines the Moran's I statistic:
 
-<!-- :::note -->
-<!-- **Note** <br /> -->
-<!-- Earlier we encountered that our dataset contains `NAs` in at least one of our columns. In fact, our `yr6_obesity_2014` variable contains `NAs`. To move forWard with our analysis, we need to remove those Wards that do not contain any obesity information from our spatial dataframe. This will have some issues in terms of how we think about our "neighbours", explained further below, but will allow us to run the code required. -->
-<!-- ::: -->
+```{r}
+#| label: fig-moran-plot
+#| echo: False 
+#| fig-cap: "A spatial lag model - plotting value against the mean of its neighbours. Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w07/moran-scatter.png){target='_blank'}"
+knitr::include_graphics('images/w07/moran-scatter.png')
+```
 
-<!-- Remove the Wards in our `obesity_Ward_sdf` that do not contain any obesity information. -->
+To determine a $p$-value from our model for global Moran's I, this spatial lag model is computed multiple times (think hundreds, thousands) but uses a random distribution of neighbouring values to determine different slopes for multiple ways our data *could* be distributed if our data was distributed randomly. The output of this test is a sampling distribution of Moran's I values that would confirm a null hypothesis that our values are randomly distributed. These slopes are then compared to compare our *observed* slope versus our *random* slopes and identify whether the slope is within the main distribution of these values or an outlier:
 
-<!-- ```{r 07-removeNAs, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # remove NAs -->
-<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% filter(!is.na(y6_obesity_2014)) -->
-<!-- ```  -->
+```{r}
+#| label: fig-moran-plot-sig
+#| echo: False 
+#| fig-cap: "Determining significance using a Monte Carlo simulation. Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w07/mc-sim.png){target='_blank'}"
+knitr::include_graphics('images/w07/mc-sim.png')
+```
 
-<!-- We can assess the distribution of our data using what is known as spatial autocorrelation tests, which can be conducted on both a global (identify if the data is clustered) and local (identify the precise clusters) scales. Whilst these different tests quantify how clustered, how random, or how dispersed, these distributions are through various approaches, ultimately they provide us with statistical and spatial information that can be used to create quantifiable descriptions of a variable’s distribution and how it vary over space. This can be incredibly useful when looking to explain and discuss a variable, particularly as the clustering present in one variable can be compared to another, which might be useful to make connections between underlying causes or possible solutions to the issues the original variable poses. -->
-
-<!-- As discussed in this week's lecture, we have several types of tests that look to quantify spatial autocorrelation. Of these tests, there are two categories: -->
-
-<!-- * **Global statistical** tests (i.e. those that provide us with a statistic to tell us about autocorrelation in our dataset). -->
-<!-- * **Local spatial** tests (i.e. those that provide us with the cluster maps). -->
-
-<!-- Three important tests are outlined in the below table for easy reference: -->
-
-<!-- |Test | Scale | Test | Output | Significance Value | -->
-<!-- | :---- | :---| :--------------| :--------------| :---| -->
-<!-- | Global Moran's I | Global | Tests how "random" the spatial distribution of values are, producing a correlation coefficient for the relationship between a variable (like income) and its surrounding values. | **Moran's I statistic:** <br> Metric between -1 and 1. <br> -1 = dispersed <br> 0 = CSR <br> 1 = clustered | Yes - $p$-value | -->
-<!-- | Local Moran's I | Local | Tests the difference between a unit of analysis and its neighbour(s).  | **Local Moran's I statistic:** <br> 1. Can be used alongside the mean of values to generate cluster type generations. <br>i.e. High-High, High-Low, Low-High, Low-Low, Insignificant. <br> 2. Can also use standard deviation of main local statistic to show just high and low clusters  | Yes - $p$-value | -->
-<!-- | Local Getis-Ord | Local |  Identifies statistically significant hot spots and cold spots using the local Getis-Ord Gi* statistic.  | Can use the standard deviation of statistic to identify hot and cold spots | Yes - $p$-value | -->
-
-<!-- In each of these cases, our $p$-values are pseudo $p$-values, generated through simulations such as that outlined in the lecture. Our pseudo $p$-values allow us to interpret our relationships with a level of confidence. If we find that our relationships do not have any significance, then we cannot be confident in presenting them as true results. -->
-
-<!-- ### Spatial lag -->
-<!-- Underlying our global Moran's I test is the concept of a **spatial lag model**. A spatial lag model plots each value against the mean of its neighbours' values, defined by our selected approach. This creates a scatter plot, from which our Moran's I statistic can be derived.  -->
-
-<!-- An Ordinary Least Squares (OLS) regression is used to fit the data and produce a slope, which determines the Moran's I statistic: -->
-
-<!-- ```{r 07-moran-plt, echo=FALSE, fig.align='center', cache=TRUE, fig.cap='A spatial lag model - plotting value against the mean of its neighbours. <br/> Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html).'} -->
-<!-- knitr::include_graphics('images/w07/MoranI_scatter_plot.png') -->
-<!-- ``` -->
-
-<!-- To determine a $p$-value from our model for global Moran's I, this spatial lag model is computed multiple times (think hundreds, thousands) but uses a random distribution of neighbouring values to determine different slopes for multiple ways our data *could* be distributed, if our data was distributed by random. The output of this test is a sampling distribution of Moran's I values that would confirm a null hypothesis that our values are randomly distributed. These slopes are then compared to compare our *observed* slope versus our *random* slopes and identify whether the slope is within the main distribution of these values or an outlier: -->
-
-<!-- ```{r 07-spatial-lag-plt, echo=FALSE, fig.align='center', cache=TRUE, fig.cap='A spatial lag model - plotting value against the mean of its neighbours. <br/> Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html).'} -->
-<!-- knitr::include_graphics('images/w07/MC_sim_1.png') -->
-<!-- ``` -->
-
-<!-- If our slope is an outlier, i.e. not a value we would expect to compute if the data were randomly distributed, we are more confidently able to confirm our slope is reflective of our data's clustering and is significant. Our *pseudo-*$p$-values are then computed from our simulation results: -->
+If our slope is an outlier, i.e. not a value we would expect to compute if the data were randomly distributed, we are more confidently able to confirm our slope is reflective of our data's clustering and is significant. Our *pseudo-*$p$-values are then computed from our simulation results:
 
 <!-- <center>\(\frac{N_{extreme} + 1}{N + 1}\)</center> -->
 <!-- <br> -->
 
 <!-- Where \({N_{extreme}}\) is the number of simulated Moran's I values that were more extreme that our observed statistic and \({N}\) is the total number of simulations. In the example above, from [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html), only 1 out the 199 simulations was more extreme than the observed local Moran's I statistic. Therefore \({N_{extreme}}\) = 1 , so $p$ is equal to (1+1) / (199 + 1) = 0.01. This means that "there is a 1% probability that we would be wrong in rejecting the null hypothesis". This approach is known as a **Monte Carlo simulation** or permutation bootstrap test. -->
 
-<!-- ### Defining neighbours -->
-<!-- For any spatial autocorrelation test that you want to conduct, you will always need one critical piece of information: *how do we define 'neighbours' in our dataset to enable the value comparison.* Every observation in a dataset will need to have a set of neighbours to which its value is compared. To enable this, we need to determine how many or what type of neighbours should be taken into account for each observation when conducting a spatial autocorrelation test. -->
+### Defining neighbours
+For any spatial autocorrelation test that you want to conduct, you will always need one critical piece of information: *how do we define 'neighbours' in our dataset to enable the value comparison.* Every observation in a dataset will need to have a set of neighbours to which its value is compared. To enable this, we need to determine how many or what type of neighbours should be taken into account for each observation when conducting a spatial autocorrelation test. These 'neighbouring' observations can be defined in a multitude of ways, based either on geometry or proximity, and include:
 
-<!-- These 'neighbouring' observations can be defined in a multitude of ways, based either on geometry or proximity, and include: -->
+- **Contiguity** neighbours: Queen / Rook
+- **Fixed Distance** neighbours: Euclidean Distance (e.g. within 2km)
+- **(K) Nearest Neighbours**: Certain *n* number of closest neighbours
 
-<!-- * **Contiguity** neighbours: Queen / Rook (*plus order*) -->
-<!-- * **Fixed Distance** neighbours: Euclidean Distance (e.g. within 2km) -->
-<!-- * **(K) Nearest Neighbours**: Certain *n* number of closest neighbours -->
+```{r}
+#| label: fig-neighbours
+#| echo: False 
+#| fig-cap: "Different approaches of conceptualising neighbours for spatial autocorrelation measurement: contiguity, fixed distance and nearest neighbours. Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w07/iffn.png){target='_blank'}"
+knitr::include_graphics('images/w07/iffn.png')
+```
 
-<!-- ```{r 07-neighbours, echo=FALSE, fig.align='center', cache=TRUE, fig.cap='Different approaches of conceptualising neighbours for spatial autocorrelation measurement: contiguity, fixed distance and nearest neighbours. Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html).'} -->
-<!-- knitr::include_graphics('images/w07/iffn.png') -->
-<!-- ``` -->
+Depending on the variable you are measuring, the appropriateness of these different types of neighbourhood calculation techniques can change. As a result, how you define neighbours within your dataset will have an impact on the validity and accuracy of spatial analysis. Whatever approach you choose therefore needs to be grounded in particular theory that aims to represent the process and variable investigated.
 
-<!-- Depending on the variable you are measuring, the appropriateness of these different types of neighbourhood calculation techniques can change. As a result, how you define neighbours within your dataset will have an impact on the validity and accuracy of spatial analysis. Whatever approach you choose therefore needs to be grounded in particular theory that aims to represent the process and variable investigated.  -->
+::: {.callout-tip}
+Have a look at Esri's Help Documentation on [Selecting a conceptualization of spatial relationships: Best practices](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/modeling-spatial-relationships.htm#GUID-729B3B01-6911-41E9-AA99-8A4CF74EEE27) when you come to need to define neighbours yourself for your own analysis.
+:::
 
-<!-- :::note -->
-<!-- **Note** <br /> -->
-<!-- Have a look at Esri's Help Documentation on [Selecting a conceptualization of spatial relationships: Best practices](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/modeling-spatial-relationships.htm#GUID-729B3B01-6911-41E9-AA99-8A4CF74EEE27) when you come to need to define neighbours yourself for your own analysis. -->
-<!-- ::: -->
-
-<!-- For our analysis into childhood obesity, we will primarily use the **Queen contiguity**. This approach is "*effective when polygons are similar in size and distribution, and when spatial relationships are a function of polygon proximity (the idea that if two polygons share a boundary, spatial interaction between them increases)*" ([Esri, 2021](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/modeling-spatial-relationships.htm#GUID-729B3B01-6911-41E9-AA99-8A4CF74EEE27)). -->
+For our analysis into the clustering of population groups, we will primarily use the **Queen contiguity**. This approach is "*effective when polygons are similar in size and distribution, and when spatial relationships are a function of polygon proximity (the idea that if two polygons share a boundary, spatial interaction between them increases)*" ([Esri, 2024](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/modeling-spatial-relationships.htm#GUID-729B3B01-6911-41E9-AA99-8A4CF74EEE27)).
 
 <!-- ### Spatial weights matrix -->
 <!-- Before we can calculate Moran’s I and any similar statistics, we need to first define our **spatial weights matrix**. This is known mathematically as \(W_{ij}\) and this will tell our code which unit neighbours which, according to our neighbour definition. For each neighbour definition, there is a different approach to implementing code to calculate the \(W_{ij}\) spatial weights matrix.  -->
