@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>GEOG0030</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./11-data.html" rel="next">
+<link href="./06-operations.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-operations.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./07-autocorrelation.html">Analysing Spatial Patterns II: Spatial Autocorrelation</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./assets/logo.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/jtvandijk/GEOG0030" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+    <div id="quarto-search" class="quarto-navigation-tool px-1" title="Search"></div>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Module overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Foundational Concepts</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 Geocomputation: An Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-GIScience.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 GIScience and GIS software</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-cartography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 Cartography and Visualisation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 Programming for Data Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 Programming for Spatial Analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Core Spatial Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6 Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-autocorrelation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Analysing Spatial Patterns II: Spatial Autocorrelation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Advanced Spatial Analysis</span></span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Additional Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11 Data Sources</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#analysing-spatial-patterns-ii-spatial-autocorrelation" id="toc-analysing-spatial-patterns-ii-spatial-autocorrelation" class="nav-link active" data-scroll-target="#analysing-spatial-patterns-ii-spatial-autocorrelation"><span class="header-section-number">7</span> Analysing Spatial Patterns II: Spatial Autocorrelation</a>
+  <ul class="collapse">
+  <li><a href="#slides-w07" id="toc-slides-w07" class="nav-link" data-scroll-target="#slides-w07"><span class="header-section-number">7.1</span> Lecture slides</a></li>
+  <li><a href="#reading-w07" id="toc-reading-w07" class="nav-link" data-scroll-target="#reading-w07"><span class="header-section-number">7.2</span> Reading list</a></li>
+  <li><a href="#clustering-of-population-groups" id="toc-clustering-of-population-groups" class="nav-link" data-scroll-target="#clustering-of-population-groups"><span class="header-section-number">7.3</span> Clustering of population groups</a>
+  <ul class="collapse">
+  <li><a href="#setup-w07" id="toc-setup-w07" class="nav-link" data-scroll-target="#setup-w07"><span class="header-section-number">7.3.1</span> Spatial analysis set up</a></li>
+  </ul></li>
+  <li><a href="#wm-w07" id="toc-wm-w07" class="nav-link" data-scroll-target="#wm-w07"><span class="header-section-number">7.4</span> Want more? [Optional]</a>
+  <ul class="collapse">
+  <li><a href="#more-spatial-autocorrelation" id="toc-more-spatial-autocorrelation" class="nav-link" data-scroll-target="#more-spatial-autocorrelation">More spatial autocorrelation</a></li>
+  </ul></li>
+  <li><a href="#byl-w07" id="toc-byl-w07" class="nav-link" data-scroll-target="#byl-w07"><span class="header-section-number">7.5</span> Before you leave</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="analysing-spatial-patterns-ii-spatial-autocorrelation" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">7</span> Analysing Spatial Patterns II: Spatial Autocorrelation</h1>
+<p>This week, we will be looking at measuring spatial dependence. Spatial dependence is the idea that the observed value of a variable in one location is dependent (to some degree) on the observed value of the same value in a nearby location. For spatial analysis, this dependence can be assessed and measured statistically by considering the level of spatial autocorrelation between values of a specific variable, observed in either different locations or between pairs of variables observed at the same location. Spatial autocorrelation occurs when these values are not independent of one another and instead cluster together across geographic space.</p>
+<section id="slides-w07" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="slides-w07"><span class="header-section-number">7.1</span> Lecture slides</h2>
+<p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w07-geo.pdf">[Link]</a></p>
+</section>
+<section id="reading-w07" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="reading-w07"><span class="header-section-number">7.2</span> Reading list</h2>
+<section id="essential-readings" class="level4">
+<h4 class="anchored" data-anchor-id="essential-readings">Essential readings</h4>
+<ul>
+<li>Griffith, D. 2017. <em>Spatial Autocorrelation</em>. The Geographic Information Science &amp; Technology Body of Knowledge. <a href="https://doi.org/10.22224/gistbok/2020.3.10">[Link]</a></li>
+<li>Gimond, M. 2023. Intro to GIS and spatial analysis. <strong>Chapter 13</strong>: <em>Spatial autocorrelation</em>. <a href="https://mgimond.github.io/Spatial/spatial-autocorrelation.html">[Link]</a></li>
+<li>Livings, M. and Wu, A-M. 2020. <em>Local Measures of Spatial Association</em>. The Geographic Information Science &amp; Technology Body of Knowledge. <a href="https://doi.org/10.22224/gistbok/2020.3.10">[Link]</a></li>
+</ul>
+</section>
+<section id="suggested-readings" class="level4">
+<h4 class="anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
+<ul>
+<li>Lee, S. 2019. Uncertainty in the effects of the modifiable areal unit problem under different levels of spatial autocorrelation: a simulation study. <em>International Journal of Geographical Information Science</em> 33: 1135-1154. <a href="https://doi.org/10.1080/13658816.2018.1542699">[Link]</a></li>
+<li>Harris, R. 2020. Exploring the neighbourhood-level correlates of Covid-19 deaths in London using a difference across spatial boundaries method. <em>Health &amp; Place</em> 66: 102446. <a href="https://doi.org/10.1016/j.healthplace.2020.102446">[Link]</a></li>
+</ul>
+</section>
+</section>
+<section id="clustering-of-population-groups" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="clustering-of-population-groups"><span class="header-section-number">7.3</span> Clustering of population groups</h2>
+<p>This week, we are using a completely new dataset and investigating a different phenomena: <strong>clustering of different population groups</strong>. We will be investigating to what extent people in London who <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/culturalidentity/ethnicity/bulletins/ethnicgroupenglandandwales/census2021">self-identified</a> as <strong>Asian - Bangladeshi</strong> in the 2021 Census are clustered in London at the Ward-level.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The Wards and electoral divisions in the United Kingdom are electoral districts at sub-national level. These differ from the Census geographies (LSOAs, MSOAs) we have been using so far.</p>
+</div>
+</div>
+</div>
+<p>To complete this analysis, we will be using a single data download from the <a href="https://data.london.gov.uk/">London Datastore</a>, which we will need to clean and join to a spatial layer containing the relevant Ward boundaries.</p>
+<section id="setup-w07" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="setup-w07"><span class="header-section-number">7.3.1</span> Spatial analysis set up</h3>
+<p>Open a new script within your GEOG0030 project and save this script as <code>wk6-segregation-analysis.r</code>. At the top of your script, add the following metadata:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/06-script-title_ab25eb3e1520bef3285084fc60f4a970">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysing segregation in London </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: January 2024</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Author: Justin </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now let us add all of the libraries we will be using today to the top of our script:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/06-load-libraries_62196407533eb5d871f61a3f7d26b25e">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spdep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We will start by downloading the 2022 Ward boundaries for Great Britain:</p>
+<ol type="1">
+<li>Navigate to the <em>Open Geography Portal</em>: <a href="https://geoportal.statistics.gov.uk/">[Link]</a></li>
+<li>In the main menu go to <strong>Boundaries</strong> -&gt; <strong>Administrative Boundaries </strong> -&gt; <strong>Wards / Electoral Divisions</strong> -&gt; <strong>2022 Boundaries</strong>.</li>
+<li>Click on <strong>Wards (December 2022) Boundaries GB GBC</strong>.</li>
+<li>Click on <strong>Download</strong> -&gt; <strong>Download GeoPackage</strong>.</li>
+<li>Save the file as <code>WARDS2022.gpkg</code> in your <code>boundaries</code> folder.</li>
+</ol>
+<p>For the data on ethnic groups we turn to the <a href="https://data.london.gov.uk/about/">London Datastore</a> again. They have prepared just the dataset that we want to use from the 2021 Census.</p>
+<ol type="1">
+<li>Navigate to the London Datastore: <a href="https://data.london.gov.uk/">[Link]</a>.</li>
+<li>Click on <strong>Data</strong> in the navigation menu.</li>
+<li>Type <em>2021 census Wards ethnicity</em> into the search field.</li>
+<li>Download the <code>Ethnic group.xlsx</code> file containing Ward codes and counts of number of individuals who self-identify with a particular population group.</li>
+</ol>
+<p>Open de file in Excel, and look at the first tab (<strong>Front Page</strong>). You will notice that under <strong>Geography</strong> 2022 Wards are listed. This is good because these are the ones we just downloaded. The actual data that we want to use can be found on the <strong>2021</strong> tab, which refers to the 2021 Census results.</p>
+<div class="cell" data-hash="07-autocorrelation_cache/html/fig-ethnic-excel_0555d6c19284c02f1b8c70fe6aa1b7e1">
+<div class="cell-output-display">
+<div id="fig-ethnic-excel" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w07/ethnic-groups.png" class="img-fluid figure-img" width="776"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: The Excel file containing the number of people that self-identify as a particular group by Ward. <a href="https://jtvandijk.github.io/GEOG0030/images/w07/ethnic-groups.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We clearly need to extract the data and save this as a separate <code>csv</code> file before we can import the data into R.</p>
+<ol type="1">
+<li>Open a new Excel spreadsheet.</li>
+<li>From the <strong>2021</strong> tab of the <code>Ethnic group.xlsx</code> spreadsheet, cut (<strong>Edit</strong> -&gt; <strong>Cut</strong>) all cells from columns <strong>A</strong> to <strong>X</strong> and rows <strong>1 to 681</strong> and paste these into this new spreadsheet.</li>
+<li>Save the file as <code>csv</code> into your <code>data</code> folder as <code>WARD2021_ethnic_group.csv</code>.</li>
+</ol>
+<p>After this, let’s load our London MSOA file:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-load-shp_6b64b33951423c4ab0f6f814ce951832">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in our Ward GeoPackage</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ward_london <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/raw/boundaries/WARDS2022.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `WD_DEC_22_GB_BGC' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/raw/boundaries/WARDS2022.gpkg' 
+  using driver `GPKG'
+Simple feature collection with 8021 features and 11 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 5512.998 ymin: 5352.6 xmax: 655653.8 ymax: 1220299
+Projected CRS: OSGB36 / British National Grid</code></pre>
+</div>
+</div>
+<p>Check the <strong>CRS</strong> of our <code>ward_london</code> spatial dataframe:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-crs-wardshp_8e64499a2397faa49724ee2c4d62d2fa">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect CRS</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(ward_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: OSGB36 / British National Grid 
+  wkt:
+PROJCRS["OSGB36 / British National Grid",
+    BASEGEOGCRS["OSGB36",
+        DATUM["Ordnance Survey of Great Britain 1936",
+            ELLIPSOID["Airy 1830",6377563.396,299.3249646,
+                LENGTHUNIT["metre",1]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["degree",0.0174532925199433]],
+        ID["EPSG",4277]],
+    CONVERSION["British National Grid",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",49,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",-2,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",0.9996012717,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",400000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",-100000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1]],
+    USAGE[
+        SCOPE["Engineering survey, topographic mapping."],
+        AREA["United Kingdom (UK) - offshore to boundary of UKCS within 49°45'N to 61°N and 9°W to 2°E; onshore Great Britain (England, Wales and Scotland). Isle of Man onshore."],
+        BBOX[49.75,-9,61.01,2.01]],
+    ID["EPSG",27700]]</code></pre>
+</div>
+</div>
+<p>This all looks good, so we can move to also load the <code>csv</code> we just created:</p>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-ethnicity-csv_893fbc2fd0bad3fc3f98290cfefe693f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read csv</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ethnicity_london <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/data/WARD2021_ethnic_group.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+Rows: 680 Columns: 24
+── Column specification
+──────────────────────────────────────────────────────── Delimiter: "," chr
+(4): ward code, ward name, local authority code, local authority name dbl (19):
+All usual residents, White British, White Irish, White Gypsy/Irish... lgl (1):
+...9
+ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+Specify the column types or set `show_col_types = FALSE` to quiet this message.
+• `` -&gt; `...9`</code></pre>
+</div>
+</div>
+<p>Inspect the file by using the <code>View()</code> function. First thing you will notice is that the column names are rather long. Second thing you will notice is that one of the columns does not contain any information but <code>NA</code> values. It also does not have a meaningful name (<code>...9</code>), and it seems that in the process of saving the <code>csv</code> an extra column was added by Excel in the conversion. Let’s drop this column, and any other columns we do not need, first and then rename the remaining columns.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>If your conversion from Excel to <code>csv</code> did not result in an extra column, update the code below to reflect this so to avoid dropping a column that contains information.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="07-autocorrelation_cache/html/07-drop-rename-cols_a9bf7c057728f7bc00ce649681f00373">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop columns by index</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ethnicity_london <span class="ot">&lt;-</span> ethnicity_london <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">9</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># rename columns</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ethnicity_london) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ward22nm"</span>, <span class="st">"ward22cd"</span>, <span class="st">"all_pop"</span>, <span class="st">"white_british"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"white_irish"</span>, <span class="st">"white_gypsy"</span>, <span class="st">"white_other"</span>, <span class="st">"mixed_white_asian"</span>, <span class="st">"mixed_white_african"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"mixed_white_caribbean"</span>, <span class="st">"mixed_other"</span>, <span class="st">"asian_bangladeshi"</span>, <span class="st">"asian_chinese"</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"asian_indian"</span>, <span class="st">"asian_pakistani"</span>, <span class="st">"asian_other"</span>, <span class="st">"black_african"</span>, <span class="st">"black_caribbean"</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"black_other"</span>, <span class="st">"other_arab"</span>, <span class="st">"other"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>If you like, you can also write out the final <code>csv</code> using the <code>write_csv()</code> function.</p>
+<!-- ### Data preparation {#data-preparation-w07} -->
+<!-- Have a look at your newly created Ward dataframe using the `plot()` function, for instance. -->
+<!-- ## Statistical distributions -->
+<!-- Today, we are interested in looking at spatial autocorrelation: the effect of spatial processes on distributions. We will be using our newly created `obesity_Ward_sdf` to look at this in action, whilst also answering questions on the overall distribution and factors of childhood obesity. -->
+<!-- Within general data analysis, when it comes to analysing the distribution of your data, you are looking to conduct what is known as **Exploratory Data Analysis** (EDA) which is where we look to summarise the main characteristics of our data. EDA was promoted by prominent statistician [John Tukey](https://en.wikipedia.org/wiki/John_Tukey) to encourage data analysts to explore their data outside of traditional formal modelling and come up with new areas of investigation and hypotheses. Tukey promoted the use of five summary statistics: **the max-min, the median, and the quartiles**, which, in comparison to the mean and standard deviation, provide a more robust understanding of a data's distribution, particularly if the data is skewed. -->
+<!-- We looked at how we can use R to extract some of these summary statistics briefly in Week 4, but let's have a look at how we can add further to this EDA, including creating some statistical charts of our data's distribution.  -->
+<!-- In your script, below your joining of our dataframes, summarise our `y6_obesity_2014` distribution  -->
+<!-- ```{r 07-summ-distr, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+<!-- # summarise our y6_obesity_2014 data -->
+<!-- summary(obesity_Ward_sdf$y6_obesity_2014) -->
+<!-- ```  -->
+<!-- This `summary()` function can also be called on the dataset as a whole and will generate summary statistics for each individual numeric variable. You can execute this in your console if you like to get an understanding of all of variables - although we will focus on obesity for much of this practical. We can see that our **median** and **mean** are quite close to one another. We can also see that the quartiles are nearly the same amount apart from the mean, so we can start to think that our data is normally distribution. To confirm this, we can do the next best thing, which is plot our distribution using a **histogram**, using the base R `hist()` command: -->
+<!-- ```{r 07-hist, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+<!-- # plot the histogram of our y6_obesity_2014 data -->
+<!-- hist(obesity_Ward_sdf$y6_obesity_2014) -->
+<!-- ```  -->
+<!-- We can actually see our data has a slight negative skew, which makes sense given that our median is higher than our mean. -->
+<!-- ```{r 07-data-distro, echo=FALSE, fig.align='center', cache=TRUE, fig.cap='Cheatsheet on data distributions: negative skew, normal, positive skew.'} -->
+<!-- knitr::include_graphics('images/w07/distributions.png') -->
+<!-- ``` -->
+<!-- We can further customise our histograms if we want to make them more aesthetically pleasing and update the title and axis labeling: -->
+<!-- ```{r 07-hist-2, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+<!-- # pretty histogram -->
+<!-- hist(obesity_Ward_sdf$y6_obesity_2014, breaks=20, col="grey", main="Distribution of Obesity in Year 6 children, London Wards in 2014", xlab="Percentage of obese Year 6 children in the Ward") -->
+<!-- ```  -->
+<!-- We can also export this histogram and save it as a `png` by storing the histogram code to a variable and saving this variable to a file. The code to do so is a little different: we essentially first "open up" a file, called what we want to name our plot. We then run the code to plot our data, which will place the output "within" the file and then "close' the file down. -->
+<!-- ```{r 07-hist-3, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE, eval=FALSE} -->
+<!-- # open an empty png -->
+<!-- png("data/graphs/Y6_obesity_distribution.png") -->
+<!-- # pretty histogram -->
+<!-- hist(obesity_Ward_sdf$y6_obesity_2014, breaks=20, col="grey", main="Distribution of Obesity in Year 6 children, London Wards in 2014", xlab="Percentage of obese Year 6 children in the Ward") -->
+<!-- # close the png -->
+<!-- dev.off() -->
+<!-- ```  -->
+<!-- Another type of chart we can create just using the base R library is a **boxplot**. -->
+<!-- ```{r 07-boxplot-img, echo=FALSE, out.width = "650pt", fig.align='center', cache=TRUE, fig.cap='Simple boxplot.'} -->
+<!-- knitr::include_graphics('images/w07/boxplot.png') -->
+<!-- ``` -->
+<!-- A boxplot shows the core characteristics of the distributions within a dataset, including the interquartile range. Plot the boxplot of our `y6_obesity_2014` variable: -->
+<!-- ```{r 07-boxplot, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+<!-- # plot the boxplot of our y6_obesity_2014 data -->
+<!-- boxplot(obesity_Ward_sdf$y6_obesity_2014) -->
+<!-- ```  -->
+<!-- :::tip -->
+<!-- **Tip** <br/> -->
+<!-- There is actually a lot more we can do in terms of visualising our data's distribution and the best way forWard would be to become more familiar with the `ggplot2` library. `ggplot2` is the main visualisation for both statistical and, increasingly, spatial graphs, charts and maps. -->
+<!-- ::: -->
+<!-- ## Assignment 1 {#assignment-1-w07} -->
+<!-- Your first assignment this week is to go ahead and test each of our variables to determine their distribution. Make a note of which ones are normally distributed and which are not (and their skew). Understanding your data's distribution is important if you want to test the relationships between different variables.  -->
+<!-- ## Spatial distributions -->
+<!-- Whilst statistical analysis of distributions focus on tests and charts, when we want to understand the spatial distribution of our phenomena, we have a very simple solution: we make a map. In our case, we are looking at areal unit data and therefore we can use a choropleth map to study our data across the Wards:  -->
+<!-- ```{r 07-facet-map, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler', eval=TRUE} -->
+<!-- # store our variables of interest as a variable -->
+<!-- var_fields <- names(obesity_Ward_sdf)[10:17] -->
+<!-- # map all our variables of interest at once -->
+<!-- tm_shape(obesity_Ward_sdf) +  -->
+<!--   tm_polygons("gray", border.col = "gray") +  -->
+<!-- tm_shape(obesity_Ward_sdf) +  -->
+<!--   tm_polygons(col = var_fields) +  -->
+<!--   tm_layout(legend.show = FALSE, -->
+<!--             panel.labels = c("Yr 6 Obesity", "IDACI", "Median House Price",  -->
+<!--                              "Mean Household Income", "Percent No Adult Employment",  -->
+<!--                              "Percent No Qualifications", "Percent Deficient in Greenspace",  -->
+<!--                              "PTAL")) +  -->
+<!--   tm_facets(ncol = 3) -->
+<!-- ```  -->
+<!-- And specifically, we can create a single output choropleth map for each of our variables to visually understand their distribution: -->
+<!-- ```{r 07-tmap-check, warnings=FALSE, message=FALSE, cache=FALSE, echo=FALSE} -->
+<!-- # ensure tmap mode is set to plot  -->
+<!-- tmap_mode("plot") -->
+<!-- ``` -->
+<!-- ```{r 07-obesity-map, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler', eval=TRUE} -->
+<!-- # child obesity map -->
+<!-- tm_shape(london_Ward_shp) +  -->
+<!--   tm_polygons("gray", border.col = "gray") +  -->
+<!-- tm_shape(obesity_Ward_sdf) +  -->
+<!--   tm_polygons(col = "y6_obesity_2014", n = 5, style = "jenks",  -->
+<!--               title = "Percentage of children ", palette="Purples",  -->
+<!--               border.col = "white") +  -->
+<!--   tm_layout(main.title = 'Obesity of Year 6 children in London Wards in 2014',  -->
+<!--             main.title.fontface = 2, fontfamily = "Helvetica",  -->
+<!--             legend.outside = TRUE,  -->
+<!--             legend.outside.position = "right",  -->
+<!--             legend.title.size = 1,  -->
+<!--             legend.title.fontface = 2) +  -->
+<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
+<!-- ```  -->
+<!-- The thing with spatial distributions is that we can quickly pick up on spatial patterns present within our data just by looking at the data. For example, in our obesity example, we can see there are clusters of high levels of obesity in East London, whilst there are clusters of low levels of obesity in the south east and south west areas of London. Let's analyse these clusters statistically by looking at spatial autocorrelation. -->
+<!-- :::note -->
+<!-- **Note** <br /> -->
+<!-- Earlier we encountered that our dataset contains `NAs` in at least one of our columns. In fact, our `yr6_obesity_2014` variable contains `NAs`. To move forWard with our analysis, we need to remove those Wards that do not contain any obesity information from our spatial dataframe. This will have some issues in terms of how we think about our "neighbours", explained further below, but will allow us to run the code required. -->
+<!-- ::: -->
+<!-- Remove the Wards in our `obesity_Ward_sdf` that do not contain any obesity information. -->
+<!-- ```{r 07-removeNAs, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+<!-- # remove NAs -->
+<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% filter(!is.na(y6_obesity_2014)) -->
+<!-- ```  -->
+<!-- We can assess the distribution of our data using what is known as spatial autocorrelation tests, which can be conducted on both a global (identify if the data is clustered) and local (identify the precise clusters) scales. Whilst these different tests quantify how clustered, how random, or how dispersed, these distributions are through various approaches, ultimately they provide us with statistical and spatial information that can be used to create quantifiable descriptions of a variable’s distribution and how it vary over space. This can be incredibly useful when looking to explain and discuss a variable, particularly as the clustering present in one variable can be compared to another, which might be useful to make connections between underlying causes or possible solutions to the issues the original variable poses. -->
+<!-- As discussed in this week's lecture, we have several types of tests that look to quantify spatial autocorrelation. Of these tests, there are two categories: -->
+<!-- * **Global statistical** tests (i.e. those that provide us with a statistic to tell us about autocorrelation in our dataset). -->
+<!-- * **Local spatial** tests (i.e. those that provide us with the cluster maps). -->
+
+<!-- Three important tests are outlined in the below table for easy reference: -->
+<!-- |Test | Scale | Test | Output | Significance Value | -->
+<!-- | :---- | :---| :--------------| :--------------| :---| -->
+<!-- | Global Moran's I | Global | Tests how "random" the spatial distribution of values are, producing a correlation coefficient for the relationship between a variable (like income) and its surrounding values. | **Moran's I statistic:** <br> Metric between -1 and 1. <br> -1 = dispersed <br> 0 = CSR <br> 1 = clustered | Yes - $p$-value | -->
+<!-- | Local Moran's I | Local | Tests the difference between a unit of analysis and its neighbour(s).  | **Local Moran's I statistic:** <br> 1. Can be used alongside the mean of values to generate cluster type generations. <br>i.e. High-High, High-Low, Low-High, Low-Low, Insignificant. <br> 2. Can also use standard deviation of main local statistic to show just high and low clusters  | Yes - $p$-value | -->
+<!-- | Local Getis-Ord | Local |  Identifies statistically significant hot spots and cold spots using the local Getis-Ord Gi* statistic.  | Can use the standard deviation of statistic to identify hot and cold spots | Yes - $p$-value | -->
+<!-- In each of these cases, our $p$-values are pseudo $p$-values, generated through simulations such as that outlined in the lecture. Our pseudo $p$-values allow us to interpret our relationships with a level of confidence. If we find that our relationships do not have any significance, then we cannot be confident in presenting them as true results. -->
+<!-- ### Spatial lag -->
+<!-- Underlying our global Moran's I test is the concept of a **spatial lag model**. A spatial lag model plots each value against the mean of its neighbours' values, defined by our selected approach. This creates a scatter plot, from which our Moran's I statistic can be derived.  -->
+<!-- An Ordinary Least Squares (OLS) regression is used to fit the data and produce a slope, which determines the Moran's I statistic: -->
+<!-- ```{r 07-moran-plt, echo=FALSE, fig.align='center', cache=TRUE, fig.cap='A spatial lag model - plotting value against the mean of its neighbours. <br/> Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html).'} -->
+<!-- knitr::include_graphics('images/w07/MoranI_scatter_plot.png') -->
+<!-- ``` -->
+<!-- To determine a $p$-value from our model for global Moran's I, this spatial lag model is computed multiple times (think hundreds, thousands) but uses a random distribution of neighbouring values to determine different slopes for multiple ways our data *could* be distributed, if our data was distributed by random. The output of this test is a sampling distribution of Moran's I values that would confirm a null hypothesis that our values are randomly distributed. These slopes are then compared to compare our *observed* slope versus our *random* slopes and identify whether the slope is within the main distribution of these values or an outlier: -->
+<!-- ```{r 07-spatial-lag-plt, echo=FALSE, fig.align='center', cache=TRUE, fig.cap='A spatial lag model - plotting value against the mean of its neighbours. <br/> Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html).'} -->
+<!-- knitr::include_graphics('images/w07/MC_sim_1.png') -->
+<!-- ``` -->
+<!-- If our slope is an outlier, i.e. not a value we would expect to compute if the data were randomly distributed, we are more confidently able to confirm our slope is reflective of our data's clustering and is significant. Our *pseudo-*$p$-values are then computed from our simulation results: -->
+<!-- <center>\(\frac{N_{extreme} + 1}{N + 1}\)</center> -->
+<!-- <br> -->
+<!-- Where \({N_{extreme}}\) is the number of simulated Moran's I values that were more extreme that our observed statistic and \({N}\) is the total number of simulations. In the example above, from [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html), only 1 out the 199 simulations was more extreme than the observed local Moran's I statistic. Therefore \({N_{extreme}}\) = 1 , so $p$ is equal to (1+1) / (199 + 1) = 0.01. This means that "there is a 1% probability that we would be wrong in rejecting the null hypothesis". This approach is known as a **Monte Carlo simulation** or permutation bootstrap test. -->
+<!-- ### Defining neighbours -->
+<!-- For any spatial autocorrelation test that you want to conduct, you will always need one critical piece of information: *how do we define 'neighbours' in our dataset to enable the value comparison.* Every observation in a dataset will need to have a set of neighbours to which its value is compared. To enable this, we need to determine how many or what type of neighbours should be taken into account for each observation when conducting a spatial autocorrelation test. -->
+<!-- These 'neighbouring' observations can be defined in a multitude of ways, based either on geometry or proximity, and include: -->
+<!-- * **Contiguity** neighbours: Queen / Rook (*plus order*) -->
+<!-- * **Fixed Distance** neighbours: Euclidean Distance (e.g. within 2km) -->
+<!-- * **(K) Nearest Neighbours**: Certain *n* number of closest neighbours -->
+<!-- ```{r 07-neighbours, echo=FALSE, fig.align='center', cache=TRUE, fig.cap='Different approaches of conceptualising neighbours for spatial autocorrelation measurement: contiguity, fixed distance and nearest neighbours. Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html).'} -->
+<!-- knitr::include_graphics('images/w07/iffn.png') -->
+<!-- ``` -->
+<!-- Depending on the variable you are measuring, the appropriateness of these different types of neighbourhood calculation techniques can change. As a result, how you define neighbours within your dataset will have an impact on the validity and accuracy of spatial analysis. Whatever approach you choose therefore needs to be grounded in particular theory that aims to represent the process and variable investigated.  -->
+<!-- :::note -->
+<!-- **Note** <br /> -->
+<!-- Have a look at Esri's Help Documentation on [Selecting a conceptualization of spatial relationships: Best practices](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/modeling-spatial-relationships.htm#GUID-729B3B01-6911-41E9-AA99-8A4CF74EEE27) when you come to need to define neighbours yourself for your own analysis. -->
+<!-- ::: -->
+<!-- For our analysis into childhood obesity, we will primarily use the **Queen contiguity**. This approach is "*effective when polygons are similar in size and distribution, and when spatial relationships are a function of polygon proximity (the idea that if two polygons share a boundary, spatial interaction between them increases)*" ([Esri, 2021](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/modeling-spatial-relationships.htm#GUID-729B3B01-6911-41E9-AA99-8A4CF74EEE27)). -->
+<!-- ### Spatial weights matrix -->
+<!-- Before we can calculate Moran’s I and any similar statistics, we need to first define our **spatial weights matrix**. This is known mathematically as \(W_{ij}\) and this will tell our code which unit neighbours which, according to our neighbour definition. For each neighbour definition, there is a different approach to implementing code to calculate the \(W_{ij}\) spatial weights matrix.  -->
+<!-- Here, we will look at three approaches: -->
+<!-- 1. Creating a Queen \(W_{ij}\) spatial weights matrix -->
+<!-- 2. Creating a Rook \(W_{ij}\) spatial weights matrix -->
+<!-- 3. Creating a Fixed Distance \(W_{ij}\) spatial weights matrix -->
+<!-- For either approach, we use a single line of code to create the relevant \(W_{ij}\) spatial weights matrix: -->
+<!-- ```{r 07-defining-neighbours, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
+<!-- # create a neighbours list based on the Queen neighbour definition -->
+<!-- Ward_neighbours_queen <- obesity_Ward_sdf %>% poly2nb(., queen=T) -->
+<!-- # create a neighbours list based on the Rook neighbour definition -->
+<!-- Ward_neighbours_rook <- obesity_Ward_sdf %>% poly2nb(., queen=F) -->
+<!-- # creates centroid and joins neighbours within 0 and 3000 'units' of the CRS, i.e. metres -->
+<!-- Ward_neighbours_fd <- dnearneigh(st_geometry(st_centroid(obesity_Ward_sdf)),0, 3000) -->
+<!-- ```  -->
+<!-- Creating our neighbours list through a single line of code, as above, does not really tell us much about the differences between these conceptualisations. It would be useful to the links between neighbours for our three definitions and visualise their distribution across space. To be able to do this, we will use a few lines of code to generate a visualisation based on mapping the defined connections between the centroids of our Wards. -->
+<!-- :::note -->
+<!-- **Note** <br /> -->
+<!-- A centroid, in its most simplest form is the central point of an areal unit. How this central point is defined can be weighted by different approaches to understanding geometries or by using an additional variable. In our case, our centroids will reflect in the 'central' point of our Wards, determined by its geometric boundaries. -->
+<!-- ::: -->
+<!-- We can calculate the centroids of our Wards using one of the **geometric** tools from the `sf` library: `sf_centroid()`: -->
+<!-- ```{r 07-calc-centroids, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
+<!-- # calculate the centroids of all of the Wards in London -->
+<!-- Ward_centroid <- obesity_Ward_sdf %>% st_centroid() -->
+<!-- ```  -->
+<!-- You can `plot()` the `Ward_centroid` using the console to see what they look like as spatial data. Now we have our Ward centroids, we can go ahead and plot the centroids and the defined neighbour connections between them from each of our neighbour definitions. To do so, we will use the `plot()` function, provide the relationships via our `Ward_neighbours_X` list and then the geometry associated with these lists from our `Ward_centroid()`: -->
+<!-- ```{r 07-plotting-neighbours-1, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+<!-- # plot neighbours: Queen -->
+<!-- plot(Ward_neighbours_queen, st_geometry(Ward_centroid), col="red", pch=20, cex=0.5) -->
+<!-- ```  -->
+<!-- ```{r 07-plotting-neighbours-2, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+<!-- # plot neighbours: Rook -->
+<!-- plot(Ward_neighbours_rook, st_geometry(Ward_centroid), col="blue", pch=20, cex=0.5) -->
+<!-- ```  -->
+<!-- ```{r 07-plotting-neighbours-3, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+<!-- # plot neighbours: Fixed Distance -->
+<!-- plot(Ward_neighbours_fd, st_geometry(Ward_centroid), col="green", pch=20, cex=0.5) -->
+<!-- ```  -->
+<!-- When comparing these different maps, we can see that there is definitely a difference in the number of neighbours when we use our different approaches. It seems our fixed distance neighbour conceptualisation has much connections in the center of London versus areas on the outskirts. We can see that our contiguity approaches provide a more equally distributed connection map, with our Queen conceptualisation having a few more links that our Rook. -->
+<!-- We can also type the different neighbours objects into the console to find out the total number of "non-zero links" (i.e. total number of connections) present within the conceptualisation. You should see that Queen has 3560 non-zero links, Rook has 3474 and Fixed Difference has 8238. Whilst this code simply explores these conceptualisations it helps us understand further how our different neighbourhood conceptualisations can ultimately impact our overall analysis. -->
+<!-- With our neighbours now defined, we will go ahead and create our final (two) spatial weights objects that will be needed for our spatial autocorrelation code. At the moment, we currently have our neighbours defined as a "list" but we need to convert it to a "neighbours" object using the `nb2listw()` function: -->
+<!-- ```{r 07-creating-neighbours, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
+<!-- # create a neighbours list -->
+<!-- Ward_spatial_weights_queen <- Ward_neighbours_queen %>% nb2listw(., style="C") -->
+<!-- # creates a neighbours list  -->
+<!-- Ward_spatial_weights_fd <- Ward_neighbours_fd %>% nb2listw(., style = 'B') -->
+<!-- ```  -->
+<!-- :::note -->
+<!-- **Note** <br /> -->
+<!-- If you did not remove the `NAs` in our obesity column than the following code will not run. Make sure you have done this. If not, do it now and re-run your spatial weights matrix generation code again. -->
+<!-- ::: -->
+<!-- ### Global Moran's I -->
+<!-- With a Global Moran’s I we test how “random” the spatial distribution of these values is, producing a global Moran's statistic from the lag approach explained earlier.  -->
+<!-- The global Moran’s I statistic is a metric between -1 and 1: -->
+<!-- * -1 is a completely even spatial distribution of values -->
+<!-- * 0 is a “random” distribution -->
+<!-- * 1 is a “non-random” distribution of clearly defined clusters -->
+<!-- Before we run our global Moran's I test, we will first create a spatial lag model plot which looks at each of the values plotted against their spatially lagged values. The graph will show quickly whether we are likely to expect our test to return a positive, zero or negative statistic: -->
+<!-- ```{r 07-scatter-plot-MI, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+<!-- obesity_MI_sp <- moran.plot(obesity_Ward_sdf$y6_obesity_2014, listw = Ward_spatial_weights_queen) -->
+<!-- ```  -->
+<!-- We can see that there is a positive relationship between our `y6_obesity_2014` variable and the spatially lagged `y6_obesity_2014` variable, therefore we are expecting our global Moran's I test to produce a statistic reflective of the slope visible in our scatter plot. Now we can run the global Moran's I spatial autocorrelation test and print the result: -->
+<!-- ```{r 07-run-GMI, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
+<!-- # run the global Moran's I test on our y6_obesity_2014 data -->
+<!-- obesity_GMI <- obesity_Ward_sdf %>% pull(y6_obesity_2014) %>% as.vector() %>% moran.test(., Ward_spatial_weights_queen) -->
+<!-- # print global Moran's I result -->
+<!-- obesity_GMI -->
+<!-- ```  -->
+<!-- The Moran’s I statistic calculated should be 0.53. With 1 = clustered, 0 = no pattern, -1 = dispersed, this means we can confirm that childhood obesity in London is positively autocorrelated. In other words, childhood obesity does spatially cluster. We can also consider the pseudo $p$-value as a measure of the statistical significance of the model - at < 2.2e-16, which confirm our result is (psuedo) significant. -->
+<!-- :::note -->
+<!-- **Note** <br/> -->
+<!-- Before we run our local spatial autocorrelation tests, let's just take a second to think through what our results have shown. From our global statistical tests, we can confirm that: -->
+<!-- * There is clustering in our dataset. -->
+<!-- * Similar values are clustering. -->
+<!-- * High values are clustering. -->
+<!-- We can conclude already that areas of high levels of childhood obesity tend to cluster in the same area. What we do not know yet is **where** these clusters are occurring. To help with this, we need to run our **local** models to identify where these clusters are located. -->
+<!-- ::: -->
+<!-- ### Local Moran's I -->
+<!-- A local Moran's I test deconstructs the global Moran’s I down to its components and then constructs a localized measure of autocorrelation, which can show different cluster types. To run a local Moran's I test, the code again is similar to above: -->
+<!-- ```{r 07-local-MI-1, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
+<!-- # run the local Moran's I test on our y6_obesity_2014 data -->
+<!-- obesity_LMI <- obesity_Ward_sdf %>% pull(y6_obesity_2014) %>% as.vector() %>% localmoran(., Ward_spatial_weights_queen) -->
+<!-- # print the first 5 lines of the local Moran's I statistic output -->
+<!-- head(obesity_LMI) -->
+<!-- ```  -->
+
+<!-- As you should see, we do not get given a single statistic as per with our global tests, but rather a table of five different statistics that are all related back to each of the Wards in our dataset. -->
+<!-- If we look at the help page for the `localmoran` function (run `?localmoran` in your console) we can find out what each of these statistics mean: -->
+<!-- | Name | Description | -->
+<!-- | :----- | :---------------| -->
+<!-- | Ii | Local Moran's I statistic | -->
+<!-- | E.Ii | Expectation of local Moran's I statistic | -->
+<!-- | Var.Ii | Variance of local Moran's I statistic | -->
+<!-- | Z.Ii | Standard deviation of local Moran's I statistic | -->
+<!-- | Pr() | $p$-value of local Moran's I statistic | -->
+<!-- We therefore have a local Moran's I statistic for each of our Wards, as well as a significance value plus a few other pieces of information that can help us create some maps showing our clusters. To be able to do this, we need to join our local Moran's I output back into our `obesity_Ward_sdf` spatial dataframe, which will then allow us to map these results.  -->
+<!-- To create this join, we first **coerce** our local Moran's I output into a dataframe that we then join to our `obesity_Ward_sdf` spatial dataframe using the `mutate()` function from the `dplyr` library. In our case, we do not need to provide an **attribute** to join these two dataframes together as we use the computer's logic to join the data in the order in which it was created: -->
+<!-- ```{r 07-local-MI-join, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
+<!-- # coerce obesity_LMI into dataframe -->
+<!-- obesity_LMI <- as.data.frame(obesity_LMI) -->
+<!-- # update the names for easier reference -->
+<!-- names(obesity_LMI) <- c("LMI_Ii", "LMI_eIi", "LMI_varIi", "LMI_zIi", "LMI_sigP") -->
+<!-- # join to obesity_Ward_sdf -->
+<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% mutate(obesity_LMI) -->
+<!-- ```  -->
+<!-- We now have the data we need to plot our local spatial autocorrelation maps. We will first plot the most simple maps to do with our local Moran's I test: the local Moran's I statistic as well as the $p$-values of the local Moran's I statistic. -->
+<!-- Map the local Moran's I statistic:  -->
+<!-- ```{r 07-map-LMI, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
+<!-- # map our local Moran's I statistic  -->
+<!-- tm_shape(obesity_Ward_sdf) +  -->
+<!--   tm_polygons("LMI_Ii", style = "pretty", midpoint = 0, title = "Local Moran's I statistic") +  -->
+<!--   tm_layout(main.title= "Spatial Autocorrelation of Childhood Obesity in London",  -->
+<!--             main.title.fontface = 2, fontfamily = "Helvetica",  -->
+<!--             legend.outside = TRUE,  -->
+<!--             legend.outside.position = "right",  -->
+<!--             legend.title.size = 1,  -->
+<!--             legend.title.fontface = 2) +  -->
+<!--   tm_compass(type = "arrow", position = c("right", "bottom")) +  -->
+<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
+<!-- ```  -->
+<!-- From the map, it is possible to observe the variations in autocorrelation across space. We can interpret that there seems to be a geographic pattern to the autocorrelation. However, it is not possible to understand if these are clusters of high or low values. To be able to interpret this confidently, we also need to know the significance of the patterns we see in our map and therefore need to map the $p$-value of local Moran's I statistic. -->
+<!-- Map the $p$-value of local Moran's I statistic: -->
+<!-- ```{r 07-map-LMI-p, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
+<!-- # significance breaks -->
+<!-- breaks <- c(0, 0.05, 0.1, 1) -->
+<!-- # colours for our local Moran's I statistic -->
+<!-- colours <- c('white', "#a6bddb", "#2b8cbe" ) -->
+<!-- # map our local Moran's I statistic  -->
+<!-- tm_shape(obesity_Ward_sdf) +  -->
+<!--   tm_polygons("LMI_sigP", style = "fixed", breaks = breaks,  -->
+<!--               palette = rev(colours), title = "p-value of Local Moran's I stat") +  -->
+<!--   tm_layout(main.title = "Spatial Autocorrelation of Childhood Obesity in London",  -->
+<!--             main.title.fontface = 2, fontfamily = "Helvetica",  -->
+<!--             legend.outside = TRUE,  -->
+<!--             legend.outside.position = "right",  -->
+<!--             legend.title.size = 1,  -->
+<!--             legend.title.fontface = 2) +  -->
+<!--   tm_compass(type = "arrow", position = c("right", "bottom")) +  -->
+<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
+<!-- ```  -->
+<!-- Using our significance map, we can interpret the above clusters present in our local Moran's I statistic more confidently. As evident, we do have several clusters that are statistically significant to the $p$-value < 0.05.  -->
+<!-- Ideally we would combine these two outputs to see what values cluster together and which clusters are significant. We can do this with a cluster map of our **local Moran's I statistic (Ii)** which will show areas of different types of clusters, including: -->
+<!-- * **HIGH-HIGH**: A Ward of high obesity that is also surrounded by other Wards of high obesity. -->
+<!-- * **HIGH-LOW**: A Ward of high obesity that is surrounded by Wards of low obesity. -->
+<!-- * **LOW-HIGH**: A Ward of low obesity that is surrounded by Wards of high obesity. -->
+<!-- * **LOW-LOW**: A Ward of low obesity that is also surrounded by other Wards of low obesity. -->
+<!-- * Those areas that have no significant cluster or relationship to the Wards around them. -->
+<!-- Our HIGH-HIGH and LOW-LOW will show our clusters, whereas the other two cluster types reveal anomalies in our variable. To create a map that shows this, we need to quantify the relationship each of our Wards have with the Wards around them to determine their cluster type. We do this using their observed value and their local Moran's I statistic and their deviation around their respective means: -->
+<!-- * *If a Ward's observed value is higher than the observed mean and it's local Moran's I statistic is higher than the LMI mean*, it is designated as **HIGH-HIGH**. -->
+<!-- * *If a Ward's observed value is lower than the observed mean and it's local Moran's I statistic is lower than the LMI mean*, it is designated as **LOW-LOW**. -->
+<!-- * *If a Ward's observed value is lower than the observed mean but it's local Moran's I statistic is higher than the LMI mean*, it is designated as **LOW-HIGH**. -->
+<!-- * *If a Ward's observed value is higher than the observed mean but it's local Moran's I statistic is lower than the LMI mean*, it is designated as **HIGH-LOW**. -->
+<!-- * *If a Ward's LMI was found not to be significant*, the Ward will be mapped as **not significant**. -->
+<!-- For example, this means that if we know our Ward’s observed value is less than the mean value of our overall `y6_obesity_2014 variable`, then it means it is of course a low value for obesity in comparison to the entirety of London. If it’s local Moran’s I statistic is also lower than the mean value of the rest of the LMI_Ii statistics, it also means it is located in a neighbourhood of low values. As a result, if this relationship is significant (determined by the pseudo $p$-value from our local Moran’s I calculation), we can call this a “LOW-LOW” cluster. -->
+<!-- To achieve this cluster map, we need to take several additional steps: -->
+<!-- * The first will tell us, for each Ward, whether its observed value is higher or lower than the mean observed. -->
+<!-- * The second will tell us, for each Ward, whether its LMI value is higher or lower than the mean LMI. -->
+<!-- * The third will use the values of these two columns to assign each Ward with a cluster type. -->
+<!-- Determine the cluster type of each Ward by comparing observed and LMI values against their respective means and the significance value: -->
+<!-- ```{r 07-LMI-cluster-type, warnings=FALSE, message=FALSE, cache=FALSE, tidy='styler'} -->
+<!-- # compare local value for obesity with mean value -->
+<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% mutate(obs_diff = (y6_obesity_2014 - mean(obesity_Ward_sdf$y6_obesity_2014))) -->
+<!-- # compare local LMI value with mean LMI value -->
+<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% mutate(LMI_diff = (obesity_LMI$LMI_Ii - mean(obesity_LMI$LMI_Ii))) -->
+<!-- # set a significance threshold  -->
+<!-- signif <- 0.05 -->
+<!-- # generate column with cluster type, using values above -->
+<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>%  -->
+<!--   mutate(cluster_type = case_when(obs_diff > 0 & LMI_diff > 0 & LMI_sigP < signif ~ "High-High", -->
+<!--                                   obs_diff < 0 & LMI_diff < 0 & LMI_sigP < signif ~ "Low-Low", -->
+<!--                                   obs_diff < 0 & LMI_diff > 0 & LMI_sigP < signif ~ "Low-High", -->
+<!--                                   obs_diff > 0 & LMI_diff < 0 & LMI_sigP < signif ~ "High-Low", -->
+<!--                                   LMI_sigP > signif ~ "No Significance")) -->
+<!-- ``` -->
+<!-- Now we have a column detailing our cluster types, we can create a cluster map that details our four cluster types as well as those that are not significant. Creating a categorical map in R and using `tmap` is a little tricky and we will need to do some preparing of our colour palettes to ensure our data is mapped correctly. To do this, we first need to figure out how many cluster types we have in our `cluster_type` field: -->
+<!-- ```{r 07-LMI-cs, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+<!-- # count the different values within our `cluster_type` variable  -->
+<!-- count(obesity_Ward_sdf, cluster_type) -->
+<!-- ``` -->
+<!-- We can see we actually have all four cluster types present within our dataset - alongside the `No Significance` value. We therefore need to ensure our palette includes four colours for these two cluster types, plus a white colour for `No Significance`: -->
+<!-- ```{r 07-plot-LMI-hscs, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
+<!-- # create a colour palette -->
+<!-- pal <- c("#d7191c", "#fdae61", "#abd9e9", "#2c7bb6","#F5F5F5") -->
+<!-- # plot the clusters -->
+<!-- tm_shape(obesity_Ward_sdf) + -->
+<!--   tm_polygons(col = "cluster_type", palette = pal, title = "Cluster Type") + -->
+<!--   tm_layout(main.title = "Cluster Map of Childhood Obesity in London, 2014", -->
+<!--             main.title.fontface = 2, fontfamily = "Helvetica", legend.outside = TRUE, -->
+<!--             legend.outside.position = "right", -->
+<!--             legend.title.size = 1, -->
+<!--             legend.title.fontface = 2) + -->
+<!--   tm_compass(type = "arrow", position = c("right", "bottom")) + -->
+<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
+<!-- ```  -->
+<!-- And there we have it: within one map we can visualise both the relationship of our Wards to their respective neighbourhoods and the significance of this relationship from our local Moran's I test. This type of map is called a LISA map and is a great way of showing how a variable is actually clustering. -->
+<!-- ### Getis-Ord-Gi* -->
+<!-- The final test we will run today is the local Getis-Ord, which will produce the Gi* statistic. This statistic will identify hot- and coldspots by looking at the neighbours within a defined proximity to identify where either high or low values cluster spatially and recognising statistically significant hotspots as those areas of high values where other areas within a neighbourhood range also share high values too (and vice versa for coldspots). -->
+<!-- Run the local Gi* statistic spatial autocorrelation test and print the result: -->
+<!-- ```{r 07-local-GO, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+<!-- # run the local Gi* test on our y6_obesity_2014 data, note we again use the fd weights -->
+<!-- obesity_LGO <- obesity_Ward_sdf %>% pull(y6_obesity_2014) %>% as.vector() %>% localG(., Ward_spatial_weights_fd)  -->
+<!-- # join the local Gi* statistic to `obesity_Ward_sdf` spatial dataframe -->
+<!-- obesity_Ward_sdf <- obesity_Ward_sdf %>% mutate(obesity_LGO_G = as.numeric(obesity_LGO)) -->
+<!-- # inspect -->
+<!-- obesity_Ward_sdf -->
+<!-- ```  -->
+<!-- By printing the results of our test, we can see that the local Getis-Ord test is a bit different from a local Moran's I test as it only contains a single value: the z-score. The z-score is a standardised value relating to whether high values or low values are clustering together, which we call the Gi* statistic. We can join this output, a list of our Gi* values, to our `obesity_Ward_sdf` spatial dataframe and map the result: -->
+<!-- ```{r 07-join-local-GO, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
+<!-- ``` -->
+<!-- ```{r 07-map-local-GO, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
+<!-- # create a colour palette -->
+<!-- GIColours <- rev(brewer.pal(8, "RdBu")) -->
+<!-- # plot the clusters -->
+<!-- tm_shape(obesity_Ward_sdf) +  -->
+<!--   tm_polygons("obesity_LGO_G", style = "pretty", palette=GIColours, -->
+<!--               midpoint=0, title = "Local Gi* statistic") + -->
+<!--   tm_layout(main.title = 'Hot/Cold Spot Map of Childhood Obesity in London, 2014',  -->
+<!--             main.title.fontface = 2, fontfamily = "Helvetica", -->
+<!--             legend.outside = TRUE,  -->
+<!--             legend.outside.position = "right",  -->
+<!--             legend.title.size = 1,  -->
+<!--             legend.title.fontface = 2) +  -->
+<!--   tm_compass(type = "arrow", position = c("right", "bottom")) + -->
+<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) -->
+<!-- ```  -->
+<!-- Our map shows quite clearly hot and cold spots of obesity across London. How does this compare with our local Moran's I? Do we see the same clusters? -->
+<!-- :::tip -->
+<!-- **Tip** <br/> -->
+<!-- If we want to only map the statistically significant clusters, we need to use these [z-scores](https://en.wikipedia.org/wiki/Standard_score) to filter out only statistically significant clusters. When using a 95 percent confidence level your values should be between `-1.96` and `+1.96` standard deviations. -->
+<!-- ::: -->
+<!-- ## Assignment 2 {#assignment-2-w07} -->
+<!-- Through conducting our spatial autocorrelation tests, we can visually confirm the presence of clusters in our `y6_obesity_2014` variable and provide a significance value associated with these tests. This provides us with a way to explain our distributions **quantitatively** during the analysis of our results. -->
+<!-- Now you have the code, you will be able to repeat this analysis on any variable in the future. For this week's assignment, we therefore want you to find out whether our `IDACI_2010` variable contains spatial clustering. -->
+<!-- In order to do this, you have to: -->
+<!-- 1. Create a choropleth map showing the distribution of the variable values. -->
+<!-- 2. Calculate a global spatial autocorrelation statistic and explain what it shows. -->
+<!-- 3. Create a local Moran's I map showing the four cluster types. -->
+<!-- 4. Create a local Getis-Ord hotspot map. -->
+<!-- 5. Compare these results to the output of our `y6_obesity_2014` values. Do both variables have clusters? Do we see similar clusters in similar locations? What might this tell us about the relationship between deprivation and obesity in children in London? -->
+<!-- 6. Run the analysis using a different neighbour definition. What happens? Do the results change? -->
+</section>
+</section>
+<section id="wm-w07" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="wm-w07"><span class="header-section-number">7.4</span> Want more? [Optional]</h2>
+<section id="more-spatial-autocorrelation" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="more-spatial-autocorrelation">More spatial autocorrelation</h3>
+<p>If you are interested in moving beyond spatial autocorrelation, for instance how to account for spatial autocorrelation in statistical models (e.g.&nbsp;with Geographically Weighted Regression or Spatial Regression), have a look at the workbook <a href="https://profrichharris.github.io/MandM/themap.html">Mapping and Modelling Geographic Data in R</a> by Bristol-based Professor <a href="https://www.bristol.ac.uk/people/person/Richard-Harris-871b21a9-0f5f-4bc8-9a99-8ace550d9903/">Richard Harris</a>. Start with <a href="https://profrichharris.github.io/MandM/themap.html">The Spatial Variable</a> section, move to the <a href="https://profrichharris.github.io/MandM/autocorrelation.html">Measuring spatial autocorrelation</a> section before looking at the <a href="https://profrichharris.github.io/MandM/gwstats.html">Geographically Weighted Statistics</a> and <a href="https://profrichharris.github.io/MandM/spregress.html">Spatial Regression</a> sections.</p>
+</section>
+</section>
+<section id="byl-w07" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="byl-w07"><span class="header-section-number">7.5</span> Before you leave</h2>
+<p>And that is how you can measure spatial dependence in your dataset through different spatial autocorrelation measures. Next week we will focus on the last topic within our set of core spatial analysis methods and techniques, but <a href="https://www.youtube.com/watch?v=fCZVL_8D048">this week we have covered enough</a>!</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./06-operations.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./11-data.html" class="pagination-link">
+        <span class="nav-page-text">Data Sources</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Course material by <a href="https://www.mappingdutchman.com">Justin van Dijk</a>. Available under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

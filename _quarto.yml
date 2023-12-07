@@ -53,6 +53,7 @@ website:
       - section: "Core Spatial Analysis"
         contents: 
           - 06-operations.qmd
+          - 07-autocorrelation.qmd
       - section: "Advanced Spatial Analysis"
       - section: "Additional Resources"
         contents:

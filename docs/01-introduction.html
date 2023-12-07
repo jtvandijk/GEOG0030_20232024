@@ -210,6 +210,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">6 Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-autocorrelation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysing Spatial Patterns II: Spatial Autocorrelation</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -378,13 +384,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="r-package-installation" class="level3" data-number="1.4.4">
 <h3 data-number="1.4.4" class="anchored" data-anchor-id="r-package-installation"><span class="header-section-number">1.4.4</span> R package installation</h3>
 <p>Now we have installed QGIS and R onto our machines / have access to QGIS and R through UCL’s resources, we need to customise R. Many useful R functions come in packages, these are free libraries of code written and made available by other R users. This includes packages specifically developed for data cleaning, data wrangling, visualisation, mapping, and spatial analysis. To save us some time, we will install <strong>all R packages that we will need</strong> over the next ten weeks in one go. Start RStudio, and copy and paste the following code into the <strong>console</strong> window. You can execute the code by hitting <strong>Enter</strong>. Depending on your computer’s specificiations and the internet connection, this may take a while.</p>
-<div class="cell" data-warnings="true" data-hash="01-introduction_cache/html/01-install-libaries_147c9f0a374ed55072aad66af3618b22">
+<div class="cell" data-warnings="true" data-hash="01-introduction_cache/html/01-install-libaries_4919e1d34ec04243d2c009ebabd0b171">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"sf"</span>, <span class="st">"tmap"</span>, <span class="st">"osmdata"</span>, <span class="st">"terra"</span>, <span class="st">"dodgr"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"sf"</span>, <span class="st">"tmap"</span>, <span class="st">"osmdata"</span>, <span class="st">"spdep"</span>, <span class="st">"terra"</span>, <span class="st">"dodgr"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">

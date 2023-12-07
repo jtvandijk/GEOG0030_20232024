@@ -1,8 +1,5 @@
 #! /bin/bash
 
-# rm html related cahce
-rm -r 06-operations_cache
-
 # render
 quarto render
 

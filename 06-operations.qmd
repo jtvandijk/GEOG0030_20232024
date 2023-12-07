@@ -2,7 +2,7 @@
 This week, we look at geometric operations and spatial queries --- the fundamental building blocks when it comes to spatial data processing and analysis. This includes operations such as calculating the distances separating one or more spatial objects, running a **buffer** analysis, and conducting **point-in-polygon** calculations.
 
 ## Lecture slides {#slides-w06}
-The slides for this week's lecture can be downloaded here: [\[Link\]](%7B%7B%3C%20var%20slides.week06%20%3E%7D%7D)
+The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var slides.week06 >}})
 
 ## Reading list {#reading-w06}
 #### Essential readings
@@ -17,7 +17,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]](%7B%7B%3C%
 ## Bike theft in London {#bike-theft-w06}
 This week, we will be investigating bike theft in London in 2021 and look to confirm the hypothesis *that bike theft primarily occurs near tube and train stations*. We will be investigating its distribution across London using the point data provided within our crime dataset. We will then compare this distribution to the location of train and tube stations using specific geometric operations and spatial queries that can compare the geometry of two (or more) datasets. We will also learn how to download data from OpenStreetMap as well as use an interactive version of `tmap` to explore the distribution of the locations of individual bike theft against the locations of these stations.
 
-### Spatial analysis set up {#setup-w05}
+### Spatial analysis set up {#setup-w06}
 Open a new script within your GEOG0030 project and save this script as `wk6-bike-theft-analysis.r`. At the top of your script, add the following metadata:
 
 ```{r}
@@ -333,7 +333,8 @@ In addition to this key-value pair, we also need to obtain the **bounding box** 
 #| label: 06-osm-data-query
 #| classes: styled-output
 #| echo: True
-#| eval: True
+#| eval: False
+#| cache: False
 #| filename: "R code"
 # extract latitude, longitude bounding box from London outline
 p_bbox <- st_bbox(st_transform(london_outline, 4326))
@@ -344,6 +345,15 @@ london_stations_osm <- opq(bbox = p_bbox) |>
   add_osm_feature(key = "public_transport", value = "station") |>
   # to sf
   osmdata_sf()
+```
+
+```{r}
+#| label: 06-load-osm-bg
+#| echo: False
+#| eval: True
+#| warning: False
+# load osm
+load('data/zip/london_stations_osm.RData')
 ```
 
 ::: callout-warning
