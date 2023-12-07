@@ -55,6 +55,10 @@ for htmlf in html_files:
     html_content = html_content.replace('<span class="menu-text">Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</span>', \
                                         '<span class="menu-text">6 Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</span>')
 
+    # update TOC chapter 7
+    html_content = html_content.replace('<span class="menu-text">Analysing Spatial Patterns II: Spatial Autocorrelation</span>', \
+                                        '<span class="menu-text">7 Analysing Spatial Patterns II: Spatial Autocorrelation</span>')
+
     # update TOC chapter 11
     html_content = html_content.replace('<span class="menu-text">Data Sources</span>', \
                                         '<span class="menu-text">11 Data Sources</span>')
