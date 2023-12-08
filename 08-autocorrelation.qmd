@@ -25,7 +25,7 @@ The Wards and electoral divisions in the United Kingdom are electoral districts 
 Open a new script within your GEOG0030 project and save this script as `wk8-population-analysis.r`. At the top of your script, add the following metadata:
 
 ```{r}
-#| label: 06-script-title
+#| label: 08-script-title
 #| classes: styled-output
 #| echo: True
 #| eval: True
@@ -38,7 +38,7 @@ Open a new script within your GEOG0030 project and save this script as `wk8-popu
 Now let us add all of the libraries we will be using today to the top of our script:
 
 ```{r}
-#| label: 06-load-libraries
+#| label: 08-load-libraries
 #| classes: styled-output
 #| echo: True
 #| eval: False
@@ -52,7 +52,7 @@ library(spdep)
 ```
 
 ```{r}
-#| label: 06-load-libraries-bg
+#| label: 08-load-libraries-bg
 #| echo: False
 #| eval: True
 #| warning: False

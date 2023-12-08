@@ -56,6 +56,9 @@ website:
           - 07-point-pattern.qmd
           - 08-autocorrelation.qmd
       - section: "Advanced Spatial Analysis"
+        contents:
+          - 09-raster.qmd
+          - 10-network.qmd
       - section: "Additional Resources"
         contents:
           - 11-data.qmd

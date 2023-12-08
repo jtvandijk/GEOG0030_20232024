@@ -62,7 +62,13 @@ for htmlf in html_files:
     # update TOC chapter 8
     html_content = html_content.replace('<span class="menu-text">Analysing Spatial Patterns III: Spatial Autocorrelation</span>', \
                                         '<span class="menu-text">8 Analysing Spatial Patterns III: Spatial Autocorrelation</span>')
-
+    
+    # update TOC chapter 9
+    html_content = html_content.replace('<span class="menu-text">Rasters, Zonal Statistics, and Interpolation</span>', \
+                                        '<span class="menu-text">9 Rasters, Zonal Statistics, and Interpolation</span>')
+    # update TOC chapter 10
+    html_content = html_content.replace('<span class="menu-text">Transport Network Analysis</span>', \
+                                        '<span class="menu-text">10 Transport Network Analysis</span>')
     # update TOC chapter 11
     html_content = html_content.replace('<span class="menu-text">Data Sources</span>', \
                                         '<span class="menu-text">11 Data Sources</span>')
