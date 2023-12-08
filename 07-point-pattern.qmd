@@ -510,7 +510,7 @@ plot(bike_theft_ann ~ seq(1:100))
 
 In our case, the plot does not reveal anything interesting in particular except that higher order points seem to be slightly closer than lower order points. Overall, the ANN is a good approach to conduct statistical tests on large datasets (e.g. if we were to compare the result to a theorethical distribution), but visually it does not tell us a huge amount about our dataset!
 
-## DBSCAN
+### DBSCAN
 The techniques above are useful exploratory techniques for telling us if we have spatial clusters present in our point data, but they are not able to tell us precisely *where* in our area of interest the clusters are occurring. One popular technique for discovering precise clusters in space is an algorithm known as **DBSCAN**, an algorithm that incorporates both distance and density. 
 
 ::: {.callout-tip}
@@ -624,10 +624,10 @@ We now have a polygon spatial dataframe, `bike_theft_clusters`, that show the ge
 #| message: False
 #| filename: "R code"
 # change tmap mode to interactive 
-tmap_mode("view")
+tmap_mode("plot")
 
 # add London outline
-tm_shape(outline_london) + tm_borders() +
+tm_shape(outline_london) + tm_polygons() +
   # add bike theft clusters
   tm_shape(bike_theft_clusters) + tm_borders() +
   # add basemap

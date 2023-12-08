@@ -461,7 +461,7 @@ What we can see is that it looks like our OSM data actual does a much better job
 #| message: False
 #| filename: "R code"
 # change tmap mode to interactive 
-tmap_mode("view")
+tmap_mode("plot")
 
 # add London outline
 tm_shape(london_outline) + tm_borders() +
