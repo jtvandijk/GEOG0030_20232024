@@ -614,7 +614,7 @@ for (cluster_index in seq(0, max(bike_theft_london$dbcluster))) {
 bike_theft_clusters <- st_sfc(geometry_list, crs = 27700)
 ```
 
-We now have a polygon spatial dataframe, `bike_theft_clusters`, that show the general location and distribution of bike theft clusters in London. Let's put them on an interactive map:
+We now have a polygon spatial dataframe, `bike_theft_clusters`, that show the general location and distribution of bike theft clusters in London. Let's put them on a map:
 
 ```{r tidy="styler"}
 #| label: fig-07-map-clusters-interactive
@@ -623,26 +623,12 @@ We now have a polygon spatial dataframe, `bike_theft_clusters`, that show the ge
 #| eval: True
 #| message: False
 #| filename: "R code"
-# change tmap mode to interactive 
-tmap_mode("plot")
-
 # add London outline
 tm_shape(outline_london) + tm_polygons() +
   # add bike theft clusters
   tm_shape(bike_theft_clusters) + tm_borders() +
   # add basemap
   tm_basemap(c(StreetMap = "OpenStreetMap"))
-```
-
-```{r}
-#| label: 07-tmap-settings
-#| classes: styled-output
-#| echo: False
-#| warning: False
-#| message: False
-#| eval: True
-# ensure tmap is set to plot
-tmap_mode("plot")
 ```
 
 ## Assignment {#assignment-w07}
