@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>GEOG0030</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./07-point-pattern.html" rel="next">
+<link href="./05-spatial.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-operations.html">Core Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./06-operations.html">Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./assets/logo.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/jtvandijk/GEOG0030" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+    <div id="quarto-search" class="quarto-navigation-tool px-1" title="Search"></div>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Module overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Foundational Concepts</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Geocomputation: An Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-GIScience.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GIScience and GIS software</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-cartography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cartography and Visualisation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programming for Data Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programming for Spatial Analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Core Spatial Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-operations.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-point-pattern.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysing Spatial Patterns II: Point Pattern Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-autocorrelation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Analysing Spatial Patterns III: Spatial Autocorrelation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Advanced Spatial Analysis</span></span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Additional Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Sources</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#analysing-spatial-patterns-i-geometric-operations-and-spatial-queries" id="toc-analysing-spatial-patterns-i-geometric-operations-and-spatial-queries" class="nav-link active" data-scroll-target="#analysing-spatial-patterns-i-geometric-operations-and-spatial-queries"><span class="header-section-number">1</span> Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</a>
+  <ul class="collapse">
+  <li><a href="#slides-w06" id="toc-slides-w06" class="nav-link" data-scroll-target="#slides-w06"><span class="header-section-number">1.1</span> Lecture slides</a></li>
+  <li><a href="#reading-w06" id="toc-reading-w06" class="nav-link" data-scroll-target="#reading-w06"><span class="header-section-number">1.2</span> Reading list</a></li>
+  <li><a href="#bike-theft-w06" id="toc-bike-theft-w06" class="nav-link" data-scroll-target="#bike-theft-w06"><span class="header-section-number">1.3</span> Bike theft in London I</a>
+  <ul class="collapse">
+  <li><a href="#setup-w06" id="toc-setup-w06" class="nav-link" data-scroll-target="#setup-w06"><span class="header-section-number">1.3.1</span> Getting started</a></li>
+  <li><a href="#data-preparation-w06" id="toc-data-preparation-w06" class="nav-link" data-scroll-target="#data-preparation-w06"><span class="header-section-number">1.3.2</span> Data preparation</a></li>
+  <li><a href="#openstreetmap" id="toc-openstreetmap" class="nav-link" data-scroll-target="#openstreetmap"><span class="header-section-number">1.3.3</span> OpenStreetMap</a></li>
+  <li><a href="#spatial-operations-i" id="toc-spatial-operations-i" class="nav-link" data-scroll-target="#spatial-operations-i"><span class="header-section-number">1.3.4</span> Spatial operations I</a></li>
+  <li><a href="#spatial-operations-ii" id="toc-spatial-operations-ii" class="nav-link" data-scroll-target="#spatial-operations-ii"><span class="header-section-number">1.3.5</span> Spatial operations II</a></li>
+  </ul></li>
+  <li><a href="#assignment-w06" id="toc-assignment-w06" class="nav-link" data-scroll-target="#assignment-w06"><span class="header-section-number">1.4</span> Assignment</a></li>
+  <li><a href="#wm-w06" id="toc-wm-w06" class="nav-link" data-scroll-target="#wm-w06"><span class="header-section-number">1.5</span> Want more? [Optional]</a>
+  <ul class="collapse">
+  <li><a href="#reproducible-research" id="toc-reproducible-research" class="nav-link" data-scroll-target="#reproducible-research">Reproducible research</a></li>
+  </ul></li>
+  <li><a href="#byl-w06" id="toc-byl-w06" class="nav-link" data-scroll-target="#byl-w06"><span class="header-section-number">1.6</span> Before you leave</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="analysing-spatial-patterns-i-geometric-operations-and-spatial-queries" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</h1>
+<p>This week, we look at geometric operations and spatial queries — the fundamental building blocks when it comes to spatial data processing and analysis. This includes operations such as calculating the distances separating one or more spatial objects, running a <strong>buffer</strong> analysis, and conducting <strong>point-in-polygon</strong> calculations.</p>
+<section id="slides-w06" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="slides-w06"><span class="header-section-number">1.1</span> Lecture slides</h2>
+<p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w06-geo.pdf">[Link]</a></p>
+</section>
+<section id="reading-w06" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="reading-w06"><span class="header-section-number">1.2</span> Reading list</h2>
+<section id="essential-readings" class="level4">
+<h4 class="anchored" data-anchor-id="essential-readings">Essential readings</h4>
+<ul>
+<li>Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, <strong>Chapter 4</strong>: <em>Spatial data operations</em>. <a href="https://geocompr.robinlovelace.net/spatial-operations.html">[Link]</a></li>
+<li>Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, <strong>Chapter 5</strong>: <em>Geometry operations</em>. <a href="https://geocompr.robinlovelace.net/geometry-operations.html">[Link]</a></li>
+<li>Lovelace, R., Nowosad, J. and Muenchow, J. 2021. Geocomputation with R, <strong>Chapter 6</strong>: <em>Reprojecting geographic data</em>. <a href="https://geocompr.robinlovelace.net/reproj-geo-data.html">[Link]</a></li>
+</ul>
+</section>
+<section id="suggested-readings" class="level4">
+<h4 class="anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
+<ul>
+<li>Houlden, V. <em>et al.</em> 2019. A spatial analysis of proximate greenspace and mental wellbeing in London. <em>Applied Geography</em> 109: 102036. <a href="https://doi.org/10.1016/j.apgeog.2019.102036">[Link]</a></li>
+<li>Malleson, N. and Andresen, M. 2016. Exploring the impact of ambient population measures on London crime hotspots. <em>Journal of Criminal Justice</em> 46: 52-63. <a href="https://doi.org/10.1016/j.jcrimjus.2016.03.002">[Link]</a></li>
+</ul>
+</section>
+</section>
+<section id="bike-theft-w06" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="bike-theft-w06"><span class="header-section-number">1.3</span> Bike theft in London I</h2>
+<p>This week, we will be investigating bike theft in London in 2021 and look to confirm the hypothesis <em>that bike theft primarily occurs near tube and train stations</em>. We will be investigating its distribution across London using the point data provided within our crime dataset. We will then compare this distribution to the location of train and tube stations using specific geometric operations and spatial queries that can compare the geometry of two (or more) datasets. We will also learn how to download data from OpenStreetMap as well as use an interactive version of <code>tmap</code> to explore the distribution of the locations of individual bike theft against the locations of these stations.</p>
+<section id="setup-w06" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="setup-w06"><span class="header-section-number">1.3.1</span> Getting started</h3>
+<p>Open a new script within your GEOG0030 project and save this script as <code>wk6-bike-theft-analysis.r</code>. At the top of your script, add the following metadata:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-script-title_66b34141c18ef995b916b162cb963e20">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysing bike theft in London using geometric analysis</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: January 2024</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now let us add all of the libraries we will be using today to the top of our script:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-load-libraries_dea77133cb9e2f298d7b101f15422dda">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-tmap-settings_bc68f466e3e5d21205d529629112a172">
+
+</div>
+<p>This week, we will start off using three datasets: the London MSOA boundaries for 2021, recorded crime in London for 2021 from <a href="https://data.police.uk/">data.police.uk</a>, and the locations of the train and tube stations from <a href="https://tfl.gov.uk/">Transport for London</a>. We already downloaded the crime data for 2021 during <a href="04-statistics.html#crime-data">Week 4’s computer tutorial</a> and we also saved the 2021 London MSOA boundaries <a href="05-spatial.html#spatial-analysis-set-up">last week</a>, so we only need to download a dataset containing train and tube stations in London.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Train and tube stations in London</td>
+<td style="text-align: left;"><code>kml</code></td>
+<td style="text-align: left;"><a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/tfl-stations.zip">Download</a></td>
+</tr>
+</tbody>
+</table>
+<p>Once downloaded, move your <code>tfl_stations.kml</code> download to your <code>raw</code> data folder and create a new <code>transport</code> folder to contain it. After this, let’s load our London MSOA file:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-load-shp_e7981bd49270ad4793b1cbe9f00442be">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in our MSOA GeoPackage</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>msoa_london <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/raw/boundaries/MSOA2021_London.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `MSOA2021_London' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/raw/boundaries/MSOA2021_London.gpkg' 
+  using driver `GPKG'
+Simple feature collection with 1002 features and 4 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid</code></pre>
+</div>
+</div>
+<p>Check the <strong>CRS</strong> of our <code>msoa_london</code> spatial dataframe:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-crs-msoapop_78cca707c2ed2dc9e0a8b2592e75bc8e">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect CRS</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: OSGB36 / British National Grid 
+  wkt:
+PROJCRS["OSGB36 / British National Grid",
+    BASEGEOGCRS["OSGB36",
+        DATUM["Ordnance Survey of Great Britain 1936",
+            ELLIPSOID["Airy 1830",6377563.396,299.3249646,
+                LENGTHUNIT["metre",1]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["degree",0.0174532925199433]],
+        ID["EPSG",4277]],
+    CONVERSION["British National Grid",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",49,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",-2,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",0.9996012717,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",400000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",-100000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1]],
+    USAGE[
+        SCOPE["Engineering survey, topographic mapping."],
+        AREA["United Kingdom (UK) - offshore to boundary of UKCS within 49°45'N to 61°N and 9°W to 2°E; onshore Great Britain (England, Wales and Scotland). Isle of Man onshore."],
+        BBOX[49.75,-9,61.01,2.01]],
+    ID["EPSG",27700]]</code></pre>
+</div>
+</div>
+<p>Of course it should be of no surprise that our <code>msoa_lon</code> spatial dataframe is projected in <strong>OSGB36 / British National Grid</strong>, however, it is always good to check and avoid problems down the line. Let’s go ahead and read in our <code>tfl_stations</code> dataset as well:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-load-stations_bf29c4e3fa28285032c3c0517d9996aa">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load stations</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>london_stations <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">"data/raw/transport/tfl_stations.kml"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>This dataset is provided as a <code>kml</code> file, which stands for <strong>Keyhole Markup Language (KML)</strong>. KML was originally created as a file format used to display geographic data in Google Earth. So we definitely need to check what CRS this dataset is in and decide whether we need to reproject the data.</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-crs-stations_39e9ef2911ef4f97de11627c0218ac68">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect CRS</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(london_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: WGS 84 
+  wkt:
+GEOGCRS["WGS 84",
+    DATUM["World Geodetic System 1984",
+        ELLIPSOID["WGS 84",6378137,298.257223563,
+            LENGTHUNIT["metre",1]]],
+    PRIMEM["Greenwich",0,
+        ANGLEUNIT["degree",0.0174532925199433]],
+    CS[ellipsoidal,2],
+        AXIS["geodetic latitude (Lat)",north,
+            ORDER[1],
+            ANGLEUNIT["degree",0.0174532925199433]],
+        AXIS["geodetic longitude (Lon)",east,
+            ORDER[2],
+            ANGLEUNIT["degree",0.0174532925199433]],
+    ID["EPSG",4326]]</code></pre>
+</div>
+</div>
+<p>The result informs us that we are going to need to reproject our data in order to use this dataframe with our <code>msoa_london</code> spatial dataframe. Luckily in R and the <code>sf</code> library, this reprojection is a relatively straightforward with the <code>st_transform()</code> function. The function is very simple to use: you only need to provide the function with the input dataset that you want to reproject and the <a href="https://epsg.io/">EPSG code</a> of the target CRS.</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-crs-transform_9e8f6d4647758153caf6e9ee861c16ae">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reproject our data from WGS84 to BNG</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>london_stations <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(london_stations, <span class="dv">27700</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We can double-check whether our new variable is in the correct CRS by using the <code>st_crs()</code> function again:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-crs-stations-after-trans_d46641a7aad3af981f6a8cea00ed6943">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect CRS</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(london_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coordinate Reference System:
+  User input: EPSG:27700 
+  wkt:
+PROJCRS["OSGB36 / British National Grid",
+    BASEGEOGCRS["OSGB36",
+        DATUM["Ordnance Survey of Great Britain 1936",
+            ELLIPSOID["Airy 1830",6377563.396,299.3249646,
+                LENGTHUNIT["metre",1]]],
+        PRIMEM["Greenwich",0,
+            ANGLEUNIT["degree",0.0174532925199433]],
+        ID["EPSG",4277]],
+    CONVERSION["British National Grid",
+        METHOD["Transverse Mercator",
+            ID["EPSG",9807]],
+        PARAMETER["Latitude of natural origin",49,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8801]],
+        PARAMETER["Longitude of natural origin",-2,
+            ANGLEUNIT["degree",0.0174532925199433],
+            ID["EPSG",8802]],
+        PARAMETER["Scale factor at natural origin",0.9996012717,
+            SCALEUNIT["unity",1],
+            ID["EPSG",8805]],
+        PARAMETER["False easting",400000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8806]],
+        PARAMETER["False northing",-100000,
+            LENGTHUNIT["metre",1],
+            ID["EPSG",8807]]],
+    CS[Cartesian,2],
+        AXIS["(E)",east,
+            ORDER[1],
+            LENGTHUNIT["metre",1]],
+        AXIS["(N)",north,
+            ORDER[2],
+            LENGTHUNIT["metre",1]],
+    USAGE[
+        SCOPE["Engineering survey, topographic mapping."],
+        AREA["United Kingdom (UK) - offshore to boundary of UKCS within 49°45'N to 61°N and 9°W to 2°E; onshore Great Britain (England, Wales and Scotland). Isle of Man onshore."],
+        BBOX[49.75,-9,61.01,2.01]],
+    ID["EPSG",27700]]</code></pre>
+</div>
+</div>
+<p>You should see that our <code>london_stations</code> spatial dataframe is now in <strong>OSGB36 / British National Grid</strong>. We are now ready to load our final dataset - our collection of <code>csv's</code> that contain the crime data for London for 2021. We can do this by running the code from <a href="04-statistics.html#crime-data">Week 4’s computer tutorial</a>:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-combine-csv_65d375fa06290a7f84c25c6286675bfb">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a list of all csv files in the crime folder</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>all_crime_df <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/raw/crime/all-crime/"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># apply the read_csv() function on each of these files</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(read_csv) <span class="sc">|&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># combine ('bind') them all together into one</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now we have loaded all crime data again, we want to do three things:</p>
+<ol type="1">
+<li>Extract only those crimes that are bicycle thefts.</li>
+<li>Convert our <code>csv</code> into a spatial dataframe that shows the locations of our crimes, using the recorded latitude and longitudes.</li>
+<li>Reproject the latitudes and longitudes from <strong>WGS84: EPSG 4326</strong> to <strong>British National Grid: EPSG 27700</strong>.</li>
+</ol>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-bike-theft_fa344c211ee674680d1be125f5d07353">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter all crimes by bicycle thefts only</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>bike_theft <span class="ot">&lt;-</span> all_crime_df <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filter according to crime type, filter out crimes with no location data</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Crime type</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Bicycle theft"</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(Longitude) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(Latitude)) <span class="sc">|&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># only keep the longitude and latitude columns</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Longitude, Latitude) <span class="sc">|&gt;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># transform into a point spatial dataframe, set CRS to WGS84</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Longitude"</span>, <span class="st">"Latitude"</span>), <span class="at">crs =</span> <span class="dv">4236</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># transform into BNG</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">27700</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Let’s go ahead and save the <code>bike_theft</code> spatial layer as a <code>GeoPackage</code>:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-bike-theft-to-gpkg_db7216158491b98a32b04ec85c87b8b0">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write to GeoPackage</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(bike_theft, <span class="st">'data/data/LondonBikeTheft2021.gpkg'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We now have our three datasets loaded, it is time for a little data inspection. We can see just from our <strong>Environment</strong> window that in total, we have <strong>302</strong> train and tube stations and <strong>20,768</strong> crimes to look at in our analysis. We can double-check the attributes of our newly created spatial dataframes to see what data we have to work with. You can either do this manually by clicking on the variable, or using commands such as <code>head()</code>, <code>summary()</code> and <code>names()</code> to get an understanding of our dataframe structures and the fieldnames present.</p>
+<p>For our bicycle theft data, we actually only have a geometry column because this is all that we extracted from our collection of crime <code>csv</code> files. For our <code>london_stations</code> spatial dataframe, we have a little more information, including the name of the station, its address, and as its geometry.</p>
+<p>Now, let’s map all three layers of data onto a single map using <code>tmap</code>:</p>
+<div class="cell" data-hash="06-operations_cache/html/fig-map-all-input_84e08d0a9f0a43516fd381e1f7823a1f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot our London MSOAs</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa_london) <span class="sc">+</span> <span class="fu">tm_fill</span>() <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># then add bike crime</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(bike_theft) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># then add stations</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(london_stations) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-map-all-input" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-operations_files/figure-html/fig-map-all-input-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Quick thematic map.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Let’s think about the distribution of our data: we can already see that our bike theft is clearly highly concentrated in the centre of London although we can certainly see some clusters in other areas. Let’s go ahead and temporarily remove the bike theft data from our map for now to see where our tube and train stations are located.</p>
+<p>To remove the bike data, simply comment out the (<code>#</code>) the relevant line of code:</p>
+<div class="cell" data-hash="06-operations_cache/html/fig-map-all-input-no-bike_3fc267c52491e8a3a133c39c999684e4">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot our London MSOAs</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa_london) <span class="sc">+</span> <span class="fu">tm_fill</span>() <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># then add bike crime</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># tm_shape(bike_theft) + tm_dots(col = "blue") +</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># then addstations</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(london_stations) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-map-all-input-no-bike" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-operations_files/figure-html/fig-map-all-input-no-bike-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Quick thematic map.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can see our train and tube stations are only present in primarily the north of London and not really present in the south. This is not quite right and in fact it seems that our dataset only contains those train stations used by Transport for London within the underground network rather than all the stations in London. We will need to fix this before conducting our full analysis. A second issue with our dataset is that the <code>london_stations</code> spatial dataframe extends beyond our London boundaries. The same applies to our <code>bike_theft</code> spatial dataframe.</p>
+</section>
+<section id="data-preparation-w06" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="data-preparation-w06"><span class="header-section-number">1.3.2</span> Data preparation</h3>
+<p>When we want to reduce a dataset to the spatial extent of another, there are two different approaches: a <em>subset</em> or a <em>clip</em>. Each deal with the geometry of the resulting dataset in slightly different ways.</p>
+<ol type="1">
+<li>A <em>subset</em> operation is what is known in GIScience-speak as a <em>select by location query</em>. In this case, our subset will return the full geometry of each observation feature of the input layer that intersects with our second layer. Any geometry that does not intersect with our second layer will be removed from the geometry of our resulting layer.</li>
+<li>A <em>clip</em> works a bit like a cookie-cutter: it will take the geometry of the input layer (i.e.&nbsp;the layer you want to clip), places a ‘cookie-cutter’ layer on top (i.e.&nbsp;the layer you want to clip by) and then returns only the parts of the input layer contained within the cookie-cutter. This will mean that the geometry of our resulting layer will be modified, if it contains observation features that extend further than the ‘cookie-cutter’ extent it will literally ‘cut’ the geometry of our data.</li>
+</ol>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Because we are using point data, we can use either approach because it is not possible to split the geometry of a single point feature. When it comes to polygon and line data, the different approaches are likely to result in different results.</p>
+</div>
+</div>
+</div>
+<p>Each approach is implemented differently in R. To <strong>subset</strong> our data, we only need to use the <code>base</code> R library to selection using <code>[]</code> brackets:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-subset-ldn-bt_631066cfd50fbe6a8338b01379914df8">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subset</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>bike_theft <span class="ot">&lt;-</span> bike_theft[msoa_london, ]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>london_stations <span class="ot">&lt;-</span> london_stations[msoa_london, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>If we want to <strong>clip</strong> our data, we need to use the <code>st_intersection()</code> function from the <code>sf</code> library.</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-clip-ldn-bt_09cad48fdb45cc0616e73bbc1808c3b3">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clip</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>bike_theft <span class="ot">&lt;-</span> bike_theft <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout all
+geometries</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>london_stations <span class="ot">&lt;-</span> london_stations <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout all
+geometries</code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Out of the two, the <strong>subset</strong> approach is the fastest to use as R is simply comparing the geometries rather than also editing the geometries, but which approach you use with future data is always dependent on your data and the output you need.</p>
+</div>
+</div>
+</div>
+<p>Before we go ahead and sort out our <code>london_stations</code> spatial dataframe, we are going to look at how we can <strong>dissolve</strong> our <code>msoa_london</code> spatial dataframe into a single feature. Reducing a spatial dataframe to a single observation is often required when using R and <code>sf</code>’s geometric operations to complete geometric comparisons. In addition, sometimes we simply want to map an outline of an area, such as London, rather than add in the additional spatial complexities of internal boundaries. To achieve just a single observation that represents the <strong>outline geometry</strong> of our dataset, we use the geometric operation <code>st_union()</code>.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>You can also use the <code>st_union()</code> function to combine two spatial datasets into one. This can be used to <strong>merge</strong> data together that are of the same spatial type. E.g. if you have a file that contains the MSOAs pertaining to England and a file that contains the MSOAs pertaining to Wales, you can use <code>st_union</code> to create one file that contains the MSOAs for both countries.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-union-ldn-bt_c56d3bb1c2d772c3464a1e659c08776a">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># union</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>london_outline <span class="ot">&lt;-</span> msoa_london <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_union</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>You should see that our <code>london_outline</code> spatial data frame only has one observation. You can now go ahead and <code>plot()</code> your <code>london_outline</code> spatial dataframe from your console and see what it looks like:</p>
+<div class="cell" data-hash="06-operations_cache/html/fig-06-union-ldn-plot_8ddecff08c8f04316a0a998e7847cdf4">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(london_outline)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-06-union-ldn-plot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-operations_files/figure-html/fig-06-union-ldn-plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Quick plot of the London outline.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="openstreetmap" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="openstreetmap"><span class="header-section-number">1.3.3</span> OpenStreetMap</h3>
+<p>Back to our train and tube stations. We have seen that our current <code>london_stations</code> spatial dataframe does not provide the coverage of train stations in London that we expected. To add in our missing data, we will be using <a href="https://www.openstreetmap.org/#map=6/54.910/-3.432">OpenStreetMap</a>.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>OpenStreetMap (OSM) is a free editable map of the world,although its spatial coverage is still unequal across the world. In addition, as you will find if you use the data, the accuracy and quality of the data can often be quite questionable or simply missing attribute details that we would like to have, e.g.&nbsp;types of roads and their speed limits, to complete specific types of spatial analysis. As a result, do not expect OSM to contain every piece of spatial data that you would want.</p>
+</div>
+</div>
+</div>
+<p>Whilst there are <a href="https://wiki.openstreetmap.org/wiki/Downloading_data">various approaches</a> to downloading data from OpenStreetMap, we will use the <code>osmdata</code> library to directly extract our required OpenStreetMap (OSM) data into a variable. The <code>osmdata</code> library grants access within R to the <a href="https://overpass-turbo.eu">Overpass API</a> that allows us to run queries on OSM data and then import the data as <code>sf</code> object. These queries are at the heart of these data downloads.</p>
+<p>To use the library (and API), we need to know how to write and run a query, which requires identifying the <code>key</code> and <code>value</code> that we need within our query to select the correct data. Essentially every map element (whether a point, line or polygon) in OSM is <em>tagged</em> with different attribute data. In our case, we are looking for train stations, which fall under the key, <code>Public Transport</code>, with a value of <code>station</code> as outlined in their <a href="https://wiki.OpenStreetMap.org/wiki/Key:public_transport">wiki</a>. These <code>keys</code> and <code>values</code> are used in our queries to extract only map elements of that feature type - to find out how a feature is <em>tagged</em> in OSM is simply a case of reading through the OSM documentation and <a href="https://wiki.openstreetmap.org/wiki/Tags">becoming familiar</a> with their <code>keys</code> and <code>values</code>.</p>
+<p>In addition to this key-value pair, we also need to obtain the <strong>bounding box</strong> of where we want our data to be extracted from to limit the search to the specific area of interest. Let’s try to extract elements from OSM that are tagged as <code>public_transport = station</code> from OSM into an <code>osmdata_sf()</code> object:</p>
+<div class="cell styled-output">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract latitude, longitude bounding box from London outline</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>p_bbox <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(<span class="fu">st_transform</span>(london_outline, <span class="dv">4326</span>))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># call OverPassQuery function</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>london_stations_osm <span class="ot">&lt;-</span> <span class="fu">opq</span>(<span class="at">bbox =</span> p_bbox) <span class="sc">|&gt;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add key, values</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_osm_feature</span>(<span class="at">key =</span> <span class="st">"public_transport"</span>, <span class="at">value =</span> <span class="st">"station"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># to sf</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osmdata_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>In some instances the OSM query will return an error, especially when several people from the same location are executing the exact same query at the same time. If that is the case you can download the <code>london_stations_osm</code> object here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/london_stations_osm.RData">[Download]</a>. After downloading, you can copy the file to your working directory and load the object using the <code>load()</code> function.</p>
+</div>
+</div>
+</div>
+<p>When we download OSM data, and extract it as above, our query will return all elements tagged as our key-value pair into our <code>osmdata_sf()</code> OSM data object. This means all elements associated with our tag will be returned: any <strong>points</strong>, <strong>lines</strong> and <strong>polygons</strong>. We might think with our <code>public_transport = station</code> tag, we would only return point data representing our train and tube stations in London. But if we use the <code>summary()</code> function on our <code>london_stations_osm</code> OSM data object, we can see that not only a lot of other data is stored in our OSM data object (including the bounding box we used within our query, plus metadata about our query), but our query has also returned both <strong>points</strong> and <strong>polygons</strong> stored within this OSM data object as individual spatial data frames.</p>
+<p>To extract only the points of our tube and train stations from our <code>london_stations_osm</code> OSM data object, we simply need to extract this from the dataframe and store this under a separate variable.</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/fig-06-osm-station-points_dd7c7889ddf852629d07bebb0b91c111">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract only points</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>london_stations_osm <span class="ot">&lt;-</span> london_stations_osm<span class="sc">$</span>osm_points <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add projection information</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_set_crs</span>(<span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reproject</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">27700</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># clip</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_intersection</span>(london_outline) <span class="sc">|&gt;</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># select relevant attributes |&gt;</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="st">"osm_id"</span>, <span class="st">"name"</span>, <span class="st">"network"</span>, <span class="st">"operator"</span>, <span class="st">"public_transport"</span>, <span class="st">"railway"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout all
+geometries</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(london_stations_osm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-06-osm-station-points" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-operations_files/figure-html/fig-06-osm-station-points-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Points marked as stations extracted from OpenStreetMap.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>With the accuracy of OSM a little questionable, we want to complete some data validation tasks to check its quality and to confirm that it at least contains the data we see in our authoritative <code>london_stations</code> spatial dataframe. The total number of data points also seems rather high. In fact, a quick search online can tell us that there are <a href="https://tfl.gov.uk/corporate/about-tfl/what-we-do">272 tube stations</a> in the London network as well as <a href="https://en.wikipedia.org/wiki/List_of_London_railway_stations">339 train stations</a> in Greater London.</p>
+<p>As we can see in our plot above, not all of our stations appear to be of the same value in our <code>railway</code> field. If we check the field using our <code>count()</code> function, you will see that there are some different values and <code>NAs</code> in our dataset:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-count-stations_472574c3740ba59c734f436017e4f034">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(london_stations_osm, railway)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 7 features and 2 fields
+Geometry type: MULTIPOINT
+Dimension:     XY
+Bounding box:  xmin: 505078.2 ymin: 159027.2 xmax: 556185.7 ymax: 200138.6
+Projected CRS: OSGB36 / British National Grid
+           railway    n                       geometry
+1         entrance    2 MULTIPOINT ((532814.8 16572...
+2 railway_crossing    2 MULTIPOINT ((523304.2 17881...
+3          station  608 MULTIPOINT ((505078.2 17673...
+4             stop   25 MULTIPOINT ((513225.1 18452...
+5  subway_entrance   44 MULTIPOINT ((513239 184507....
+6           switch    9 MULTIPOINT ((523304.3 17879...
+7             &lt;NA&gt; 4304 MULTIPOINT ((505595.9 18418...</code></pre>
+</div>
+</div>
+<p>As we can see, not every feature in our <code>london_stations_osm</code> spatial dataframe is recorded as a <code>station</code> and we have a high number of <code>NAs</code> which are unlikely to represent actual stations. The number of points marked as <code>station</code> in the <code>railway</code> field are most likely the only points in our dataset that represent actual stations. There is still a difference between the official numbers and the OSM extract, but we will go on use this information to clean up the OSM dataset:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-osm-station-clean_85ce9b3ae37bdb7f85c576f9f99152b3">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract train and tube stations</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>london_stations_osm <span class="ot">&lt;-</span> london_stations_osm <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(railway <span class="sc">==</span> <span class="st">"station"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We have now cleaned our <code>london_stations_osm</code> spatial dataframe to remove all those points within our dataset that are not tagged as <code>railway == "station"</code>. Our <code>london_stations</code> spatial dataframe is of course an authoritative dataset from TfL, so we hope that this data is accurate, albeit incomplete, and at very least does not contain stations that do not exist. Therefore, it would be helpful if we could compare our two datasets to one another spatially to double-check that our <code>london_stations_osm</code> spatial dataframe contains all the data found within our <code>london_stations</code> spatial dataframe. We can first look at this by comparing their distributions visually on a map.</p>
+<div class="cell" data-hash="06-operations_cache/html/fig-06-map-stations_1ab45f63236ff6e84da61085439915b4">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add London outline</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(london_outline) <span class="sc">+</span> <span class="fu">tm_fill</span>() <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add OSM station data</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(london_stations_osm) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add TfL station data</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(london_stations) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add north arrow</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">type =</span> <span class="st">"arrow"</span>, <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add scale bar</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>), <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add credits</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="st">"© OpenStreetMap contributors"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-06-map-stations" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-operations_files/figure-html/fig-06-map-stations-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: Map of TfL and OSM stations.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>What we can see is that it looks like our OSM data actual does a much better job at covering all train and tube stations across London but still it is pretty hard to get a sense of comparison from a static map like this whether it contains all of the tube and train stations in our <code>london_stations</code> spatial dataframe. An interactive map would enable us to interrogate the spatial coverage of our two station spatial dataframes further. To do so, we use the <code>tmap_mode()</code> function and change it from its default <code>plot()</code> mode to a <code>view()</code> model:</p>
+<div class="cell" data-hash="06-operations_cache/html/fig-06-map-stations-interactive_e890438ba5c0a5d6e29f263ac05331c0">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change tmap mode to interactive</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"plot"</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add London outline</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(london_outline) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add OSM station data</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(london_stations_osm) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add TfL station data</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(london_stations) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add basemap</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="fu">c</span>(<span class="at">StreetMap =</span> <span class="st">"OpenStreetMap"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-06-map-stations-interactive" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-operations_files/figure-html/fig-06-map-stations-interactive-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: Interactive map of TfL and OSM stations.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Using the interactive map, what we can see is that whilst we <strong>do</strong> have overlap with our datasets, and more importantly, our <code>london_stations_osm</code> spatial dataframe seems to contain all of the data within the <code>london_stations</code> spatial dataframe, although there are definitely differences in their precise location. Now depending on what level of accuracy we are willing to accept with our assumption that our OSM data contains the <strong>same</strong> data as our Transport for London data, we could leave our comparison here and move forward with our analysis. There are, however, several more steps we could complete to validate this assumption. The easiest first step is to simply reverse the order of our datasets to check that each <code>london_stations</code> spatial dataframe point is covered by reversing the drawing order:</p>
+<div class="cell" data-hash="06-operations_cache/html/fig-06-map-stations-interactive-again_b75b150ba87a43aae7faa4c52e842d58">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add London outline</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(london_outline) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add TfL station data</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(london_stations) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add OSM station data</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(london_stations_osm) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add basemap</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="fu">c</span>(<span class="at">StreetMap =</span> <span class="st">"OpenStreetMap"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-06-map-stations-interactive-again" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-operations_files/figure-html/fig-06-map-stations-interactive-again-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: Interactive map of TfL and OSM stations.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="spatial-operations-i" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="spatial-operations-i"><span class="header-section-number">1.3.4</span> Spatial operations I</h3>
+<p>The comparison looks pretty good but still the question is: can we be sure? Using geometric operations and spatial queries, we can look to find if any of our stations in our <code>london_stations</code> spatial dataframe are not present the <code>london_stations_osm</code> spatial dataframe. We can use specific geometric operations and/or queries that let us check whether or not all points within our <code>london_stations</code> spatial dataframe spatially intersect with our <code>london_stations_osm</code> spatial dataframe, i.e.&nbsp;we can complete the opposite of the clip/intersection that we conducted earlier. The issue we face, however is that, as we saw above, our points are slightly offset from one another as the datasets have ultimately given the same stations slightly different locations. This offset means we need to think a little about the geometric operation or spatial query that we want to use.</p>
+<p>We will approach this question in two different ways to highlight the differences between geometric operations and spatial queries:</p>
+<ol type="1">
+<li>We will use <strong>geometric operations</strong> to generate geometries that highlight missing stations from our <code>london_stations</code> spatial dataframe (i.e.&nbsp;ones that are not present in the<code>london_stations_osm</code> spatial dataframe).</li>
+<li>We will use <strong>spatial queries</strong> to provide us with a list of features in our <code>london_stations</code> spatial dataframe that do not meet our spatial requirements (i.e.&nbsp;are not present in the<code>london_stations_osm</code> spatial dataframe).</li>
+</ol>
+<section id="geometric-operations" class="level4">
+<h4 class="anchored" data-anchor-id="geometric-operations">Geometric operations</h4>
+<p>As highlighted above, the offset between our spatial dataframes adds a little complexity to our geometric operations code. To be able to make our direct spatial comparisons across our spatial dataframes, what we first need to do is try to <strong>snap</strong> the geometry of our <code>london_stations</code> spatial dataframe to our <code>london_stations_osm</code> spatial dataframe for points within a given distance threshold. This will mean that any points in the <code>london_stations</code> spatial dataframe that are within a specific distance of the <code>london_stations_osm</code> spatial dataframe will have their geometry changed to that of the <code>london_stations_osm</code> spatial dataframe.</p>
+<div class="cell" data-hash="06-operations_cache/html/fig-snap-snap-snap_feb86dfdb31f452b655a43af79d6972c">
+<div class="cell-output-display">
+<div id="fig-snap-snap-snap" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w06/snap.png" class="img-fluid figure-img" width="512"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: Snapping points to a line. In our case we snap our points to other points. <a href="https://jtvandijk.github.io/GEOG0030/images/w06/snap.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>By placing a threshold on this <strong>snap</strong>, we stop too many points moving about if they are unlikely to be representing the same station (e.g.&nbsp;further than 150m or so away) but this still allows us to create more uniformity across our datasets’ geometries (and tries to reduce the uncertainty we add by completing this process).</p>
+<p>Snap our our <code>london_stations</code> spatial dataframe to our <code>london_stations_osm</code> spatial dataframe for points within a 150m distance threshold:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-snap-data_22012ad56b5478f0618e1591796c5c0b">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># snap points</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>london_stations_snap <span class="ot">&lt;-</span> london_stations <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_snap</span>(london_stations_osm, <span class="dv">150</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now we have out snapped geometry, we can look to compare our two datasets to calculate whether or not our <code>london_stations_osm</code> spatial dataframe is missing any data from our <code>london_stations_snap</code> spatial dataframe. To do so, we will use the <code>st_difference()</code> function which will return us the geometries of those points in our <code>london_stations_snap</code> spatial dataframe that are missing in our our <code>london_stations_osm</code> spatial dataframe. However, to use this function successfully we need to convert our our <code>london_stations_osm</code> spatial dataframe into a single geometry first. To simplify our <code>london_stations_osm</code> spatial dataframe into a single geometry, we simply use the <code>st_union()</code> code we used with our London outline above:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-single-geometry_dff2abc19e36b88492cd8185f820c026">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a single geometry</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>london_stations_osm_compare <span class="ot">&lt;-</span> london_stations_osm <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_union</span>()</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># compare the geometriess</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>missing_stations <span class="ot">&lt;-</span> <span class="fu">st_difference</span>(london_stations_snap, london_stations_osm_compare)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout all
+geometries</code></pre>
+</div>
+</div>
+<p>You should now find that we apparently have <strong>3</strong> missing stations in our <code>london_stations_osm</code> spatial dataframe. We can plot these missing stations against our <code>london_stations_osm</code> spatial dataframe and confirm whether these stations are indeed missing or not.</p>
+<div class="cell" data-hash="06-operations_cache/html/fig-06-compare-after-snap_2945586b3c5db847f3e8d6b02ed7787e">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add OSM station data</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(london_stations_osm) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add missing station data</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(missing_stations) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"green"</span>) <span class="sc">+</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add basemap</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_basemap</span>(<span class="fu">c</span>(<span class="at">StreetMap =</span> <span class="st">"OpenStreetMap"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-06-compare-after-snap" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-operations_files/figure-html/fig-06-compare-after-snap-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;9: Interactive map of TfL and OSM stations after the snapping operation.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>When you investigate the missing stations, you can actually see that our <code>london_stations_osm</code> spatial dataframe dataset is actually more accurate than the TfL locations. All ‘missing’ stations are not in fact missing but simply at a greater offset than 150m. We can safely suggest that we can move forward with only using the <code>london_stations_osm</code> spatial dataframe and do not need to follow through with adding any more data to this dataset. Before we move on, let’s save the data as a <code>GeoPackage</code>.</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-save-trainstations_078ce1fd919c09e8a676f11a37cf3553">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write to GeoPackage</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(london_stations_osm, <span class="st">"data/data/LondonStations.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="spatial-queries" class="level4">
+<h4 class="anchored" data-anchor-id="spatial-queries">Spatial queries</h4>
+<p>Before we go ahead and move forward with our analysis, we will have a look at how we can implement the above quantification using spatial queries instead of geometric operations. Usually, when we want to find out if two spatial dataframes have the same or similar geometries, we would use one of the following queries:</p>
+<ul>
+<li><code>st_equals()</code></li>
+<li><code>st_intersects()</code></li>
+<li><code>st_crosses()</code></li>
+<li><code>st_overlaps()</code></li>
+<li><code>st_touches()</code></li>
+</ul>
+<p>Ultimately which query or spatial relationship conceptualisation you would choose would depend on the qualifications you are trying to place on your dataset. In our case, considering our <code>london_stations</code> spatial dataframe and our <code>london_stations_osm</code> spatial dataframe, we again have to consider <strong>the offset between our datasets</strong>. We could, of course, <em>snap</em> our spatial dataframe as above but wouldn’t it be great if we could skip this step?</p>
+<p>To do so, instead of <em>snapping</em> the <code>london_stations</code> spatial dataframe to the <code>london_stations_osm</code> spatial dataframe, we can use the <code>st_is_within_distance()</code> spatial query to ask whether our points in our <code>london_stations</code> spatial dataframe are within 150m of our <code>london_stations_osm</code> spatial dataframe. This ultimately means we can skip the snapping and <code>st_difference()</code> steps and complete our processing in two simple steps.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>One thing to be aware of when running spatial queries in R and <code>sf</code> is that whichever spatial dataframe is the comparison geometry (i.e.&nbsp;spatial dataframe <code>y</code> in our queries), this spatial dataframe <strong>must</strong> be a <strong>single geometry</strong> (as we saw above in our <code>st_difference()</code> geometric operation). If it is not a single geometry, then the query will be run <code>x</code> number of observations times <code>y</code> spatial dataframe number of observations times, which is not the output that we want. By converting our comparison spatial dataframe to a single geometry, the query is only run for the number of observations in <code>x</code>.</p>
+<p>You should also be aware that any of our spatial queries will return <strong>one</strong> of <strong>two potential outputs</strong>: a <strong>list</strong> detailing the <strong>indexes</strong> of all those observation features in <code>x</code> that do intersect with <code>y</code>, or a <strong>matrix</strong> that contains a <code>TRUE</code> or <code>FALSE</code> statement about this relationship. To define whether we want a list or a matrix output, we set the <code>sparse</code> parameter within our query to <code>TRUE</code> or <code>FALSE</code> respectively.</p>
+</div>
+</div>
+</div>
+<p>Query whether the points in our <code>london_stations</code> spatial dataframe are within 150m of our <code>london_stations_osm</code> spatial dataframe:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-missing-spatial-query_7b941be1da5f89a61936cfc92a3159e8">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a single geometry</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>london_stations_osm_compare <span class="ot">&lt;-</span> london_stations_osm <span class="sc">|&gt;</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_union</span>()</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co"># compare the two point geometries</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>london_stations<span class="sc">$</span>in_osm_data <span class="ot">&lt;-</span> london_stations <span class="sc">|&gt;</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_is_within_distance</span>(london_stations_osm_compare, <span class="at">dist =</span> <span class="dv">150</span>, <span class="at">sparse =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We can go ahead and <code>count()</code> the results of our query.</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-count-them-nodes_ae8313a35112509e8379074ad7521de6">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(london_stations, in_osm_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 2 features and 2 fields
+Geometry type: MULTIPOINT
+Dimension:     XY
+Bounding box:  xmin: 505625.9 ymin: 168579.9 xmax: 556144.8 ymax: 196387.1
+Projected CRS: OSGB36 / British National Grid
+# A tibble: 2 × 3
+  in_osm_data[,1]     n                                                 geometry
+* &lt;lgl&gt;           &lt;int&gt;                                         &lt;MULTIPOINT [m]&gt;
+1 FALSE               3 ((533644.3 188926.1), (537592.5 179814.9), (538301.6 17…
+2 TRUE              283 ((505625.9 184164.2), (507565.2 185008.3), (507584.9 17…</code></pre>
+</div>
+</div>
+<p>Great - we can see we have <strong>3</strong> stations missing (<code>FALSE</code> observations), just like we had in our geometric operations approach. Now we have done our checks and we know that we can move forward with using our tube and train station file, we should save a copy for usage at a later stage. Save your <code>london_stations_osm</code> spatial dataframe under the <code>transport</code> folder in your <code>raw</code> directory as a shapefile:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-write-to-file_b62260b36c22a042e0ce0a5486032178">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># write to GeoPackage</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_write</span>(london_stations_osm, <span class="st">"data/raw/transport/osm_stations.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="spatial-operations-ii" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="spatial-operations-ii"><span class="header-section-number">1.3.5</span> Spatial operations II</h3>
+<p>We now have our London bike theft and train stations ready for analysis and we just need to complete one last step of processing with this dataset to find out <em>whether or not bike theft occurs more often near to a train station</em>. As above, we can use both geometric operations or spatial queries to complete this analysis.</p>
+<section id="geometric-operations-1" class="level4">
+<h4 class="anchored" data-anchor-id="geometric-operations-1">Geometric operations</h4>
+<p>Our first approach using geometric operations will involve the creation of a <strong>buffer</strong> around each train station to then identify which bike thefts occur within 400m of a train or tube station.When it comes to buffers, we need to consider two main things: what distance will we use (and are we in the right CRS to use a buffer) and whether we want individual buffers or a single buffer.</p>
+<div class="cell" data-hash="06-operations_cache/html/fig-buffer-buffer_b19e2d6f7fb04f1fadb46967913bece1">
+<div class="cell-output-display">
+<div id="fig-buffer-buffer" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w06/buffer.png" class="img-fluid figure-img" width="415"></p>
+<figcaption class="figure-caption">Figure&nbsp;10: A single versus multiple buffer. The single buffer represents a dissolved version of the multiple buffer option. <a href="https://jtvandijk.github.io/GEOG0030/images/w06/buffer.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In terms of CRS, we want to make sure we use a CRS that defines its measurement units in metres. If our CRS does not use metres as its measurement unit, it might be in a base unit of an Arc Degree or something else that creates difficulties when converting between a required metre distance and the measurement unit of that CRS. In our case, we are using British National Grid and, luckily for us, the units of the CRS is metres, so we do not need to worry about this.</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-buffer-stations_d716d45431413ab8e18e136d636c3495">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a 400m buffer</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>station_400m_buffer <span class="ot">&lt;-</span> london_stations_osm <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_buffer</span>(<span class="at">dist =</span> <span class="dv">400</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_union</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>You can then go ahead and plot our buffer to see the results, entering <code>plot(station_400m_buffer)</code> within the console:</p>
+<div class="cell" data-hash="06-operations_cache/html/fig-06-quick-buffer-plot_31e84c7364c61367d4048ad92107dfb0">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(station_400m_buffer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-06-quick-buffer-plot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-operations_files/figure-html/fig-06-quick-buffer-plot-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;11: Quick plot of the stations with their 400m buffers</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>To find out which bike thefts have occurred within 400m of a station, we will use the <code>st_intersects()</code> function.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>One thing to note is that there is a difference between <code>st_intersects()</code> and the <code>st_intersections()</code> function we have been used so far. Unlike the <code>st_intersections()</code> function which creates a ‘clip’ of our dataset, i.e.&nbsp;produces a new spatial dataframe containing the clipped geometry, the <code>st_intersects()</code> function simply identifies whether “x and y geometry share any space”. As explained above, as with all spatial queries, the <code>st_intersects()</code> function can produce two different outputs: either a list detailing the <strong>indexes</strong> of all those observation features in <code>x</code> that do intersect with <code>y</code> or a matrix that contains a <code>TRUE</code> or <code>FALSE</code> statement about this relationship. As with our previous spatial query, we will continue to use the matrix approach: this means for every single bike theft in London, we will know whether or not it occurred within our chosen distance of a train station. We can then join this as a new column to our <code>bike_theft</code> spatial dataframe.</p>
+</div>
+</div>
+</div>
+<p>To detect which bike thefts occur within 400m of a train or tube station, we can do:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-intersect-test_aa91e0e9c3238732b319e64ad2a35b37">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># intersect buffers with thefts</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>bike_theft<span class="sc">$</span>d400 <span class="ot">&lt;-</span> bike_theft <span class="sc">|&gt;</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersects</span>(station_400m_buffer, <span class="at">sparse =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We could go ahead and recode this to create a <code>1</code> or <code>0</code>, or <code>YES</code> or <code>NO</code> after processing, but for now we will leave it as <code>TRUE</code> or <code>FALSE</code>. We can go ahead and now visualise our <code>bike_theft</code> based on this column, to see those occurring near to a train station:</p>
+<div class="cell" data-hash="06-operations_cache/html/fig-06-intersect-map_d3667082ffc4d5c3c471524a98263caa">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set tmap back to plot</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"plot"</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add London outline</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(london_outline) <span class="sc">+</span> <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add bik theft</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(bike_theft) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"d400"</span>, <span class="at">palette =</span> <span class="st">"BuGn"</span>) <span class="sc">+</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add train stations</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(london_stations_osm) <span class="sc">+</span> <span class="fu">tm_dots</span>(<span class="at">palette =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add credits</span></span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="st">"© OpenStreetMap contributors"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-06-intersect-map" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="06-operations_files/figure-html/fig-06-intersect-map-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;12: Map of bike thefts in the vicinity of stations.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>It should be of no surprise that visually we can of course see some defined clusters of our points around the various train stations. We can then utilise this resulting dataset to calculate the percentage of bike thefts have occurred at this distance, but first we will look at the spatial query approach to obtaining the same result.</p>
+</section>
+<section id="spatial-queries-1" class="level4">
+<h4 class="anchored" data-anchor-id="spatial-queries-1">Spatial queries</h4>
+<p>Like earlier, we can use the <code>st_is_within_distance()</code> function to identify those bike thefts that fall within 400m of a tube or train station in London.</p>
+<p>We will again need to use the <strong>single geometry</strong> version of our <code>london_stations_osm</code> spatial dataframe for this comparison with <code>sparse = FALSE</code> to create a matrix that we assign to our <code>bike_theft</code> spatial dataframe as a new column:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-distance-spatial-query_b7c91712f653ea1c89ba987c5f06343f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compare the two point geometries</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>bike_theft<span class="sc">$</span>d400_sq <span class="ot">&lt;-</span> bike_theft <span class="sc">|&gt;</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_is_within_distance</span>(london_stations_osm_compare, <span class="at">dist =</span> <span class="dv">400</span>, <span class="at">sparse =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>We can <code>count</code> or map the outputs of our two different approaches to check that we have the same output. If you were to do this you will see that we have achieved the exact same output with fewer lines of code and, as a result, quicker processing. However, unlike with the geometric operations, we do not have a buffer to visualise this distance around a train station, which we might want to do, for example, for maps in a report or presentation. Once again, it will be up to you to determine which approach you prefer to use. Some people prefer using the more visual techniques of <strong>geometric operations</strong>, whereas others might find <strong>spatial queries</strong> to answer the same questions.</p>
+</section>
+<section id="theft-at-train-and-tube-locations" class="level4">
+<h4 class="anchored" data-anchor-id="theft-at-train-and-tube-locations">Theft at train and tube locations?</h4>
+<p>Now we have for each bike theft in our <code>bike_theft</code> spatial dataframe an attribute that contains information about whether the theft occurred within 400m of a train or tube station or not. We can use the <code>count()</code> function to find out just how many thefts fall in each of these categories.</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-intersect-count_e0eef6c675e028df8603f24fcc11725f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count thefts within 400m of a station</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">count</span>(bike_theft, d400_sq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 2 features and 2 fields
+Geometry type: MULTIPOINT
+Dimension:     XY
+Bounding box:  xmin: 504839.3 ymin: 158502.4 xmax: 557575.6 ymax: 199969.7
+Projected CRS: OSGB36 / British National Grid
+# A tibble: 2 × 3
+  d400_sq[,1]     n                                                     geometry
+* &lt;lgl&gt;       &lt;int&gt;                                             &lt;MULTIPOINT [m]&gt;
+1 FALSE        9896 ((504937.2 184142.4), (505034.2 182358.6), (505048.2 184104…
+2 TRUE        10633 ((504839.3 175647.3), (504861.2 175885.4), (505339.2 184226…</code></pre>
+</div>
+</div>
+<p>Almost 50 per cent of bike thefts occur within 400m of a train station. Our main hypothesis that <em>bike thefts occur primarily near train and tube stations</em> is perhaps not quite proven, but so far we have managed to quantify that a substantial amount of bike thefts do occur within 400m of these areas.</p>
+<p>In a final step, we will conduct a very familiar procedure: aggregating our data to the MSOA level. At the moment, we have now calculated for each bike theft whether or not it occurs within 400m of a tube or train station. We can use this to see if specific MSOAs are hotspots of bike crimes near stations across London. To do this, we will be using the same process we used in in previous weeks: counting <strong>the number of points in each of our polygons</strong>.</p>
+<p>To create a point-in-polygon count within <code>sf</code>, we use the <code>st_intersects()</code> function again but instead of using the matrix output of <code>TRUE</code> or <code>FALSE</code> that we have used before, what we actually want to extract from our function is the total number of points it identifies as intersecting with our <code>msoa_london</code> spatial dataframe. To achieve this, we use the <code>lengths()</code> function from the <code>base</code> R package to count the number of wards returned within the index list its <code>sparse</code> output creates.</p>
+<p>Remember, this <code>sparse</code> output creates a list of the bike thefts (by their index) that intersect with each MSOA. The <code>lengths()</code> function will return the length of this list, i.e.&nbsp;how many bike thefts each MSOA contains or, in other words, a <strong>point-in-polygon</strong> count. This time around therefore we do not set the <code>sparse</code> function to <code>FALSE</code> but leave it as <code>TRUE</code> (its default) by not entering the parameter. As a result, we can calculate the number of bike thefts per MSOA and the number of bike thefts within 400m of a station per MSOA and use this to generate a <strong>theft rate</strong> for each MSOA of the number of bikes thefts that occur near a train station for identification of these <strong>hotspots</strong>.</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-intersect-point-in-poly_28d1176e527fb33da7380b0a29736f1a">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co"># point in polygon</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>msoa_london<span class="sc">$</span>total_bike_theft <span class="ot">&lt;-</span> <span class="fu">lengths</span>(<span class="fu">st_intersects</span>(msoa_london, bike_theft))</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># point in polygon, only thefts within 400m of a station</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>msoa_london<span class="sc">$</span>station_bike_theft <span class="ot">&lt;-</span> <span class="fu">lengths</span>(<span class="fu">st_intersects</span>(msoa_london, <span class="fu">filter</span>(bike_theft,</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>    d400_sq <span class="sc">==</span> <span class="cn">TRUE</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>We are looking specifically at the phenomena of whether bike theft occurs near to a train or tube station or not. By normalising by the total bike theft, we are creating a rate that shows specifically where there are hotspots of bike theft near train stations. This, however, will be of course influenced by the number of train stations within a MSOA, the size of the MSOA, and of course the number of bikes and potentially daytime and residential populations within an area.</p>
+</div>
+</div>
+</div>
+<p>Calculate the rate of bike theft within 400m of a train or tube station out of all bike thefts for each MSOA:</p>
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-msoa-theft-rate_b62bc091b7420959fbd8f4afd18e8bb1">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># theft rate</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>msoa_london <span class="ot">&lt;-</span> msoa_london <span class="sc">|&gt;</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">rate_bike_theft =</span> (station_bike_theft<span class="sc">/</span>total_bike_theft) <span class="sc">*</span> <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="assignment-w06" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="assignment-w06"><span class="header-section-number">1.4</span> Assignment</h2>
+<p>Now we worked through all this, for this week’s assignment:</p>
+<ol type="1">
+<li>Create a proper map of the rate of bike thefts within <strong>400m</strong> of a train or tube station.</li>
+<li>Re-run the above analysis at four more distances: <strong>100m</strong>, <strong>200m</strong>, <strong>300m</strong>, <strong>500m</strong> and calculate the percentage of bike theft at these different distances. You can choose whether you would like to use the <strong>geometric operations</strong> or <strong>spatial queries</strong> approach.</li>
+<li>There are clear differences between using different buffer distances. What do you think could explain the substantial differences in counts as we increase the distance from 100 to 200m?</li>
+</ol>
+</section>
+<section id="wm-w06" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="wm-w06"><span class="header-section-number">1.5</span> Want more? [Optional]</h2>
+<section id="reproducible-research" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="reproducible-research">Reproducible research</h3>
+<p>The book <a href="https://psyteachr.github.io/reprores-v3/index.html">Data Skills for Reproducible Research</a> provides an excellent overview of skills needed for reproducible and open research using R and the <code>tidyverse</code> packages. To get started: have a look at <a href="https://psyteachr.github.io/reprores-v3/repro.html">Chapter 2: Reproducible Workflows</a>, <a href="https://psyteachr.github.io/reprores-v3/dplyr.html">Chapter 7: Data Wrangling</a>, and <a href="https://psyteachr.github.io/reprores-v3/func.html">Chapter 8: Iterations and Functions</a>.</p>
+<p>Another great tool can be found in the <code>targets</code> package. The targets package is a <a href="https://www.gnu.org/software/make/">Make</a>-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the <a href="https://books.ropensci.org/targets/walkthrough.html">Walkthrough</a> chapter to see <code>targets</code> in action.</p>
+</section>
+</section>
+<section id="byl-w06" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="byl-w06"><span class="header-section-number">1.6</span> Before you leave</h2>
+<p>And that is how you can conduct basic geometric operations and spatial queries using R and <code>sf</code>. More RGIS coming in the next few weeks, but <a href="https://www.youtube.com/watch?v=Ydg4T2MP7Z8">this concludes the tutorial for this week</a>. Time to check out that reading list?</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./05-spatial.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Programming for Spatial Analysis</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./07-point-pattern.html" class="pagination-link">
+        <span class="nav-page-text">Analysing Spatial Patterns II: Point Pattern Analysis</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Course material by <a href="https://www.mappingdutchman.com">Justin van Dijk</a>. Available under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
