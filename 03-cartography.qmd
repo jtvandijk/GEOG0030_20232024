@@ -25,7 +25,7 @@ Against this background, we are actually going to answer a very simple question 
 The datasets you will create in this practical will be used in other practicals, so make sure to follow every step and export your data to your `data` folder at the end of the practical.
 :::
 
-### Crime data 
+### Getting started
 For our crime data, we will use data directly from the **Police Data Portal**, which you can find at [data.polic.uk](https://data.police.uk/). This data portal allows you to access and generate tabular data for crime recorded in the UK across different the different police forces since 2017. 
 
 ::: {.callout-note}
@@ -48,7 +48,6 @@ Normally, we would now head to the **Police Data Portal** and download our crime
 When mapping the data from the provided longitude and latitude coordinates, it is important to know that these locations represent the approximate location of a crime — not the exact place where it happened. This displacement is introduced on purpose to preserve anonymity of the individuals involved. The process by how this displacement occurs is standardised. There is a list of anonymous map points to which the exact location of each crime is compared against this master list to find the nearest map point. The co-ordinates of the actual crime are then replaced with the co-ordinates of the map point. Each map point is specifically chosen to avoid associating that point with an exact household.
 :::
 
-### Population data 
 If we want to study a phenomena like crime and aggregate it to an areal unit, we will need to normalise this by some denominator (e.g. population). Why? When we record events created by humans, there is often a population bias: simply, more people in an area will by probability lead to a higher occurrence of said event. Fortunately, we already prepared a 2021 LSOA population dataset [last week](02-GIScience.html#assignment-w02).
 
 In addition to our **LSOA** level dataset, we also need a population dataset for our London **Boroughs** today. We can do this utilising by joining Borough population data to Borough spatial data and creating a `Borough2021_London.gpkg` file.
@@ -77,7 +76,7 @@ The final data that we need is the total population for each of the London Borou
 10. Now format the `pop2021` column so that it is recognised as being a **numeric** column. 
 11. Save the file as a new `csv` in your `data` folder: `LondonBorough2021_population.csv`.
 
-### Mapping crime data
+### Loading data
 #### Setting up a project
 1. Start **QGIS**
 2. Click on **Project** -> **New**. Save your project as `w3-crime-analysis`. Remember to save your work throughout the practical. 
@@ -187,8 +186,8 @@ The `crime-rate` is stored as a decimal as this is required for the calculation 
 knitr::include_graphics('images/w03/crime-borough-lsoa.png')
 ```
 
-#### Mapping crime data
-Now you have both datasets ready, it is time to style the maps. Remember to use the **Properties** box to symbolise your mapss. Think through using an appropriate colour scheme, perhaps [have a look at the online colorbrewer 2.0 for inspiration](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) if you do not want to use the default settings. Once you are happy with their symbolisation, we can turn them into proper publishable maps using QGIS's **Print Layout**. 
+### Mapping data
+Now you have both datasets ready, it is time to style the maps. Remember to use the **Properties** box to symbolise your maps. Think through using an appropriate colour scheme, perhaps [have a look at the online colorbrewer 2.0 for inspiration](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) if you do not want to use the default settings. Once you are happy with their symbolisation, we can turn them into proper publishable maps using QGIS's **Print Layout**. 
 
 ```{r}
 #| label: fig-map-styled

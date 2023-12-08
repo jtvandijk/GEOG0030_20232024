@@ -255,15 +255,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reading-w05" id="toc-reading-w05" class="nav-link" data-scroll-target="#reading-w05"><span class="header-section-number">5.2</span> Reading list</a></li>
   <li><a href="#crime-in-london-iii" id="toc-crime-in-london-iii" class="nav-link" data-scroll-target="#crime-in-london-iii"><span class="header-section-number">5.3</span> Crime in London III</a>
   <ul class="collapse">
-  <li><a href="#setup-w05" id="toc-setup-w05" class="nav-link" data-scroll-target="#setup-w05"><span class="header-section-number">5.3.1</span> Spatial analysis set up</a></li>
-  <li><a href="#interacting-with-spatial-data" id="toc-interacting-with-spatial-data" class="nav-link" data-scroll-target="#interacting-with-spatial-data"><span class="header-section-number">5.3.2</span> Interacting with spatial data</a></li>
-  <li><a href="#getting-our-crime-data-into-shape" id="toc-getting-our-crime-data-into-shape" class="nav-link" data-scroll-target="#getting-our-crime-data-into-shape"><span class="header-section-number">5.3.3</span> Getting our crime data into shape</a></li>
-  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling"><span class="header-section-number">5.3.4</span> Data wrangling</a></li>
-  <li><a href="#aggregate-crime-by-msoa" id="toc-aggregate-crime-by-msoa" class="nav-link" data-scroll-target="#aggregate-crime-by-msoa"><span class="header-section-number">5.3.5</span> Aggregate crime by MSOA</a></li>
-  <li><a href="#joining-crime-data-to-msoas" id="toc-joining-crime-data-to-msoas" class="nav-link" data-scroll-target="#joining-crime-data-to-msoas"><span class="header-section-number">5.3.6</span> Joining crime data to MSOAs</a></li>
-  <li><a href="#mapping-crime-data" id="toc-mapping-crime-data" class="nav-link" data-scroll-target="#mapping-crime-data"><span class="header-section-number">5.3.7</span> Mapping crime data</a></li>
-  <li><a href="#styling-crime-data" id="toc-styling-crime-data" class="nav-link" data-scroll-target="#styling-crime-data"><span class="header-section-number">5.3.8</span> Styling crime data</a></li>
-  <li><a href="#exporting-our-crime-data" id="toc-exporting-our-crime-data" class="nav-link" data-scroll-target="#exporting-our-crime-data"><span class="header-section-number">5.3.9</span> Exporting our crime data</a></li>
+  <li><a href="#setup-w05" id="toc-setup-w05" class="nav-link" data-scroll-target="#setup-w05"><span class="header-section-number">5.3.1</span> Getting started</a></li>
+  <li><a href="#spatial-data" id="toc-spatial-data" class="nav-link" data-scroll-target="#spatial-data"><span class="header-section-number">5.3.2</span> Spatial data</a></li>
+  <li><a href="#preparing-data" id="toc-preparing-data" class="nav-link" data-scroll-target="#preparing-data"><span class="header-section-number">5.3.3</span> Preparing data</a></li>
+  <li><a href="#wrangling-data" id="toc-wrangling-data" class="nav-link" data-scroll-target="#wrangling-data"><span class="header-section-number">5.3.4</span> Wrangling data</a></li>
+  <li><a href="#aggregating-data" id="toc-aggregating-data" class="nav-link" data-scroll-target="#aggregating-data"><span class="header-section-number">5.3.5</span> Aggregating data</a></li>
+  <li><a href="#joining-data" id="toc-joining-data" class="nav-link" data-scroll-target="#joining-data"><span class="header-section-number">5.3.6</span> Joining data</a></li>
+  <li><a href="#mapping-data" id="toc-mapping-data" class="nav-link" data-scroll-target="#mapping-data"><span class="header-section-number">5.3.7</span> Mapping data</a></li>
+  <li><a href="#styling-data" id="toc-styling-data" class="nav-link" data-scroll-target="#styling-data"><span class="header-section-number">5.3.8</span> Styling data</a></li>
+  <li><a href="#exporting-data" id="toc-exporting-data" class="nav-link" data-scroll-target="#exporting-data"><span class="header-section-number">5.3.9</span> Exporting data</a></li>
   </ul></li>
   <li><a href="#assignment-w05" id="toc-assignment-w05" class="nav-link" data-scroll-target="#assignment-w05"><span class="header-section-number">5.4</span> Assignment</a></li>
   <li><a href="#wm-w05" id="toc-wm-w05" class="nav-link" data-scroll-target="#wm-w05"><span class="header-section-number">5.5</span> Want more? [Optional]</a>
@@ -321,16 +321,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <section id="setup-w05" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="setup-w05"><span class="header-section-number">5.3.1</span> Spatial analysis set up</h3>
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="setup-w05"><span class="header-section-number">5.3.1</span> Getting started</h3>
 <p>Open a new script within your GEOG0030 project and save this script as <code>wk5-crime-spatial-processing.r</code>. At the top of your script, add the following metadata:</p>
-<div class="cell styled-output" data-hash="05-spatial_cache/html/05-script-title_82fdb1de0fc534e050e1b2d4311f436b">
+<div class="cell styled-output" data-hash="05-spatial_cache/html/05-script-title_fc1913650eb53a941c44488b6fe7ad16">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysing theft in London by MSOA</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: January 2024</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Author: Justin </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: January 2024</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>Now let us add all of the libraries we will be using today to the top of our script:</p>
@@ -431,8 +430,8 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 <p>You should also see the <code>msoa_population</code> variable appear in your environment window.</p>
 </section>
-<section id="interacting-with-spatial-data" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="interacting-with-spatial-data"><span class="header-section-number">5.3.2</span> Interacting with spatial data</h3>
+<section id="spatial-data" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="spatial-data"><span class="header-section-number">5.3.2</span> Spatial data</h3>
 <p>As this is the first time we have loaded spatial data into R, let’s go for a little exploration of how we can interact with our spatial dataframe. The first thing we want to do when we load spatial data is, of course, map it to confirm if everything is in order. To do this, we can use a really simple command from R’s <code>base</code> library: <code>plot()</code>. As we do not necessarily want to plot this data everytime we run this script in the future, we can type this command into the console:</p>
 <div class="cell styled-output" data-hash="05-spatial_cache/html/05-plot-msoapop_d2481fb78f3924d2aa86ef1ee01f503c">
 <div class="code-with-filename">
@@ -603,8 +602,8 @@ PROJCRS["OSGB36 / British National Grid",
 <p>You notice that we actually get a lot more information about our CRS beyond simply the code using this function. This function is really important to us as users of spatial data as it allows us to retrieve and set the CRS of our spatial data when the projection is not specified in the data but we do know what projection system should be used.</p>
 <p>The final thing we might want to do before we get started with our data analysis is to simply look at the data table part of our dataset, i.e.&nbsp;what we called the <strong>Attribute Table</strong> in QGIS, but here it is simply the table part of our dataframe. To do so, you can either use the <code>View()</code> function in the console or click on the <code>msoa_population</code> variable within our environment.</p>
 </section>
-<section id="getting-our-crime-data-into-shape" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="getting-our-crime-data-into-shape"><span class="header-section-number">5.3.3</span> Getting our crime data into shape</h3>
+<section id="preparing-data" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="preparing-data"><span class="header-section-number">5.3.3</span> Preparing data</h3>
 <p>Now we have our data loaded, our next step is to process our data to create what we need as our final output for analysis: a spatial dataframe that contains a <strong>theft crime rate</strong> for each MSOA. We only two types of spatial or spatially-relevant data in our <code>all_theft_df</code> that can help us with this:</p>
 <ol type="1">
 <li>The approximate WGS84 <strong>latitude</strong> and <strong>longitude</strong>.</li>
@@ -823,15 +822,15 @@ dbl (1): ObjectId
 </div>
 </div>
 <p>Now we have adjusted our weightings we can perform our first join. We need to decide which dataset is going to be our target dataset (i.e.&nbsp;the dataset we attach new data too). It makes sense to use the <code>all_theft_df</code> because we need to keep <strong>all records</strong> in this dataset, but we do not necessarily need <strong>all records</strong> in the <code>lsoa_lookup</code> dataset for LSOAs for which no crime has been recorded.</p>
-<div class="cell styled-output" data-hash="05-spatial_cache/html/05-lsoa-lookup-join_5a6f12b58e1276fea3d5bbfa1d1aa1ba">
+<div class="cell styled-output" data-hash="05-spatial_cache/html/05-lsoa-lookup-join_93373c5dc59c2a73b6d41839546d3b59">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join to crime data</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>all_theft_df_join <span class="ot">&lt;-</span> all_theft_df <span class="sc">|&gt;</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(lsoa_lookup, <span class="at">by =</span> <span class="fu">c</span>(<span class="at">lsoa_code =</span> <span class="st">"LSOA11CD"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(LSOA21CD))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lsoa_lookup, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"lsoa_code"</span> <span class="ot">=</span> <span class="st">"LSOA11CD"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(LSOA21CD))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-tip">
@@ -926,21 +925,21 @@ chr (2): lsoa21cd, msoa21cd
 </div>
 </div>
 <p>We can now simply attach the <code>msoa_lookup</code> table to our <code>all_theft_df</code>:</p>
-<div class="cell styled-output" data-hash="05-spatial_cache/html/05-msoa-lookup-join_0d987aa9aa58ea7ba647d0473159e289">
+<div class="cell styled-output" data-hash="05-spatial_cache/html/05-msoa-lookup-join_00ec4584879f8b8a4b53b4fa90cef024">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join to crime data</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>all_theft_df_join <span class="ot">&lt;-</span> all_theft_df_join <span class="sc">|&gt;</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(msoa_lookup, <span class="at">by =</span> <span class="fu">c</span>(<span class="at">LSOA21CD =</span> <span class="st">"lsoa21cd"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(msoa_lookup, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"LSOA21CD"</span> <span class="ot">=</span> <span class="st">"lsoa21cd"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>Now we have our joined dataset, we can finally move forward with aggregating our data to the MSOA level. Before we do this, it would be good if we could clean up our dataframe to only the relevant data that we need moving forward. To be able to ‘clean’ our dataframe, we have two choices in terms of the code we might want to run. First, we could look to drop certain columns from our dataframe. Alternatively, we could create a subset of the columns we want to keep from our dataframe and store this as a new variable or simply overwrite the currently stored variable. To do either of these types of data transformation, we need to know more about how we can interact with a dataframe in terms of <strong>indexing</strong>, <strong>selecting</strong> and <strong>slicing</strong>.</p>
 </section>
 </section>
-<section id="data-wrangling" class="level3" data-number="1.3.4">
-<h3 data-number="1.3.4" class="anchored" data-anchor-id="data-wrangling"><span class="header-section-number">5.3.4</span> Data wrangling</h3>
+<section id="wrangling-data" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="wrangling-data"><span class="header-section-number">5.3.4</span> Wrangling data</h3>
 <p>Everything we will be doing today as we progress with our dataframe cleaning and processing relies on us understanding how to interact with and transform our dataframe. This interaction itself relies on knowing about how <strong>indexing</strong> works in R as well as how to <strong>select</strong> and <strong>slice</strong> your dataframe to extract the relevant cells, rows or columns and then manipulate them. Whilst there are traditional programming approaches to this using the base R library, <code>dplyr</code> is making this type of data wrangling much easier. The following video provides an excellent explanation from both a <code>base</code> R perspective as well as using the <code>dplyr</code> library.</p>
 <section id="selection-with-base-r" class="level4">
 <h4 class="anchored" data-anchor-id="selection-with-base-r">Selection with base R</h4>
@@ -1406,8 +1405,8 @@ chr (2): lsoa21cd, msoa21cd
 <p>You should now see that your <code>all_theft_df_join</code> dataframe should only contain four variables. You can go and view this dataframe or call the <code>head()</code> function on the data in the console if youlike to check out this new formatting.</p>
 </section>
 </section>
-<section id="aggregate-crime-by-msoa" class="level3" data-number="1.3.5">
-<h3 data-number="1.3.5" class="anchored" data-anchor-id="aggregate-crime-by-msoa"><span class="header-section-number">5.3.5</span> Aggregate crime by MSOA</h3>
+<section id="aggregating-data" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="aggregating-data"><span class="header-section-number">5.3.5</span> Aggregating data</h3>
 <p>To aggregate our crime by MSOA, we need to use a combination of <code>dplyr</code> functions. First, we need to <strong>group</strong> our crime by each 2021 MSOA and then create a new variable that contains the sum of thefts occurring in each MSOA. To do so, we will use the <code>group_by()</code> function and the <code>mutate()</code> function. This is the same <code>group_by()</code> function we already used to adjust the LSOA weightings. The <code>group_by()</code> function creates a ‘grouped’ copy of the table (in memory), then any <code>dplyr</code> function used on this grouped table will manipulate each group separately (i.e.&nbsp;our weighted crime counts) and then <strong>combine the results</strong> to a single output:</p>
 <div class="cell styled-output" data-hash="05-spatial_cache/html/05-group-by-count_8972130dad148c20ddec001068a79757">
 <div class="code-with-filename">
@@ -1441,8 +1440,8 @@ chr (2): lsoa21cd, msoa21cd
 </div>
 </div>
 </section>
-<section id="joining-crime-data-to-msoas" class="level3" data-number="1.3.6">
-<h3 data-number="1.3.6" class="anchored" data-anchor-id="joining-crime-data-to-msoas"><span class="header-section-number">5.3.6</span> Joining crime data to MSOAs</h3>
+<section id="joining-data" class="level3" data-number="1.3.6">
+<h3 data-number="1.3.6" class="anchored" data-anchor-id="joining-data"><span class="header-section-number">5.3.6</span> Joining data</h3>
 <p>We are now getting to the final stages of our data processing, we just need to join our completed theft table, <code>all_theft_df_msoa</code> to our <code>msoa_population</code> spatial dataframe and then compute a theft crime rate. This will then allow us to map our crime rates by MSOA, exactly what we set to achieve within this practical.</p>
 <div class="cell styled-output" data-hash="05-spatial_cache/html/05-join-sdf_86056096420953ce2120a306a0b0b888">
 <div class="code-with-filename">
@@ -1477,8 +1476,8 @@ chr (2): lsoa21cd, msoa21cd
 </div>
 <p>Have a look at your new <code>theft_msoa_sdf</code> spatial dataframe. Does it look as you would expect? Now we have our <strong>final</strong> dataframe, we can go ahead and make our maps.</p>
 </section>
-<section id="mapping-crime-data" class="level3" data-number="1.3.7">
-<h3 data-number="1.3.7" class="anchored" data-anchor-id="mapping-crime-data"><span class="header-section-number">5.3.7</span> Mapping crime data</h3>
+<section id="mapping-data" class="level3" data-number="1.3.7">
+<h3 data-number="1.3.7" class="anchored" data-anchor-id="mapping-data"><span class="header-section-number">5.3.7</span> Mapping data</h3>
 <p>For making our maps, we will be using one of two main visualisation libraries that can be used for spatial data: <code>tmap</code>. <code>tmap</code> is a library written around thematic map visualisation. The package offers a flexible, layer-based, and easy to use approach to create thematic maps, such as choropleths and bubble maps. What is really great about <code>tmap</code> is that it comes with one quick plotting method for a map called: <code>qtm()</code>.</p>
 <p>We can use this function to plot the theft crime rate really quickly. Within your script, use the <code>qtm</code> function to create a map of theft crime rate in London in 2021.</p>
 <div class="callout callout-style-simple callout-note">
@@ -1641,8 +1640,8 @@ chr (2): lsoa21cd, msoa21cd
 </div>
 <p>That looks a little better from the classification side of things.</p>
 </section>
-<section id="styling-crime-data" class="level3" data-number="1.3.8">
-<h3 data-number="1.3.8" class="anchored" data-anchor-id="styling-crime-data"><span class="header-section-number">5.3.8</span> Styling crime data</h3>
+<section id="styling-data" class="level3" data-number="1.3.8">
+<h3 data-number="1.3.8" class="anchored" data-anchor-id="styling-data"><span class="header-section-number">5.3.8</span> Styling data</h3>
 <p>To style our map takes a further understanding and familiarity with our <code>tmap</code> library, but it is only something you will only really learn by having to make your own maps. As a result, we will not go into explaining <strong>exactly</strong> every aspect of map styling but instead provide you with some example code that you can use as well as experiment with to try to see how you can adjust aspects of the map to your preferences.</p>
 <p>Fundamentally, the <strong>key functions</strong> to be aware of:</p>
 <ul>
@@ -1696,8 +1695,8 @@ chr (2): lsoa21cd, msoa21cd
 </div>
 </div>
 </section>
-<section id="exporting-our-crime-data" class="level3" data-number="1.3.9">
-<h3 data-number="1.3.9" class="anchored" data-anchor-id="exporting-our-crime-data"><span class="header-section-number">5.3.9</span> Exporting our crime data</h3>
+<section id="exporting-data" class="level3" data-number="1.3.9">
+<h3 data-number="1.3.9" class="anchored" data-anchor-id="exporting-data"><span class="header-section-number">5.3.9</span> Exporting data</h3>
 <p>Once we are finished making our map, we can go ahead and export it to our <code>maps</code> folder. To do so, we need to save our map-making code to as a variable and then use the <code>tmap_save()</code> function to save the output of this code to a picture within our maps folder.</p>
 <div class="cell styled-output" data-hash="05-spatial_cache/html/05-export-map_97bc973f5d6df1d225298f348d661a56">
 <div class="code-with-filename">

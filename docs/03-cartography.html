@@ -221,9 +221,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#reading-w03" id="toc-reading-w03" class="nav-link" data-scroll-target="#reading-w03"><span class="header-section-number">3.2</span> Reading list</a></li>
   <li><a href="#crime-in-london-i" id="toc-crime-in-london-i" class="nav-link" data-scroll-target="#crime-in-london-i"><span class="header-section-number">3.3</span> Crime in London I</a>
   <ul class="collapse">
-  <li><a href="#crime-data" id="toc-crime-data" class="nav-link" data-scroll-target="#crime-data"><span class="header-section-number">3.3.1</span> Crime data</a></li>
-  <li><a href="#population-data" id="toc-population-data" class="nav-link" data-scroll-target="#population-data"><span class="header-section-number">3.3.2</span> Population data</a></li>
-  <li><a href="#mapping-crime-data" id="toc-mapping-crime-data" class="nav-link" data-scroll-target="#mapping-crime-data"><span class="header-section-number">3.3.3</span> Mapping crime data</a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><span class="header-section-number">3.3.1</span> Getting started</a></li>
+  <li><a href="#loading-data" id="toc-loading-data" class="nav-link" data-scroll-target="#loading-data"><span class="header-section-number">3.3.2</span> Loading data</a></li>
+  <li><a href="#mapping-data" id="toc-mapping-data" class="nav-link" data-scroll-target="#mapping-data"><span class="header-section-number">3.3.3</span> Mapping data</a></li>
   </ul></li>
   <li><a href="#assignment-w03" id="toc-assignment-w03" class="nav-link" data-scroll-target="#assignment-w03"><span class="header-section-number">3.4</span> Assignment</a></li>
   <li><a href="#byl-w03" id="toc-byl-w03" class="nav-link" data-scroll-target="#byl-w03"><span class="header-section-number">3.5</span> Before you leave</a></li>
@@ -278,8 +278,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<section id="crime-data" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="crime-data"><span class="header-section-number">3.3.1</span> Crime data</h3>
+<section id="getting-started" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">3.3.1</span> Getting started</h3>
 <p>For our crime data, we will use data directly from the <strong>Police Data Portal</strong>, which you can find at <a href="https://data.police.uk/">data.polic.uk</a>. This data portal allows you to access and generate tabular data for crime recorded in the UK across different the different police forces since 2017.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
@@ -325,12 +325,9 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="population-data" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="population-data"><span class="header-section-number">3.3.2</span> Population data</h3>
 <p>If we want to study a phenomena like crime and aggregate it to an areal unit, we will need to normalise this by some denominator (e.g.&nbsp;population). Why? When we record events created by humans, there is often a population bias: simply, more people in an area will by probability lead to a higher occurrence of said event. Fortunately, we already prepared a 2021 LSOA population dataset <a href="02-GIScience.html#assignment-w02">last week</a>.</p>
 <p>In addition to our <strong>LSOA</strong> level dataset, we also need a population dataset for our London <strong>Boroughs</strong> today. We can do this utilising by joining Borough population data to Borough spatial data and creating a <code>Borough2021_London.gpkg</code> file.</p>
+</section>
 <section id="borough-boundaries" class="level4">
 <h4 class="anchored" data-anchor-id="borough-boundaries">Borough boundaries</h4>
 <p>A lot of data about London is collated by the Greater London Authority (GLA) and made available through the <a href="https://data.london.gov.uk/about/">London Datastore</a>. Whereas some of the data is relatively old, it is a good place to get some data specific to London:</p>
@@ -360,8 +357,8 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 </section>
 </section>
-<section id="mapping-crime-data" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="mapping-crime-data"><span class="header-section-number">3.3.3</span> Mapping crime data</h3>
+<section id="loading-data" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="loading-data"><span class="header-section-number">3.3.2</span> Loading data</h3>
 <section id="setting-up-a-project" class="level4">
 <h4 class="anchored" data-anchor-id="setting-up-a-project">Setting up a project</h4>
 <ol type="1">
@@ -522,9 +519,10 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="mapping-crime-data-1" class="level4">
-<h4 class="anchored" data-anchor-id="mapping-crime-data-1">Mapping crime data</h4>
-<p>Now you have both datasets ready, it is time to style the maps. Remember to use the <strong>Properties</strong> box to symbolise your mapss. Think through using an appropriate colour scheme, perhaps <a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">have a look at the online colorbrewer 2.0 for inspiration</a> if you do not want to use the default settings. Once you are happy with their symbolisation, we can turn them into proper publishable maps using QGIS’s <strong>Print Layout</strong>.</p>
+</section>
+<section id="mapping-data" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="mapping-data"><span class="header-section-number">3.3.3</span> Mapping data</h3>
+<p>Now you have both datasets ready, it is time to style the maps. Remember to use the <strong>Properties</strong> box to symbolise your maps. Think through using an appropriate colour scheme, perhaps <a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3">have a look at the online colorbrewer 2.0 for inspiration</a> if you do not want to use the default settings. Once you are happy with their symbolisation, we can turn them into proper publishable maps using QGIS’s <strong>Print Layout</strong>.</p>
 <div class="cell" data-hash="03-cartography_cache/html/fig-map-styled_4d5954d334173c6363ea4f441c9db781">
 <div class="cell-output-display">
 <div id="fig-map-styled" class="quarto-figure quarto-figure-center anchored">
@@ -657,7 +655,6 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>The only thing outstanding is to export our map to a file. Go to <strong>Layout</strong> -&gt; <strong>Export as Image</strong> and then save it as <code>London-2021-crime-rate.png</code>.</p>
-</section>
 </section>
 </section>
 <section id="assignment-w03" class="level2" data-number="1.4">

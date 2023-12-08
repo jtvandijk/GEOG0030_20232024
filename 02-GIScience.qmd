@@ -69,7 +69,7 @@ Before we download our data, it is important to establish an organised file syst
 | `output`    | To store all your final output data files. |
 | `maps`      | To store the maps you will create. |
 
-### Downloading spatial data {#w02-download-spatial}
+### Getting started {#w02-download-spatial}
 We will start by downloading the administrative geography boundaries for England and Wales:
 
 1. Navigate to the *Open Geography Portal*: [[Link]](https://geoportal.statistics.gov.uk/)
@@ -89,7 +89,6 @@ Now open your `GEOG0030/raw/` folder and create a new folder called `boundaries`
 You may have used spatial data before and noticed that we did not download a collection of files known as a `shapefile` but a `GeoPackage` instead. Whilst `shapefiles` are still being used, and you will most likely come across them at some point in your career if you have not already, the more modern, more portable, and open-source `GeoPackage` file format should be your spatial data format of choice where possible. Have a look at this article on *towardsdatascience.com* for an excellent explanation on why one should use `GeoPackage` files over `shapefiles` where possible: [[Link]](https://towardsdatascience.com/why-you-need-to-use-geopackage-files-instead-of-shapefile-or-geojson-7cb24fe56416)
 :::
 
-### Downloading population data {#w02-download-population}
 For our population data, we will use the 2011 and 2021 Census population counts that are made available by the ONS through their [Nomis](https://www.nomisweb.co.uk/) portal.
 
 To get the 2011 Census population counts, you should:
@@ -114,7 +113,7 @@ To get the 2021 Census population counts, you should:
 
 In your `GEOG0030/raw/` folder, now create a new folder called `population` and copy the two Excel files to the newly created `population` folder. Rename the files you downloaded to: `LSOA2011_population.xlsx` and `LSOA2021_population.xlsx`, respectively.
 
-### Cleaning population data {#w02-cleaning}
+### Cleaning data {#w02-cleaning}
 When you open up any of the LSOA spreadsheets in Excel, you will notice that some additional rows of information are contained at the top of each of these files. This extra information will cause issues in QGIS and we therefore need to do some data cleaning. To reduce the chance of errors in later stages, we will also save the data in `csv` format.
 
 ::: {.callout-tip}
@@ -225,7 +224,7 @@ Now the 2011 data is prepared, we can move on to the 2021 data:
 Again make sure you did not miss any LSOAs. You should end up with **4,995** rows of data in your second spreadsheet.
 :::
 
-### Mapping population data
+### Mapping data
 #### Setting up a project
 We will now use QGIS to create population maps for the LSOAs in London for both years. To achieve this, we need to **join our table data to our spatial datasets** and then map our populations for our visual analysis. 
 
@@ -256,7 +255,7 @@ Now are project is set up, we can start by loading our 2011 spatial layer.
 knitr::include_graphics('images/w02/england-wales.png')
 ```
 
-#### Conducting an attribute join
+#### Attribute joins
 We are now going to join our 2011 population data to our 2011 spatial data file. We start by adding the 2011 population data to our project. 
 
 1. Click on **Layer** -> **Add Layer** -> **Add Delimited Text Layer**.

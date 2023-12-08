@@ -224,11 +224,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#w02-scene" id="toc-w02-scene" class="nav-link" data-scroll-target="#w02-scene"><span class="header-section-number">2.3.1</span> Setting the scene</a></li>
   <li><a href="#w02-finding" id="toc-w02-finding" class="nav-link" data-scroll-target="#w02-finding"><span class="header-section-number">2.3.2</span> Finding data</a></li>
   <li><a href="#w01-housekeeping" id="toc-w01-housekeeping" class="nav-link" data-scroll-target="#w01-housekeeping"><span class="header-section-number">2.3.3</span> Housekeeping</a></li>
-  <li><a href="#w02-download-spatial" id="toc-w02-download-spatial" class="nav-link" data-scroll-target="#w02-download-spatial"><span class="header-section-number">2.3.4</span> Downloading spatial data</a></li>
-  <li><a href="#w02-download-population" id="toc-w02-download-population" class="nav-link" data-scroll-target="#w02-download-population"><span class="header-section-number">2.3.5</span> Downloading population data</a></li>
-  <li><a href="#w02-cleaning" id="toc-w02-cleaning" class="nav-link" data-scroll-target="#w02-cleaning"><span class="header-section-number">2.3.6</span> Cleaning population data</a></li>
-  <li><a href="#mapping-population-data" id="toc-mapping-population-data" class="nav-link" data-scroll-target="#mapping-population-data"><span class="header-section-number">2.3.7</span> Mapping population data</a></li>
-  <li><a href="#exporting-map-for-visual-analysis" id="toc-exporting-map-for-visual-analysis" class="nav-link" data-scroll-target="#exporting-map-for-visual-analysis"><span class="header-section-number">2.3.8</span> Exporting map for visual analysis</a></li>
+  <li><a href="#w02-download-spatial" id="toc-w02-download-spatial" class="nav-link" data-scroll-target="#w02-download-spatial"><span class="header-section-number">2.3.4</span> Getting started</a></li>
+  <li><a href="#w02-cleaning" id="toc-w02-cleaning" class="nav-link" data-scroll-target="#w02-cleaning"><span class="header-section-number">2.3.5</span> Cleaning data</a></li>
+  <li><a href="#mapping-data" id="toc-mapping-data" class="nav-link" data-scroll-target="#mapping-data"><span class="header-section-number">2.3.6</span> Mapping data</a></li>
+  <li><a href="#exporting-map-for-visual-analysis" id="toc-exporting-map-for-visual-analysis" class="nav-link" data-scroll-target="#exporting-map-for-visual-analysis"><span class="header-section-number">2.3.7</span> Exporting map for visual analysis</a></li>
   </ul></li>
   <li><a href="#assignment-w02" id="toc-assignment-w02" class="nav-link" data-scroll-target="#assignment-w02"><span class="header-section-number">2.4</span> Assignment</a></li>
   <li><a href="#byl-w02" id="toc-byl-w02" class="nav-link" data-scroll-target="#byl-w02"><span class="header-section-number">2.5</span> Before you leave</a></li>
@@ -397,7 +396,7 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </section>
 <section id="w02-download-spatial" class="level3" data-number="1.3.4">
-<h3 data-number="1.3.4" class="anchored" data-anchor-id="w02-download-spatial"><span class="header-section-number">2.3.4</span> Downloading spatial data</h3>
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="w02-download-spatial"><span class="header-section-number">2.3.4</span> Getting started</h3>
 <p>We will start by downloading the administrative geography boundaries for England and Wales:</p>
 <ol type="1">
 <li>Navigate to the <em>Open Geography Portal</em>: <a href="https://geoportal.statistics.gov.uk/">[Link]</a></li>
@@ -427,9 +426,6 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-</section>
-<section id="w02-download-population" class="level3" data-number="1.3.5">
-<h3 data-number="1.3.5" class="anchored" data-anchor-id="w02-download-population"><span class="header-section-number">2.3.5</span> Downloading population data</h3>
 <p>For our population data, we will use the 2011 and 2021 Census population counts that are made available by the ONS through their <a href="https://www.nomisweb.co.uk/">Nomis</a> portal.</p>
 <p>To get the 2011 Census population counts, you should:</p>
 <ol type="1">
@@ -453,8 +449,8 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <p>In your <code>GEOG0030/raw/</code> folder, now create a new folder called <code>population</code> and copy the two Excel files to the newly created <code>population</code> folder. Rename the files you downloaded to: <code>LSOA2011_population.xlsx</code> and <code>LSOA2021_population.xlsx</code>, respectively.</p>
 </section>
-<section id="w02-cleaning" class="level3" data-number="1.3.6">
-<h3 data-number="1.3.6" class="anchored" data-anchor-id="w02-cleaning"><span class="header-section-number">2.3.6</span> Cleaning population data</h3>
+<section id="w02-cleaning" class="level3" data-number="1.3.5">
+<h3 data-number="1.3.5" class="anchored" data-anchor-id="w02-cleaning"><span class="header-section-number">2.3.5</span> Cleaning data</h3>
 <p>When you open up any of the LSOA spreadsheets in Excel, you will notice that some additional rows of information are contained at the top of each of these files. This extra information will cause issues in QGIS and we therefore need to do some data cleaning. To reduce the chance of errors in later stages, we will also save the data in <code>csv</code> format.</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
@@ -675,8 +671,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </section>
 </section>
-<section id="mapping-population-data" class="level3" data-number="1.3.7">
-<h3 data-number="1.3.7" class="anchored" data-anchor-id="mapping-population-data"><span class="header-section-number">2.3.7</span> Mapping population data</h3>
+<section id="mapping-data" class="level3" data-number="1.3.6">
+<h3 data-number="1.3.6" class="anchored" data-anchor-id="mapping-data"><span class="header-section-number">2.3.6</span> Mapping data</h3>
 <section id="setting-up-a-project" class="level4">
 <h4 class="anchored" data-anchor-id="setting-up-a-project">Setting up a project</h4>
 <p>We will now use QGIS to create population maps for the LSOAs in London for both years. To achieve this, we need to <strong>join our table data to our spatial datasets</strong> and then map our populations for our visual analysis.</p>
@@ -725,8 +721,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </section>
-<section id="conducting-an-attribute-join" class="level4">
-<h4 class="anchored" data-anchor-id="conducting-an-attribute-join">Conducting an attribute join</h4>
+<section id="attribute-joins" class="level4">
+<h4 class="anchored" data-anchor-id="attribute-joins">Attribute joins</h4>
 <p>We are now going to join our 2011 population data to our 2011 spatial data file. We start by adding the 2011 population data to our project.</p>
 <ol type="1">
 <li>Click on <strong>Layer</strong> -&gt; <strong>Add Layer</strong> -&gt; <strong>Add Delimited Text Layer</strong>.</li>
@@ -863,8 +859,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </section>
 </section>
-<section id="exporting-map-for-visual-analysis" class="level3" data-number="1.3.8">
-<h3 data-number="1.3.8" class="anchored" data-anchor-id="exporting-map-for-visual-analysis"><span class="header-section-number">2.3.8</span> Exporting map for visual analysis</h3>
+<section id="exporting-map-for-visual-analysis" class="level3" data-number="1.3.7">
+<h3 data-number="1.3.7" class="anchored" data-anchor-id="exporting-map-for-visual-analysis"><span class="header-section-number">2.3.7</span> Exporting map for visual analysis</h3>
 <p>To export your map select only the map layers you want to export and then opt for <strong>Project</strong> -&gt; <strong>Import/Export</strong> -&gt; <strong>Export to Image</strong> and save your final map in your <code>maps</code> folder. Next week, we will look at how to style our maps using the main map conventions (adding North Arrows, Scale Bars and Legends, etc.) but for now a simple output will do.</p>
 </section>
 </section>

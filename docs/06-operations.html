@@ -255,9 +255,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#reading-w06" id="toc-reading-w06" class="nav-link" data-scroll-target="#reading-w06"><span class="header-section-number">6.2</span> Reading list</a></li>
   <li><a href="#bike-theft-w06" id="toc-bike-theft-w06" class="nav-link" data-scroll-target="#bike-theft-w06"><span class="header-section-number">6.3</span> Bike theft in London</a>
   <ul class="collapse">
-  <li><a href="#setup-w06" id="toc-setup-w06" class="nav-link" data-scroll-target="#setup-w06"><span class="header-section-number">6.3.1</span> Spatial analysis set up</a></li>
-  <li><a href="#data-preparation-w06" id="toc-data-preparation-w06" class="nav-link" data-scroll-target="#data-preparation-w06"><span class="header-section-number">6.3.2</span> Data preparation</a></li>
-  <li><a href="#openstreetmap-data" id="toc-openstreetmap-data" class="nav-link" data-scroll-target="#openstreetmap-data"><span class="header-section-number">6.3.3</span> OpenStreetMap data</a></li>
+  <li><a href="#setup-w06" id="toc-setup-w06" class="nav-link" data-scroll-target="#setup-w06"><span class="header-section-number">6.3.1</span> Getting started</a></li>
+  <li><a href="#data-preparation-w06" id="toc-data-preparation-w06" class="nav-link" data-scroll-target="#data-preparation-w06"><span class="header-section-number">6.3.2</span> Preparing data</a></li>
+  <li><a href="#openstreetmap" id="toc-openstreetmap" class="nav-link" data-scroll-target="#openstreetmap"><span class="header-section-number">6.3.3</span> OpenStreetMap</a></li>
   <li><a href="#spatial-operations-i" id="toc-spatial-operations-i" class="nav-link" data-scroll-target="#spatial-operations-i"><span class="header-section-number">6.3.4</span> Spatial operations I</a></li>
   <li><a href="#spatial-operations-ii" id="toc-spatial-operations-ii" class="nav-link" data-scroll-target="#spatial-operations-ii"><span class="header-section-number">6.3.5</span> Spatial operations II</a></li>
   </ul></li>
@@ -305,16 +305,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="1.3" class="anchored" data-anchor-id="bike-theft-w06"><span class="header-section-number">6.3</span> Bike theft in London</h2>
 <p>This week, we will be investigating bike theft in London in 2021 and look to confirm the hypothesis <em>that bike theft primarily occurs near tube and train stations</em>. We will be investigating its distribution across London using the point data provided within our crime dataset. We will then compare this distribution to the location of train and tube stations using specific geometric operations and spatial queries that can compare the geometry of two (or more) datasets. We will also learn how to download data from OpenStreetMap as well as use an interactive version of <code>tmap</code> to explore the distribution of the locations of individual bike theft against the locations of these stations.</p>
 <section id="setup-w06" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="setup-w06"><span class="header-section-number">6.3.1</span> Spatial analysis set up</h3>
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="setup-w06"><span class="header-section-number">6.3.1</span> Getting started</h3>
 <p>Open a new script within your GEOG0030 project and save this script as <code>wk6-bike-theft-analysis.r</code>. At the top of your script, add the following metadata:</p>
-<div class="cell styled-output" data-hash="06-operations_cache/html/06-script-title_63d3af0731cf92e0251aa89361728dc7">
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-script-title_66b34141c18ef995b916b162cb963e20">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysing bike theft in London using geometric analysis</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: January 2024</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Author: Justin </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: January 2024</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>Now let us add all of the libraries we will be using today to the top of our script:</p>
@@ -612,7 +611,7 @@ PROJCRS["OSGB36 / British National Grid",
 <p>We can see our train and tube stations are only present in primarily the north of London and not really present in the south. This is not quite right and in fact it seems that our dataset only contains those train stations used by Transport for London within the underground network rather than all the stations in London. We will need to fix this before conducting our full analysis. A second issue with our dataset is that the <code>london_stations</code> spatial dataframe extends beyond our London boundaries. The same applies to our <code>bike_theft</code> spatial dataframe.</p>
 </section>
 <section id="data-preparation-w06" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="data-preparation-w06"><span class="header-section-number">6.3.2</span> Data preparation</h3>
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="data-preparation-w06"><span class="header-section-number">6.3.2</span> Preparing data</h3>
 <p>When we want to reduce a dataset to the spatial extent of another, there are two different approaches: a <em>subset</em> or a <em>clip</em>. Each deal with the geometry of the resulting dataset in slightly different ways.</p>
 <ol type="1">
 <li>A <em>subset</em> operation is what is known in GIScience-speak as a <em>select by location query</em>. In this case, our subset will return the full geometry of each observation feature of the input layer that intersects with our second layer. Any geometry that does not intersect with our second layer will be removed from the geometry of our resulting layer.</li>
@@ -709,8 +708,8 @@ geometries</code></pre>
 </div>
 </div>
 </section>
-<section id="openstreetmap-data" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="openstreetmap-data"><span class="header-section-number">6.3.3</span> OpenStreetMap data</h3>
+<section id="openstreetmap" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="openstreetmap"><span class="header-section-number">6.3.3</span> OpenStreetMap</h3>
 <p>Back to our train and tube stations. We have seen that our current <code>london_stations</code> spatial dataframe does not provide the coverage of train stations in London that we expected. To add in our missing data, we will be using <a href="https://www.openstreetmap.org/#map=6/54.910/-3.432">OpenStreetMap</a>.</p>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">

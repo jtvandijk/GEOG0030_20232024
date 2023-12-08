@@ -23,7 +23,7 @@ To analyse crime over space, we will go through several steps of data preparatio
 OAs, LSOAs and MSOAs make up the different levels of the census statistical geographies. Middle layer Super Output Areas (MSOAs) are made up of groups of LSOAs, usually four or five. They comprise between 2,000 and 6,000 households and have a usually resident population between 5,000 and 15,000 persons. For details see the explanation on the webapge of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies#middle-layer-super-output-areas-msoas)
 :::
 
-### Spatial analysis set up {#setup-w05}
+### Getting started {#setup-w05}
 Open a new script within your GEOG0030 project and save this script as `wk5-crime-spatial-processing.r`. At the top of your script, add the following metadata:
 
 ```{r}
@@ -35,7 +35,6 @@ Open a new script within your GEOG0030 project and save this script as `wk5-crim
 #| filename: "R code"
 # Analysing theft in London by MSOA
 # Date: January 2024
-# Author: Justin 
 ```
 
 Now let us add all of the libraries we will be using today to the top of our script:
@@ -125,7 +124,7 @@ msoa_population <- st_read("data/raw/boundaries/MSOA2021_London.gpkg")
 
 You should also see the `msoa_population` variable appear in your environment window.
 
-### Interacting with spatial data
+### Spatial data
 As this is the first time we have loaded spatial data into R, let's go for a little exploration of how we can interact with our spatial dataframe. The first thing we want to do when we load spatial data is, of course, map it to confirm if everything is in order. To do this, we can use a really simple command from R’s `base` library: `plot()`. As we do not necessarily want to plot this data everytime we run this script in the future, we can type this command into the console:
 
 ```{r}
@@ -221,7 +220,7 @@ You notice that we actually get a lot more information about our CRS beyond simp
 
 The final thing we might want to do before we get started with our data analysis is to simply look at the data table part of our dataset, i.e. what we called the **Attribute Table** in QGIS, but here it is simply the table part of our dataframe. To do so, you can either use the `View()` function in the console or click on the `msoa_population` variable within our environment.
 
-### Getting our crime data into shape
+### Preparing data
 Now we have our data loaded, our next step is to process our data to create what we need as our final output for analysis: a spatial dataframe that contains a **theft crime rate** for each MSOA. We only two types of spatial or spatially-relevant data in our `all_theft_df` that can help us with this:
 
 1) The approximate WGS84 **latitude** and **longitude**.
@@ -351,12 +350,11 @@ The code above uses something called a **pipe** function: `|>`. A pipe is used t
 
 Now we have adjusted our weightings we can perform our first join. We need to decide which dataset is going to be our target dataset (i.e. the dataset we attach new data too). It makes sense to use the `all_theft_df` because we need to keep **all records** in this dataset, but we do not necessarily need **all records** in the `lsoa_lookup` dataset for LSOAs for which no crime has been recorded.
 
-```{r}
+```{r tidy='styler'}
 #| label: 05-lsoa-lookup-join
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| tidy: True
 #| filename: "R code"
 # join to crime data
 all_theft_df_join <- all_theft_df |> 
@@ -425,12 +423,11 @@ msoa_lookup <- read_csv("data/raw/boundaries/lsoa21_msoa21.csv")
 
 We can now simply attach the `msoa_lookup` table to our `all_theft_df`:
 
-```{r}
+```{r tidy='styler'}
 #| label: 05-msoa-lookup-join
 #| classes: styled-output
 #| echo: True
 #| eval: True
-#| tidy: True
 #| filename: "R code"
 # join to crime data
 all_theft_df_join <- all_theft_df_join |> 
@@ -439,7 +436,7 @@ all_theft_df_join <- all_theft_df_join |>
 
 Now we have our joined dataset, we can finally move forward with aggregating our data to the MSOA level. Before we do this, it would be good if we could clean up our dataframe to only the relevant data that we need moving forward. To be able to 'clean' our dataframe, we have two choices in terms of the code we might want to run. First, we could look to drop certain columns from our dataframe. Alternatively, we could create a subset of the columns we want to keep from our dataframe and store this as a new variable or simply overwrite the currently stored variable. To do either of these types of data transformation, we need to know more about how we can interact with a dataframe in terms of **indexing**, **selecting** and **slicing**.
 
-### Data wrangling
+### Wrangling data
 Everything we will be doing today as we progress with our dataframe cleaning and processing relies on us understanding how to interact with and transform our dataframe. This interaction itself relies on knowing about how **indexing** works in R as well as how to **select** and **slice** your dataframe to extract the relevant cells, rows or columns and then manipulate them. Whilst there are traditional programming approaches to this using the base R library, `dplyr` is making this type of data wrangling much easier. The following video provides an excellent explanation from both a `base` R perspective as well as using the `dplyr` library.
 
 #### Selection with base R
@@ -703,7 +700,7 @@ all_theft_df_join <- dplyr::select(all_theft_df_join, crime_id, LSOA21CD, msoa21
 
 You should now see that your `all_theft_df_join` dataframe should only contain four variables. You can go and view this dataframe or call the `head()` function on the data in the console if youlike to check out this new formatting.
 
-### Aggregate crime by MSOA
+### Aggregating data
 To aggregate our crime by MSOA, we need to use a combination of `dplyr` functions. First, we need to **group** our crime by each 2021 MSOA and then create a new variable that contains the sum of thefts occurring in each MSOA. To do so, we will use the `group_by()` function and the `mutate()` function. This is the same `group_by()` function we already used to adjust the LSOA weightings. The `group_by()` function creates a 'grouped' copy of the table (in memory), then any `dplyr` function used on this grouped table will manipulate each group separately (i.e. our weighted crime counts) and then **combine the results** to a single output:
 
 ```{r}
@@ -745,7 +742,7 @@ Write out the completed theft table to a new `csv` file for future reference:
 write_csv(all_theft_df_msoa, "data/data/MSOA2021_theft.csv")
 ```
 
-### Joining crime data to MSOAs
+### Joining data
 We are now getting to the final stages of our data processing, we just need to join our completed theft table, `all_theft_df_msoa` to our `msoa_population` spatial dataframe and then compute a theft crime rate. This will then allow us to map our crime rates by MSOA, exactly what we set to achieve within this practical. 
 
 ```{r}
@@ -789,7 +786,7 @@ theft_msoa_sdf <- theft_msoa_sdf |>
 
 Have a look at your new `theft_msoa_sdf` spatial dataframe. Does it look as you would expect? Now we have our **final** dataframe, we can go ahead and make our maps.
 
-### Mapping crime data
+### Mapping data
 For making our maps, we will be using one of two main visualisation libraries that can be used for spatial data: `tmap`. `tmap` is a library written around thematic map visualisation. The package offers a flexible, layer-based, and easy to use approach to create thematic maps, such as choropleths and bubble maps. What is really great about `tmap` is that it comes with one quick plotting method for a map called: `qtm()`.
 
 We can use this function to plot the theft crime rate really quickly. Within your script, use the `qtm` function to create a map of theft crime rate in London in 2021.
@@ -911,7 +908,7 @@ tm_shape(theft_msoa_sdf) +
 
 That looks a little better from the classification side of things.
 
-### Styling crime data
+### Styling data
 To style our map takes a further understanding and familiarity with our `tmap` library, but it is only something you will only really learn by having to make your own maps. As a result, we will not go into explaining **exactly** every aspect of map styling but instead provide you with some example code that you can use as well as experiment with to try to see how you can adjust aspects of the map to your preferences.
 
 Fundamentally, the **key functions** to be aware of:
@@ -960,7 +957,7 @@ tm_shape(theft_msoa_sdf) +
   )
 ``` 
 
-### Exporting our crime data
+### Exporting data
 Once we are finished making our map, we can go ahead and export it to our `maps` folder. To do so, we need to save our map-making code to as a variable and then use the `tmap_save()` function to save the output of this code to a picture within our maps folder.
 
 ```{r tidy='styler'} 

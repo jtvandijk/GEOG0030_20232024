@@ -17,7 +17,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 ## Bike theft in London {#bike-theft-w06}
 This week, we will be investigating bike theft in London in 2021 and look to confirm the hypothesis *that bike theft primarily occurs near tube and train stations*. We will be investigating its distribution across London using the point data provided within our crime dataset. We will then compare this distribution to the location of train and tube stations using specific geometric operations and spatial queries that can compare the geometry of two (or more) datasets. We will also learn how to download data from OpenStreetMap as well as use an interactive version of `tmap` to explore the distribution of the locations of individual bike theft against the locations of these stations.
 
-### Spatial analysis set up {#setup-w06}
+### Getting started {#setup-w06}
 Open a new script within your GEOG0030 project and save this script as `wk6-bike-theft-analysis.r`. At the top of your script, add the following metadata:
 
 ```{r}
@@ -29,7 +29,6 @@ Open a new script within your GEOG0030 project and save this script as `wk6-bike
 #| filename: "R code"
 # Analysing bike theft in London using geometric analysis
 # Date: January 2024
-# Author: Justin 
 ```
 
 Now let us add all of the libraries we will be using today to the top of our script:
@@ -241,7 +240,7 @@ tm_shape(msoa_london) + tm_fill() +
 
 We can see our train and tube stations are only present in primarily the north of London and not really present in the south. This is not quite right and in fact it seems that our dataset only contains those train stations used by Transport for London within the underground network rather than all the stations in London. We will need to fix this before conducting our full analysis. A second issue with our dataset is that the `london_stations` spatial dataframe extends beyond our London boundaries. The same applies to our `bike_theft` spatial dataframe. 
 
-### Data preparation {#data-preparation-w06}
+### Preparing data {#data-preparation-w06}
 When we want to reduce a dataset to the spatial extent of another, there are two different approaches: a *subset* or a *clip*. Each deal with the geometry of the resulting dataset in slightly different ways.
 
 1.  A *subset* operation is what is known in GIScience-speak as a *select by location query*. In this case, our subset will return the full geometry of each observation feature of the input layer that intersects with our second layer. Any geometry that does not intersect with our second layer will be removed from the geometry of our resulting layer.
@@ -316,7 +315,7 @@ You should see that our `london_outline` spatial data frame only has one observa
 plot(london_outline)
 ```
 
-### OpenStreetMap data
+### OpenStreetMap
 Back to our train and tube stations. We have seen that our current `london_stations` spatial dataframe does not provide the coverage of train stations in London that we expected. To add in our missing data, we will be using [OpenStreetMap](https://www.openstreetmap.org/#map=6/54.910/-3.432).
 
 ::: callout-note

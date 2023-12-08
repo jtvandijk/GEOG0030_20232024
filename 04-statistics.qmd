@@ -14,13 +14,15 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 #### Suggested readings
 - Arribas-Bel, D. *et al*. 2021. Open data products - A framework for creating valuable analysis ready data. *Journal of Geographical Systems* 23: 497-514. [[Link]](https://doi.org/10.1007/s10109-021-00363-5)
 
-## Programming
+## Programming in R
 Programming is our most fundamental way of interacting with a computer, it was how computers were first built and operated and for a long time, the [Command Line Interface (CLI)](https://en.wikipedia.org/wiki/Command-line_interface) was our primary way of using computers before our [Graphical User Interface (GUI)](https://en.wikipedia.org/wiki/Graphical_user_interface) Operating Systems (OS) and software became mainstream. Nowadays, the majority of us use our computers through clicking instead of typing. However, programming and computer code underpin every single application that we use on our computers.
 
+::: {.callout-note}
 Programming is used for endless purposes and applications, ranging from software engineering and application development, to creating websites and managing databases at substantial scales. To help with this diversity of applications, multiple types of programming languages have developed. Wikipedia, for example, has a [list of hundreds of different languages](https://en.wikipedia.org/wiki/List_of_programming_languages), although there is some overlap between many of these, some are used for incredibly niche activities, and some are not used any more at all.
+:::
 
-## Programming in R
-We will be using R and RStudio in this module as the main tool to complete specific tasks we need to do for our data analysis. There are a lot of alternative tools out there that you can use to achieve the same outcomes (as you have seen with QGIS, and no doubt had experience of using some statistics/spreadsheet software) but we choose to use this tool because it provides us with many advantages over these other tools.
+### R
+We will be using R in this module as the main tool to complete specific tasks we need to do for our data analysis. There are a lot of alternative tools out there that you can use to achieve the same outcomes (as you have seen with QGIS, and no doubt had experience of using some statistics/spreadsheet software) but we choose to use this tool because it provides us with many advantages over these other tools.
 
 What is important to understand is that R and RStudio are two different things:
 
@@ -39,16 +41,18 @@ We can also use the **R Console** to execute simple instructions that do not nee
 - It is well respected and used at the world's largest technology companies including Google, Microsoft and Facebook.
 - It offers a **transferable skill** that shows to potential employers experience both of statistics and of computing.
 
+::: {.callout-note}
 The intention of the practical elements of this week is to provide a thorough introduction to RStudio to get you started:
 
 1. The basic programming principles behind R.
 2. Loading in data from `csv` files, filtering and subsetting it into smaller chunks and joining them together.
 3. Calculating a number of statistics for data exploration and checking.
 4. Creating basic and more complex plots in order to visualise the distributions values within a dataset.
+::: 
 
 What you should remember is that R has a steep learning curve, but the benefits of using it are well worth the effort. The best way to really learn R is to take the basic code provided in tutorials and experiment with changing parameters such as the colour of points in a graph to really get 'under the hood' of the software. 
 
-### The RStudio interface
+### RStudio
 You should all have access to some form of R on your personal computer, or through [Desktop@UCL Anywhere](https://www.ucl.ac.uk/isd/services/computers/remote-access/desktopucl-anywhere) or the [RStudio Server](https://rstudio.data-science.rc.ucl.ac.uk/auth-sign-in). If not, please refer to the [Geocomputation: An Introduction](01-introduction.html#software) section. Go ahead and open RStudio and we will first take a quick tour of the various components of the RStudio environment interface and how and when to use them. When you first open RStudio, it should look a little something like this:
 
 ```{r}
@@ -417,7 +421,7 @@ attributes(two_str_variable)
 In addition to make notes about the functions you are coming across in the workshop, you should notice that with each line of code in the examples, an additional **comment** is used to explain what the code does. Comments are denoted using the hash symbol `#`. This comments out that particular line so that R ignores it when the code is run. These comments will help you in future when you return to scripts a week or so after writing the code as well as help others understand what is going on when sharing your code. It is good practice to get into writing comments **as you code** and not leave it to do retrospectively. Whilst we are using the console, using comments is not necessary but as we start to build up a script later on, you will find them essential to help understand your workflow in the future.
 :::
 
-## Simple analysis
+## Getting started
 The objects we created and played with above are very simple but the real power of R comes when we can begin to execute functions on more complex objects. R accepts four main types of data structures: **vectors**, **matrices**, **dataframes**, and **lists**. These data structures are essential because they allow us to apply common statistical functions. 
 
 We are going to explore these data structures with some of dummy data on the total number of pages and publication dates of the various editions of **Geographic Information Systems and Science** (GISS) book by Longley *et al.* and use these for a brief analysis:
@@ -757,7 +761,6 @@ Let us go ahead and give our script a title and include some metadata:
 #| filename: "R code"
 # Analysing theft in London by month
 # Date: January 2024
-# Author: Justin 
 ```
 
 Now we have our title, the **second** bit of code we want to include in our script is to load **our libraries** (i.e. the installed packages we want to use in our script):
@@ -790,7 +793,7 @@ There are two main ways to run a script in RStudio: all at once or by line/chunk
 
 If you are running a script that seems for whatever reason to be stuck or you notice some of your code is wrong, you will need to interrupt R. To do so, click on **Session** -> **Interrupt R**. If this does not work, you may have to terminate and restart R.
 
-### Crime data
+### Crime analysis
 Where last week we provided you with a crime dataset, this week you will download and prepare the dataset yourselves.
 
 1. Start by navigating to [data.police.uk](https://data.police.uk/). And click on **Downloads**.
@@ -859,7 +862,7 @@ We have found out our variable is a dataframe, containing **84,848 rows and 12 c
 
 This will be the most complicated section of code you will come across today, and we will use some functions that you have not seen before. Copy the following code below into your script, then execute.
 
-```{r tidy="styler"}
+```{r tidy='styler'}
 #| label: 04-combine-csv
 #| classes: styled-output
 #| echo: True
