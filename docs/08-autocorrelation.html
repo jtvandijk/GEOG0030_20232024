@@ -297,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This week, we will be looking at measuring spatial dependence. Spatial dependence is the idea that an observed value of a variable in one location is to some degree dependent on the observed value of the same value in a nearby location. For spatial analysis, this dependence can be assessed and measured statistically by considering the level of spatial autocorrelation between values of a specific variable, observed in either different locations or between pairs of variables observed at the same location. Spatial autocorrelation occurs when these values are not independent of one another and instead cluster together in space.</p>
 <section id="slides-w08" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="slides-w08"><span class="header-section-number">8.1</span> Lecture slides</h2>
-<p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w07-geo.pdf">[Link]</a></p>
+<p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w08-geo.pdf">[Link]</a></p>
 </section>
 <section id="reading-w08" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="reading-w08"><span class="header-section-number">8.2</span> Reading list</h2>
@@ -332,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="setup-w08" class="level3" data-number="1.3.1">
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="setup-w08"><span class="header-section-number">8.3.1</span> Getting started</h3>
-<p>Open a new script within your GEOG0030 project and save this script as <code>wk6-population-analysis.r</code>. At the top of your script, add the following metadata:</p>
+<p>Open a new script within your GEOG0030 project and save this script as <code>wk8-population-analysis.r</code>. At the top of your script, add the following metadata:</p>
 <div class="cell styled-output" data-hash="08-autocorrelation_cache/html/06-script-title_14ca67aa126142f5d87d40850c76c9dd">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -388,7 +388,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Save the file as <code>csv</code> into your <code>data</code> folder as <code>WARD2021_ethnic_group.csv</code>.</li>
 </ol>
 <p>After this, let’s load our London Ward file:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-load-shp_5ae0bdd34944c04961d7d0b77c7af9c4">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-load-shp_50dd62764ce75107f1d6a62c94d4422c">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -408,7 +408,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 <p>Check the <strong>CRS</strong> of our <code>ward_gb</code> spatial dataframe:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-crs-wardshp_95984e11f4ffe4e0633257cfc8a93b40">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-crs-wardshp_6cf478586ca345bc1cd44b8f89bed1d2">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -461,7 +461,7 @@ PROJCRS["OSGB36 / British National Grid",
 </div>
 </div>
 <p>This all looks good, so we can move to also load the <code>csv</code> we just created:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-ethnicity-csv_a5bd030aa6105790b0cfa5a03357e00b">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-ethnicity-csv_3f0972340f6fe485c6b85f691fdfab9b">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -493,7 +493,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-drop-rename-cols_f51e884a2b4d6388eef6d5c136770902">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-drop-rename-cols_5f0000ce425869cea95716b5510a304c">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -515,7 +515,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 <section id="data-preparation-w08" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="data-preparation-w08"><span class="header-section-number">8.3.2</span> Data preparation</h3>
 <p>We now need to join our population group dataset to our Ward spatial layer. Because the Ward dataset contains every the geometry of every single Ward in Great Britain, we can use an <code>inner_join</code> so that only the geometries of those Wards that also appear in the <code>ethnicity_london</code> object are retained.</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-join-pop-shp_7a40f8df18bce976f715a6b8882ccb69">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-join-pop-shp_18c93b91573b3db01af94e345f73a9a7">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -526,7 +526,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 </div>
 </div>
 <p>Have a look at your newly created Ward dataframe using the <code>plot()</code> function.</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-quick-plt_4c5c3a1403c9ba56d2e508b1c5eba8d0">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-quick-plt_debe055ad6e8830386047eff699a13f8">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -535,16 +535,16 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ethnicity_london_sdf, <span class="at">max.plot =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-quick-plt" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-quick-plt" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-quick-plt-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-quick-plt-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;2: Quick plot of the filtered Ward spatial dataframe.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>This is looking reasonably okay, however, it is clear that there are some data missing from the <a href="https://en.wikipedia.org/wiki/City_of_London">City of London</a>. The reason for this is that the dataset we downloaded only contains an overall value for the City of London rather than a value for every Ward. If we only were interested in plotting the data, we could simply add a layer with <strong>no data</strong> to colour in the empty City of London area, but for measuring spatial autocorrelation it is essential that there are no holes in the spatial data that should not be there. We will fix this by extracting the Wards pertaining to the City of London and adding these to our spatial dataframe.</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-city-of-london_359324918a24dc59155397b2b494c309">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-city-of-london_a1765a853dcf8b9030c7d6c9b54e0c23">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -566,7 +566,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 </div>
 </div>
 <p>To join the <code>ethnicity_london</code> dataset to the City of London wards is a bit tricky — because the <code>ethnicity_london</code> dataset does not contain the actual Wards codes for the City of London Wards. Fortunately for us, the London Data Store was a bit cheeky and in the ethnic group file they created they put the Local Authority District code of the City of London into the Ward column. We can use this to our advantage and join our datasets together with a <code>left_join</code>.</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-join-city-shp_63f53bc97042b4c3a21a46b88ca8b3da">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-join-city-shp_66f6ad7d6ab54b8eed7b441980588ec3">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -646,7 +646,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-city-of-london-divvie-up_06ccd0be5ab102c1ebb0f0ee913a5f73">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-city-of-london-divvie-up_62e1be214241f276a32b7b6c53f13f6e">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -716,7 +716,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <p>That is much better. The last thing we now need to do is to combine our <code>city_of_london_sdf</code> with our <code>ethnicity_london_sdf</code>. Because both spatial dataframe contain the exact same data and column names, we can simply <strong>bind</strong> them together.</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-city-of-london-bind_1e460d9ed4201a5dcbff8d3c3d3c064c">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-city-of-london-bind_96703d46c7e74e33f26f201af76a5df2">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -727,7 +727,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <p>Let’s check whether our approach worked by plotting the updated spatial dataframe:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-quick-plt-again_5048f89b9081f55fcf78bbba7bd37bfd">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-quick-plt-again_731d9b2add39fba0b4c8247858855f36">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -736,9 +736,9 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ethnicity_london_sdf, <span class="at">max.plot =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-quick-plt-again" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-quick-plt-again" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-quick-plt-again-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-quick-plt-again-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;3: Quick plot of the full Ward spatial dataframe.</figcaption>
 </figure>
 </div>
@@ -771,7 +771,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-summarise-sdf_572ffcf52210c63b58583652e5d4ca1d">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-summarise-sdf_c3022d00954e023d6ece86cd9e4a1cd7">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -840,7 +840,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <p>This gives us an overview of all variables, but let’s have a look at our population group of interest for today’s practical by creating a <a href="https://en.wikipedia.org/wiki/Histogram">histogram</a>.</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-quick-hist_9d7fe2c3efb9f9bcd27493176753ac22">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-quick-hist_2bcec3714a64c16a053b0a2c1f722087">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -849,9 +849,9 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ethnicity_london_sdf<span class="sc">$</span>asian_bangladeshi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-quick-hist" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-quick-hist" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-quick-hist-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-quick-hist-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;4: Histogram of the distribution of the self-identified Asian-Bangladeshi population group.</figcaption>
 </figure>
 </div>
@@ -870,7 +870,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <p>Plot the boxplot of our <code>asian_bangladeshi</code> variable:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-quick-boxplot_641ba1837e73f2d643f290a585265cff">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-quick-boxplot_5caf420128ffe59c96cfffeb18644359">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -879,9 +879,9 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(ethnicity_london_sdf<span class="sc">$</span>asian_bangladeshi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-quick-boxplot" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-quick-boxplot" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-quick-boxplot-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-quick-boxplot-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;6: Boxplot of the distribution of the self-identified Asian-Bangladeshi population group.</figcaption>
 </figure>
 </div>
@@ -902,7 +902,7 @@ Projected CRS: OSGB36 / British National Grid
 <section id="spatial-distributions" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="spatial-distributions"><span class="header-section-number">8.5</span> Spatial distributions</h2>
 <p>Whilst statistical analysis of distributions focus on tests and charts, when we want to understand the spatial distribution of our phenomena, we have a very simple solution: we make a map. In our case, we are looking at areal unit data and therefore we can use a choropleth map to study our data across the Wards. In fact, we can actually create a sequence of maps not only covering the self-identified Asian-Bangladeshis but also other population groups.</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-facet-map_3bc919cbf6628933a85b7533c3834e8f">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-facet-map_5dd02106a007897073474ebe35c428bb">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -923,16 +923,16 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_facets</span>(<span class="at">ncol =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-facet-map" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-facet-map" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-facet-map-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-facet-map-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;7: Facet map of all our population groups.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Despite these maps being a little small and not containing any labels, it seems that different population groups indeed concentrate in different parts of London. Let’s zoom into the Asian-Bangladeshi population group and add a legend:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-facet-map-asian-bangladeshi_da4ba0548a998281f926930708bebe6e">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-facet-map-asian-bangladeshi_2b6aed7f026d55ba18002d9dccb41769">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -949,9 +949,9 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>), <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-facet-map-asian-bangladeshi" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-facet-map-asian-bangladeshi" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-facet-map-asian-bangladeshi-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-facet-map-asian-bangladeshi-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;8: Quick map of the self-identified Asian-Bangladeshi population group.</figcaption>
 </figure>
 </div>
@@ -969,7 +969,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 <p>The thing with spatial distributions is that we can quickly pick up on spatial patterns present within our data just by looking at the data. For example, we can clearly see some concentrations of people that self-identify as Asian-Bangladeshis in East London. The question now is whether these clusters are significant from a statistical point of view. This brings us to measuring spatial correlation.</p>
 <p>Before we move on, let’s normalise the <code>asian_banglades</code> variable by creating a new variable that contains the proportion of individuals that self-identify as Asian-Bangladeshi:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-create-proportions_0a56c86b799dc03033c1cb8d39837eed">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-create-proportions_14e73857cb746771a723ddd89727ad1d">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1106,7 +1106,7 @@ Projected CRS: OSGB36 / British National Grid
 <li>Creating a Fixed Distance <span class="math inline">\(W_{ij}\)</span> spatial weights matrix</li>
 </ol>
 <p>For either approach, we use a single line of code to create the relevant <span class="math inline">\(W_{ij}\)</span> spatial weights matrix:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-who-is-your-neighbour_1a61a81e7a6228bb6cd618022888dad9">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-who-is-your-neighbour_8b1e3fdf49ab04f4f74ddff590544a34">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1140,7 +1140,7 @@ are constant over geometries of x</code></pre>
 </div>
 </div>
 <p>We can calculate the centroids of our Wards using one of the <strong>geometric</strong> tools from the <code>sf</code> library: <code>sf_centroid()</code>.</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-get-them-centroids_109f1ef78add537b140d86e1d43a784d">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-get-them-centroids_8c5548724ad5b659bd2b9246e05dadb5">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1165,7 +1165,7 @@ are constant over geometries of x</code></pre>
 </div>
 </div>
 <p>Now we have our Ward centroids, we can go ahead and plot the centroids and the defined neighbour connections between them from each of our neighbour definitions. To do so, we will use the <code>plot()</code> function, provide the relationships via our <code>ward_neighbours_*</code> lists and then the geometry associated with these lists from our <code>ward_centroid</code> object:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-plot-them-neighbours-queen_0b2ec94f82982634bc3dd2184aa8632e">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-plot-them-neighbours-queen_c0e5ccf986a1baa7281de93dce4fa8a5">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1174,15 +1174,15 @@ are constant over geometries of x</code></pre>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ward_neighbours_queen, <span class="fu">st_geometry</span>(ward_centroid), <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-plot-them-neighbours-queen" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-plot-them-neighbours-queen" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-plot-them-neighbours-queen-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-plot-them-neighbours-queen-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;12: 2022 Wards with a <strong>Queen</strong> neighbourhood definition.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-plot-them-neighbours-rook_ba632956be7ce52b16dcb9e65e19111b">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-plot-them-neighbours-rook_10e4537c7637b5d129e255ab211afeeb">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1191,15 +1191,15 @@ are constant over geometries of x</code></pre>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ward_neighbours_rook, <span class="fu">st_geometry</span>(ward_centroid), <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-plot-them-neighbours-rook" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-plot-them-neighbours-rook" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-plot-them-neighbours-rook-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-plot-them-neighbours-rook-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;13: 2022 Wards with a <strong>Rook</strong> neighbourhood definition.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-plot-them-neighbours-fixed_280ac2beb76950fb3aba4f58c4d15455">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-plot-them-neighbours-fixed_5b293f415763bc24583fc13f8e6c89ea">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1208,9 +1208,9 @@ are constant over geometries of x</code></pre>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ward_neighbours_fd, <span class="fu">st_geometry</span>(ward_centroid), <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-plot-them-neighbours-fixed" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-plot-them-neighbours-fixed" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-plot-them-neighbours-fixed-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-plot-them-neighbours-fixed-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;14: 2022 Wards with a <strong>Fixed distance</strong> neighbourhood definition.</figcaption>
 </figure>
 </div>
@@ -1249,7 +1249,7 @@ are constant over geometries of x</code></pre>
 </div>
 </div>
 <p>With our neighbours now defined, we will go ahead and create our final spatial weights objects that will be needed for our spatial autocorrelation code. At the moment, we have our neighbours defined as a <em>list</em> but we need to convert it to a <em>neighbours</em> object using the <code>nb2listw()</code> function:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-meeting-the-neigbhours-queen_c05967f58eff8398318f9ae559a23b29">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-meeting-the-neigbhours-queen_7fb72a6770b8bddeeb1091baf8265aee">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1298,7 +1298,7 @@ are constant over geometries of x</code></pre>
 <li><span class="math inline">\(1\)</span> suggests a <em>non-random</em> distribution of clearly defined clusters</li>
 </ul>
 <p>Before we run our global Moran’s I test, we will first create a spatial lag model plot which looks at each of the values plotted against their spatially lagged values. The graph will show quickly whether we are likely to expect our test to return a positive, zero, or negative statistic:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-plot-moran-queens_b0cc7afb2da9f82656ba5f2294eef8b0">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-plot-moran-queens_b3e371582b362c8e4d311cd240daf709">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1307,16 +1307,16 @@ are constant over geometries of x</code></pre>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moran.plot</span>(ethnicity_london_sdf<span class="sc">$</span>asian_bangladeshi_prop, <span class="at">listw =</span> ward_spatial_weights_queen)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-plot-moran-queens" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-plot-moran-queens" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-plot-moran-queens-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-plot-moran-queens-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;15: Plot of lagged values versus polygon values using the Queen neigbhourhood definition.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>We can see that there is a positive relationship between our <code>asian_bangladeshi_prop</code> variable and the spatially lagged <code>asian_bangladeshi_prop</code> variable, therefore we are expecting our global Moran’s I test to produce a statistic reflective of the slope visible in our scatter plot. Now we can run the global Moran’s I spatial autocorrelation test:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-global-moran-queen_df0b663dab614b03fb8d038d7c911431">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-global-moran-queen_55336e729c2dbe0c5a2c697e64386548">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1365,7 +1365,7 @@ Moran I statistic       Expectation          Variance
 <section id="local-morans-i" class="level3" data-number="1.6.5">
 <h3 data-number="1.6.5" class="anchored" data-anchor-id="local-morans-i"><span class="header-section-number">8.6.5</span> Local Moran’s I</h3>
 <p>A local Moran’s I test deconstructs the global Moran’s I down to its components and then constructs a localised measure of autocorrelation, which can show different cluster types. To run a local Moran’s I test, the code is similar to above:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-local-moran-queen_ede6e4ae2f5a36c07e6160625fd27fc1">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-local-moran-queen_71bfb351884c9eb08827f8ad3b167f0a">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1422,7 +1422,7 @@ Moran I statistic       Expectation          Variance
 </table>
 <p>We therefore have a Moran’s I statistic for each of our Wards, as well as a significance value plus a few other pieces of information that can help us create some maps showing our clusters. To be able to do this, we need to join our local Moran’s I output back into our <code>ethnicity_london_sdf</code> spatial dataframe, which will then allow us to map these results.</p>
 <p>To create this join, we first <strong>coerce</strong> our local Moran’s I output into a dataframe that we then join to our <code>ethnicity_london_sdf</code> spatial dataframe using the familiar <code>mutate()</code> function from the <code>dplyr</code> library. In our case, we do not need to provide an <strong>attribute</strong> to join these two dataframes together as we use the computer’s logic to join the data in the order in which it was created:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-local-moran-join_4c88e976685ba0c0cf2861c5d9a1b465">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-local-moran-join_f5b941fb5d721745cd6eeedfdb915706">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1439,7 +1439,7 @@ Moran I statistic       Expectation          Variance
 </div>
 </div>
 <p>We now have the data we need to plot our local spatial autocorrelation maps. We will first plot the most simple maps to do with our local Moran’s I test: the local Moran’s I statistic.</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-map-local-moran_b0e33ca8463393fb2e5d30fa78c51e47">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-map-local-moran_83da3abd869de5f6714760850b13d8ab">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1459,16 +1459,16 @@ Moran I statistic       Expectation          Variance
 <span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>), <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-map-local-moran" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-map-local-moran" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-map-local-moran-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-map-local-moran-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;16: Cluster map of the self-identified Asian-Bangladeshi population group.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>From the map, it is possible to observe the variations in autocorrelation across space. We can interpret that there seems to be a geographic pattern to the autocorrelation. However, it is not possible to understand if these are clusters of high or low values or which ones are statistically signficant. To be able to interpret this confidently, we also need to know the significance of the patterns we see in our map and therefore need to map the <span class="math inline">\(p\)</span>-value of local Moran’s I statistic.</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-map-local-moran-significance_3980aa91303bf5f8b2bed9b8e04253c0">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-map-local-moran-significance_2b71dd3dfcdacfc5b90423a5351c0a7a">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1497,9 +1497,9 @@ Moran I statistic       Expectation          Variance
 <span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>), <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-map-local-moran-significance" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-map-local-moran-significance" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-map-local-moran-significance-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-map-local-moran-significance-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;17: Significant cluster map of the self-identified Asian-Bangladeshi population group.</figcaption>
 </figure>
 </div>
@@ -1522,7 +1522,7 @@ Moran I statistic       Expectation          Variance
 <li>If a Ward’s LMI was found not to be significant, the Ward will be mapped as <strong>not significant</strong>.</li>
 </ul>
 <p>To create this cluster map, we need to take several additional steps. We firstly need, for each Ward, whether its observed value is higher or lower than the mean observed. We then need to know, for each Ward, whether its LMI value is higher or lower than the mean LMI. Finally, we can use the values of these two columns to assign each Ward with a cluster type.</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-map-local-moran-cluster-type_6dd1872aa479ab4cdc0c5013e191d859">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-map-local-moran-cluster-type_d20c303046ba8c54d1ed7176c050aad6">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1550,7 +1550,7 @@ Moran I statistic       Expectation          Variance
 </div>
 </div>
 <p>Now we have a column detailing our cluster types, we can create a cluster map that details our four cluster types as well as those that are not significant. Creating a categorical map in R and using <code>tmap</code> is a little tricky and we will need to do some preparing of our colour palettes to ensure our data is mapped correctly. To do this, we first need to figure out how many cluster types we have in our <code>cluster_type</code> field:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-local-moran-cluster-types_cea5cd1336627e6d0ad7cdb34ffe62e4">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-local-moran-cluster-types_1b3d04b45bbe529186241284cdad74bb">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1572,7 +1572,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <p>We can see that we have three out of the four possible cluster types in our dataset — alongside the <code>No Significance</code> value. We therefore need to ensure our palette includes three colours for these cluster types, plus a white colour for <code>No Significance</code>:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-local-moran-cluster-types-colours_7a7889c4e4c2258b8723621b62028538">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-local-moran-cluster-types-colours_0ac9a5045340258131d2df94409a8413">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1582,7 +1582,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <p>Now we can finally map our clusters:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-cluster-plot_0ce0654c7ba28a9da2db6ffc50fa3ee5">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-cluster-plot_78228ce56450c5b88f9812edf2e72ab9">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1601,9 +1601,9 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>), <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-cluster-plot" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-cluster-plot" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-cluster-plot-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-cluster-plot-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;18: Cluster types map of the self-identified Asian-Bangladeshi population group.</figcaption>
 </figure>
 </div>
@@ -1614,7 +1614,7 @@ Projected CRS: OSGB36 / British National Grid
 <section id="getis-ord-gi" class="level3" data-number="1.6.6">
 <h3 data-number="1.6.6" class="anchored" data-anchor-id="getis-ord-gi"><span class="header-section-number">8.6.6</span> Getis-Ord-Gi*</h3>
 <p>The final test we will run today is the local Getis-Ord, which will produce the <span class="math inline">\(Gi*\)</span> statistic. This statistic will identify hot- and coldspots by looking at the neighbours within a defined proximity to identify where either high or low values cluster spatially and recognising statistically significant hotspots as those areas of high values where other areas within a neighbourhood range also share high values too (and vice versa for coldspots).</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/07-local-gi-queen_29c3a5504b16933455ac45ec1bed4736">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-local-gi-queen_2a5efd31ae1fa26d7514c26a10f1c7d6">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1741,7 +1741,7 @@ First 10 features:
 </div>
 </div>
 <p>By printing the results of our test, we can see that the local Getis-Ord test is a bit different from a local Moran’s I test as it only contains a single value: <a href="https://en.wikipedia.org/wiki/Standard_score">the z-score</a>. The z-score is a standardised value relating to whether high values or low values are clustering together, which we call the <span class="math inline">\(Gi*\)</span> statistic. Now we have joined this output, a list of <span class="math inline">\(Gi*\)</span> values, to our <code>ethnicity_london_sdf</code> spatial dataframe, we can map the result:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-07-cluster-plot-gi_59701b30b4477318f5f08f7e04022127">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-cluster-plot-gi_0f4ffe04fc2e8d271c8323a3d63cd375">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1761,9 +1761,9 @@ First 10 features:
 <span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>), <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-07-cluster-plot-gi" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-08-cluster-plot-gi" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="08-autocorrelation_files/figure-html/fig-07-cluster-plot-gi-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="08-autocorrelation_files/figure-html/fig-08-cluster-plot-gi-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;19: Local <span class="math inline">\(Gi*\)</span> map of the self-identified Asian-Bangladeshi population group.</figcaption>
 </figure>
 </div>

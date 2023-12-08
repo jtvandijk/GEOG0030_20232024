@@ -198,6 +198,19 @@ bike_theft <- all_crime_df |>
   st_transform(27700)
 ```
 
+Let's go ahead and save the `bike_theft` spatial layer as a `GeoPackage`:
+
+```{r}
+#| label: 06-bike-theft-to-gpkg
+#| classes: styled-output
+#| echo: True
+#| eval: False
+#| message: False
+#| filename: "R code"
+# write to GeoPackage
+st_write(bike_theft, 'data/data/LondonBikeTheft2021.gpkg')
+```
+
 We now have our three datasets loaded, it is time for a little data inspection. We can see just from our **Environment** window that in total, we have **302** train and tube stations and **20,768** crimes to look at in our analysis. We can double-check the attributes of our newly created spatial dataframes to see what data we have to work with. You can either do this manually by clicking on the variable, or using commands such as `head()`, `summary()` and `names()` to get an understanding of our dataframe structures and the fieldnames present. 
 
 For our bicycle theft data, we actually only have a geometry column because this is all that we extracted from our collection of crime `csv` files. For our `london_stations` spatial dataframe, we have a little more information, including the name of the station, its address, and as its geometry.
@@ -240,7 +253,7 @@ tm_shape(msoa_london) + tm_fill() +
 
 We can see our train and tube stations are only present in primarily the north of London and not really present in the south. This is not quite right and in fact it seems that our dataset only contains those train stations used by Transport for London within the underground network rather than all the stations in London. We will need to fix this before conducting our full analysis. A second issue with our dataset is that the `london_stations` spatial dataframe extends beyond our London boundaries. The same applies to our `bike_theft` spatial dataframe. 
 
-### Preparing data {#data-preparation-w06}
+### Data preparation {#data-preparation-w06}
 When we want to reduce a dataset to the spatial extent of another, there are two different approaches: a *subset* or a *clip*. Each deal with the geometry of the resulting dataset in slightly different ways.
 
 1.  A *subset* operation is what is known in GIScience-speak as a *select by location query*. In this case, our subset will return the full geometry of each observation feature of the input layer that intersects with our second layer. Any geometry that does not intersect with our second layer will be removed from the geometry of our resulting layer.
@@ -547,7 +560,19 @@ tm_shape(london_stations_osm) + tm_dots(col = "black") +
     tm_basemap(c(StreetMap = "OpenStreetMap"))
 ```
 
-When you investigate the missing stations, you can actually see that our `london_stations_osm` spatial dataframe dataset is actually more accurate than the TfL locations. All 'missing' stations are not in fact missing but simply at a greater offset than 150m. We can safely suggest that we can move forward with only using the `london_stations_osm` spatial dataframe and do not need to follow through with adding any more data to this dataset.
+When you investigate the missing stations, you can actually see that our `london_stations_osm` spatial dataframe dataset is actually more accurate than the TfL locations. All 'missing' stations are not in fact missing but simply at a greater offset than 150m. We can safely suggest that we can move forward with only using the `london_stations_osm` spatial dataframe and do not need to follow through with adding any more data to this dataset. Before we move on, let's save the data as a `GeoPackage`.
+
+```{r}
+#| label: 06-save-trainstations
+#| classes: styled-output
+#| echo: True
+#| eval: False
+#| tidy: True
+#| message: False
+#| filename: "R code"
+# write to GeoPackage
+st_write(london_stations_osm, 'data/data/LondonStations.gpkg')
+```
 
 #### Spatial queries
 Before we go ahead and move forward with our analysis, we will have a look at how we can implement the above quantification using spatial queries instead of geometric operations. Usually, when we want to find out if two spatial dataframes have the same or similar geometries, we would use one of the following queries:
@@ -715,7 +740,7 @@ We will again need to use the **single geometry** version of our `london_station
 bike_theft$d400_sq <- bike_theft |> st_is_within_distance(london_stations_osm_compare, dist=400, sparse=FALSE)
 ```
 
-We can `count` or map the outputs of our two different approaches to check that we have the same output. If you were to do this you will see that we have achieved the exact same output with fewer lines of code and, as a result, quicker processing. However, unlike with the geometric operations, we do not have a buffer to visualise this distance around a train station, which we might want to do, for example, for maps in a report or presentation. Once again, it will be up to you to determine which approach you prefer to use. Some people prefer using the more visual techniques of **geometric operations**, whereas others might find **spatial queries** to answer the same questions.
+We can `count` or map the outputs of our two different approaches to check that we have the same output. If you were to do this you will see that we have achieved the exact same output with fewer lines of code and, as a result, quicker processing. However, unlike with the geometric operations, we do not have a buffer to visualise this distance around a train station, which we might want to do, for example, for maps in a report or presentation. Once again, it will be up to you to determine which approach you prefer to use. Some people prefer using the more visual techniques of **geometric operations**, whereas others might find **spatial queries** to answer the same questions. 
 
 #### Theft at train and tube locations?
 Now we have for each bike theft in our `bike_theft` spatial dataframe an attribute that contains information about whether the theft occurred within 400m of a train or tube station or not. We can use the `count()` function to find out just how many thefts fall in each of these categories.

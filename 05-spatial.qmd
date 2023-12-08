@@ -220,7 +220,7 @@ You notice that we actually get a lot more information about our CRS beyond simp
 
 The final thing we might want to do before we get started with our data analysis is to simply look at the data table part of our dataset, i.e. what we called the **Attribute Table** in QGIS, but here it is simply the table part of our dataframe. To do so, you can either use the `View()` function in the console or click on the `msoa_population` variable within our environment.
 
-### Preparing data
+### Data preparation
 Now we have our data loaded, our next step is to process our data to create what we need as our final output for analysis: a spatial dataframe that contains a **theft crime rate** for each MSOA. We only two types of spatial or spatially-relevant data in our `all_theft_df` that can help us with this:
 
 1) The approximate WGS84 **latitude** and **longitude**.

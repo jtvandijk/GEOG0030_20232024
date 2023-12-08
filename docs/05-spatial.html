@@ -263,7 +263,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#setup-w05" id="toc-setup-w05" class="nav-link" data-scroll-target="#setup-w05"><span class="header-section-number">5.3.1</span> Getting started</a></li>
   <li><a href="#spatial-data" id="toc-spatial-data" class="nav-link" data-scroll-target="#spatial-data"><span class="header-section-number">5.3.2</span> Spatial data</a></li>
-  <li><a href="#preparing-data" id="toc-preparing-data" class="nav-link" data-scroll-target="#preparing-data"><span class="header-section-number">5.3.3</span> Preparing data</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><span class="header-section-number">5.3.3</span> Data preparation</a></li>
   <li><a href="#wrangling-data" id="toc-wrangling-data" class="nav-link" data-scroll-target="#wrangling-data"><span class="header-section-number">5.3.4</span> Wrangling data</a></li>
   <li><a href="#aggregating-data" id="toc-aggregating-data" class="nav-link" data-scroll-target="#aggregating-data"><span class="header-section-number">5.3.5</span> Aggregating data</a></li>
   <li><a href="#joining-data" id="toc-joining-data" class="nav-link" data-scroll-target="#joining-data"><span class="header-section-number">5.3.6</span> Joining data</a></li>
@@ -608,8 +608,8 @@ PROJCRS["OSGB36 / British National Grid",
 <p>You notice that we actually get a lot more information about our CRS beyond simply the code using this function. This function is really important to us as users of spatial data as it allows us to retrieve and set the CRS of our spatial data when the projection is not specified in the data but we do know what projection system should be used.</p>
 <p>The final thing we might want to do before we get started with our data analysis is to simply look at the data table part of our dataset, i.e.&nbsp;what we called the <strong>Attribute Table</strong> in QGIS, but here it is simply the table part of our dataframe. To do so, you can either use the <code>View()</code> function in the console or click on the <code>msoa_population</code> variable within our environment.</p>
 </section>
-<section id="preparing-data" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="preparing-data"><span class="header-section-number">5.3.3</span> Preparing data</h3>
+<section id="data-preparation" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="data-preparation"><span class="header-section-number">5.3.3</span> Data preparation</h3>
 <p>Now we have our data loaded, our next step is to process our data to create what we need as our final output for analysis: a spatial dataframe that contains a <strong>theft crime rate</strong> for each MSOA. We only two types of spatial or spatially-relevant data in our <code>all_theft_df</code> that can help us with this:</p>
 <ol type="1">
 <li>The approximate WGS84 <strong>latitude</strong> and <strong>longitude</strong>.</li>
