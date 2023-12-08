@@ -17,7 +17,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 - Shi, X. 2010. Selection of bandwidth type and adjustment side in kernel density estimation over inhomogeneous backgrounds. *International Journal of Geographical Information Science* 24(5), pp.643-660. [[Link]](https://doi.org/10.1080/13658810902950625)
 
 ## Bike theft in London II {#bike-theft-w07}
-This week, we again investigate bike theft in London in 2021 as we continue to look to confirm our very simple hypothesis: *that bike theft primarily occurs near tube and train stations.* This week, instead of looking at the distance of individual bike thefts from train stations, we will look to analyse the distribution of clusters in relation to the stations. We will first look at this visually and then look to compare these clusters to the location of train and tube stations quantitatively using geometric operations.
+This week, we again investigate bike theft in London in 2021 as we continue to look to confirm our very simple hypothesis: *that bike theft cluster in space.* This week, instead of looking at the distance of individual bike thefts from train stations, we will look to analyse the distribution of clusters and identify hotspots of bike theft.
 
 ### Getting started {#setup-w07}
 Open a new script within your GEOG0030 project and save this script as `wk7-bike-theft-ppa.r`. At the top of your script, add the following metadata:
@@ -462,17 +462,203 @@ tm_shape(kde_400g_raster) +
   tm_raster('lyr.1', palette = 'Blues') 
 ```
 
-With our `kde_400g_raster` using `tmap`, we can go ahead and customise our map as we would do with our vector mapping such as changing the legend, adding a title, north arrow, etc.
+With our `kde_400g_raster` using `tmap`, we can go ahead and customise our map as we would do with our vector mapping such as changing the legend, adding a title, north arrow, etc. --- and, of course, our `stations_london` spatial layer.
 
 ## Distance-based methods
 We have spent a good amount of time looking at using density-based methods to quantify whether our point data is randomly distributed and visualise and identify high and low areas of density, showing if our data is clustered and where. **Distance-based** methods, on the other hands, allow us to quantify the second order properties of our data, i.e. the influence the location of these points have on one another.
 
 ::: {.callout-note}
-Distance-based measures analyse the spatial distribution of points using distances between point pairs, with the majority using Euclidean distance, to determine quantitatively whether our data is, again, randomly distributed or shows sign of clustering or dispersion. These methods are a more rigorous alternative to using the Quadrat Analysis approach, and enables us to assess clustering within our point data at both a global and local scale.
+Distance-based measures analyse the spatial distribution of points using distances between point pairs, with the majority using Euclidean distance, to determine quantitatively whether our data is, again, randomly distributed or shows sign of clustering or dispersion. These methods are a more rigorous alternative to using the Quadrat Analysis approach, and enables us to assess clustering within our point data at both a global and local scale. For the remainder of this practical, we look at one distance-based measure (**average nearest neighbour**) as well as a well-known hybrid technique (**DBSCAN**) 
 :::
 
+### Average Nearest Neighbour
+Average Nearest Neighbour (ANN) is the average distance between all points within a dataset and their individual nearest point. ANN is used as a global indicator to measure the overall pattern of a point set. The ANN of a given point collection can be compared with the expected ANN from points following a random distribution to test whether our point data is clustered or dispersed. The approach is similar to that of the Quadrat Analysis simulation we saw above, but by using distance rather than density grouped to arbitrary quadrats, ANN is likely to be a more robust quantification of our point distribution. 
+
+We can calculate the ANN for our dataset by using the `nndist()` function from the `spatstat` library:
+
+```{r}
+#| label: 07-ann
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# calculate the average distance to nearest neighbour
+mean(nndist(bike_theft_ppp_jitter, k=1))
+```
+
+We can see that the average nearest neighbour for all points is 53.5 metres. To get an insight into the spatial ordering of all our points relative to one another we can plot the ANN values for different order neighbours (i.e. first closest point, second closest point, etc. For point patterns that are highly clustered, we would expect the average distances between points to be very small. 
+
+Calculate the average nearest neighbour to the $k$ nearest neighbours for our bike theft data:
+
+```{r}
+#| label: fig-07-ann
+#| fig-cap: "Average distances to the nearest 100 neighbours."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# calculate the average distance to the nearest 100 neighbours
+bike_theft_ann <- apply(nndist(bike_theft_ppp_jitter, k=1:100),2,FUN=mean)
+
+# plot
+plot(bike_theft_ann ~ seq(1:100))
+```
+
+In our case, the plot does not reveal anything interesting in particular except that higher order points seem to be slightly closer than lower order points. Overall, the ANN is a good approach to conduct statistical tests on large datasets (e.g. if we were to compare the result to a theorethical distribution), but visually it does not tell us a huge amount about our dataset!
+
+## DBSCAN
+The techniques above are useful exploratory techniques for telling us if we have spatial clusters present in our point data, but they are not able to tell us precisely *where* in our area of interest the clusters are occurring. One popular technique for discovering precise clusters in space is an algorithm known as **DBSCAN**, an algorithm that incorporates both distance and density. 
+
+::: {.callout-tip}
+For the complete overview of the DBSCAN algorithm, you can refer to the original paper by [Ester *et al*. (1996)](https://www.aaai.org/Papers/KDD/1996/KDD96-037.pdf). Whilst DBSCAN is a relatively old algorithm, there has been a substantial [resurgence](https://dl.acm.org/doi/10.1145/3068335) in its use within spatial data science (e.g. see [Arribas-Bel *et al.* 2019](https://doi.org/10.1016/j.jue.2019.103217)).
+:::
+
+We can use DBSCAN to detect clusters within our bike theft dataset and then use the clusters to further answer our original research question. DBSCAN takes two parameters:
+
+- The minimum number of points: `MinPts`.
+- The distance: `epsilon`.
+
+Across a set of points, DBSCAN will group together points that are close to each other based on a distance measurement and a minimum number of points. It also marks as outliers the points that are in low-density regions. The algorithm can be used to find associations and structures in data that are hard to find through visual observation alone, but that can be relevant and useful to find patterns and predict trends. However, DBSCAN will only work well if you are able to successfully define the distance and minimum points parameters and your clusters do not vary considerably in density.
+
+### Conducting a DBSCAN analysis
+We can conduct a DBSCAN analysis using the `dbscan` library. For our analysis, we will set our `epsilon` to 200m and then set our minimum cluster size to 20 bike thefts.
+
+```{r}
+#| label: 07-dbscan
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# run dbscan
+bike_theft_dbscan <- bike_theft_london |>
+  st_coordinates() |>
+  dbscan(eps = 200, minPts = 20) 
+```
+
+::: {.callout-tip}
+The `dbscan()` function only accepts a data matrix or dataframe of points as input rather than a spatial dataframe. This is why in the above code we pass the `st_coordinates()` function to extract the projected coordinates.
+:::
+
+### Mapping DBSCAN clusters
+The DBSCAN output contains three objects, including a vector detailing the cluster for each of our bike theft observations. To be able to work with our DBSCAN output effectively and, for example, plot the clusters as individual polygons, we need to add our cluster groups back to into our original point dataset. Because the DBSCAN output does not change the order of points, we can simply stick the cluster output on the `bike_theft_london` spatial dataframe.
+
+```{r}
+#| label: 07-dbscan-add-clusters
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# add the cluster numbers as column
+bike_theft_london <- bike_theft_london |>
+  mutate(dbcluster = bike_theft_dbscan$cluster)
+```
+
+Now we have each of our bike theft points in London associated with a specific cluster, we can generate a polygon that represents these clusters in space, as we can sort of see in our above plot. To do so, we will utilise a geometric operation from the `sf` package: the `st_convex_hull()` function. The `st_convex_hull()` function can be used to create a polygon that represents the minimum coverage of our individual clusters. We can use this function to create a polygon that represents the geometry of all points within each cluster. To enable this, we will use something called a `for` loop. A `for` loop is used to repeat a specific block of code a known number of times.
+
+::: {.callout-warning}
+The code below is a bit complex, but essentially we repeat the following steps for each cluster that the DBSCAN algorithm identified:
+
+- Filter the `bike_theft_london` spatial dataframe by cluster number.
+- Combine all points belonging to the same cluster into a single set of geometry observations.
+- Calculate the convex hull of that single set of geometry observations.
+- Store the resulting polygon in a list.
+
+Once we have looped through all clusters, we end up with a final list containing all the geometries of our cluster polygons which we can convert into a spatial dataframe.
+:::
+
+Run a `for` loop to generate a polygon dataset that represents our bike theft clusters:
+
+```{r}
+#| label: 07-dbscan-for-loop
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# create an empty list to store the resulting convex hull geometries
+# set the length of this list to the total number of clusters found
+geometry_list <- vector(mode = "list", length = max(bike_theft_london$dbcluster))
+
+# create a counter to keep track
+counter <-0
+
+# begin loop
+for (cluster_index in seq(0, max(bike_theft_london$dbcluster))) {
+
+   # filter to only return points for belonging to cluster n
+   biketheft_cluster_subset <- bike_theft_london |>
+     filter(dbcluster == cluster_index)
+
+   # union points, calculate convex hull
+   cluster_polygon <- biketheft_cluster_subset |>
+     st_union() |>
+     st_convex_hull()
+
+   # add the geometry of the polygon to our list
+   geometry_list[counter] <- (cluster_polygon)
+
+   # update the counter
+   counter <- counter + 1
+}
+
+# combine the list
+bike_theft_clusters <- st_sfc(geometry_list, crs = 27700)
+```
+
+We now have a polygon spatial dataframe, `bike_theft_clusters`, that show the general location and distribution of bike theft clusters in London. Let's put them on an interactive map:
+
+```{r tidy="styler"}
+#| label: fig-07-map-clusters-interactive
+#| fig-cap: Interactive map of identified DBSCAN bike theft clusters. 
+#| echo: True
+#| eval: True
+#| message: False
+#| filename: "R code"
+# change tmap mode to interactive 
+tmap_mode("view")
+
+# add London outline
+tm_shape(outline_london) + tm_borders() +
+  # add bike theft clusters
+  tm_shape(bike_theft_clusters) + tm_borders() +
+  # add basemap
+  tm_basemap(c(StreetMap = "OpenStreetMap"))
+```
+
+```{r}
+#| label: 07-tmap-settings
+#| classes: styled-output
+#| echo: False
+#| warning: False
+#| message: False
+#| eval: True
+# ensure tmap is set to plot
+tmap_mode("plot")
+```
+
 ## Assignment {#assignment-w07}
-For this week's assignment, you need to produce a finished KDE map for bike theft in London that also shows the **location of train stations** relative to our KDE clusters. You can adjust the bandwidth and kernel settings if you like, but mainly you need to create a final map that contains this additional data layer as well our expected mapping conventions, plus a title and a renamed legend title. Once your map is done: do you think our hypothesis is confirmed? How confident are you in this assessment?
+We have conducted a lot of analysis today. What we have failed to do, however, is to make proper maps. For this week's assignment, create two publishable maps with all the trimmings using the main outputs from today's tutorial:
+
+1. A Kernel Density Map of bike theft in London.
+2. A cluster map of bike theft in London, using the DBSCAN output.
+
+::: {.callout-tip}
+- Because the thefts concentrate in central London why not consider zooming into a specific area?
+- Why not contextualise the densities and clusters by including the `stations_london` layer?
+:::
+
+## Want more? [Optional] {#wm-w07}
+### Reproducible research {.unnumbered}
+Last week you might have had a look at the book [Data Skills for Reproducible Research](https://psyteachr.github.io/reprores-v3/index.html). A great tool that can be used to create reproducible workflos is found in the `targets` package. The targets package is a [Make](https://www.gnu.org/software/make/)-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the [Walkthrough](https://books.ropensci.org/targets/walkthrough.html) chapter to see `targets` in action. 
 
 ## Before you leave {#byl-w07}
-As geographers we are keen to understand our point data's distribution and understand whether are our points clustered, randomly distributed (i.e. display complete spatial randomness), uniform or dispersed. We have looked at various techniques that enable us to statistically and visually assess our data's distribution and understand whether our data is randomly distributed or not. And that is [us done for this week](https://www.youtube.com/watch?v=-zxtbwGogyY). Reading list anyone?
+As geographers we are keen to understand our point data's distribution and understand whether are our points clustered, randomly distributed, uniform or dispersed. We have looked at various techniques that enable us to statistically and visually assess our data's distribution and understand whether our data is randomly distributed or clustered in space. And that is [us done for this week](https://www.youtube.com/watch?v=-zxtbwGogyY). Reading list anyone?
