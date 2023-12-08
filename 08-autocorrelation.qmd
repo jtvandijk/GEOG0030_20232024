@@ -1,0 +1,949 @@
+# Analysing Spatial Patterns III: Spatial Autocorrelation 
+This week, we will be looking at measuring spatial dependence. Spatial dependence is the idea that an observed value of a variable in one location is to some degree dependent on the observed value of the same value in a nearby location. For spatial analysis, this dependence can be assessed and measured statistically by considering the level of spatial autocorrelation between values of a specific variable, observed in either different locations or between pairs of variables observed at the same location. Spatial autocorrelation occurs when these values are not independent of one another and instead cluster together in space.
+
+## Lecture slides {#slides-w08}
+The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var slides.week07 >}})
+
+## Reading list {#reading-w08}
+#### Essential readings 
+- Griffith, D. 2017. *Spatial Autocorrelation*. The Geographic Information Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2020.3.10)
+- Gimond, M. 2023. Intro to GIS and spatial analysis. **Chapter 13**: *Spatial autocorrelation*. [[Link]](https://mgimond.github.io/Spatial/spatial-autocorrelation.html)
+- Livings, M. and Wu, A-M. 2020. *Local Measures of Spatial Association*. The Geographic Information Science & Technology Body of Knowledge. [[Link]](https://doi.org/10.22224/gistbok/2020.3.10)
+
+#### Suggested readings 
+- Lee, S. 2019. Uncertainty in the effects of the modifiable areal unit problem under different levels of spatial autocorrelation: a simulation study. *International Journal of Geographical Information Science* 33: 1135-1154. [[Link]](https://doi.org/10.1080/13658816.2018.1542699)
+- Harris, R. 2020. Exploring the neighbourhood-level correlates of Covid-19 deaths in London using a difference across spatial boundaries method. *Health & Place* 66: 102446. [[Link]](https://doi.org/10.1016/j.healthplace.2020.102446)
+
+## Population clusters
+This week, we are using a completely new dataset and we will investigate to what extent people in London who [self-identified](https://www.ons.gov.uk/peoplepopulationandcommunity/culturalidentity/ethnicity/bulletins/ethnicgroupenglandandwales/census2021) as **Asian-Bangladeshi** in the 2021 Census are clustered in London at the Ward-level. To complete this analysis, we will be using a data download from the [London Datastore](https://data.london.gov.uk/), which we will need to clean and join to a spatial layer containing the relevant Ward boundaries.
+
+::: {.callout-note}
+The Wards and electoral divisions in the United Kingdom are electoral districts at sub-national level. These differ from the Census geographies (LSOAs, MSOAs) we have been using so far.
+:::
+
+### Getting started {#setup-w08}
+Open a new script within your GEOG0030 project and save this script as `wk6-population-analysis.r`. At the top of your script, add the following metadata:
+
+```{r}
+#| label: 06-script-title
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: False
+#| filename: "R code"
+# Analysing population clusters in London 
+# Date: January 2024
+```
+
+Now let us add all of the libraries we will be using today to the top of our script:
+
+```{r}
+#| label: 06-load-libraries
+#| classes: styled-output
+#| echo: True
+#| eval: False
+#| tidy: True
+#| filename: "R code"
+# load libraries
+library(tidyverse)
+library(sf)
+library(tmap)
+library(spdep)
+```
+
+```{r}
+#| label: 06-load-libraries-bg
+#| echo: False
+#| eval: True
+#| warning: False
+# load libraries
+library(tidyverse)
+library(sf)
+library(tmap)
+library(spdep)
+```
+
+We will start by downloading the 2022 Ward boundaries for Great Britain:
+
+1. Navigate to the *Open Geography Portal*: [[Link]](https://geoportal.statistics.gov.uk/)
+2. In the main menu go to **Boundaries** -> **Administrative Boundaries ** -> **Wards / Electoral Divisions** -> **2022 Boundaries**.
+3. Click on **Wards (December 2022) Boundaries GB GBC**.
+4. Click on **Download** -> **Download GeoPackage**.
+5. Save the file as `WARDS2022.gpkg` in your `boundaries` folder.
+
+For the data on ethnic groups we turn to the [London Datastore](https://data.london.gov.uk/about/) again. They have prepared just the dataset that we want to use from the 2021 Census.
+
+1. Navigate to the London Datastore: [[Link]](https://data.london.gov.uk/).
+2. Click on **Data** in the navigation menu.
+3. Type *2021 census Wards ethnicity* into the search field.
+4. Download the `Ethnic group.xlsx` file containing Ward codes and counts of number of individuals who self-identify with a particular population group.
+
+Open de file in Excel, and look at the first tab (**Front Page**). You will notice that under 2022 Wards are listed as the administrative geography the data have been aggregated to. Coincidentally we just donwloaded the 2022 Ward boundaries. The actual data that we want to use can be found in the **2021** tab, which contains the 2021 Census results on ethnicity.
+
+```{r}
+#| label: fig-ethnic-excel
+#| echo: False 
+#| fig-cap: "The Excel file containing the number of people that self-identify as a particular group by Ward. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w08/ethnic-groups.png){target='_blank'}"
+knitr::include_graphics('images/w08/ethnic-groups.png')
+```
+
+Looking at the Excel file, we clearly need to extract the data and save this as a separate `csv` file before we can import the data into R.
+
+1. Open a new Excel spreadsheet. 
+2. From the **2021** tab of the `Ethnic group.xlsx` spreadsheet, cut (**Edit** -> **Cut**) all cells from columns **A** to **X** and rows **1 to 681** and paste these into this new spreadsheet.
+3. Save the file as `csv` into your `data` folder as `WARD2021_ethnic_group.csv`.
+
+After this, let's load our London Ward file:
+
+```{r}
+#| label: 07-load-shp
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# read in our Ward GeoPackage
+ward_gb <- st_read("data/raw/boundaries/WARDS2022.gpkg")
+```
+
+Check the **CRS** of our `ward_gb` spatial dataframe:
+
+```{r}
+#| label: 07-crs-wardshp
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# inspect CRS
+st_crs(ward_gb)
+```
+
+This all looks good, so we can move to also load the `csv` we just created:
+
+```{r}
+#| label: 07-ethnicity-csv
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# read csv
+ethnicity_london <- read_csv('data/data/WARD2021_ethnic_group.csv')
+```
+
+Inspect the file by using the `View()` function. First thing you will notice is that the column names are rather long. Second thing you will notice is that one of the columns does not contain any information but `NA` values. It also does not have a meaningful name (`...9`). It seems that in the process of converting the Excel file into a `csv` an extra column was added in the process. Let's drop this column, and any other columns we do not need, and then rename the remaining columns for easier reference.
+
+::: {.callout-warning}
+If your conversion from Excel to `csv` did not result in an extra column, update the code below to reflect this so to avoid dropping a column that contains information.
+:::
+
+```{r}
+#| label: 07-drop-rename-cols
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# drop columns by index
+ethnicity_london <- ethnicity_london |>
+  select(-3,-4,-9)
+
+# rename columns
+names(ethnicity_london) <- c('ward22cd','ward22nm','all_pop','white_british','white_irish',
+                             'white_gypsy','white_other','mixed_white_asian', 'mixed_white_african',
+                             'mixed_white_caribbean','mixed_other','asian_bangladeshi',
+                             'asian_chinese','asian_indian','asian_pakistani','asian_other',
+                             'black_african','black_caribbean','black_other','other_arab','other')
+```
+
+If you like, you can also write out the final `csv` using the `write_csv()` function.
+
+### Data preparation {#data-preparation-w08}
+We now need to join our population group dataset to our Ward spatial layer. Because the Ward dataset contains every the geometry of every single Ward in Great Britain, we can use an `inner_join` so that only the geometries of those Wards that also appear in the `ethnicity_london` object are retained.
+
+```{r tidy='styler'}
+#| label: 07-join-pop-shp
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# inner join
+ethnicity_london_sdf <- ward_gb |>
+  inner_join(ethnicity_london, by = c('WD22CD' = 'ward22cd'))
+```
+
+Have a look at your newly created Ward dataframe using the `plot()` function.
+
+```{r}
+#| label: fig-07-quick-plt
+#| fig-cap: "Quick plot of the filtered Ward spatial dataframe."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# inspect
+plot(ethnicity_london_sdf, max.plot=1)
+```
+This is looking reasonably okay, however, it is clear that there are some data missing from the [City of London](https://en.wikipedia.org/wiki/City_of_London). The reason for this is that the dataset we downloaded only contains an overall value for the City of London rather than a value for every Ward. If we only were interested in plotting the data, we could simply add a layer with **no data** to colour in the empty City of London area, but for measuring spatial autocorrelation it is essential that there are no holes in the spatial data that should not be there. We will fix this by extracting the Wards pertaining to the City of London and adding these to our spatial dataframe.
+
+```{r}
+#| label: 07-city-of-london
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# filter Wards pertaining to City of London
+city_of_london_sdf <- ward_gb |>
+  filter(LAD22NM == 'City of London')
+```
+
+We have now effectively filtered out the 25 2022 Wards that fall with in the City of London Local Authority District. We now need to assign our ethnic group data to this. We will first add the data and subsequentially divide the overall counts equally across the Wards.
+
+::: {.callout-warning}
+This is a bit of a lazy approach. Much better would be to actually try and find the actual Ward counts from the 2021 Census. 
+:::
+
+To join the `ethnicity_london` dataset to the City of London wards is a bit tricky --- because the `ethnicity_london` dataset does not contain the actual Wards codes for the City of London Wards. Fortunately for us, the London Data Store was a bit cheeky and in the ethnic group file they created they put the Local Authority District code of the City of London into the Ward column. We can use this to our advantage and join our datasets together with a `left_join`.
+
+```{r tidy='styler'}
+#| label: 07-join-city-shp
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| filename: "R code"
+# join
+city_of_london_sdf <- city_of_london_sdf |>
+  left_join(ethnicity_london, by = c('LAD22CD' = 'ward22cd'))
+
+# inspect
+head(city_of_london_sdf)
+```
+
+This seems to have worked quite nicely, except that now all our data points have been duplicated. We need to fix this by dividing all counts by 25 (the number of wards) to equally divide the counts across the City of London. If we have to do this for every column individually there is a lot of typing involved, but fortunately we can use the `mutate_at()` function from the `dplyr` library to do this for the columns in one go. 
+
+::: {.callout-note}
+Check the documentation of the `mutate_at()` function to see how it works in detail, but essentially you provide a function, in this case "divide a number by the total number of Wards" and do this for all columns that are specified.
+:::
+
+```{r}
+#| label: 07-city-of-london-divvie-up
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# divide counts by number of Wards
+city_of_london_sdf <- city_of_london_sdf |>
+  mutate_at(c(13:31), function(x) as.integer(x/nrow(city_of_london_sdf)))
+
+# inspect
+head(city_of_london_sdf)
+```
+
+That is much better. The last thing we now need to do is to combine our `city_of_london_sdf` with our
+`ethnicity_london_sdf`. Because both spatial dataframe contain the exact same data and column names, we can simply **bind** them together.
+
+```{r}
+#| label: 07-city-of-london-bind
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# bind spatial dataframes
+ethnicity_london_sdf <- ethnicity_london_sdf |>
+  rbind(city_of_london_sdf)
+```
+
+Let's check whether our approach worked by plotting the updated spatial dataframe:
+
+```{r}
+#| label: fig-07-quick-plt-again
+#| fig-cap: "Quick plot of the full Ward spatial dataframe."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# inspect
+plot(ethnicity_london_sdf, max.plot=1)
+```
+
+This looks much better: there are no more obvious holes in our spatial dataframe and we can move on.
+
+## Statistical distributions
+Today, we are interested in looking at spatial autocorrelation: the effect of spatial processes on distributions. We will be using our newly created `ethnicity_london_sdf` to look at this in action. Before we do this, however, let's start by looking at the data distribution.
+
+::: {.callout-note}
+Analysing the distribution of your data and summarising the main characteristics of its distribution is known as [Exploratory Data Analysis (EDA)](https://en.wikipedia.org/wiki/Exploratory_data_analysis). EDA was promoted by prominent statistician [John Tukey](https://en.wikipedia.org/wiki/John_Tukey) to encourage data analysts to explore their data outside of traditional formal modelling and come up with new areas of investigation and hypotheses. Tukey promoted the use of five summary statistics: the **maximum**, the **minimum**, the **median**, and the **quartiles**, which, in comparison to the mean and standard deviation, provide a more robust understanding of a dataset's distribution, particularly if the data is skewed.
+::: 
+
+We looked at how we can use R to extract some of these summary statistics briefly in [Week 4's computer tutorial](04-statistics.html#atomic-vectors), but let's have a look at how we can add further to this EDA. A simple and straightforward way to extract the main characteristics of a dataset is by using the `summary()` function.
+
+::: {.callout-tip}
+The `summary()` function can be called on a dataset as a whole and will generate summary statistics for each numeric variable. 
+:::
+
+```{r}
+#| label: 07-summarise-sdf
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# summarise dataframe, but exclude geometry column
+summary(ethnicity_london_sdf |> st_drop_geometry())
+```
+
+This gives us an overview of all variables, but let's have a look at our population group of interest for today's practical by creating a [histogram](https://en.wikipedia.org/wiki/Histogram).
+
+```{r}
+#| label: fig-07-quick-hist
+#| fig-cap: "Histogram of the distribution of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# histogram
+hist(ethnicity_london_sdf$asian_bangladeshi)
+```
+
+We can actually see our data has a very strong negative skew with the majority of Wards having a relatively low number of individual self-identifying as Asian-Bangladeshi, but there are also some Wards where a large number of self-identified Asian-Bangladeshis are residing. 
+
+Another type of chart we can create just using the `base` R library is a **boxplot**. A boxplot shows the core characteristics of the distributions within a dataset, including the interquartile range. 
+
+```{r}
+#| label: fig-boxplot
+#| echo: False 
+#| fig-cap: "Simple boxplot. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w08/boxplot.png){target='_blank'}"
+knitr::include_graphics('images/w08/boxplot.png')
+```
+
+Plot the boxplot of our `asian_bangladeshi` variable: 
+
+```{r}
+#| label: fig-07-quick-boxplot
+#| fig-cap: "Boxplot of the distribution of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| cache: True
+#| filename: "R code"
+# histogram
+boxplot(ethnicity_london_sdf$asian_bangladeshi)
+```
+
+Again, it is clear that the majority of Wards have a relatively low number of individuals that self-identify as Asian-Bangladeshi, but there is a good number of outliers. This raises the question whether these outliers are random or also clustered in spac --- and this brings us to spatial autocorrelation.
+
+::: {.callout-tip}
+There is actually a lot more we can do in terms of visualising our data's distribution and the best way forward would be to become more familiar with the `ggplot2` library. `ggplot2` is the main visualisation for both statistical and, increasingly, spatial graphs, charts and maps. Refer back to [Week 4's optional suggestions](04-statistics.html#wm-w04) on how to get started with `ggplot2`.
+:::
+
+## Spatial distributions
+Whilst statistical analysis of distributions focus on tests and charts, when we want to understand the spatial distribution of our phenomena, we have a very simple solution: we make a map. In our case, we are looking at areal unit data and therefore we can use a choropleth map to study our data across the Wards. In fact, we can actually create a sequence of maps not only covering the self-identified Asian-Bangladeshis but also other population groups.
+
+```{r tidy='styler'}
+#| label: fig-07-facet-map
+#| fig-cap: "Facet map of all our population groups."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# store variables of interest as separate variable
+var_fields <- names(ethnicity_london_sdf)[14:31]
+
+# map all our variables of interest at once
+tm_shape(ethnicity_london_sdf) +
+  # add Ward boundaries
+  tm_polygons("gray", border.col = "gray") +
+tm_shape(ethnicity_london_sdf) +
+  # add all variables of interest
+  tm_polygons(col = var_fields) +
+  # add layout options
+  tm_layout(legend.show = FALSE) +
+  # add 4 columns
+  tm_facets(ncol = 4)
+```
+
+Despite these maps being a little small and not containing any labels, it seems that different population groups indeed concentrate in different parts of London. Let's zoom into the Asian-Bangladeshi population group and add a legend:
+
+```{r tidy='styler'}
+#| label: fig-07-facet-map-asian-bangladeshi
+#| fig-cap: "Quick map of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# map a specific variable
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons("gray", border.col = "gray") +
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons(col = "asian_bangladeshi", n = 5, style = "jenks") +
+  tm_layout(legend.outside = TRUE,
+            legend.outside.position = "right") +
+  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+```
+
+::: {.callout-warning}
+Please remember, whereas the above map is fine for a quick inspection, it is technically incorrect because we are showing absolute numbers on a choropleth. This is something we should never do, unless the spatial units are identical in size (e.g. a hexagonal tessellation of an area), because larger areas will draw attention and affect the visualisation. To be fair, even for a quick inspection, it would be much better to normalise these counts by the total number of people living within each of the Wards to get a more honoust picture of the distribution.
+:::
+
+The thing with spatial distributions is that we can quickly pick up on spatial patterns present within our data just by looking at the data. For example, we can clearly see some concentrations of people that self-identify as Asian-Bangladeshis in East London. The question now is whether these clusters are significant from a statistical point of view. This brings us to measuring spatial correlation. 
+
+Before we move on, let's normalise the `asian_banglades` variable by creating a new variable that contains the proportion of individuals that self-identify as Asian-Bangladeshi:
+
+```{r}
+#| label: 07-create-proportions
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# calculate proportions
+ethnicity_london_sdf <- ethnicity_london_sdf |>
+  mutate(asian_bangladeshi_prop = asian_bangladeshi/all_pop)
+```
+
+## Spatial autocorrelation
+We can assess the distribution of our data using what is known as spatial autocorrelation tests, which can be conducted on both a global (identify if the data is clustered) and local (identify the precise clusters) scales. Whilst these different tests quantify how clustered, how random, or how dispersed, these distributions are through various approaches, ultimately they provide us with statistical and spatial information that can be used to create quantifiable descriptions of a variable's distribution and how it vary over space.
+
+As discussed in this week's lecture, we have several types of tests that look to quantify spatial autocorrelation. Of these tests, there are two main categories:
+
+- Measures of **global spatial aucorrelation**: tests that provide us with a statistic to tell whether spatial autocorrelation is present in our dataset.
+- Measures of **local spatial autocorrelation**: tests that break down the global patterns and essentially tell us where we can find clusters and outliers.
+
+Three of the most frequently used tests are the [Global Moran's I](https://pro.arcgis.com/en/pro-app/3.1/tool-reference/spatial-statistics/h-how-spatial-autocorrelation-moran-s-i-spatial-st.htm), the [Local Moran's I](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/h-how-cluster-and-outlier-analysis-anselin-local-m.htm), and the [Getis-Ord Gi*](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/h-how-hot-spot-analysis-getis-ord-gi-spatial-stati.htm):
+
+|Test | Scale | Test | Output | 
+| :----- | :---| :--------------| :--------------|
+| Global Moran's I | Global | Tests how "random" the spatial distribution of values are, producing a correlation coefficient for the relationship between a variable and its surrounding values. | Metric between $-1$ and $1$. |
+| Local Moran's I | Local | Tests the difference between a unit of analysis and its neighbour(s).  | Can be used alongside the mean of values to generate cluster type generations. | 
+| Getis-Ord Gi* | Local |  Identifies statistically significant hot spots and cold spots using the local Getis-Ord $Gi*$ statistic. | The returned $z$-scores can be used to identify statistically significant clusters. |
+
+::: {.callout-note}
+In each of these cases, our $p$-values are pseudo $p$-values, generated through simulations such as those outlined in the lecture. Our pseudo $p$-values allow us to interpret our relationships with a level of confidence. If we find that our relationships do not have any significance, then we cannot be confident in presenting them as true results.
+::: 
+
+### Spatial lag
+Underlying our global Moran's I test is the concept of a **spatial lag model**. A spatial lag model plots each value against the mean of its neighbours' values, defined by our selected approach. This creates a scatter plot, from which our Moran's I statistic can be derived.
+
+An Ordinary Least Squares (OLS) regression is used to fit the data and produce a slope, which determines the Moran's I statistic:
+
+```{r}
+#| label: fig-moran-plot
+#| echo: False 
+#| fig-cap: "A spatial lag model - plotting value against the mean of its neighbours. Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w08/moran-scatter.png){target='_blank'}"
+knitr::include_graphics('images/w08/moran-scatter.png')
+```
+
+To determine a $p$-value from our model for global Moran's I, this spatial lag model is computed multiple times (think hundreds, thousands) but uses a random distribution of neighbouring values to determine different slopes for multiple ways our data *could* be distributed if our data was distributed randomly. The output of this test is a sampling distribution of Moran's I values that would confirm a null hypothesis that our values are randomly distributed. These slopes are then compared to compare our *observed* slope versus our *random* slopes and identify whether the slope is within the main distribution of these values or an outlier:
+
+```{r}
+#| label: fig-moran-plot-sig
+#| echo: False 
+#| fig-cap: "Determining significance using a Monte Carlo simulation. Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w08/mc-sim.png){target='_blank'}"
+knitr::include_graphics('images/w08/mc-sim.png')
+```
+
+If our slope is an outlier, i.e. not a value we would expect to compute if the data were randomly distributed, we are more confidently able to confirm our slope is reflective of our data's clustering and is significant. Our *pseudo-*$p$-values are then computed from our simulation results:
+
+$$
+\frac{N_{extreme} + 1}{N + 1}
+$$
+
+Where ${N_{extreme}}$ is the number of simulated Moran's I values that were more extreme that our observed statistic and ${N}$ is the total number of simulations. In the example above, from [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html), only 1 out the 199 simulations was more extreme than the observed local Moran's I statistic. Therefore ${N_{extreme}}$ = 1 , so $p$ is equal to $(1+1) / (199 + 1) = 0.01$. This means that "there is a 1% probability that we would be wrong in rejecting the null hypothesis". This approach is known as a **Monte Carlo simulation** or permutation bootstrap test.
+
+### Neighbours
+For any spatial autocorrelation test that you want to conduct, you will always need one critical piece of information: *how do we define 'neighbours' in our dataset to enable the value comparison.* Every observation in a dataset will need to have a set of neighbours to which its value is compared. To enable this, we need to determine how many or what type of neighbours should be taken into account for each observation when conducting a spatial autocorrelation test. These 'neighbouring' observations can be defined in a multitude of ways, based either on geometry or proximity, and include:
+
+- **Contiguity**: Queen [nodes have to touch] or Rook [edges have to touch]
+- **Fixed Distance**: Euclidean Distance [specified distance]
+- **(K) Nearest Neighbours**: $n$ closest neighbours
+
+```{r}
+#| label: fig-neighbours
+#| echo: False 
+#| fig-cap: "Different approaches of conceptualising neighbours for spatial autocorrelation measurement: contiguity, fixed distance and nearest neighbours. Source: [Manuel Gimond](https://mgimond.github.io/Spatial/spatial-autocorrelation.html). [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w08/iffn.png){target='_blank'}"
+knitr::include_graphics('images/w08/iffn.png')
+```
+
+Depending on the variable you are measuring, the appropriateness of these different types of neighbourhood calculation techniques can change. As a result, how you define neighbours within your dataset will have an impact on the validity and accuracy of spatial analysis. Whatever approach you choose therefore needs to be grounded in particular theory that aims to represent the process and variable investigated.
+
+::: {.callout-tip}
+Have a look at Esri's Help Documentation on [Selecting a conceptualization of spatial relationships: Best practices](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/modeling-spatial-relationships.htm#GUID-729B3B01-6911-41E9-AA99-8A4CF74EEE27) when you come to need to define neighbours yourself for your own analysis.
+:::
+
+For our analysis into the clustering of population groups, we will primarily use the **Queen contiguity**. This approach is "*effective when polygons are similar in size and distribution, and when spatial relationships are a function of polygon proximity (the idea that if two polygons share a boundary, spatial interaction between them increases)*" ([Esri, 2024](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/modeling-spatial-relationships.htm#GUID-729B3B01-6911-41E9-AA99-8A4CF74EEE27)).
+
+### Spatial weights matrix
+Before we can calculate Moran’s I and any similar statistics, we need to first define our **spatial weights matrix**. This is known mathematically as $W_{ij}$ and this will tell our code which unit neighbours which, according to our neighbour definition. For each neighbour definition, there is a different approach to implementing code to calculate the $W_{ij}$ spatial weights matrix. We will look at three approaches:
+
+1. Creating a Queen $W_{ij}$ spatial weights matrix
+2. Creating a Rook $W_{ij}$ spatial weights matrix
+3. Creating a Fixed Distance $W_{ij}$ spatial weights matrix
+
+For either approach, we use a single line of code to create the relevant $W_{ij}$ spatial weights matrix:
+
+```{r}
+#| label: 07-who-is-your-neighbour
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# Queens neighbours
+ward_neighbours_queen <- ethnicity_london_sdf |> poly2nb(queen=T)
+
+# Rook neigbhours
+ward_neighbours_rook <- ethnicity_london_sdf |> poly2nb(queen=F)
+
+# Fixed distance neighbours
+ward_neighbours_fd <- dnearneigh(st_geometry(st_centroid(ethnicity_london_sdf)),0, 4000)
+```
+
+Creating our neighbours list through a single line of code, as above, does not really tell us much about the differences between these different definitions. It would be useful to the links between neighbours for our three definitions and visualise their distribution across space. To be able to do this, we will use a few lines of code to generate a visualisation based on mapping the defined connections between the centroids of our Wards.
+
+::: {.callout-note}
+A centroid in its most simplest form is the central point of an areal unit. How this central point is defined can be weighted by different approaches to understanding geometries or by using an additional variable. In our case, our centroids will reflect in the geometric middle point of our Wards.
+:::
+
+We can calculate the centroids of our Wards using one of the **geometric** tools from the `sf` library: `sf_centroid()`.
+
+```{r}
+#| label: 07-get-them-centroids
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# calculate the centroids of all of the Wards in London
+ward_centroid <- ethnicity_london_sdf |>
+  st_centroid()
+```
+
+::: {.callout-note}
+We actually already used this function above as the creation of the fixed distance spatial weights matrix requires a point geometry and then calculates which other point geometries are within the specified distance.
+:::
+
+Now we have our Ward centroids, we can go ahead and plot the centroids and the defined neighbour connections between them from each of our neighbour definitions. To do so, we will use the `plot()` function, provide the relationships via our `ward_neighbours_*` lists and then the geometry associated with these lists from our `ward_centroid` object:
+
+```{r}
+#| label: fig-07-plot-them-neighbours-queen
+#| fig-cap: "2022 Wards with a **Queen** neighbourhood definition."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# plot neighbours: Queen
+plot(ward_neighbours_queen, st_geometry(ward_centroid), col="red", pch=20, cex=0.5)
+```
+
+```{r}
+#| label: fig-07-plot-them-neighbours-rook
+#| fig-cap: "2022 Wards with a **Rook** neighbourhood definition."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# plot neighbours: Rook
+plot(ward_neighbours_rook, st_geometry(ward_centroid), col="blue", pch=20, cex=0.5)
+```
+
+```{r}
+#| label: fig-07-plot-them-neighbours-fixed
+#| fig-cap: "2022 Wards with a **Fixed distance** neighbourhood definition."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# plot neighbours: Fixed distance
+plot(ward_neighbours_fd, st_geometry(ward_centroid), col="red", pch=20, cex=0.5)
+```
+
+::: {.callout-note}
+In this example we use four kilometres as a distance threshold (i.e. centroids are considered neighbours if they are within three kilometres from one another, however, this is an arbitrary distance. When using a fixed distance make sure you have a good reason to select the distance (e.g. used in a paper that used the same administrative geographies).
+:::
+
+When comparing these different maps, we can see that there is definitely a difference in the number of neighbours when we use our different approaches. It seems our fixed distance neighbour conceptualisation has many connections in the centre of London versus areas on the outskirts. We can see that our contiguity approaches provide a more equally distributed connection map, with our Queen conceptualisation having a few more links that our Rook conceptualisation.
+
+::: {.callout-warning}
+Whichever form of neighbours you are using, **always** check the results, especially those of the contiguity based approaches. If the spatial file that you are using is not in good shape (e.g. polygons seem to touch upon visual inspection but actually do not), your results will be compromised. 
+:::
+
+We can also type the different neighbours objects into the console to find out the total number of non-zero links (i.e. total number of connections) present within the conceptualisation. You should see that Queen has 4022 non-zero links, Rook has 3854 and Fixed Difference has 12462 Whilst this code simply explores these conceptualisations it helps us understand further how our different neighbourhood conceptualisations can ultimately impact our overall analysis.
+
+::: {.callout-note}
+Remember: the number of links essentially determines the value of the **spatial lag** variable --- i.e. the value of a certain variable in comparison with its neighbours.
+:::
+
+With our neighbours now defined, we will go ahead and create our final spatial weights objects that will be needed for our spatial autocorrelation code. At the moment, we have our neighbours defined as a *list* but we need to convert it to a *neighbours* object using the `nb2listw()` function:
+
+```{r}
+#| label: 07-meeting-the-neigbhours-queen
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# create a neighbours list - Queen
+ward_spatial_weights_queen <- ward_neighbours_queen |> nb2listw(style = 'W' )
+
+# create a neighbours list - Rook
+ward_spatial_weights_queen <- ward_neighbours_rook |> nb2listw(style = 'W' )
+
+# create a neighbours list
+ward_spatial_weights_fd <- ward_neighbours_fd |> nb2listw(style = 'W', zero.policy = TRUE)
+```
+
+::: {.callout-note}
+The *style* that we specify in the code above determines how neighbours are weighted. `style = 'W'` row-standardises the values, e.g. if a Ward has five neighbours the value of the spatially lagged variable of interest will be the average of the variable of interest of these five neighbours --- every neighbour has an equal weight. See `?nb2listw` for more information on the different styles.
+:::
+
+::: {.callout-note}
+For the fixed distance measure we need to specify an additional parameter (`zero.policy`). This is because it is possible that there are Wards without **any** neighbour (i.e. there is a Ward with a centroid that is not within our specified distance). This is not ideal, because you would want every unit to have at least one neighbour. We do not need this parameter in case of the contiguity based measures today because every Ward polygon touches at least one other Ward polygon --- provided our spatial data are in order.
+:::
+
+### Global Moran's I
+With a Global Moran’s I we test how random the spatial distribution of our values are, producing a global Moran's statistic from the lag approach explained earlier.
+
+The global Moran’s I statistic is a metric between $-1$ and $1$:
+
+- $-1$ suggests a completely even spatial distribution of values
+- $0$ suggests a *random* distribution
+- $1$ suggests a *non-random* distribution of clearly defined clusters
+
+Before we run our global Moran's I test, we will first create a spatial lag model plot which looks at each of the values plotted against their spatially lagged values. The graph will show quickly whether we are likely to expect our test to return a positive, zero, or negative statistic:
+
+```{r}
+#| label: fig-07-plot-moran-queens
+#| fig-cap: "Plot of lagged values versus polygon values using the Queen neigbhourhood definition."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# Moran's plot
+moran.plot(ethnicity_london_sdf$asian_bangladeshi_prop, listw = ward_spatial_weights_queen)
+```
+
+We can see that there is a positive relationship between our `asian_bangladeshi_prop` variable and the spatially lagged `asian_bangladeshi_prop` variable, therefore we are expecting our global Moran's I test to produce a statistic reflective of the slope visible in our scatter plot. Now we can run the global Moran's I spatial autocorrelation test:
+
+```{r}
+#| label: 07-global-moran-queen
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# Moran's I
+moran_queen <- ethnicity_london_sdf |> 
+  pull(asian_bangladeshi_prop) |> 
+  as.vector() |>
+  moran.test(ward_spatial_weights_queen)
+
+# inspect result
+moran_queen
+```
+
+The Moran’s I statistic calculated should be 0.73. With $1$ = clustered, $0$ = no pattern, $-1$ = dispersed, this means we can confirm that the population in London that self-identifies as Asian-Bangladeshi is strongly positively autocorrelated. In other words, self-identified Asian-Bangladeshis in London tend to reside in similar areas. We can also consider the pseudo $p$-value as a measure of the statistical significance of the model - at < 2.2e-16, which confirm our result is statistically significant.
+
+::: {.callout-note}
+Before we run our local spatial autocorrelation tests, let's just take a second to think through what our results have shown. From our global statistical tests, we can confirm that:
+
+- There is clustering in our dataset.
+- Similar values are clustering.
+- High values are clustering.
+
+We can conclude already that Wards with a relatively large proportion of people that self-identify as Asian-Bangladeshis tend to cluster in the same area. What we do not know yet is **where** these clusters are occurring. To help with this, we need to run our **local** models to identify where these clusters are located.
+:::
+
+### Local Moran's I
+A local Moran's I test deconstructs the global Moran’s I down to its components and then constructs a localised measure of autocorrelation, which can show different cluster types. To run a local Moran's I test, the code is similar to above:
+
+```{r}
+#| label: 07-local-moran-queen
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# Local Moran's I
+local_moran_queen <- ethnicity_london_sdf |>
+  pull(asian_bangladeshi_prop) |> 
+  as.vector() |>
+  localmoran(ward_spatial_weights_queen)
+
+# inspect result
+head(local_moran_queen)
+```
+
+As you should see, we ae not given a single statistic as we did with our global test, but rather a table of different statistics that are all related back to each of the Wards in our dataset. If we look at the help page for the `localmoran` function we can find out what each of these statistics mean:
+
+| Name    | Description |
+| :-----  | :---------------|
+| Ii      | Local Moran's I statistic |
+| E.Ii    | Expectation of local Moran's I statistic |
+| Var.Ii  | Variance of local Moran's I statistic |
+| Z.Ii    | Standard deviation of local Moran's I statistic |
+| Pr()    | $p$-value of local Moran's I statistic |
+
+We therefore have a Moran's I statistic for each of our Wards, as well as a significance value plus a few other pieces of information that can help us create some maps showing our clusters. To be able to do this, we need to join our local Moran's I output back into our `ethnicity_london_sdf` spatial dataframe, which will then allow us to map these results.
+
+To create this join, we first **coerce** our local Moran's I output into a dataframe that we then join to our `ethnicity_london_sdf` spatial dataframe using the familiar `mutate()` function from the `dplyr` library. In our case, we do not need to provide an **attribute** to join these two dataframes together as we use the computer's logic to join the data in the order in which it was created:
+
+```{r}
+#| label: 07-local-moran-join
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# coerce to dataframe
+local_moran_queen <- as.data.frame(local_moran_queen)
+
+# update the names for easier reference
+names(local_moran_queen) <- c("LMI_Ii", "LMI_eIi", "LMI_varIi", "LMI_zIi", "LMI_sigP")
+
+# join
+ethnicity_london_sdf <- ethnicity_london_sdf |>
+  mutate(local_moran_queen)
+```
+
+We now have the data we need to plot our local spatial autocorrelation maps. We will first plot the most simple maps to do with our local Moran's I test: the local Moran's I statistic.
+
+```{r tidy='styler'}
+#| label: fig-07-map-local-moran
+#| fig-cap: "Cluster map of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# map the local Moran's I statistic
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons("LMI_Ii", style = "pretty", midpoint = 0, title = "Local Moran's I statistic") +
+  tm_layout(main.title= "Local Moran's I statistic",
+            main.title.fontface = 2, fontfamily = "Helvetica",
+            legend.outside = TRUE,
+            legend.outside.position = "right",
+            legend.title.size = 1,
+            legend.title.fontface = 2) +
+  tm_compass(type = "arrow", position = c("right", "bottom")) +
+  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+```
+
+From the map, it is possible to observe the variations in autocorrelation across space. We can interpret that there seems to be a geographic pattern to the autocorrelation. However, it is not possible to understand if these are clusters of high or low values or which ones are statistically signficant. To be able to interpret this confidently, we also need to know the significance of the patterns we see in our map and therefore need to map the $p$-value of local Moran's I statistic.
+
+```{r tidy='styler'}
+#| label: fig-07-map-local-moran-significance
+#| fig-cap: "Significant cluster map of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# significance breaks
+breaks <- c(0, 0.05, 0.1, 1)
+
+# colour palette
+colours <- c('#ffffff', "#a6bddb", "#2b8cbe" )
+
+# map the local Moran's I statistic / significance only
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons("LMI_sigP", style = "fixed", breaks = breaks,
+              palette = rev(colours), title = "p-value of Local Moran's I stat") +
+  tm_layout(main.title = "Significant clusters",
+            main.title.fontface = 2, fontfamily = "Helvetica",
+            legend.outside = TRUE,
+            legend.outside.position = "right",
+            legend.title.size = 1,
+            legend.title.fontface = 2) +
+  tm_compass(type = "arrow", position = c("right", "bottom")) +
+  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+```
+
+Using our significance map, we can interpret the above clusters present in our local Moran's I statistic more confidently. As evident, we do have several clusters that are statistically significant to the $p$-value < 0.05.
+
+Ideally we would combine these two outputs to see what values cluster together as well as which clusters are significant. We can do this with a cluster map of our local Moran's I statistic (`Ii`) which will show areas of different types of clusters, including:
+
+- **HIGH-HIGH**: A Ward with a relatively high proportion of residents that self-identify as Asian-Bangladeshi that is also surrounded by other Wards with a relatively high proportion of residents that self-identify as Asian-Bangladeshi.
+- **HIGH-LOW**: A Ward with a relativley high proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively low proportion of residents that self-identify as Asian-Bangladeshi.
+- **LOW-HIGH**: A Ward with a relativley low proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively high proportion of residents that self-identify as Asian-Bangladeshi.
+- **LOW-LOW**: A Ward with a relatively low proportion of residents that self-identify as Asian-Bangladeshi that is also surrounded by other Wards with a relatively low proportion of residents that self-identify as Asian-Bangladeshi.
+
+Our HIGH-HIGH and LOW-LOW will show our clusters, whereas the other two cluster types reveal anomalies in our variable. To create a map that shows this, we need to quantify the relationship each of our Wards have with the Wards around them to determine their cluster type. We do this using their observed value and their local Moran's I statistic and their deviation around their respective means:
+
+- If a Ward's observed value is higher than the observed mean and it's local Moran's I statistic is higher than the LMI mean, it is designated as **HIGH-HIGH**.
+- If a Ward's observed value is lower than the observed mean and it's local Moran's I statistic is lower than the LMI mean, it is designated as **LOW-LOW**.
+* If a Ward's observed value is lower than the observed mean but it's local Moran's I statistic is higher than the LMI mean, it is designated as **LOW-HIGH**.
+* If a Ward's observed value is higher than the observed mean but it's local Moran's I statistic is lower than the LMI mean, it is designated as **HIGH-LOW**.
+* If a Ward's LMI was found not to be significant, the Ward will be mapped as **not significant**.
+
+To create this cluster map, we need to take several additional steps. We firstly need, for each Ward, whether its observed value is higher or lower than the mean observed. We then need to know, for each Ward, whether its LMI value is higher or lower than the mean LMI. Finally, we can use the values of these two columns to assign each Ward with a cluster type.
+
+```{r tidy='styler'}
+#| label: fig-07-map-local-moran-cluster-type
+#| fig-cap: "Cluster types map of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# significance breaks
+ethnicity_london_sdf <- ethnicity_london_sdf |> 
+  mutate(obs_diff = (asian_bangladeshi_prop - mean(ethnicity_london_sdf$asian_bangladeshi_prop)))
+
+# compare local LMI value with mean LMI value
+ethnicity_london_sdf <- ethnicity_london_sdf |> 
+  mutate(LMI_diff = (ethnicity_london_sdf$LMI_Ii - mean(ethnicity_london_sdf$LMI_Ii)))
+
+# set significance threshold
+signif <- 0.05
+
+# generate column with cluster type, using values above
+ethnicity_london_sdf <- ethnicity_london_sdf |>
+  mutate(cluster_type = case_when(obs_diff > 0 & LMI_diff > 0 & LMI_sigP < signif ~ "High-High",
+                                  obs_diff < 0 & LMI_diff < 0 & LMI_sigP < signif ~ "Low-Low",
+                                  obs_diff < 0 & LMI_diff > 0 & LMI_sigP < signif ~ "Low-High",
+                                  obs_diff > 0 & LMI_diff < 0 & LMI_sigP < signif ~ "High-Low",
+                                  LMI_sigP > signif ~ "No Significance"))
+
+```
+
+Now we have a column detailing our cluster types, we can create a cluster map that details our four cluster types as well as those that are not significant. Creating a categorical map in R and using `tmap` is a little tricky and we will need to do some preparing of our colour palettes to ensure our data is mapped correctly. To do this, we first need to figure out how many cluster types we have in our `cluster_type` field:
+
+```{r}
+#| label: 07-local-moran-cluster-types
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# count the cluster types
+count(ethnicity_london_sdf, cluster_type)
+```
+
+We can see that we have three out of the four possible cluster types in our dataset --- alongside the `No Significance` value. We therefore need to ensure our palette includes three colours for these cluster types, plus a white colour for `No Significance`:
+
+```{r}
+#| label: 07-local-moran-cluster-types-colours
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# create palette
+pal <- c("#d7191c", "#fdae61", "#2c7bb6","#F5F5F5")
+```
+
+Now we can finally map our clusters:
+
+```{r tidy='styler'}
+#| label: fig-07-cluster-plot
+#| fig-cap: "Cluster types map of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# plot the different clusters
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons(col = "cluster_type", palette = pal, title = "Cluster Type") +
+  tm_layout(main.title = "Cluster Map Asian Bangladeshis in London",
+            main.title.fontface = 2, fontfamily = "Helvetica", legend.outside = TRUE,
+            legend.outside.position = "right",
+            legend.title.size = 1,
+            legend.title.fontface = 2) +
+  tm_compass(type = "arrow", position = c("right", "bottom")) +
+  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+```
+
+And there we have it: within one map we can visualise both the relationship of our Wards to their respective neighbourhoods and the significance of this relationship from our local Moran's I test. This type of map is called a [LISA map](https://geodacenter.github.io/workbook/6a_local_auto/lab6a.html) and is a great way of showing how a variable is actually clustering.
+
+### Getis-Ord-Gi*
+The final test we will run today is the local Getis-Ord, which will produce the $Gi*$ statistic. This statistic will identify hot- and coldspots by looking at the neighbours within a defined proximity to identify where either high or low values cluster spatially and recognising statistically significant hotspots as those areas of high values where other areas within a neighbourhood range also share high values too (and vice versa for coldspots).
+
+```{r}
+#| label: 07-local-gi-queen
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# Gi* test
+gi_queen <- ethnicity_london_sdf |> 
+  pull(asian_bangladeshi_prop) |> 
+  as.vector() |>
+  localG(ward_spatial_weights_queen)
+
+# join
+ethnicity_london_sdf <- ethnicity_london_sdf |>
+  mutate(asian_bangladeshi_gi = as.numeric(gi_queen))
+
+# inspect
+ethnicity_london_sdf
+```
+
+By printing the results of our test, we can see that the local Getis-Ord test is a bit different from a local Moran's I test as it only contains a single value: [the z-score](https://en.wikipedia.org/wiki/Standard_score). The z-score is a standardised value relating to whether high values or low values are clustering together, which we call the $Gi*$ statistic. Now we have joined this output, a list of $Gi*$ values, to our `ethnicity_london_sdf` spatial dataframe, we can map the result:
+
+```{r tidy='styler'}
+#| label: fig-07-cluster-plot-gi
+#| fig-cap: "Local $Gi*$ map of the self-identified Asian-Bangladeshi population group."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+#| filename: "R code"
+# plot the different clusters
+tm_shape(ethnicity_london_sdf) +
+  tm_polygons("asian_bangladeshi_prop", style = "pretty", midpoint=0, title = "Local Gi* statistic") +
+  tm_layout(main.title = "Cluster Map Asian-Bangladeshis in London",
+            main.title.fontface = 2, fontfamily = "Helvetica",
+            legend.outside = TRUE,
+            legend.outside.position = "right",
+            legend.title.size = 1,
+            legend.title.fontface = 2) +
+  tm_compass(type = "arrow", position = c("right", "bottom")) +
+  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+```
+
+Our map shows quite clear hot spots of self-identified Asian-Bangladeshis across London. 
+
+::: {.callout-warning}
+If we want to only map the statistically significant clusters, we need to use these [z-scores](https://en.wikipedia.org/wiki/Standard_score) to filter out only statistically significant clusters. When using a 95 percent confidence level your values should be between `-1.96` and `+1.96` standard deviations.
+:::
+
+## Assignment {#assignment-w08}
+Through conducting our spatial autocorrelation tests, we can confirm the presence of clusters in our `asian_bangladeshi_prop` variable and assign a significance value to these clusters. 
+
+Now you have the code, you will be able to repeat this analysis on any variable in the future. For this week's assignment, we therefore want you to find out whether also our self-identified `white_british` ethnic group shows signs of spatial clustering.
+
+In order to do this, you have to:
+
+1. Create a choropleth map showing the distribution of the variable's values.
+2. Normalise the variable by dividing it by the total population.
+3. Calculate a global spatial autocorrelation statistic and explain what it shows.
+4. Create a local Moran's I map showing the cluster types.
+5. Create a local Getis-Ord hotspot map.
+6. Compare these results to the output of our `asian_bangladeshi_prop` values. Do both variables have clusters? Do we see similar clusters in similar locations?
+7. Run the analysis using a different neighbour definition. What happens? Do the results change?
+
+## Want more? [Optional] {#wm-w08}
+### More spatial autocorrelation {.unnumbered}
+If you are interested in moving beyond spatial autocorrelation, for instance how to account for spatial autocorrelation in statistical models (e.g. with Geographically Weighted Regression or Spatial Regression), have a look at the workbook [Mapping and Modelling Geographic Data in R](https://profrichharris.github.io/MandM/themap.html) by Bristol-based Professor [Richard Harris](https://www.bristol.ac.uk/people/person/Richard-Harris-871b21a9-0f5f-4bc8-9a99-8ace550d9903/). Start with [The Spatial Variable](https://profrichharris.github.io/MandM/themap.html) section, move to the [Measuring spatial autocorrelation](https://profrichharris.github.io/MandM/autocorrelation.html) section before looking at the [Geographically Weighted Statistics](https://profrichharris.github.io/MandM/gwstats.html) and [Spatial Regression](https://profrichharris.github.io/MandM/spregress.html) sections.
+
+## Before you leave {#byl-w08}
+And that is how you can measure spatial dependence in your dataset through different spatial autocorrelation measures. Next week we will focus on the last topic within our set of core spatial analysis methods and techniques, but [this week we have covered enough](https://www.youtube.com/watch?v=fCZVL_8D048)! Probably time to get back to that pesky reading list.

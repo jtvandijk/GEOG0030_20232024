@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./07-autocorrelation.html" rel="next">
+<link href="./07-point-pattern.html" rel="next">
 <link href="./05-spatial.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -212,8 +212,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-autocorrelation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">7 Analysing Spatial Patterns II: Spatial Autocorrelation</span></a>
+  <a href="./07-point-pattern.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7 Analysing Spatial Patterns II: Point Pattern Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-autocorrelation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">8 Analysing Spatial Patterns III: Spatial Autocorrelation</span></a>
   </div>
 </li>
       </ul>
@@ -253,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#slides-w06" id="toc-slides-w06" class="nav-link" data-scroll-target="#slides-w06"><span class="header-section-number">6.1</span> Lecture slides</a></li>
   <li><a href="#reading-w06" id="toc-reading-w06" class="nav-link" data-scroll-target="#reading-w06"><span class="header-section-number">6.2</span> Reading list</a></li>
-  <li><a href="#bike-theft-w06" id="toc-bike-theft-w06" class="nav-link" data-scroll-target="#bike-theft-w06"><span class="header-section-number">6.3</span> Bike theft in London</a>
+  <li><a href="#bike-theft-w06" id="toc-bike-theft-w06" class="nav-link" data-scroll-target="#bike-theft-w06"><span class="header-section-number">6.3</span> Bike theft in London I</a>
   <ul class="collapse">
   <li><a href="#setup-w06" id="toc-setup-w06" class="nav-link" data-scroll-target="#setup-w06"><span class="header-section-number">6.3.1</span> Getting started</a></li>
   <li><a href="#data-preparation-w06" id="toc-data-preparation-w06" class="nav-link" data-scroll-target="#data-preparation-w06"><span class="header-section-number">6.3.2</span> Preparing data</a></li>
@@ -302,7 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 </section>
 <section id="bike-theft-w06" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="bike-theft-w06"><span class="header-section-number">6.3</span> Bike theft in London</h2>
+<h2 data-number="1.3" class="anchored" data-anchor-id="bike-theft-w06"><span class="header-section-number">6.3</span> Bike theft in London I</h2>
 <p>This week, we will be investigating bike theft in London in 2021 and look to confirm the hypothesis <em>that bike theft primarily occurs near tube and train stations</em>. We will be investigating its distribution across London using the point data provided within our crime dataset. We will then compare this distribution to the location of train and tube stations using specific geometric operations and spatial queries that can compare the geometry of two (or more) datasets. We will also learn how to download data from OpenStreetMap as well as use an interactive version of <code>tmap</code> to explore the distribution of the locations of individual bike theft against the locations of these stations.</p>
 <section id="setup-w06" class="level3" data-number="1.3.1">
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="setup-w06"><span class="header-section-number">6.3.1</span> Getting started</h3>
@@ -1605,8 +1611,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07-autocorrelation.html" class="pagination-link">
-        <span class="nav-page-text">Analysing Spatial Patterns II: Spatial Autocorrelation</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./07-point-pattern.html" class="pagination-link">
+        <span class="nav-page-text">Analysing Spatial Patterns II: Point Pattern Analysis</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

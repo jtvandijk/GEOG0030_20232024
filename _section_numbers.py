@@ -56,8 +56,12 @@ for htmlf in html_files:
                                         '<span class="menu-text">6 Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</span>')
 
     # update TOC chapter 7
-    html_content = html_content.replace('<span class="menu-text">Analysing Spatial Patterns II: Spatial Autocorrelation</span>', \
-                                        '<span class="menu-text">7 Analysing Spatial Patterns II: Spatial Autocorrelation</span>')
+    html_content = html_content.replace('<span class="menu-text">Analysing Spatial Patterns II: Point Pattern Analysis</span>', \
+                                        '<span class="menu-text">7 Analysing Spatial Patterns II: Point Pattern Analysis</span>')    
+
+    # update TOC chapter 8
+    html_content = html_content.replace('<span class="menu-text">Analysing Spatial Patterns III: Spatial Autocorrelation</span>', \
+                                        '<span class="menu-text">8 Analysing Spatial Patterns III: Spatial Autocorrelation</span>')
 
     # update TOC chapter 11
     html_content = html_content.replace('<span class="menu-text">Data Sources</span>', \

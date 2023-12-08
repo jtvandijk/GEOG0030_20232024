@@ -14,7 +14,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 - Houlden, V. *et al.* 2019. A spatial analysis of proximate greenspace and mental wellbeing in London. *Applied Geography* 109: 102036. [\[Link\]](https://doi.org/10.1016/j.apgeog.2019.102036)
 - Malleson, N. and Andresen, M. 2016. Exploring the impact of ambient population measures on London crime hotspots. *Journal of Criminal Justice* 46: 52-63. [\[Link\]](https://doi.org/10.1016/j.jcrimjus.2016.03.002)
 
-## Bike theft in London {#bike-theft-w06}
+## Bike theft in London I {#bike-theft-w06}
 This week, we will be investigating bike theft in London in 2021 and look to confirm the hypothesis *that bike theft primarily occurs near tube and train stations*. We will be investigating its distribution across London using the point data provided within our crime dataset. We will then compare this distribution to the location of train and tube stations using specific geometric operations and spatial queries that can compare the geometry of two (or more) datasets. We will also learn how to download data from OpenStreetMap as well as use an interactive version of `tmap` to explore the distribution of the locations of individual bike theft against the locations of these stations.
 
 ### Getting started {#setup-w06}
