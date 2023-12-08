@@ -617,8 +617,8 @@ bike_theft_clusters <- st_sfc(geometry_list, crs = 27700)
 We now have a polygon spatial dataframe, `bike_theft_clusters`, that show the general location and distribution of bike theft clusters in London. Let's put them on a map:
 
 ```{r tidy="styler"}
-#| label: fig-07-map-clusters-interactive
-#| fig-cap: Interactive map of identified DBSCAN bike theft clusters. 
+#| label: fig-07-map-clusters
+#| fig-cap: Basic map of identified DBSCAN bike theft clusters. 
 #| echo: True
 #| eval: True
 #| message: False
@@ -626,7 +626,7 @@ We now have a polygon spatial dataframe, `bike_theft_clusters`, that show the ge
 # add London outline
 tm_shape(outline_london) + tm_borders() +
   # add bike theft clusters
-  tm_shape(bike_theft_clusters) + tm_polygon() +
+  tm_shape(bike_theft_clusters) + tm_polygons() +
   # add basemap
   tm_basemap(c(StreetMap = "OpenStreetMap"))
 ```
