@@ -624,9 +624,9 @@ We now have a polygon spatial dataframe, `bike_theft_clusters`, that show the ge
 #| message: False
 #| filename: "R code"
 # add London outline
-tm_shape(outline_london) + tm_polygons() +
+tm_shape(outline_london) + tm_borders() +
   # add bike theft clusters
-  tm_shape(bike_theft_clusters) + tm_borders() +
+  tm_shape(bike_theft_clusters) + tm_polygon() +
   # add basemap
   tm_basemap(c(StreetMap = "OpenStreetMap"))
 ```
