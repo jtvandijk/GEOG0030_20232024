@@ -770,7 +770,7 @@ breaks <- c(0, 0.05, 0.1, 1)
 colours <- c('#ffffff', "#a6bddb", "#2b8cbe" )
 
 # map the local Moran's I statistic / significance only
-tm_shape(ethnicity_londonat_sdf) +
+tm_shape(ethnicity_london_sdf) +
   tm_polygons(cols = "LMI_sigP", 
               style = "fixed", 
               breaks = breaks,
