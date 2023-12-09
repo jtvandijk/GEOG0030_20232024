@@ -98,7 +98,8 @@ p_bbox <- c(-1.113197,50.775781,-1.026508,50.859941)
 # pass bounding box coordinates into the OverPassQuery (opq) function
 # only download features that are not classified as motorway
 osmdata <- opq(bbox = p_bbox ) |>
-  add_osm_feature(key = "highway", value = c("primary", "secondary", "tertiary", "residential", "path", "footway", "unclassified", "living_street", "pedestrian")) |> 
+  add_osm_feature(key = "highway", 
+                  value = c("primary", "secondary", "tertiary", "residential", "path", "footway", "unclassified", "living_street", "pedestrian")) |> 
   osmdata_sf()
 ```
 

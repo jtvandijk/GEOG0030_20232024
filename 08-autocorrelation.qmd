@@ -909,7 +909,8 @@ By printing the results of our test, we can see that the local Getis-Ord test is
 #| filename: "R code"
 # plot the different clusters
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons("asian_bangladeshi_prop", style = "pretty", midpoint=0, title = "Local Gi* statistic") +
+  tm_polygons("asian_bangladeshi_gi", style = "pretty", midpoint=0, title = "Local Gi* statistic",
+              palette=rev("-RdYlBu")) +
   tm_layout(main.title = "Cluster Map Asian-Bangladeshis in London",
             main.title.fontface = 2, fontfamily = "Helvetica",
             legend.outside = TRUE,
@@ -920,7 +921,7 @@ tm_shape(ethnicity_london_sdf) +
   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
 ```
 
-Our map shows quite clear hot spots of self-identified Asian-Bangladeshis across London. 
+Our map shows quite clear hot spots of self-identified Asian-Bangladeshis across London: the higher the z-score, the stronger the clustering.
 
 ::: {.callout-warning}
 If we want to only map the statistically significant clusters, we need to use these [z-scores](https://en.wikipedia.org/wiki/Standard_score) to filter out only statistically significant clusters. When using a 95 percent confidence level your values should be between `-1.96` and `+1.96` standard deviations.

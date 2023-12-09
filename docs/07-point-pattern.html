@@ -295,8 +295,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#average-nearest-neighbour" id="toc-average-nearest-neighbour" class="nav-link" data-scroll-target="#average-nearest-neighbour"><span class="header-section-number">7.6.1</span> Average Nearest Neighbour</a></li>
   <li><a href="#dbscan" id="toc-dbscan" class="nav-link" data-scroll-target="#dbscan"><span class="header-section-number">7.6.2</span> DBSCAN</a></li>
-  <li><a href="#conducting-a-dbscan-analysis" id="toc-conducting-a-dbscan-analysis" class="nav-link" data-scroll-target="#conducting-a-dbscan-analysis"><span class="header-section-number">7.6.3</span> Conducting a DBSCAN analysis</a></li>
-  <li><a href="#mapping-dbscan-clusters" id="toc-mapping-dbscan-clusters" class="nav-link" data-scroll-target="#mapping-dbscan-clusters"><span class="header-section-number">7.6.4</span> Mapping DBSCAN clusters</a></li>
   </ul></li>
   <li><a href="#assignment-w07" id="toc-assignment-w07" class="nav-link" data-scroll-target="#assignment-w07"><span class="header-section-number">7.7</span> Assignment</a></li>
   <li><a href="#wm-w07" id="toc-wm-w07" class="nav-link" data-scroll-target="#wm-w07"><span class="header-section-number">7.8</span> Want more? [Optional]</a>
@@ -1001,9 +999,6 @@ PROJCRS["OSGB36 / British National Grid",
 <li>The distance: <code>epsilon</code>.</li>
 </ul>
 <p>Across a set of points, DBSCAN will group together points that are close to each other based on a distance measurement and a minimum number of points. It also marks as outliers the points that are in low-density regions. The algorithm can be used to find associations and structures in data that are hard to find through visual observation alone, but that can be relevant and useful to find patterns and predict trends. However, DBSCAN will only work well if you are able to successfully define the distance and minimum points parameters and your clusters do not vary considerably in density.</p>
-</section>
-<section id="conducting-a-dbscan-analysis" class="level3" data-number="1.6.3">
-<h3 data-number="1.6.3" class="anchored" data-anchor-id="conducting-a-dbscan-analysis"><span class="header-section-number">7.6.3</span> Conducting a DBSCAN analysis</h3>
 <p>We can conduct a DBSCAN analysis using the <code>dbscan</code> library. For our analysis, we will set our <code>epsilon</code> to 200m and then set our minimum cluster size to 20 bike thefts.</p>
 <div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-dbscan_8ce899202d44872d92b632dc05a4ecd2">
 <div class="code-with-filename">
@@ -1026,9 +1021,6 @@ PROJCRS["OSGB36 / British National Grid",
 </div>
 </div>
 </div>
-</section>
-<section id="mapping-dbscan-clusters" class="level3" data-number="1.6.4">
-<h3 data-number="1.6.4" class="anchored" data-anchor-id="mapping-dbscan-clusters"><span class="header-section-number">7.6.4</span> Mapping DBSCAN clusters</h3>
 <p>The DBSCAN output contains three objects, including a vector detailing the cluster for each of our bike theft observations. To be able to work with our DBSCAN output effectively and, for example, plot the clusters as individual polygons, we need to add our cluster groups back to into our original point dataset. Because the DBSCAN output does not change the order of points, we can simply stick the cluster output on the <code>bike_theft_london</code> spatial dataframe.</p>
 <div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-dbscan-add-clusters_63cbf74cc062f16c40f4b79ea13f99ef">
 <div class="code-with-filename">

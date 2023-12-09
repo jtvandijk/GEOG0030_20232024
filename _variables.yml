@@ -10,10 +10,10 @@ urls:
   w04: "04-statistics.html"
   w05: "05-spatial.html"
   w06: "06-operations.html"
-  w07: ""
-  w08: ""
-  w09: ""
-  w10: ""
+  w07: "07-point-pattern.html"
+  w08: "08-autocorrelation.html"
+  w09: "09-raster.html"
+  w10: "10-network.html"
   
 slides:
   week01: "https://github.com/jtvandijk/GEOG0030/tree/master/slides/w01-geo.pdf"

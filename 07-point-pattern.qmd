@@ -524,7 +524,6 @@ We can use DBSCAN to detect clusters within our bike theft dataset and then use 
 
 Across a set of points, DBSCAN will group together points that are close to each other based on a distance measurement and a minimum number of points. It also marks as outliers the points that are in low-density regions. The algorithm can be used to find associations and structures in data that are hard to find through visual observation alone, but that can be relevant and useful to find patterns and predict trends. However, DBSCAN will only work well if you are able to successfully define the distance and minimum points parameters and your clusters do not vary considerably in density.
 
-### Conducting a DBSCAN analysis
 We can conduct a DBSCAN analysis using the `dbscan` library. For our analysis, we will set our `epsilon` to 200m and then set our minimum cluster size to 20 bike thefts.
 
 ```{r}
@@ -545,7 +544,6 @@ bike_theft_dbscan <- bike_theft_london |>
 The `dbscan()` function only accepts a data matrix or dataframe of points as input rather than a spatial dataframe. This is why in the above code we pass the `st_coordinates()` function to extract the projected coordinates.
 :::
 
-### Mapping DBSCAN clusters
 The DBSCAN output contains three objects, including a vector detailing the cluster for each of our bike theft observations. To be able to work with our DBSCAN output effectively and, for example, plot the clusters as individual polygons, we need to add our cluster groups back to into our original point dataset. Because the DBSCAN output does not change the order of points, we can simply stick the cluster output on the `bike_theft_london` spatial dataframe.
 
 ```{r}
