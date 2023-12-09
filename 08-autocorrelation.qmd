@@ -738,7 +738,7 @@ We now have the data we need to plot our local spatial autocorrelation maps. We 
 #| filename: "R code"
 # map the local Moran's I statistic
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons(cols = "LMI_Ii", 
+  tm_polygons(col = "LMI_Ii", 
               style = "pretty", 
               midpoint = 0, 
               title = "Local Moran's I statistic") +
@@ -771,7 +771,7 @@ colours <- c('#ffffff', "#a6bddb", "#2b8cbe" )
 
 # map the local Moran's I statistic / significance only
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons(cols = "LMI_sigP", 
+  tm_polygons(col = "LMI_sigP", 
               style = "fixed", 
               breaks = breaks,
               palette = rev(colours), 
