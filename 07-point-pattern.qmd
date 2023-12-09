@@ -100,12 +100,16 @@ Let's create a quick map of our data to check it loaded correctly:
 # plot our London MSOAs
 tm_shape(outline_london) + 
   tm_fill() +
-  # then add bike crime as blue
-  tm_shape(bike_theft_london) + 
-    tm_dots(col = "blue") +
-  # then add our stations as red
-  tm_shape(stations_london) + 
-    tm_dots(col = "red") +
+# then add bike crime as blue
+tm_shape(bike_theft_london) + 
+  tm_dots(
+    col = "blue"
+    ) +
+# then add our stations as red
+tm_shape(stations_london) + 
+  tm_dots(
+    col = "red"
+    ) +
   # then add a north arrow
   tm_compass(
     type = "arrow", 
@@ -468,8 +472,10 @@ Now we have our raster data ready to map:
 #| filename: "R code"
 # map kde raster
 tm_shape(kde_400g_raster) + 
-  tm_raster(col = 'lyr.1', 
-            palette = 'Blues') 
+  tm_raster(
+    col = 'lyr.1', 
+    palette = 'Blues'
+    ) 
 ```
 
 With our `kde_400g_raster` using `tmap`, we can go ahead and customise our map as we would do with our vector mapping such as changing the legend, adding a title, north arrow, etc. --- and, of course, our `stations_london` spatial layer.
@@ -634,9 +640,9 @@ We now have a polygon spatial dataframe, `bike_theft_clusters`, that show the ge
 # add London outline
 tm_shape(outline_london) + 
     tm_borders() +
-  # add bike theft clusters
-  tm_shape(bike_theft_clusters) + 
-    tm_polygons() +
+# add bike theft clusters
+tm_shape(bike_theft_clusters) + 
+  tm_polygons() +
   # add basemap
   tm_basemap(c(StreetMap = "OpenStreetMap"))
 ```

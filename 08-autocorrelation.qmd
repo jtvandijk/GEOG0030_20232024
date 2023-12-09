@@ -361,18 +361,25 @@ Whilst statistical analysis of distributions focus on tests and charts, when we 
 # store variables of interest as separate variable
 var_fields <- names(ethnicity_london_sdf)[14:31]
 
-
 # add Ward boundaries
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons("gray", border.col = "gray") +
+  tm_polygons(
+    col = "gray"
+    ) +
 # map all variables 
 tm_shape(ethnicity_london_sdf) +
   # select variables
-  tm_polygons(col = var_fields) +
+  tm_polygons(
+    col = var_fields
+    ) +
   # add layout options
-  tm_layout(legend.show = FALSE) +
+  tm_layout(
+    legend.show = FALSE
+    ) +
   # add 4 columns
-  tm_facets(ncol = 4)
+  tm_facets(
+    ncol = 4
+    )
 ```
 
 Despite these maps being a little small and not containing any labels, it seems that different population groups indeed concentrate in different parts of London. Let's zoom into the Asian-Bangladeshi population group and add a legend:
@@ -387,15 +394,23 @@ Despite these maps being a little small and not containing any labels, it seems 
 #| filename: "R code"
 # map a specific variable
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons("gray", 
-              border.col = "gray") +
+  tm_polygons(
+    col = "gray"
+    ) +
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons(col = "asian_bangladeshi", 
-              n = 5, 
-              style = "jenks") +
-  tm_layout(legend.outside = TRUE,
-            legend.outside.position = "right") +
-  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+  tm_polygons(
+    col = "asian_bangladeshi", 
+    n = 5, 
+    style = "jenks"
+    ) +
+  tm_layout(
+    legend.outside = TRUE,
+    legend.outside.position = "right"
+    ) +
+  tm_scale_bar(
+    breaks = c(0, 5, 10, 15, 20), 
+    position = c("left", "bottom")
+    )
 ```
 
 ::: {.callout-warning}
@@ -738,19 +753,28 @@ We now have the data we need to plot our local spatial autocorrelation maps. We 
 #| filename: "R code"
 # map the local Moran's I statistic
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons(col = "LMI_Ii", 
+  tm_polygons(
+              col = "LMI_Ii", 
               style = "pretty", 
               midpoint = 0, 
               title = "Local Moran's I statistic") +
-  tm_layout(main.title= "Local Moran's I statistic",
+  tm_layout(
+            main.title= "Local Moran's I statistic",
             main.title.fontface = 2, 
             fontfamily = "Helvetica",
             legend.outside = TRUE,
             legend.outside.position = "right",
             legend.title.size = 1,
-            legend.title.fontface = 2) +
-  tm_compass(type = "arrow", position = c("right", "bottom")) +
-  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+            legend.title.fontface = 2
+            ) +
+  tm_compass(
+    type = "arrow", 
+    position = c("right", "bottom")
+    ) +
+  tm_scale_bar(
+    breaks = c(0, 5, 10, 15, 20), 
+    position = c("left", "bottom")
+    )
 ```
 
 From the map, it is possible to observe the variations in autocorrelation across space. We can interpret that there seems to be a geographic pattern to the autocorrelation. However, it is not possible to understand if these are clusters of high or low values or which ones are statistically signficant. To be able to interpret this confidently, we also need to know the significance of the patterns we see in our map and therefore need to map the $p$-value of local Moran's I statistic.
@@ -771,11 +795,12 @@ colours <- c('#ffffff', "#a6bddb", "#2b8cbe" )
 
 # map the local Moran's I statistic / significance only
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons(col = "LMI_sigP", 
-              style = "fixed", 
-              breaks = breaks,
-              palette = rev(colours), 
-              title = "p-value of Local Moran's I stat") +
+  tm_polygons(
+    col = "LMI_sigP", 
+    style = "fixed", 
+    breaks = breaks,
+    palette = rev(colours), 
+    title = "p-value of Local Moran's I stat") +
   tm_layout(main.title = "Significant clusters",
             main.title.fontface = 2, 
             fontfamily = "Helvetica",
@@ -783,8 +808,14 @@ tm_shape(ethnicity_london_sdf) +
             legend.outside.position = "right",
             legend.title.size = 1,
             legend.title.fontface = 2) +
-  tm_compass(type = "arrow", position = c("right", "bottom")) +
-  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+  tm_compass(
+    type = "arrow", 
+    position = c("right", "bottom")
+    ) +
+  tm_scale_bar(
+    breaks = c(0, 5, 10, 15, 20), 
+    position = c("left", "bottom")
+    )
 ```
 
 Using our significance map, we can interpret the above clusters present in our local Moran's I statistic more confidently. As evident, we do have several clusters that are statistically significant to the $p$-value < 0.05.
@@ -873,18 +904,28 @@ Now we can finally map our clusters:
 #| filename: "R code"
 # plot the different clusters
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons(col = "cluster_type", 
-              palette = pal, 
-              title = "Cluster Type") +
-  tm_layout(main.title = "Cluster Map Asian Bangladeshis in London",
-            main.title.fontface = 2, 
-            fontfamily = "Helvetica", 
-            legend.outside = TRUE,
-            legend.outside.position = "right",
-            legend.title.size = 1,
-            legend.title.fontface = 2) +
-  tm_compass(type = "arrow", position = c("right", "bottom")) +
-  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+  tm_polygons(
+    col = "cluster_type", 
+    palette = pal, 
+    title = "Cluster Type"
+    ) +
+  tm_layout(
+    main.title = "Cluster Map Asian Bangladeshis in London",
+    main.title.fontface = 2, 
+    fontfamily = "Helvetica", 
+    legend.outside = TRUE,
+    legend.outside.position = "right",
+    legend.title.size = 1,
+    legend.title.fontface = 2
+    ) +
+  tm_compass(
+    type = "arrow", 
+    position = c("right", "bottom")
+    ) +
+  tm_scale_bar(
+    breaks = c(0, 5, 10, 15, 20), 
+    position = c("left", "bottom")
+    )
 ```
 
 And there we have it: within one map we can visualise both the relationship of our Wards to their respective neighbourhoods and the significance of this relationship from our local Moran's I test. This type of map is called a [LISA map](https://geodacenter.github.io/workbook/6a_local_auto/lab6a.html) and is a great way of showing how a variable is actually clustering.
@@ -925,20 +966,30 @@ By printing the results of our test, we can see that the local Getis-Ord test is
 #| filename: "R code"
 # plot the different clusters
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons(col = "asian_bangladeshi_gi", 
-              style = "pretty", 
-              midpoint=0, 
-              title = "Local Gi* statistic",
-              palette=rev("-RdYlBu")) +
-  tm_layout(main.title = "Cluster Map Asian-Bangladeshis in London",
-            main.title.fontface = 2, 
-            fontfamily = "Helvetica",
-            legend.outside = TRUE,
-            legend.outside.position = "right",
-            legend.title.size = 1,
-            legend.title.fontface = 2) +
-  tm_compass(type = "arrow", position = c("right", "bottom")) +
-  tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
+  tm_polygons(
+    col = "asian_bangladeshi_gi", 
+    style = "pretty", 
+    midpoint=0, 
+    title = "Local Gi* statistic",
+    palette=rev("-RdYlBu")
+    ) +
+  tm_layout(
+    main.title = "Cluster Map Asian-Bangladeshis in London",
+    main.title.fontface = 2, 
+    fontfamily = "Helvetica",
+    legend.outside = TRUE,
+    legend.outside.position = "right",
+    legend.title.size = 1,
+    legend.title.fontface = 2
+    ) +
+  tm_compass(
+    type = "arrow", 
+    position = c("right", "bottom")
+    ) +
+  tm_scale_bar(
+    breaks = c(0, 5, 10, 15, 20), 
+    position = c("left", "bottom")
+    )
 ```
 
 Our map shows quite clear hot spots of self-identified Asian-Bangladeshis across London: the higher the z-score, the stronger the clustering.
