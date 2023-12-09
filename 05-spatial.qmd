@@ -865,7 +865,9 @@ Let's go ahead and pass our `crime_rate` column within the `col()` parameter and
 # shape, polygons
 tm_shape(theft_msoa_sdf) +
   # specify column
-  tm_polygons(col = "crime_rate")
+  tm_polygons(
+    col = "crime_rate"
+    )
 ```
 
 We are slowly getting there. But there are two things we can notice straight away that do not look right about our data. The first is that our **classification breaks** do not really reflect the variation in our dataset. This is because `tmap` has defaulted to its default break type: **pretty breaks**, whereas, as we know, using an approach such as **natural** breaks, aka **jenks**, may reveal better variation in our data.
@@ -888,7 +890,11 @@ Let's say we want to change our choropleth map to have five classes, determined 
 # shape, polygons
 tm_shape(theft_msoa_sdf) +
   # specify column, classes
-  tm_polygons(col = "crime_rate", n=5, style="quantile")
+  tm_polygons(
+              col = "crime_rate", 
+              n=5, 
+              style="quantile"
+              )
 ``` 
 
 We now have a choropleth that reflects better the distribution of our data, but we can make them a little prettier by rounding the values. To do so, we can change the `style` of the map to `fixed` and then supply a new argument for `breaks` that contains the rounded classification breaks:
@@ -903,7 +909,12 @@ We now have a choropleth that reflects better the distribution of our data, but 
 # shape, polygons
 tm_shape(theft_msoa_sdf) +
   # specify column, classes, breaks
-  tm_polygons(col = "crime_rate", n = 5, style = "fixed", breaks = c(0, 5, 10, 15, 50, 5000))
+  tm_polygons(
+              col = "crime_rate", 
+              n = 5, 
+              style = "fixed", 
+              breaks = c(0, 5, 10, 15, 50, 5000)
+              )
 ``` 
 
 That looks a little better from the classification side of things.
@@ -930,20 +941,22 @@ To be able to start styling our map, we need to interrogate each of these functi
 tm_shape(theft_msoa_sdf) +
   # specify column, classes, breaks, borders, legend title
   tm_polygons(
-    col = "crime_rate", n = 5, style = "fixed",
-    breaks = c(0, 5, 10, 15, 50, 5000),
-    palette = "Blues",
-    title = "Rate per 10,000 people"
+              col = "crime_rate", 
+              n = 5, 
+              style = "fixed",
+              breaks = c(0, 5, 10, 15, 50, 5000),
+              palette = "Blues",
+              title = "Rate per 10,000 people"
   ) +
   # add title
   tm_layout(
-    main.title = "Theft in London - 2021",
-    main.title.fontface = 2,
-    fontfamily = "Helvetica",
-    legend.outside = TRUE,
-    legend.position = c("left", "top"),
-    legend.title.size = 1,
-    legend.title.fontface = 2
+            main.title = "Theft in London - 2021",
+            main.title.fontface = 2,
+            fontfamily = "Helvetica",
+            legend.outside = TRUE,
+            legend.position = c("left", "top"),
+            legend.title.size = 1,
+            legend.title.fontface = 2
   ) +
   # add North arrow
   tm_compass(
@@ -973,7 +986,9 @@ msoa_map <-
 tm_shape(theft_msoa_sdf) +
   # specify column, classes, breaks, borders, legend title
   tm_polygons(
-    col = "crime_rate", n = 5, style = "fixed",
+    col = "crime_rate", 
+    n = 5, 
+    style = "fixed",
     breaks = c(0, 5, 10, 15, 50, 5000),
     palette = "Blues",
     title = "Rate per 10,000 people"

@@ -225,11 +225,14 @@ Now, let's map all three layers of data onto a single map using `tmap`:
 #| message: False
 #| filename: "R code"
 # plot our London MSOAs
-tm_shape(msoa_london) + tm_fill() + 
+tm_shape(msoa_london) + 
+  tm_fill() + 
   # then add bike crime 
-  tm_shape(bike_theft) + tm_dots(col = "blue") + 
+  tm_shape(bike_theft) + 
+    tm_dots(col = "blue") + 
   # then add stations 
-  tm_shape(london_stations) + tm_dots(col = "red") 
+  tm_shape(london_stations) + 
+    tm_dots(col = "red") 
 ```
 
 Let's think about the distribution of our data: we can already see that our bike theft is clearly highly concentrated in the centre of London although we can certainly see some clusters in other areas. Let's go ahead and temporarily remove the bike theft data from our map for now to see where our tube and train stations are located.
@@ -244,11 +247,14 @@ To remove the bike data, simply comment out the (`#`) the relevant line of code:
 #| message: False
 #| filename: "R code"
 # plot our London MSOAs
-tm_shape(msoa_london) + tm_fill() + 
+tm_shape(msoa_london) + 
+  tm_fill() + 
   # then add bike crime 
-  # tm_shape(bike_theft) + tm_dots(col = "blue") + 
-  # then addstations 
-  tm_shape(london_stations) + tm_dots(col = "red") 
+  # tm_shape(bike_theft) + 
+  #  tm_dots(col = "blue") + 
+  # then add stations 
+  tm_shape(london_stations) + 
+    tm_dots(col = "red") 
 ```
 
 We can see our train and tube stations are only present in primarily the north of London and not really present in the south. This is not quite right and in fact it seems that our dataset only contains those train stations used by Transport for London within the underground network rather than all the stations in London. We will need to fix this before conducting our full analysis. A second issue with our dataset is that the `london_stations` spatial dataframe extends beyond our London boundaries. The same applies to our `bike_theft` spatial dataframe. 
@@ -438,15 +444,24 @@ We have now cleaned our `london_stations_osm` spatial dataframe to remove all th
 #| message: False
 #| filename: "R code"
 # add London outline
-tm_shape(london_outline) + tm_fill() +
+tm_shape(london_outline) + 
+    tm_fill() +
     # add OSM station data 
-    tm_shape(london_stations_osm) + tm_dots(col = "black") +
+    tm_shape(london_stations_osm) + 
+      tm_dots(col = "black") +
     # add TfL station data 
-    tm_shape(london_stations) + tm_dots(col = "red") +
+    tm_shape(london_stations) + 
+      tm_dots(col = "red") +
     # add north arrow
-    tm_compass(type = "arrow", position = c("right", "bottom")) +
+    tm_compass(
+      type = "arrow", 
+      position = c("right", "bottom")
+      ) +
     # add scale bar
-    tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) +
+    tm_scale_bar(
+      breaks = c(0, 5, 10, 15, 20), 
+      position = c("left", "bottom")
+      ) +
     # add credits
     tm_credits("© OpenStreetMap contributors")
 ```
@@ -464,11 +479,14 @@ What we can see is that it looks like our OSM data actual does a much better job
 tmap_mode("plot")
 
 # add London outline
-tm_shape(london_outline) + tm_borders() +
+tm_shape(london_outline) + 
+    tm_borders() +
     # add OSM station data
-    tm_shape(london_stations_osm) + tm_dots(col = "black") +
+    tm_shape(london_stations_osm) + 
+      tm_dots(col = "black") +
     # add TfL station data 
-    tm_shape(london_stations) + tm_dots(col = "red") +
+    tm_shape(london_stations) + 
+      tm_dots(col = "red") +
     # add basemap
     tm_basemap(c(StreetMap = "OpenStreetMap"))
 ```
@@ -483,11 +501,14 @@ Using the interactive map, what we can see is that whilst we **do** have overlap
 #| message: False
 #| filename: "R code"
 # add London outline
-tm_shape(london_outline) + tm_borders() +
+tm_shape(london_outline) + 
+    tm_borders() +
     # add TfL station data 
-    tm_shape(london_stations) + tm_dots(col = "red") +
+    tm_shape(london_stations) + 
+      tm_dots(col = "red") +
     # add OSM station data
-    tm_shape(london_stations_osm) + tm_dots(col = "black") +
+    tm_shape(london_stations_osm) + 
+      tm_dots(col = "black") +
     # add basemap
     tm_basemap(c(StreetMap = "OpenStreetMap"))
 ```
@@ -553,9 +574,11 @@ You should now find that we apparently have **3** missing stations in our `londo
 #| message: False
 #| filename: "R code"
 # add OSM station data
-tm_shape(london_stations_osm) + tm_dots(col = "black") +
+tm_shape(london_stations_osm) + 
+  tm_dots(col = "black") +
   # add missing station data
-  tm_shape(missing_stations) + tm_dots(col = "green")  +
+  tm_shape(missing_stations) + 
+    tm_dots(col = "green")  +
     # add basemap
     tm_basemap(c(StreetMap = "OpenStreetMap"))
 ```
@@ -662,7 +685,8 @@ In terms of CRS, we want to make sure we use a CRS that defines its measurement 
 #| message: False
 #| filename: "R code"
 # generate a 400m buffer
-station_400m_buffer <- london_stations_osm |> st_buffer(dist = 400) |> st_union()
+station_400m_buffer <- london_stations_osm |> st_buffer(dist = 400) |> 
+  st_union()
 ```
 
 You can then go ahead and plot our buffer to see the results, entering `plot(station_400m_buffer)` within the console:
@@ -711,11 +735,17 @@ We could go ahead and recode this to create a `1` or `0`, or `YES` or `NO` after
 tmap_mode("plot")
 
 # add London outline
-tm_shape(london_outline) + tm_borders() +
+tm_shape(london_outline) + 
+  tm_borders() +
   # add bik theft
-  tm_shape(bike_theft) + tm_dots(col = "d400", palette = "BuGn") +
+  tm_shape(bike_theft) + 
+    tm_dots(
+      col = "d400", 
+      palette = "BuGn"
+      ) +
   # add train stations
-  tm_shape(london_stations_osm) + tm_dots(palette = "gray") +
+  tm_shape(london_stations_osm) + 
+    tm_dots(palette = "gray") +
   # add credits
   tm_credits("© OpenStreetMap contributors")
 ```
