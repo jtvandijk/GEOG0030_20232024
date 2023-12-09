@@ -338,7 +338,7 @@ Plot the boxplot of our `asian_bangladeshi` variable:
 #| cache: True
 #| filename: "R code"
 # histogram
-boxplot(ethnicity_london_sdf$asian_bangladeshi)
+boxplot(ethnicity_london_sdf$asian_bangladeshi, horizontal = TRUE)
 ```
 
 Again, it is clear that the majority of Wards have a relatively low number of individuals that self-identify as Asian-Bangladeshi, but there is a good number of outliers. This raises the question whether these outliers are random or also clustered in spac --- and this brings us to spatial autocorrelation.
@@ -971,7 +971,7 @@ tm_shape(ethnicity_london_sdf) +
     style = "pretty", 
     midpoint=0, 
     title = "Local Gi* statistic",
-    palette=rev("-RdYlBu")
+    palette= "-RdYlBu"
     ) +
   tm_layout(
     main.title = "Cluster Map Asian-Bangladeshis in London",
