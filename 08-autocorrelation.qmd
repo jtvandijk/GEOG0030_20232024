@@ -861,9 +861,13 @@ Now we can finally map our clusters:
 #| filename: "R code"
 # plot the different clusters
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons(col = "cluster_type", palette = pal, title = "Cluster Type") +
+  tm_polygons(col = "cluster_type", 
+              palette = pal, 
+              title = "Cluster Type") +
   tm_layout(main.title = "Cluster Map Asian Bangladeshis in London",
-            main.title.fontface = 2, fontfamily = "Helvetica", legend.outside = TRUE,
+            main.title.fontface = 2, 
+            fontfamily = "Helvetica", 
+            legend.outside = TRUE,
             legend.outside.position = "right",
             legend.title.size = 1,
             legend.title.fontface = 2) +
@@ -909,10 +913,14 @@ By printing the results of our test, we can see that the local Getis-Ord test is
 #| filename: "R code"
 # plot the different clusters
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons("asian_bangladeshi_gi", style = "pretty", midpoint=0, title = "Local Gi* statistic",
+  tm_polygons(col = "asian_bangladeshi_gi", 
+              style = "pretty", 
+              midpoint=0, 
+              title = "Local Gi* statistic",
               palette=rev("-RdYlBu")) +
   tm_layout(main.title = "Cluster Map Asian-Bangladeshis in London",
-            main.title.fontface = 2, fontfamily = "Helvetica",
+            main.title.fontface = 2, 
+            fontfamily = "Helvetica",
             legend.outside = TRUE,
             legend.outside.position = "right",
             legend.title.size = 1,
