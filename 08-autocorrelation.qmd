@@ -361,12 +361,13 @@ Whilst statistical analysis of distributions focus on tests and charts, when we 
 # store variables of interest as separate variable
 var_fields <- names(ethnicity_london_sdf)[14:31]
 
-# map all our variables of interest at once
+
+# add Ward boundaries
 tm_shape(ethnicity_london_sdf) +
-  # add Ward boundaries
   tm_polygons("gray", border.col = "gray") +
+# map all variables 
 tm_shape(ethnicity_london_sdf) +
-  # add all variables of interest
+  # select variables
   tm_polygons(col = var_fields) +
   # add layout options
   tm_layout(legend.show = FALSE) +
@@ -386,9 +387,12 @@ Despite these maps being a little small and not containing any labels, it seems 
 #| filename: "R code"
 # map a specific variable
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons("gray", border.col = "gray") +
+  tm_polygons("gray", 
+              border.col = "gray") +
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons(col = "asian_bangladeshi", n = 5, style = "jenks") +
+  tm_polygons(col = "asian_bangladeshi", 
+              n = 5, 
+              style = "jenks") +
   tm_layout(legend.outside = TRUE,
             legend.outside.position = "right") +
   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom"))
@@ -734,9 +738,13 @@ We now have the data we need to plot our local spatial autocorrelation maps. We 
 #| filename: "R code"
 # map the local Moran's I statistic
 tm_shape(ethnicity_london_sdf) +
-  tm_polygons("LMI_Ii", style = "pretty", midpoint = 0, title = "Local Moran's I statistic") +
+  tm_polygons(cols = "LMI_Ii", 
+              style = "pretty", 
+              midpoint = 0, 
+              title = "Local Moran's I statistic") +
   tm_layout(main.title= "Local Moran's I statistic",
-            main.title.fontface = 2, fontfamily = "Helvetica",
+            main.title.fontface = 2, 
+            fontfamily = "Helvetica",
             legend.outside = TRUE,
             legend.outside.position = "right",
             legend.title.size = 1,
@@ -762,11 +770,15 @@ breaks <- c(0, 0.05, 0.1, 1)
 colours <- c('#ffffff', "#a6bddb", "#2b8cbe" )
 
 # map the local Moran's I statistic / significance only
-tm_shape(ethnicity_london_sdf) +
-  tm_polygons("LMI_sigP", style = "fixed", breaks = breaks,
-              palette = rev(colours), title = "p-value of Local Moran's I stat") +
+tm_shape(ethnicity_londonat_sdf) +
+  tm_polygons(cols = "LMI_sigP", 
+              style = "fixed", 
+              breaks = breaks,
+              palette = rev(colours), 
+              title = "p-value of Local Moran's I stat") +
   tm_layout(main.title = "Significant clusters",
-            main.title.fontface = 2, fontfamily = "Helvetica",
+            main.title.fontface = 2, 
+            fontfamily = "Helvetica",
             legend.outside = TRUE,
             legend.outside.position = "right",
             legend.title.size = 1,
