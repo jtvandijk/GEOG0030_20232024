@@ -680,7 +680,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
     Chi-squared test of CSR using quadrat counts
 
 data:  bike_theft_ppp_jitter
-X2 = 55571, df = 80, p-value &lt; 2.2e-16
+X2 = 55581, df = 80, p-value &lt; 2.2e-16
 alternative hypothesis: two.sided
 
 Quadrats: 81 tiles (irregular windows)</code></pre>
@@ -969,7 +969,7 @@ PROJCRS["OSGB36 / British National Grid",
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">nndist</span>(bike_theft_ppp_jitter, <span class="at">k =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 53.41826</code></pre>
+<pre><code>[1] 53.41619</code></pre>
 </div>
 </div>
 <p>We can see that the average nearest neighbour for all points is 53.5 metres. To get an insight into the spatial ordering of all our points relative to one another we can plot the ANN values for different order neighbours (i.e.&nbsp;first closest point, second closest point, etc. For point patterns that are highly clustered, we would expect the average distances between points to be very small.</p>

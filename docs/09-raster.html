@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -244,6 +278,13 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#slides-w09" id="toc-slides-w09" class="nav-link" data-scroll-target="#slides-w09"><span class="header-section-number">9.1</span> Lecture slides</a></li>
   <li><a href="#reading-w09" id="toc-reading-w09" class="nav-link" data-scroll-target="#reading-w09"><span class="header-section-number">9.2</span> Reading list</a></li>
+  <li><a href="#raster-data" id="toc-raster-data" class="nav-link" data-scroll-target="#raster-data"><span class="header-section-number">9.3</span> Raster data</a>
+  <ul class="collapse">
+  <li><a href="#setup-w08" id="toc-setup-w08" class="nav-link" data-scroll-target="#setup-w08"><span class="header-section-number">9.3.1</span> Getting started</a></li>
+  <li><a href="#map-algebra" id="toc-map-algebra" class="nav-link" data-scroll-target="#map-algebra"><span class="header-section-number">9.3.2</span> Map algebra</a></li>
+  <li><a href="#zonal-statistics" id="toc-zonal-statistics" class="nav-link" data-scroll-target="#zonal-statistics"><span class="header-section-number">9.3.3</span> Zonal statistics</a></li>
+  </ul></li>
+  <li><a href="#interpolation" id="toc-interpolation" class="nav-link" data-scroll-target="#interpolation"><span class="header-section-number">9.4</span> Interpolation</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -265,49 +306,371 @@ ul.task-list li input[type="checkbox"] {
 <section id="essential-readings" class="level4">
 <h4 class="anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
-<li>Dugoua, E. Kennedy, R. and Urpelainen, J. 2018. Satellite data for the social sciences: measuring rural electrification with night-time lights. <em>International Journal of Remote Sensing</em> 39(9): 2690-2701. <a href="https://doi.org/10.1080/01431161.2017.1420936">[Link]</a></li>
 <li>Gimond, M. 2021. Intro to GIS and spatial analysis. <strong>Chapter 14</strong>: <em>Spatial Interpolation</em>. <a href="https://mgimond.github.io/Spatial/spatial-interpolation.html">[Link]</a></li>
-<li>Jumaah, H. <em>et al.</em> 2019. Air quality index prediction using IDW geostatistical technique and OLS-based GIS technique in Kuala Lumpur, Malaysia. <em>Geomatics, Natural Hazards and Risk</em> 10(1): 2185-2199. <a href="https://doi.org/10.1080/19475705.2019.1683084">[Link]</a></li>
+<li>Heris, M., Foks, N., Bagstad, K. 2020. A rasterized building footprint dataset for the United States. <em>Scientific Data</em> 7: 207. <a href="https://doi.org/10.1038/s41597-020-0542-3">[Link]</a></li>
+<li>Thomson, D., Leasure, D., Bird, T. <em>et al</em>. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level?: A simulation analysis in urban Namibia. <em>Plos ONE</em> 17:7: e0271504. <a href="https://doi.org/10.1371/journal.pone.0271504">[Link]</a></li>
 </ul>
 </section>
 <section id="suggested-readings" class="level4">
 <h4 class="anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
 <ul>
-<li>Ferreira, T. 2018. Using satellite data to track socio-economic outcomes: a case study of Namibia. <em>Stellenbosch Working Paper Series</em> WP12/2018. <a href="https://www.ekon.sun.ac.za/wpapers/2018/wp122018">[Link]</a></li>
-<li>Mellander, C. <em>et al.</em> 2015. Night-time light data: a good proxy measure for economic activity? <em>PLoS ONE</em> 10(10): e0139779. <a href="https://doi.org/10.1371/journal.pone.0139779">[Link]</a></li>
+<li>Mellander, C., Lobo, J., Stolarick, K. <em>et al</em>. 2015. Night-time light data: a good proxy measure for economic activity? <em>PLoS ONE</em> 10(10): e0139779. <a href="https://doi.org/10.1371/journal.pone.0139779">[Link]</a></li>
 </ul>
-<!-- ## Raster data  -->
-<!-- This week's content introduces you to raster data, map algebra and interpolation. After first looking at population change in London using raster data, we will then look at generating pollution maps in London from individual point readings taken from air quality monitoring sites across London. To complete this analysis, we will be using several new datasets: -->
-<!-- 1. **Population rasters for Great Britain**: Raster datasets containing estimated population counts for Great Britain in 2001 and 2011 at a spatial resolution of 1km. -->
-<!-- 2. **NO~2~ readings across London**: A dataset contain readings of NO~2~ for individual air quality monitoring sites in London. -->
-<!-- We will also use our London wards (2018) administrative boundaries dataset at various points within both practicals. This file should already be in your `raw/boundaries` folder. -->
-<!-- ### Housekeeping {#housekeeping-w09} -->
-<!-- Let's get ourselves ready to start our practical content by first downloading the relevant data and loading this within our script. Open a new script within your GEOG0030 project and save this script as `wk9-pollution-raster-analysis.r`. At the top of your script, add the following metadata (substitute accordingly): -->
-<!-- ```{r 09-scr-title, warnings=FALSE, message=FALSE, cache=TRUE, tidy=FALSE} -->
-<!-- # Analysing population change and pollution in London -->
-<!-- # Data: January 2023 -->
-<!-- # Author: Justin -->
-<!-- ``` -->
-<!-- Within your script, add the following libraries for loading: -->
-<!-- ```{r 09-scr-libs-all, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # libraries -->
-<!-- library(tidyverse) -->
-<!-- library(sf) -->
-<!-- library(raster) -->
-<!-- library(tmap) -->
-<!-- library(gstat) -->
-<!-- library(spatstat) -->
-<!-- ``` -->
-<!-- ### Downloading data {#downloading-data-w09} -->
-<!-- #### Population data  -->
-<!-- For the first part of this week's practical material we will be using raster datasets from the [Population Change and Geographic Inequalities in the UK, 1971-2011 (PopChange)](https://www.liverpool.ac.uk/geography-and-planning/research/popchange/introduction/) project. In this [ESRC-funded project](https://esrc.ukri.org/research/our-research/secondary-data-analysis-initiative/), researchers from the University of Liverpool created raster population surfaces from publicly available Census data (1971, 1981, 1991, 2001, 2011). These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of 1km. These surfaces can be used to explore, for example, changes in the demographic profiles of small areas, area deprivation, or country of birth. -->
-<!-- To enable this, the researchers have created several categories of rasters, including: Total Population, Population by Age, Population by Country of Birth, Population by Ethnicity etc. This week we will use the **Total Population** datasets. To access data directly from the PopChange website requires a simple registration for log-in, you can then navigate through the datasets and choose those you would like to download. -->
-<!-- For this week, we have gone ahead and downloaded the data for you, which you can access directly from the links below: -->
-<!-- | PopChange Raster                            | File Type         | Link | -->
-<!-- | :------                                     | :------      | :------ | -->
-<!-- | Population surface GB 2001 - Total Population    | `asc`        | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/5a_ascii_grid2001_Total_Population_UsRsPopA.zip) | -->
-<!-- | Population surface GB 2011 - Total Population    | `asc`        | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/5a_ascii_grid2011_Total_Population_URPopAll.zip) | -->
-<!-- Once downloaded, copy over these files into your `data/raw/population` folder. -->
+</section>
+</section>
+<section id="raster-data" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="raster-data"><span class="header-section-number">9.3</span> Raster data</h2>
+<p>In previous weeks, we have predominantly worked with <strong>vector data</strong> and/or <strong>tabular data</strong> that we then join to vector data for analysis. However, depending on the nature of your research problem, you may also encounter <strong>raster data</strong>. This week’s content introduces you to raster data, map algebra and interpolation. After first looking at population change in London using raster data, we will then look at generating pollution maps in London from individual point readings taken from air quality monitoring sites across London. To complete this analysis, we will be using several new datasets:</p>
+<ol type="1">
+<li><strong>Population rasters for Great Britain</strong>: <a href="https://hub.worldpop.org/">WorldPop</a> raster on estimated population counts for Great Britain in 2010 and 2020 at a spatial resolution of 1km.</li>
+<li><strong>NO<sub>2</sub> readings across London</strong>: A dataset contain readings of NO<sub>2</sub> for individual air quality monitoring sites in London.</li>
+</ol>
+<div class="cell" data-hash="09-raster_cache/html/fig-raster-vector_8fdc487ea00c83e94b1dd41d62d58b03">
+<div class="cell-output-display">
+<div id="fig-raster-vector" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w09/raster-vector.png" class="img-fluid figure-img" width="464"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: A hypothetical raster and a vector model of landuse. <a href="https://jtvandijk.github.io/GEOG0030/images/w09/raster-vector.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The main difference between vector and raster models is how they are structured. Our vectors are represented by three different types of geometries: points, lines and polygons. We have used point data in the form of our stations and bike theft, and polygons in the form of our ward and borough boundaries. In comparison, our raster datasets are composed of pixels (or grid cells) — a bit like an image. This means that a raster dataset represents a geographic phenomenon by dividing the world into a set of rectangular cells that are laid out in a grid. Each cell holds one value that represents the value of that phenomena at the location, e.g.&nbsp;a population density at that grid cell location. In comparison to vector data, we do not have an <em>attribute table</em> containing fields to analyse. All analysis conducted on a raster dataset therefore is primarily conducted on the cell values of a raster, rather than on the attribute values of the observations contained within our dataset or the precise geometries of our dataset. Probably one of the most common or well-known types of raster data are those that we can derive from remote sensing, including satellite and RADAR/LIDAR imagery that we see used in many environmental modelling applications, such as land use and pollution monitoring.</p>
+</div>
+</div>
+</div>
+<section id="setup-w08" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="setup-w08"><span class="header-section-number">9.3.1</span> Getting started</h3>
+<p>Open a new script within your GEOG0030 project and save this script as <code>wk9-raster-analysis.r</code>. At the top of your script, add the following metadata:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-script-title_8edff1e9fc642db479e0b11e0f39ec26">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Raster analysis </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: January 2024</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now let us add all of the libraries we will be using today to the top of our script:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-load-libraries_ca4a8e7e230e3731e5c90c3ac4c664e7">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stars)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>For the first part of this week’s practical material we will be using raster datasets from <a href="https://hub.worldpop.org/">WorldPop</a>:</p>
+<blockquote class="blockquote">
+<p>“<em>WorldPop develops peer-reviewed research and methods for the contstruction of open and high-resolution geosapatial data on population distributions, demogrpaphics and dynamics, with a focus on low and middle income countries.</em>”</p>
+</blockquote>
+<p>These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These surfaces can be used to explore, for example, changes in the demographic profiles of small areas, area deprivation, or country of birth.</p>
+<ol type="1">
+<li>Navigate to the WorldPop Hub*: <a href="https://hub.worldpop.org/">[Link]</a></li>
+<li>Go to <strong>Population Count</strong> -&gt; <strong>Unconstrained individual countries 2000-2020 (1km resoultion)</strong>.</li>
+<li>Type <em>United Kingdom</em> in the search bar.</li>
+<li>Download the <a href="https://en.wikipedia.org/wiki/GeoTIFF">GeoTIFF</a> files for <strong>2010</strong> and <strong>2020</strong>: <code>gbr_ppp_2010_1km_Aggregated</code> and <code>gbr_ppp_2020_1km_Aggregated</code>.</li>
+<li>Save the file in your <code>population</code> folder.</li>
+</ol>
+</section>
+<section id="map-algebra" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="map-algebra"><span class="header-section-number">9.3.2</span> Map algebra</h3>
+<p><strong>Map algebra</strong> is a set-based algebra for manipulating geographic data, coined by <a href="https://en.wikipedia.org/wiki/Dana_Tomlin">Dana Tomlin</a> in the early 1980s. Map algebra uses maths-like operations, including addition, subtraction and multiplication to update raster cell values - depending on the output you’re looking to achieve. The most common type of map algebra is to apply these operations using <em>a cell-by-cell function</em>. These operations might include:</p>
+<ul>
+<li><strong>Arithmetic operations</strong> that use basic mathematical functions like addition, subtraction, multiplication and division.</li>
+<li><strong>Statistical operations</strong> that use statistical operations such as minimum, maximum, average and median.</li>
+<li><strong>Relational operations</strong> which compare cells using functions such as greater than, smaller than or equal to.</li>
+</ul>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The utilisation of these functions can enable many different types of specialised raster analysis, such as recoding or reclassifying indivdual rasters to reduce complexity in their data values, generating the <a href="https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index">Normalised Difference Vegetation Index</a> for a satellite imagery dataset or calculating <a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/creating-a-cost-surface-raster.htm">Least Cost Surfaces</a> to find the most efficient path from one cell in a raster to another. Furthermore, using multiple raster datasets, it is possible to combine these data through mathematical overlays, from the basic mathematical operations mentioned above to more complex modelling..</p>
+</div>
+</div>
+</div>
+<p>We will be using some simple map algebra to look at population change in London between 2010 and 2020. Let’s get started and take a look at our data. First we need to load it into R (using the <code>terra</code> library) and then we can quickly plot it using the <code>base</code> plot function:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-load-raster-data_1a6eef198438f655808b8a9b7b3b5fd3">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pop2010 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/raw/population/gbr_ppp_2010_1km_Aggregated.tif"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pop2020 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/raw/population/gbr_ppp_2020_1km_Aggregated.tif"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># transform projection</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>pop2010 <span class="ot">&lt;-</span> pop2010 <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">project</span>(<span class="st">"epsg:27700"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>pop2020 <span class="ot">&lt;-</span> pop2020 <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">project</span>(<span class="st">"epsg:27700"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2010_1a10a69f50efcc73a412ac13434f2c3b">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot 2010</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pop2010)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-load-raster-data-2010" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-load-raster-data-2010-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: WorldPop 2010 population estimates for the UK.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2020_b987526a40659f75378dd7e38ccd5966">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot 2020</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pop2020)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-load-raster-data-2020" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-load-raster-data-2020-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: WorldPop 2020 population estimates for the UK.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>You should see that whilst your maps look very similar, the legend certainly shows that the values associated with each cell has grown over the 10 years between 2010 and 2021: we see our maximum increase from about 12,000 people per cell to well-over 14,000 people per cell. Now we have our raster data loaded, we want to reduce it to show only the extent of London.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The <code>terra</code> package does not take in <code>sf</code> objects, so once we have loaded the London MSOA file we need to transform the file into a <code>SpatRaster</code> or <code>SpatVector</code>. The process of turning a vector dataset into a raster dataset is called rasterising.</p>
+<div class="cell" data-hash="09-raster_cache/html/fig-rasterise-a-file_85d7d754ab0080439b9a9d580e49377f">
+<div class="cell-output-display">
+<div id="fig-rasterise-a-file" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w09/rtovector.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Rasterising a line geometry. Source: <a href="https://r.geocompx.org/raster-vector#rasterization">Lovelace <em>et al</em>. 2023</a>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-confe-them-area_34784caaa9a1fed10b5626eb8ec9d8de">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data, get outline, rasterise</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>msoa_london <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/raw/boundaries/MSOA2021_London.gpkg"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `MSOA2021_London' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/raw/boundaries/MSOA2021_London.gpkg' 
+  using driver `GPKG'
+Simple feature collection with 1002 features and 4 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># crop</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>pop2010_london <span class="ot">&lt;-</span> <span class="fu">crop</span>(pop2010, msoa_london)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>pop2020_london <span class="ot">&lt;-</span> <span class="fu">crop</span>(pop2020, msoa_london)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># mask</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>pop2010_london <span class="ot">&lt;-</span> <span class="fu">mask</span>(pop2010_london, msoa_london)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>pop2020_london <span class="ot">&lt;-</span> <span class="fu">mask</span>(pop2020_london, msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2010-lon_a66858dc5e88695943e21e7a05e7053c">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot 2010</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pop2010_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-load-raster-data-2010-lon" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-load-raster-data-2010-lon-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: WorldPop 2010 population estimates for London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2020-lon_40ea483a6b92a8230db4ce574a1dd7ad">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot 2020</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pop2020_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-load-raster-data-2020-lon" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-load-raster-data-2020-lon-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: WorldPop 2020 population estimates for London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Now we have our two London population rasters, we can calculate population change between the two timeperiods by subtracting our 2010 population raster from our 2020 population raster:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-substract-london_856d5e771375b161fbf66f2ce11387bc">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subtract</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>lonpop_change <span class="ot">&lt;-</span> pop2020_london <span class="sc">-</span> pop2010_london</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_change)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-substract-london" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-substract-london-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: Population change in London 2010-2020.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="zonal-statistics" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="zonal-statistics"><span class="header-section-number">9.3.3</span> Zonal statistics</h3>
+<p>To further analyse our population change raster, we can create a smoothed version of our <code>lonpop_change</code> raster by using the <code>focal()</code> function. Using the <code>focal()</code> function, we generate a raster that summarises the average (mean) value of the <strong>9</strong> nearest neighbours for each cell, using a weight matrix defined in our <code>w</code> parameter and set to a <code>matrix</code>:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-focus-on-the-hood_527f4264c41ae5a64ec79b76578e4c9f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subtract</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lonpop_smooth <span class="ot">&lt;-</span> <span class="fu">focal</span>(lonpop_change, <span class="at">w =</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">3</span>), <span class="at">fun =</span> mean)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_change)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-focus-on-the-hood" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-focus-on-the-hood-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: Smoothed version of population change in London 2010-2020.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The differences are not very noticeable, but you were to subtract the smoothed raster from the original raster you will see that definitely something happened:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-focus-on-the-smooth_880fc7cdbca5e80a384c641eede31e49">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the results</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_change <span class="sc">-</span> lonpop_smooth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-focus-on-the-smooth" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-focus-on-the-smooth-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;9: Difference smoothed population change with original population change raster.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can also look to use zonal functions to better represent our population change by aggregating our data to coarser resolutions. For example, we can resize our raster’s spatial resolution to contain larger grid cells which will, of course, simplify our data, making larger trends more visible in our data but may similarly end up obfuscating smaller trends.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>We can resize our <code>lonpop_change</code> raster by using the <code>aggregate()</code> function and setting the <code>fact</code> (factor) parameter to the <em>order</em> of rescaling we would like (e.g.&nbsp;increase both the width and height of a cell by a factor of two). We then provide the <code>fun</code> (function) by which to aggregate our data, in this case, we will continue to use the <code>mean</code> but we could also use the <code>min</code> or <code>max</code> depending on our application.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-aggregate-the-raster_185ff2582940dda035aa4b5dfaaf700c">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>lonpop_agg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(lonpop_change, <span class="at">fact =</span> <span class="dv">2</span>, <span class="at">fun =</span> mean)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_agg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-aggregate-the-raster" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-aggregate-the-raster-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;10: Aggregated cell values.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Where we transformed a vector dataset into a raster dataset earlier, in some cases you would want to aggregate move from raster to vector. For example, in our case, we can aggregate the <code>lonpop_change</code> raster to our actual London MSOA boundaries, i.e.&nbsp;calculate for each MSOA in our dataset the average (or other function) population change,. We can, of course, use other functions other than the <code>mean</code>. What function you use will simply depend on your application.</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-aggregate-the-raster-to-vector_98ba213b29162e153de8b2eb53df968e">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>london_msoa_pop <span class="ot">&lt;-</span> <span class="fu">extract</span>(lonpop_change, msoa_london, <span class="at">fun =</span> mean)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add to spatial dataframe</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>msoa_london <span class="ot">&lt;-</span> msoa_london <span class="sc">|&gt;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>() <span class="sc">|&gt;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pop_change =</span> london_msoa_pop<span class="sc">$</span>gbr_ppp_2020_1km_Aggregated)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa_london) <span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"pop_change"</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Variable(s) "pop_change" contains positive and negative values, so midpoint is set to 0. Set midpoint = NA to show the full spectrum of the color palette.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-aggregate-the-raster-to-vector" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-aggregate-the-raster-to-vector-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;11: Aggregating raster values to a vector geography.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We now have a vector dataset that we could go ahead and run many of the analyses that we have completed in previous weeks. Furthermore, we can use this data within other analyses we might want to complete.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Trying to calculate population change, particularly across decades as we have done here, can be quite challenging with changing administrative boundaries. Using raster data can be a good workaround to these issues, provided that the different rasters are of same size and extent.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="interpolation" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="interpolation"><span class="header-section-number">9.4</span> Interpolation</h2>
 <!-- #### Pollution data -->
 <!-- For the second part of this week's practical material, we will explore several methods of interpolation by looking at air pollution in London by getting data from the [Londonair](https://www.londonair.org.uk/LondonAir/General/about.aspx) website. **Londonair** is the website of the London Air Quality Network (LAQN), and shows air pollution in London and south east England that is provided by the [Environmental Research Group](https://www.imperial.ac.uk/school-public-health/environmental-research-group/) of Imperial College London. The data are captured by hundreds of sensors at various continuous monitoring sites in London and the south east of England. The data are publicly available for download and we can use an R package to directly interact with the data without needing to download it. The `openair` [R package](https://davidcarslaw.github.io/openair/) enables us to import data directly form the Londonair website.  -->
 <!-- :::note -->
@@ -318,130 +681,6 @@ ul.task-list li input[type="checkbox"] {
 <!-- | :------                                   | :------      | :------ | -->
 <!-- | Air pollution in London for 2019 (NO~2~)  | `csv`        | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/no2_london_2019.zip) | -->
 <!-- Once downloaded, copy over these files into a `data/raw/pollution` folder. Please note that the file is rather larger (~170 MB) and it is best to keep it as `.zip` file. -->
-<!-- ### Raster data -->
-<!-- In the previous weeks, we have predominantly worked with **vector data** and/or **tabular data** that we then join to vector data for analysis. However, depending on the nature of your research problem, you may also encounter **raster data**.  -->
-<!-- ```{r 09-raster-but-vector, echo=FALSE, fig.align='center', out.width="90%", fig.cap='A hypothetical raster and a vector model of landse.'} -->
-<!-- knitr::include_graphics('images/w09/raster_and_vector.png') -->
-<!-- ``` -->
-
-<!-- If you remember, the main difference between vector and raster models is how they are structured. Our vectors are represented by three different types of geometries: points, lines and polygons. We have used point data in the form of our stations and bike theft, and polygons in the form of our ward and borough boundaries. In comparison, our raster datasets are composed of pixels (or grid cells) - a bit like an image. This means that a raster dataset represents a geographic phenomenon by dividing the world into a set of rectangular cells that are laid out in a grid. Each cell holds one value that represents the value of that phenomena at the location, e.g. a population density at that grid cell location. In comparison to vector data, we do not have an *attribute table* containing fields to analyse.  -->
-<!-- All analysis conducted on a raster dataset therefore is primarily conducted on the cell values of a raster, rather than on the attribute values of the observations contained within our dataset or the precise geometries of our dataset. Probably one of the most common or well-known types of raster data are those that we can derive from remote sensing, including satellite and RADAR/LIDAR imagery that we see used in many environmental modelling applications, such as land use and pollution monitoring. However, over the last few years, raster data has increasingly being used within spatial data science applications. For example, [Worldpop](www.worldpop.org) and [Facebook](https://dataforgood.fb.com/tools/population-density-maps/) have created raster-based estimates of population density (and other variables), that you can access openly via their respective links. -->
-<!-- Beyond their benefits in computational requirements and even, for some geographical phenomena, visualisation capacity and capabilities, a key advantage of raster data is that is relatively straight-forward to standardise data across space (i.e. different countries) and across variables (i.e. different datasets) to enable greater compatibility and easier comparison of datasets than its vector counterparts. We have, for example, seen that we can run into issues quickly even with data on London, as our ward boundaries have changed so frequently even over just the last ten years. -->
-<!-- This standardisation can occur as raster data has:  -->
-<!-- * An **origin** point from which the grid extends and then a precise number of columns and rows within said dataset; -->
-<!-- * A specific **spatial resolution** which refers to the **cell size** of the raster dataset, e.g. are the grid square 100m x 100m, 1000m x 1000m, etc. -->
-<!-- From these two values, it is possible to calculate the size of our raster (number of columns X spatial resolution by the number of rows X spatial resolution) as well as * **snap** future rasters (or *resample* current rasters) to both the **spatial extent** and the **spatial delineation** of one raster dataset (i.e. ensure the cells between the rasters will align with one another). This enables us to create rasters that essentially "line up with one another" and by doing so, we are able to complete specific calculations between our raster datasets known as **map algebra**. -->
-<!-- ### Map algebra -->
-<!-- **Map algebra** is a set-based algebra for manipulating geographic data, coined by [Dana Tomlin](https://en.wikipedia.org/wiki/Dana_Tomlin) in the early 1980s. Map algebra uses maths-like operations, including addition, subtraction and multiplication to update raster cell values - depending on the output you're looking to achieve. The most common type of map algebra is to apply these operations using *a cell-by-cell function*. Conceptually, this approach will directly stack rasters on top of one another and complete the mathematical operations that you've supplied to the cells that are aligned with each other. -->
-<!-- These operations might include: -->
-<!-- * **Arithmetic operations** that use basic mathematical functions like addition, subtraction, multiplication and division. -->
-<!-- * **Statistical operations** that use statistical operations such as minimum, maximum, average and median. -->
-<!-- * **Relational operations**, which compare cells using functions such as greater than, smaller than or equal to. -->
-<!-- * **Trigonometric operations**, which use sine, cosine, tangent, arcsine between two or more raster layers. -->
-<!-- * **Exponential and logarithmic operations** that use exponent and logarithm functions. -->
-<!-- But it is also possible to run (some of) these operations at a different scale. Map algebra functions can be applied using for **four** different approaches: -->
-<!-- * **Local**: The simplest approach - completing functions on a cell-by-cell basis. -->
-<!-- * **Global**: Used to apply a bulk change to all cells in a raster using a function, e.g. add 1 to all values in a raster, or calculate the euclidean distance each cell is away from a specific cell. -->
-<!-- * **Focal**: Apply a function to a set of neighborhood values to calculate the output for a single cell, e.g. using a moving window, such as kernel. -->
-<!-- * **Zonal**: Apply a function to a group of cells within a specified zone (zone can be provided as a raster or vector format). -->
-<!-- The utilisation of these functions can enable many different types of specialised raster analysis, such as recoding or reclassifying indivdual rasters to reduce complexity in their data values, generating the *Normalised Difference Vegetation Index* for a satellite imagery dataset, or calculating *Least Cost Estimate Surfaces* to find the most "efficient" path from one cell in a raster to another. Furthermore, using multiple raster datasets, it is possible to combine these data through mathematical overlays, from the basic mathematical operations mentioned above to more complex modelling, such as prediction using Bayes theorem.  -->
-
-<!-- The results of these overlays have many applications, including identifying suitable locations for placing a new school or modelling risk to viruses, such as the Zika virus (e.g. [Cunze et al, 2019](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6863140/) and [Santos & Meneses, 2017](https://www.sciencedirect.com/science/article/pii/S0001706X16303886?casa_token=vJFKzU7IYf4AAAAA:LkKoIPdcLztD9qmWaDEUq56H3so9PPRXvgN8hy6IidqblVRJ1FWawqlGBKybvHhYYdfRY-DLadVi) for those of you interested in this application), and, of course, as highlighted above, population density. -->
-<!-- ## Population change in London -->
-<!-- The first part of our practical this week will look at map algebra in action - and some simple raster data process - by looking to analyse population change in London between 2001 and 2011. To do so, we are going to complete a very simple bit of map algebra - we will subtract the values of the 2011 raster dataset from the 2011 raster dataset and then map the resulting values, i.e. population change. One question to think about - and reflect on as we move forward with this practical - is that we already know that small-area counts of people in a variety of population subgroups are publicly released for each Census and via the Mid-Year estimates, so why was it necessary to create these raster population surfaces? -->
-<!-- Before we open up the data in R, try to have a 'non-spatial sneak peak' at the `.asc` file by opening it in a normal text editor, for instance, *TextEdit* on Mac OS or *NotePad* on Windows. What you will notice is that the `asc` file, which is an exchange format, is in very fact a flat plain text file: -->
-<!-- ```{r 09-raster-vector, echo=FALSE, fig.align='center', out.width="90%", fig.cap='Raster or plain text?'} -->
-<!-- knitr::include_graphics('images/w09/raster_as_text.png') -->
-<!-- ``` -->
-<!-- Reflecting on what we have just read about rasters and their format, what do you think the first few lines of the `asc` file, when opened with a text editor, mean? -->
-<!-- ### Loading data {#loading-data-w09-1} -->
-<!-- Let's get started and take a look at our data. First we need to load it into R (using the `raster` library) and then we can quickly plot it using the `base` plot function: -->
-<!-- ```{r 09-load-raster data, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # load our two raster datasets -->
-<!-- pop_2001 <- raster('data/raw/population/5a_ascii_grid2001_Total_Population_UsRsPopA.asc') -->
-<!-- pop_2011 <- raster('data/raw/population/5a_ascii_grid2011_Total_Population_URPopAll.asc') -->
-<!-- # plot 2001 - this can be a little slow, especially for large raster -->
-<!-- plot(pop_2001) -->
-<!-- # plot 2011 - this can be a little slow, especially for large rasters -->
-<!-- plot(pop_2011) -->
-<!-- ``` -->
-<!-- You should see that whilst your maps look very similar, the legend certainly shows that the values associated with each cell has grown over the 10 years between 2001 and 2011: we see our maximum increase from 15,000 people per cell to 20,000 people per cell. -->
-<!-- Now we have our raster data loaded, we want to reduce it to show only London using our London ward shapefile. To do so, we will use a combination of two techniques - the `crop()` function and then using a `mask` to refine our raster further. The `crop()` function crop any raster by the overall spatial extent or rather *bounding box* of the `y` dataset. As a result, the raster returned will be rectangular (or square) in shape - and *not cropped* to the precise geometry of the `y` dataset that we see in the use of the `st_intersections()` function that we use with vector data. To reduce a raster to the (almost) precise geometry of the `y` dataset, we need to instead use a `mask` approach.  -->
-<!-- :::tip -->
-<!-- **Tip** <br /> -->
-<!-- A `mask` will only work when using **two** raster datasets. As a result, we need to turn our `y` dataset (in our case, the London ward shapefile) into a raster - a process simply known as "rasterize" or "rasterizing". This process of rasterizing will turn our polygon dataset into a raster and thus simplify/alter the geometry of our dataset to coerce it into a grid-based dataset: -->
-<!-- ```{r 09-raster-as-grid, echo=FALSE, fig.align='center', fig.cap='Rasterising a line vector - forcing geometries into a grid. Source: [Lovelace *et al*. 2020](https://geocompr.robinlovelace.net/geometric-operations.html#raster-vector).'} -->
-<!-- knitr::include_graphics('images/w09/rtovector.png') -->
-<!-- ``` -->
-<!-- ::: -->
-<!-- To ensure our resulting raster of our London ward shapefile matches the spatial delineation (aligns our cells) and resolution (make cells the same size) of our population rasters, instead of separately rasterising (using the `rasterise()` function) our London ward shapefile and then masking (using the `mask()` function) our rasters by the resulting raster, we can combine this into one, still using the `rasterise()` function but adding the London population rasters into the function and the `mask` parameter set to `True`. -->
-<!-- Load our London ward shapefile and use this to first crop, then mask our population rasters: -->
-<!-- ```{r 09-confine-that-area-yall, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # load london ward data  -->
-<!-- london_ward <- read_sf("data/raw/boundaries/2018/London_Ward.shp") -->
-<!-- # crop raster to extent greater london -->
-<!-- lonpop_2001 <- crop(pop_2001,london_ward) -->
-<!-- lonpop_2011 <- crop(pop_2011,london_ward) -->
-<!-- # rasterise London ward, and mask each population raster -->
-<!-- lonpop_2001 <- rasterize(london_ward, lonpop_2001, mask=TRUE) -->
-<!-- lonpop_2011 <- rasterize(london_ward, lonpop_2011, mask=TRUE) -->
-<!-- # plot the 2001 London population raster -->
-<!-- plot(lonpop_2001) -->
-<!-- # plot the 2011 London population raster -->
-<!-- plot(lonpop_2011) -->
-<!-- ``` -->
-<!-- You should now have generated two plots for each year. You can quickly flick between the two and see there is evidence of population change between our two datasets. -->
-<!-- ### Analysing population change -->
-<!-- Now we have our two London population rasters, we are now ready to go ahead and calculate population change between our two datasets by subtracting our 2001 population raster from our 2011 population raster: -->
-<!-- ```{r 09-local-is-lekker, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # subtract 2001 population from 2011 population  -->
-<!-- lonpop_change <- lonpop_2011 - lonpop_2001 -->
-<!-- # plot the results -->
-<!-- plot(lonpop_change) -->
-<!-- ``` -->
-<!-- We now have a raster that shows us population change in London - and to our surprise, there are areas in which population has actually declined. We can utilise some of the focal and zonal functions from our map algebra catalogue to further enhance our understanding of population change in London. -->
-<!-- To further analyse our population change raster, we can create a 'pseudo' hotspot map of our `lonpop_change` raster by calculating a smoothed version of our raster using the `focal()` function. This will enable us to see more clearly where there are areas of high counts (surrounded by areas of high counts) and vice versa - just like our KDE analysis of bike theft. Using the `focal()` function, we generate a raster that summarises the average (mean) value, using the `fun=` parameter set to `mean`,  of the **9** nearest neighbours for each cell, using a weight matrix defined in our `w` parameter and set to a `matrix` (consisting of our cell with 3 rows and 3 columns as neighbours): -->
-<!-- ```{r 09-focus-on-the-hood, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # focal statistics (of 9 neighbours) to calculate smoothed raster -->
-<!-- lonpop_smooth <- focal(lonpop_change,w=matrix(1,3,3),fun=mean) -->
-<!-- # plot results -->
-<!-- plot(lonpop_smooth) -->
-<!-- ``` -->
-<!-- Our areas of high population growth are now more visible in our dataset. Our areas of population decline are potentially not as stark, but are certainly still visible within our raster. We can also look to use zonal functions to better represent our population change by aggregating our data to coarser resolutions. For example, we can resize our raster's spatial resolution to contain larger grid cells which will, of course, simplify our data, making larger trends more visible in our data but of course, may end up obfuscating smaller trends. -->
-<!-- We can resize our `lonpop_change` raster by using the `aggregate()` function and setting the `fact=` (factor) parameter to the "order" of rescaling we would like (in our case, 2 times larger both width and height). We then provide the `fun=` (function) by which to aggregate our data, in this case, we will continue to use the `mean` but we could in fact provide `min` or `max` depending on our future applications/analysis of our dataset: -->
-<!-- ```{r 09-zone-zone-zone, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # rescale raster and aggregate based on mean -->
-<!-- lonpop_change_agg <- aggregate(lonpop_change,fact=2, fun=mean) -->
-<!-- # plot resulting raster -->
-<!-- plot(lonpop_change_agg) -->
-<!-- ``` -->
-<!-- Another very common technique used in raster analysis via map algebra is the use of **zonal statistics**. As outlined earlier, a zonal statistics operation is one that calculates statistics on cell values of a raster (a value raster) within specific zones that are defined by another dataset. The zones can be provided by both **raster** and **vector** data - as a result, **zonal statistics** are a really useful tool if we need to aggregate data from a raster dataset for use within further analysis that primarily uses vector data, such as when we're analysing data within administrative boundaries. -->
-<!-- For example, in our case, we can aggregate the `lonpop_change` raster to our actual London ward boundaries, i.e. calculate for each ward in our dataset, the average (or other function) population change, as determined by our raster. We can, of course, use other functions other than the `mean`. What function you use will simply depend on your application. Esri has [a great resource](https://desktop.arcgis.com/en/arcmap/10.3/tools/spatial-analyst-toolbox/h-how-zonal-statistics-works.htm) on how Zonal statistics works with other functions and raster  -->
-<!-- ```{r 09-set-tmap-setting, warnings=FALSE, message=FALSE, cache=FALSE, tidy=TRUE} -->
-<!-- # change tmap mode to plot -->
-<!-- tmap_mode("plot") -->
-<!-- ``` -->
-<!-- ```{r 09-I-am-in-the-zone, warnings=FALSE, message=FALSE,  cache=TRUE, tidy='styler'} -->
-<!-- # aggregate to administrative geography -->
-<!-- # note: the output is a vector that is forced to a SpatialPolygons object (not sf) -->
-<!-- london_ward_pop <- raster::extract(lonpop_change, london_ward, fun=mean, sp=TRUE) -->
-<!-- # plot via tmap -->
-<!-- tm_shape(london_ward_pop) + -->
-<!--   tm_polygons(col='layer') -->
-<!-- ``` -->
-<!-- We now have a vector dataset that we could go ahead and run many of the analyses that we have completed in previous weeks. Furthermore, we can use this data within other analyses we might want to complete. For example, if we are using population change as a specific variable to analyse another dataset that is only available as a vector dataset / at the ward level.  -->
-<!-- :::note -->
-<!-- **Note** <br /> -->
-<!-- Trying to calculate population change, particularly across decades as we have done here, is quite difficult with our Census and Mid-Year Estimates given the differences in our ward boundaries and the impact this has when we try to join datasets from different years that then have different codes that we need to join by attribute. Using raster data, such as these datasets, are a good workaround to these issues, but, of course, with any data processing, will add some level of uncertainty into our datasets. -->
-<!-- ::: -->
-<!-- ## Assignment 1 {#assignment-w09-01} -->
-<!-- The first assignment this week is a purely theoretical question: How can we use a combination of the techniques we have used over the last few weeks to calculate the number of people in London under-served by public transport? -->
-<!-- To answer the question, we want you to think of a method using what you have learnt above in regards to map algebra and your use of point data in the previous week, to think about how we can calculate the number of people who are **not within 400m euclidean distance walk** of a **bus, tube or train station** in London. -->
-<!-- :::tip -->
-<!-- **Tip** <br /> -->
-<!-- Many libraries in R share the same function names. This can be a problem when these packages are loaded in a same R session. For instance `extract` is not only the name of a function in the `raster` package, but also the name of functions in the `magrittr` and `tidyr` packages. To ensure you are using the function that you think you are using, you can specify the package using the `::` approach, as follows: `library::function`, e.g. `tidyr::extract` or `raster::extract`. -->
-<!-- ::: -->
-<!-- ## Air pollution in London -->
 <!-- The second half of this week's tutorial focuses on interpolation. Spatial interpolation is the prediction of a given phenomenon in unmeasured locations. There are many reasons why we may wish to interpolate point data across a map. It could be because we are trying to predict a variable across space, including in areas where there are little to no data. We might also want to smooth the data across space so that we cannot interpret the results of individuals, but still identify the general trends from the data. This is particularly useful when the data corresponds to individual persons and disclosing their locations is unethical.  -->
 <!-- To predict the values of the cells of our resulting raster, we need to determine how to interpolate between our points, i.e. develop a set of procedures that enable us to calculate predicted values of the variable of interest with confidence     and, of course, repetitively. -->
 <!-- We will put some techniques into action by interpolating our air quality point data into a raster surface to understand further how air pollution varies across London. -->
@@ -656,7 +895,6 @@ ul.task-list li input[type="checkbox"] {
 <!-- We then looked at how we can use two different interpolation methods to generate raster data from point data. Understanding how to interpolate data correctly is incredibly important. Whilst in most instances you will be working with vector data, especially where government statistics and administrative boundaries are involved, there are also plenty of use cases in which you will need to generate raster data from point data, as we have done today. With that being said: [that is it for our final-to-last week in Geocomputation](https://www.youtube.com/watch?v=8iwBM_YB1sE). -->
 
 
-</section>
 </section>
 </section>
 

@@ -98,8 +98,9 @@ p_bbox <- c(-1.113197,50.775781,-1.026508,50.859941)
 # pass bounding box coordinates into the OverPassQuery (opq) function
 # only download features that are not classified as motorway
 osmdata <- opq(bbox = p_bbox ) |>
-  add_osm_feature(key = "highway", 
-                  value = c("primary", "secondary", "tertiary", "residential", "path", "footway", "unclassified", "living_street", "pedestrian")) |> 
+  add_osm_feature(
+    key = "highway", 
+    value = c("primary", "secondary", "tertiary", "residential", "path", "footway", "unclassified", "living_street", "pedestrian")) |> 
   osmdata_sf()
 ```
 
@@ -188,7 +189,9 @@ As for our Portsmouth scenario we are interested in calculating the shortest dis
 
 # download schools 
 schools <- opq(bbox = p_bbox) |>
-  add_osm_feature(key = 'amenity', value = 'school') |> 
+  add_osm_feature(
+    key = 'amenity', 
+    value = 'school') |> 
   osmdata_sf()
 
 # download fast-food outlets 
@@ -275,7 +278,12 @@ Now we have our connected subgraph, will can use the `dodgr_distances()` functio
 #| filename: "R code"
 
 # create a distance matrix between schools and fast-food stores
-sch_to_ff_calc <- dodgr_distances(graph_connected, from=st_coordinates(ports_schools), to= st_coordinates(ports_ff), shortest = TRUE, pairwise = FALSE, quiet=FALSE)
+sch_to_ff_calc <- dodgr_distances(graph_connected,
+                                  from=st_coordinates(ports_schools), 
+to= st_coordinates(ports_ff), 
+shortest = TRUE, 
+pairwise = FALSE, 
+quiet=FALSE)
 ```
 
 The result of this computation is a distance-matrix that contains the network distances between all Origins (i.e. schools) and all Destinations (i.e. fast-food outlets). Let's inspect the first row of our output. Do you understand what the values mean?

@@ -83,7 +83,7 @@ Now we have installed QGIS and R onto our machines / have access to QGIS and R t
 #| tidy: True
 #| filename: "R code"
 # install packages
-install.packages(c('tidyverse','sf','tmap','osmdata','spatstat','terra','spdep','dbscan','dodgr'))
+install.packages(c('tidyverse','sf','tmap','osmdata','spatstat','terra','spdep','dbscan','stars','dodgr'))
 ```
 
 ::: {.callout-warning}
@@ -110,6 +110,7 @@ library(terra)
 library(spatstat)
 library(dbscan)
 library(spdep)
+library(stars)
 library(dodgr)
 ```
 
