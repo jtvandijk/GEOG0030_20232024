@@ -314,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Gimond, M. 2021. Intro to GIS and spatial analysis. <strong>Chapter 14</strong>: <em>Spatial Interpolation</em>. <a href="https://mgimond.github.io/Spatial/spatial-interpolation.html">[Link]</a></li>
 <li>Heris, M., Foks, N., Bagstad, K. 2020. A rasterized building footprint dataset for the United States. <em>Scientific Data</em> 7: 207. <a href="https://doi.org/10.1038/s41597-020-0542-3">[Link]</a></li>
-<li>Thomson, D., Leasure, D., Bird, T. <em>et al</em>. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level?: A simulation analysis in urban Namibia. <em>Plos ONE</em> 17:7: e0271504. <a href="https://doi.org/10.1371/journal.pone.0271504">[Link]</a></li>
+<li>Thomson, D., Leasure, D., Bird, T. <em>et al</em>. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level? A simulation analysis in urban Namibia. <em>Plos ONE</em> 17:7: e0271504. <a href="https://doi.org/10.1371/journal.pone.0271504">[Link]</a></li>
 </ul>
 </section>
 <section id="suggested-readings" class="level4">
@@ -689,18 +689,17 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="09-raster_cache/html/09-get-air-pollution-data_2cd4fcb1ea0feb755847033587231cb4">
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-get-air-pollution-data_86a32ec2856a06a17a98aed0ab77fe73">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get list of all measurement sites operated by Imperial College# limit to</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sties</span></span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get list of all measurement sites operated by Imperial College</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># limit to sites with data for 2022</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>site_meta <span class="ot">&lt;-</span> <span class="fu">importMeta</span>(<span class="at">source =</span> <span class="st">"kcl"</span>, <span class="at">all =</span> <span class="cn">TRUE</span>, <span class="at">year =</span> <span class="dv">2022</span><span class="sc">:</span><span class="dv">2022</span>)</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># download all data pertaining to these sites</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>pollution <span class="ot">&lt;-</span> <span class="fu">importKCL</span>(<span class="at">site =</span> <span class="fu">c</span>(measurement_sites<span class="sc">$</span>code), <span class="at">year =</span> <span class="dv">2022</span><span class="sc">:</span><span class="dv">2022</span>, <span class="at">pollutant =</span> <span class="st">"no2"</span>,</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">meta =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>pollution <span class="ot">&lt;-</span> <span class="fu">importKCL</span>(<span class="at">site =</span> <span class="fu">c</span>(site_meta<span class="sc">$</span>code), <span class="at">year =</span> <span class="dv">2022</span><span class="sc">:</span><span class="dv">2022</span>, <span class="at">pollutant =</span> <span class="st">"no2"</span>, <span class="at">meta =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -781,7 +780,7 @@ the `.groups` argument.</code></pre>
 </div>
 </div>
 <p>We are now left with only <strong>45</strong> measurement sites — with only the latitudes, longitudes, and the average NO<sub>2</sub> values associated with each. When using interpolation, the distribution and density of our data points will impact the accuracy of our final raster and we may end up with a level of uncertainty in the areas where measurements are more sparse. Let’s have a look at the spatial distribution of the measurement sites.</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-measurement-sites_032906589e75ee69ea75de132533c344">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-measurement-sites_13b850db42cb85ce4fcfbb6e1785ff97">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load MSOAs for reference</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>msoa_london <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/raw/boundaries/MSOA2021_London.gpkg"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_union</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -807,13 +806,14 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <pre><code>Warning: attribute variables are assumed to be spatially constant throughout all
 geometries</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add London outline</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa_london) <span class="sc">+</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"grey"</span></span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(measurement_sites) <span class="sc">+</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add measurement sites</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(measurement_sites) <span class="sc">+</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-09-air-quality-measurement-sites" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -824,7 +824,7 @@ geometries</code></pre>
 </div>
 </div>
 <p>Let’s also have a look whether measurements differ across London:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-measurement-sites-proportional-symbol_44d3422e4fe9871d7172ca3179356534">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-measurement-sites-proportional-symbol_88a9195307a48638f80548188ca107f6">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add London outline</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa_london) <span class="sc">+</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
@@ -837,7 +837,7 @@ geometries</code></pre>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"blue"</span>,</span>
 <span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="st">"pretty"</span>,</span>
 <span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">border.col =</span> <span class="st">"white"</span>,</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title.size =</span> <span class="st">"Average NO2 ug/m3 reading in 2020"</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title.size =</span> <span class="st">"Average NO2 ug/m3 reading in 2022"</span></span>
 <span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add legend</span></span>
 <span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
@@ -1074,7 +1074,7 @@ geometries</code></pre>
 </section>
 <section id="byl-w09" class="level2" data-number="1.9">
 <h2 data-number="1.9" class="anchored" data-anchor-id="byl-w09"><span class="header-section-number">9.9</span> Before you leave</h2>
-<p>This week, we’ve looked at raster datasets and how we use the <code>terra</code> library to manage and process them. Specifically, we looked at using <strong>map algebra</strong> to apply mathematical operations to rasters. We further looked at two different interpolation methods to generate raster data from point data. Understanding how to interpolate data correctly is incredibly important. Whilst in most instances you will be working with vector data, especially where government statistics and administrative boundaries are involved, there are also plenty of use cases in which you will need to generate raster data from point data, as we have done today. With that being said: <a href="https://www.youtube.com/watch?v=8iwBM_YB1sE">that is it for our final-to-last week in Geocomputation</a>. Suppose nothing left to do besides checking out that reading?</p>
+<p>This week, we’ve looked at raster datasets and how we use the <code>terra</code> library to manage and process them. Specifically, we looked at using <strong>map algebra</strong> to apply mathematical operations to rasters. We further looked at two different interpolation methods to generate raster data from point data. Understanding how to interpolate data correctly is incredibly important. Whilst in most instances you will be working with vector data, especially where government statistics and administrative boundaries are involved, there are also plenty of use cases in which you will need to generate raster data from point data, as we have done today. With that being said: <a href="https://www.youtube.com/watch?v=8iwBM_YB1sE">that is it for our penultimate week</a>. Suppose nothing left to do besides checking out that reading?</p>
 
 
 </section>

@@ -8,7 +8,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 #### Essential readings 
 - Gimond, M. 2021. Intro to GIS and spatial analysis. **Chapter 14**: *Spatial Interpolation*. [[Link]](https://mgimond.github.io/Spatial/spatial-interpolation.html)
 - Heris, M., Foks, N., Bagstad, K. 2020. A rasterized building footprint dataset for the United States. *Scientific Data* 7: 207. [[Link]](https://doi.org/10.1038/s41597-020-0542-3)
-- Thomson, D., Leasure, D., Bird, T. *et al*. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level?: A simulation analysis in urban Namibia. *Plos ONE* 17:7: e0271504. [[Link]](https://doi.org/10.1371/journal.pone.0271504)
+- Thomson, D., Leasure, D., Bird, T. *et al*. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level? A simulation analysis in urban Namibia. *Plos ONE* 17:7: e0271504. [[Link]](https://doi.org/10.1371/journal.pone.0271504)
 
 #### Suggested readings 
 - Mellander, C., Lobo, J., Stolarick, K. *et al*. 2015. Night-time light data: a good proxy measure for economic activity? *PLoS ONE* 10(10): e0139779. [[Link]](https://doi.org/10.1371/journal.pone.0139779)
@@ -304,19 +304,18 @@ For the second part of this week's practical material, we will explore several m
 Spatial interpolation is the prediction of a given phenomenon in unmeasured locations. There are many reasons why we may wish to interpolate point data across a map. It could be because we are trying to predict a variable across space, including in areas where there are little to no data.
 ::: 
 
-```{r}
+```{r tidy="styler"}
 #| label: 09-get-air-pollution-data
 #| classes: styled-output
 #| echo: True
 #| eval: False
-#| tidy: True
 #| filename: "R code"
-# get list of all measurement sites operated by Imperial College#
-# limit to sties 
+# get list of all measurement sites operated by Imperial College
+# limit to sites with data for 2022
 site_meta <- importMeta(source = "kcl", all=TRUE, year=2022:2022)
 
 # download all data pertaining to these sites
-pollution <- importKCL(site=c(measurement_sites$code), year=2022:2022, pollutant='no2',meta=TRUE)
+pollution <- importKCL(site=c(site_meta$code), year=2022:2022, pollutant='no2',meta=TRUE)
 ```
 
 ::: {.callout-warning}
@@ -378,11 +377,12 @@ measurement_sites <- pollution_avg |>
 measurement_sites <- measurement_sites |>
   st_intersection(msoa_london)
 
-# plot
+# add London outline
 tm_shape(msoa_london) +
   tm_polygons(
     col = 'grey'
   ) +
+  # add measurement sites
   tm_shape(measurement_sites) +
   tm_dots()
 ```
@@ -407,7 +407,7 @@ tm_shape(measurement_sites) +
     col = "blue", 
     style = "pretty",
     border.col = "white",
-    title.size="Average NO2 ug/m3 reading in 2020"
+    title.size="Average NO2 ug/m3 reading in 2022"
     ) +
   # add legend
   tm_layout(
@@ -580,4 +580,4 @@ For your final assignment this week, we want you to redo the IDW interpolation o
 A raster dataset often only contains one layer, i.e. one variable. Hence when we want to map a raster, we use the `tm_raster()` and provide the layer name for mapping. However, satellite imagery, for instance, consists of **three** bands: a band with a red value, a band with a green value and a band with a blue value. This is known as **multi-band** imagery. We can visualise each band independently of one another, however, you would see that you end up with either a nearly all red, green or blue image. If you are interested to learn more about [using satellite imagery with R](https://andrewmaclachlan.github.io/CASA0005repo/advanced-raster-analysis.html) and raster analysis in general, this is a good place to start. Alternatively, if you are interested in more advanced interpolation methods, [Manual Gimond's](https://mgimond.github.io/Spatial/interpolation-in-r.html) tutorial on spatial data interpolation will get you started.
 
 ## Before you leave {#byl-w09}
-This week, we've looked at raster datasets and how we use the `terra` library to manage and process them. Specifically, we looked at using **map algebra** to apply mathematical operations to rasters. We further looked at two different interpolation methods to generate raster data from point data. Understanding how to interpolate data correctly is incredibly important. Whilst in most instances you will be working with vector data, especially where government statistics and administrative boundaries are involved, there are also plenty of use cases in which you will need to generate raster data from point data, as we have done today. With that being said: [that is it for our final-to-last week in Geocomputation](https://www.youtube.com/watch?v=8iwBM_YB1sE). Suppose nothing left to do besides checking out that reading?
+This week, we've looked at raster datasets and how we use the `terra` library to manage and process them. Specifically, we looked at using **map algebra** to apply mathematical operations to rasters. We further looked at two different interpolation methods to generate raster data from point data. Understanding how to interpolate data correctly is incredibly important. Whilst in most instances you will be working with vector data, especially where government statistics and administrative boundaries are involved, there are also plenty of use cases in which you will need to generate raster data from point data, as we have done today. With that being said: [that is it for our penultimate week](https://www.youtube.com/watch?v=8iwBM_YB1sE). Suppose nothing left to do besides checking out that reading?
