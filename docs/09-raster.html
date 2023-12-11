@@ -281,10 +281,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#raster-data" id="toc-raster-data" class="nav-link" data-scroll-target="#raster-data"><span class="header-section-number">9.3</span> Raster data</a>
   <ul class="collapse">
   <li><a href="#setup-w08" id="toc-setup-w08" class="nav-link" data-scroll-target="#setup-w08"><span class="header-section-number">9.3.1</span> Getting started</a></li>
-  <li><a href="#map-algebra" id="toc-map-algebra" class="nav-link" data-scroll-target="#map-algebra"><span class="header-section-number">9.3.2</span> Map algebra</a></li>
-  <li><a href="#zonal-statistics" id="toc-zonal-statistics" class="nav-link" data-scroll-target="#zonal-statistics"><span class="header-section-number">9.3.3</span> Zonal statistics</a></li>
   </ul></li>
-  <li><a href="#interpolation" id="toc-interpolation" class="nav-link" data-scroll-target="#interpolation"><span class="header-section-number">9.4</span> Interpolation</a></li>
+  <li><a href="#map-algebra" id="toc-map-algebra" class="nav-link" data-scroll-target="#map-algebra"><span class="header-section-number">9.4</span> Map algebra</a></li>
+  <li><a href="#zonal-statistics" id="toc-zonal-statistics" class="nav-link" data-scroll-target="#zonal-statistics"><span class="header-section-number">9.5</span> Zonal statistics</a></li>
+  <li><a href="#interpolation" id="toc-interpolation" class="nav-link" data-scroll-target="#interpolation"><span class="header-section-number">9.6</span> Interpolation</a></li>
+  <li><a href="#assignment-w09" id="toc-assignment-w09" class="nav-link" data-scroll-target="#assignment-w09"><span class="header-section-number">9.7</span> Assignment</a></li>
+  <li><a href="#wm-w09" id="toc-wm-w09" class="nav-link" data-scroll-target="#wm-w09"><span class="header-section-number">9.8</span> Want more? [Optional]</a>
+  <ul class="collapse">
+  <li><a href="#more-raster" id="toc-more-raster" class="nav-link" data-scroll-target="#more-raster">More raster</a></li>
+  </ul></li>
+  <li><a href="#byl-w09" id="toc-byl-w09" class="nav-link" data-scroll-target="#byl-w09"><span class="header-section-number">9.9</span> Before you leave</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -358,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Now let us add all of the libraries we will be using today to the top of our script:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/09-load-libraries_ca4a8e7e230e3731e5c90c3ac4c664e7">
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-load-libraries_b9f50e77c3737deb06821e60fb8940f8">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -367,8 +373,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stars)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openair)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gstat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>For the first part of this week’s practical material we will be using raster datasets from <a href="https://hub.worldpop.org/">WorldPop</a>:</p>
@@ -377,16 +384,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <p>These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These surfaces can be used to explore, for example, changes in the demographic profiles of small areas, area deprivation, or country of birth.</p>
 <ol type="1">
-<li>Navigate to the WorldPop Hub*: <a href="https://hub.worldpop.org/">[Link]</a></li>
-<li>Go to <strong>Population Count</strong> -&gt; <strong>Unconstrained individual countries 2000-2020 (1km resoultion)</strong>.</li>
+<li>Navigate to the WorldPop Hub: <a href="https://hub.worldpop.org/">[Link]</a></li>
+<li>Go to <strong>Population Count</strong> -&gt; <strong>Unconstrained individual countries 2000-2020 (1km resolution)</strong>.</li>
 <li>Type <em>United Kingdom</em> in the search bar.</li>
 <li>Download the <a href="https://en.wikipedia.org/wiki/GeoTIFF">GeoTIFF</a> files for <strong>2010</strong> and <strong>2020</strong>: <code>gbr_ppp_2010_1km_Aggregated</code> and <code>gbr_ppp_2020_1km_Aggregated</code>.</li>
-<li>Save the file in your <code>population</code> folder.</li>
+<li>Save the files in your <code>population</code> folder.</li>
 </ol>
 </section>
-<section id="map-algebra" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="map-algebra"><span class="header-section-number">9.3.2</span> Map algebra</h3>
-<p><strong>Map algebra</strong> is a set-based algebra for manipulating geographic data, coined by <a href="https://en.wikipedia.org/wiki/Dana_Tomlin">Dana Tomlin</a> in the early 1980s. Map algebra uses maths-like operations, including addition, subtraction and multiplication to update raster cell values - depending on the output you’re looking to achieve. The most common type of map algebra is to apply these operations using <em>a cell-by-cell function</em>. These operations might include:</p>
+</section>
+<section id="map-algebra" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="map-algebra"><span class="header-section-number">9.4</span> Map algebra</h2>
+<p><strong>Map algebra</strong> is a set-based algebra for manipulating geographic data, coined by <a href="https://en.wikipedia.org/wiki/Dana_Tomlin">Dana Tomlin</a> in the early 1980s. Map algebra uses maths-like operations, including addition, subtraction and multiplication to update raster cell values. The most common type of map algebra is to apply these operations using <em>a cell-by-cell function</em>. These operations might include:</p>
 <ul>
 <li><strong>Arithmetic operations</strong> that use basic mathematical functions like addition, subtraction, multiplication and division.</li>
 <li><strong>Statistical operations</strong> that use statistical operations such as minimum, maximum, average and median.</li>
@@ -402,7 +410,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>We will be using some simple map algebra to look at population change in London between 2010 and 2020. Let’s get started and take a look at our data. First we need to load it into R (using the <code>terra</code> library) and then we can quickly plot it using the <code>base</code> plot function:</p>
+<p>We will be using some simple map algebra to look at population change in London between 2010 and 2020. Let’s get started and take a look at our data. We can load raster data into R using the <code>terra</code> library:</p>
 <div class="cell styled-output" data-hash="09-raster_cache/html/09-load-raster-data_1a6eef198438f655808b8a9b7b3b5fd3">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -461,12 +469,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container">
 <p>The <code>terra</code> package does not take in <code>sf</code> objects, so once we have loaded the London MSOA file we need to transform the file into a <code>SpatRaster</code> or <code>SpatVector</code>. The process of turning a vector dataset into a raster dataset is called rasterising.</p>
-<div class="cell" data-hash="09-raster_cache/html/fig-rasterise-a-file_85d7d754ab0080439b9a9d580e49377f">
+<div class="cell" data-hash="09-raster_cache/html/fig-rasterise-a-file_8e6cdcbb846ca81a31334698bbab665c">
 <div class="cell-output-display">
 <div id="fig-rasterise-a-file" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/w09/rtovector.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;4: Rasterising a line geometry. Source: <a href="https://r.geocompx.org/raster-vector#rasterization">Lovelace <em>et al</em>. 2023</a>.</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;4: Turning a line and polygon vector into a raster. Source: <a href="https://r.geocompx.org/raster-vector#rasterization">Lovelace <em>et al</em>. 2023</a>.</figcaption>
 </figure>
 </div>
 </div>
@@ -557,8 +565,8 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 </section>
-<section id="zonal-statistics" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="zonal-statistics"><span class="header-section-number">9.3.3</span> Zonal statistics</h3>
+<section id="zonal-statistics" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="zonal-statistics"><span class="header-section-number">9.5</span> Zonal statistics</h2>
 <p>To further analyse our population change raster, we can create a smoothed version of our <code>lonpop_change</code> raster by using the <code>focal()</code> function. Using the <code>focal()</code> function, we generate a raster that summarises the average (mean) value of the <strong>9</strong> nearest neighbours for each cell, using a weight matrix defined in our <code>w</code> parameter and set to a <code>matrix</code>:</p>
 <div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-focus-on-the-hood_527f4264c41ae5a64ec79b76578e4c9f">
 <div class="code-with-filename">
@@ -668,231 +676,405 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 </section>
+<section id="interpolation" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="interpolation"><span class="header-section-number">9.6</span> Interpolation</h2>
+<p>For the second part of this week’s practical material, we will explore several methods of spatial data interpolation by looking at air pollution in London using <a href="https://www.londonair.org.uk/">Londonair</a> data. Londonair is the website of the London Air Quality Network (LAQN), and shows air pollution in London and southeast England that is provided by the <a href="https://www.imperial.ac.uk/school-public-health/environmental-research-group/">Environmental Research Group</a> of Imperial College London. The data are publicly available for download and we can use an R package to directly interact with the data without needing to download it. The <code>openair</code> <a href="https://davidcarslaw.github.io/openair/">R package</a> enables us to import data directly from the Londonair website. We will focus on Nitrogen Dioxide (NO<sub>2</sub>) measurements.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Spatial interpolation is the prediction of a given phenomenon in unmeasured locations. There are many reasons why we may wish to interpolate point data across a map. It could be because we are trying to predict a variable across space, including in areas where there are little to no data.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-get-air-pollution-data_2cd4fcb1ea0feb755847033587231cb4">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get list of all measurement sites operated by Imperial College# limit to</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sties</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>site_meta <span class="ot">&lt;-</span> <span class="fu">importMeta</span>(<span class="at">source =</span> <span class="st">"kcl"</span>, <span class="at">all =</span> <span class="cn">TRUE</span>, <span class="at">year =</span> <span class="dv">2022</span><span class="sc">:</span><span class="dv">2022</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># download all data pertaining to these sites</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>pollution <span class="ot">&lt;-</span> <span class="fu">importKCL</span>(<span class="at">site =</span> <span class="fu">c</span>(measurement_sites<span class="sc">$</span>code), <span class="at">year =</span> <span class="dv">2022</span><span class="sc">:</span><span class="dv">2022</span>, <span class="at">pollutant =</span> <span class="st">"no2"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">meta =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This second part of the code might take some time to run as it will try to download the data for all sites for an entire year — and in many cases data is measured hourly. Despite us limiting our data download, not all measurements sites collect data on NO<sub>2</sub> so you will get some warnings along the lines of <code>404 Not Found</code>. In case you run into too many errors or it is just taking too long, you can download a copy of the data here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/london-no2-2022.zip">[Download]</a>. Once downloaded, copy over the <code>zip</code> and put this into a <code>data/raw/pollution</code> folder. The file is rather large, so you can leave it unzipped.</p>
+</div>
+</div>
+</div>
+<p>Let’s inspect the data:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-inspect-air-pollution-data_a03b3243aac48d16bc81f8ca34303998">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load from zip if not downloaded through the Open Air library</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>pollution <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/pollution/london_no2_2022.zip"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Multiple files in zip: reading 'london_no2_2022.csv'
+Rows: 1624324 Columns: 8
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (4): site, code, source, site_type
+dbl  (3): no2, latitude, longitude
+dttm (1): date
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pollution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  date                  no2 site            code  source latit…¹ longi…² site_…³
+  &lt;dttm&gt;              &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  
+1 2022-01-01 00:00:00    NA City of London… CTA   kcl       51.5 -0.0921 Roadsi…
+2 2022-01-01 01:00:00    NA City of London… CTA   kcl       51.5 -0.0921 Roadsi…
+3 2022-01-01 02:00:00    NA City of London… CTA   kcl       51.5 -0.0921 Roadsi…
+4 2022-01-01 03:00:00    NA City of London… CTA   kcl       51.5 -0.0921 Roadsi…
+5 2022-01-01 04:00:00    NA City of London… CTA   kcl       51.5 -0.0921 Roadsi…
+6 2022-01-01 05:00:00    NA City of London… CTA   kcl       51.5 -0.0921 Roadsi…
+# … with abbreviated variable names ¹​latitude, ²​longitude, ³​site_type</code></pre>
+</div>
+</div>
+<p>We can see that in our first five rows we have data for the <strong>same site</strong> and if we look at the <strong>date</strong> field, we can see we have a reading observation for every hour. With 24 hours in the day, 365 days in a year and hundreds of sites, it should therefore be of no surprise that we have such a large <code>csv</code>. Let’s summarise the values by site to make the dataset a bit more workable:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-mean-air-pollution-data_3db1658c7ab475ad00989e7b6fd98184">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate mean no2 values</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>pollution_avg <span class="ot">&lt;-</span> pollution <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(latitude) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(no2)) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(code, latitude, longitude) <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">no2 =</span> <span class="fu">mean</span>(no2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'code', 'latitude'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pollution_avg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+# Groups:   code, latitude [6]
+  code  latitude longitude   no2
+  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 AH0       49.8    -7.56   1.82
+2 BE1       54.6    -5.93   5.05
+3 BG1       51.6     0.178 16.8 
+4 BG2       51.5     0.133 20.6 
+5 BH0       50.8    -0.148 11.6 
+6 BK0       53.8    -3.01   6.11</code></pre>
+</div>
+</div>
+<p>We are now left with only <strong>45</strong> measurement sites — with only the latitudes, longitudes, and the average NO<sub>2</sub> values associated with each. When using interpolation, the distribution and density of our data points will impact the accuracy of our final raster and we may end up with a level of uncertainty in the areas where measurements are more sparse. Let’s have a look at the spatial distribution of the measurement sites.</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-measurement-sites_032906589e75ee69ea75de132533c344">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load MSOAs for reference</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>msoa_london <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/raw/boundaries/MSOA2021_London.gpkg"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_union</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `MSOA2021_London' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/raw/boundaries/MSOA2021_London.gpkg' 
+  using driver `GPKG'
+Simple feature collection with 1002 features and 4 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a point spatial dataframe</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>measurement_sites <span class="ot">&lt;-</span> pollution_avg <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">27700</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ensure all points within London</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>measurement_sites <span class="ot">&lt;-</span> measurement_sites <span class="sc">|&gt;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_intersection</span>(msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout all
+geometries</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa_london) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"grey"</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(measurement_sites) <span class="sc">+</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-09-air-quality-measurement-sites" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-air-quality-measurement-sites-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;12: NO<sub>2</sub> measurement sites in London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Let’s also have a look whether measurements differ across London:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-measurement-sites-proportional-symbol_44d3422e4fe9871d7172ca3179356534">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add London outline</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa_london) <span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="st">"grey"</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add proportional symbol</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(measurement_sites) <span class="sc">+</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_bubbles</span>(</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="st">"no2"</span>,</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="st">"pretty"</span>,</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">border.col =</span> <span class="st">"white"</span>,</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title.size =</span> <span class="st">"Average NO2 ug/m3 reading in 2020"</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add legend</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"top"</span>)</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add north arrow</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"arrow"</span>,</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"top"</span>)</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add scale bar</span></span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>),</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>)</span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add credits</span></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="st">"NO~2~ measurements from London Air (2022)."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-09-air-quality-measurement-sites-proportional-symbol" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-air-quality-measurement-sites-proportional-symbol-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;13: Proportional symbol map on NO<sub>2</sub> measurements in London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Our proportional symbols shows that there is some heterogeneity in NO<sub>2</sub> measurements across London — both in terms of coverage and in terms of NO<sub>2</sub> levels. This means that if we want to make a reasonable assumptions about NO<sub>2</sub> levels in an area where no measurement was taking, we need to interpolate the missing values.</p>
+<section id="thiessen-polygons" class="level4">
+<h4 class="anchored" data-anchor-id="thiessen-polygons">Thiessen polygons</h4>
+<p>The first step we can take to interpolate the data across space is to create Thiessen polygons. Thiessen polygons are formed to assign boundaries of the areas closest to each unique point. Therefore, for every point in a dataset, it has a corresponding Thiessen polygon.</p>
+<div class="cell" data-hash="09-raster_cache/html/fig-thiessen_0037564e44c78b2e6e35874cf728c10c">
+<div class="cell-output-display">
+<div id="fig-thiessen" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w09/thiessen.png" class="img-fluid figure-img" width="376"></p>
+<figcaption class="figure-caption">Figure&nbsp;14: Thiessen polygons. <a href="https://jtvandijk.github.io/GEOG0030/images/w09/thiessen.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Besides Thiessen you may also come across the term Voronoi polygons. Both terms are used interchangeably to describe this type of geometry created from point data. In the field of GIS we tend to refer to them as Thiessen polygons, but in other fields they are often referred to as Voronoi diagrams, in honour of the mathematician Georgy Voronoy.</p>
+</div>
+</div>
+</div>
+<p>We can create Thiessen polygons using the <code>sf</code> library with a bit of code: we will create a simple function called <code>st_thiessen_point()</code> that we can use to generate Thiessen polygons directly from a point dataset.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Do not worry about fully understanding the code behind the function, but simply understand what input (a point spatial dataframe) and output (a Thiessen polygon spatial dataframe) it will provide.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-create-thiessen-polygons_e0c7d1f1ba89acfac6ece23babdc21d8">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>st_thiessen_point <span class="ot">&lt;-</span> <span class="cf">function</span>(points) {</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># input check</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">all</span>(<span class="fu">st_geometry_type</span>(points) <span class="sc">==</span> <span class="st">"POINT"</span>)) {</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">stop</span>(<span class="st">"Input not POINT geometries"</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># to multipoint</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">=</span> <span class="fu">st_combine</span>(<span class="fu">st_geometry</span>(points))</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># to thiessen</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    v <span class="ot">=</span> <span class="fu">st_voronoi</span>(g)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    v <span class="ot">=</span> <span class="fu">st_collection_extract</span>(v)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(v[<span class="fu">unlist</span>(<span class="fu">st_intersects</span>(points, v))])</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="co"># call function</span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>measurement_sites_thiessen <span class="ot">&lt;-</span> <span class="fu">st_thiessen_point</span>(measurement_sites)</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="co"># force thiessen polygons to measurement sites dataframe</span></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>measurement_sites_thiessen_df <span class="ot">&lt;-</span> measurement_sites <span class="sc">|&gt;</span></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_set_geometry</span>(measurement_sites_thiessen) <span class="sc">|&gt;</span></span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout all
+geometries</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>measurement_sites_thiessen_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 103 features and 2 fields
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid
+# A tibble: 103 × 3
+   code    no2                                                          geometry
+ * &lt;chr&gt; &lt;dbl&gt;                                                    &lt;GEOMETRY [m]&gt;
+ 1 BG1    16.8 POLYGON ((547785.5 187913.4, 557897 187404.3, 550800.7 184315.1,…
+ 2 BG2    20.6 MULTIPOLYGON (((543729.1 183422.7, 543923.7 183583, 543960.2 183…
+ 3 BL0    25.7 POLYGON ((529120.3 182395, 529101.2 184092.5, 531261 183754.7, 5…
+ 4 BQ7    16.1 MULTIPOLYGON (((546347 181055.1, 546593.8 181106.4, 546697.1 181…
+ 5 BT4    43.1 POLYGON ((516082 187365.6, 520958.9 189405.3, 521236.1 184358.2,…
+ 6 BT5    28.0 POLYGON ((523877.3 190896.9, 524273.2 190424, 525686.9 187185.8,…
+ 7 BT6    27.7 POLYGON ((522237.8 181852.6, 519969.8 183532.7, 519912.6 183741.…
+ 8 BT8    28.5 POLYGON ((522982.8 184472, 525686.9 187185.8, 526408.6 186420, 5…
+ 9 BX1    17.6 MULTIPOLYGON (((550063.2 169311.6, 550099.6 169246.6, 550115.1 1…
+10 BX2    15.9 MULTIPOLYGON (((548349.8 175998.9, 549623.4 180763, 550028.2 180…
+# … with 93 more rows</code></pre>
+</div>
+</div>
+<p>We can now visualise these Thiessen polygons with their associated NO<sub>2</sub> value:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-london-thiessen_7f25aa194dbc9f91ebd59f02213cd8ab">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add thiessen polygons</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(measurement_sites_thiessen_df) <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"no2"</span>,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Blues"</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add legend</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.show =</span> <span class="cn">TRUE</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-09-air-quality-london-thiessen" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-air-quality-london-thiessen-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;15: Interpolation of NO<sub>2</sub> measurements in London using Thiessen polygons.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>And that’s it! We now have our values interpolated using our Thiessen polygon approach. However, as you can see, our approach is quite coarse. Whilst we, of course, can see areas of high and low pollution, it really does not offer us as much spatial detail as we would like, particularly when we know there are better methods out there to use.</p>
 </section>
-<section id="interpolation" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="interpolation"><span class="header-section-number">9.4</span> Interpolation</h2>
-<!-- #### Pollution data -->
-<!-- For the second part of this week's practical material, we will explore several methods of interpolation by looking at air pollution in London by getting data from the [Londonair](https://www.londonair.org.uk/LondonAir/General/about.aspx) website. **Londonair** is the website of the London Air Quality Network (LAQN), and shows air pollution in London and south east England that is provided by the [Environmental Research Group](https://www.imperial.ac.uk/school-public-health/environmental-research-group/) of Imperial College London. The data are captured by hundreds of sensors at various continuous monitoring sites in London and the south east of England. The data are publicly available for download and we can use an R package to directly interact with the data without needing to download it. The `openair` [R package](https://davidcarslaw.github.io/openair/) enables us to import data directly form the Londonair website.  -->
-<!-- :::note -->
-<!-- **Note** <br /> -->
-<!-- The `openair` library can be a bit fiddly at times: to make things easy for us, you can simply download a copy of the data below. -->
-<!-- ::: -->
-<!-- | Pollution Data                            | Type         | Link | -->
-<!-- | :------                                   | :------      | :------ | -->
-<!-- | Air pollution in London for 2019 (NO~2~)  | `csv`        | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/no2_london_2019.zip) | -->
-<!-- Once downloaded, copy over these files into a `data/raw/pollution` folder. Please note that the file is rather larger (~170 MB) and it is best to keep it as `.zip` file. -->
-<!-- The second half of this week's tutorial focuses on interpolation. Spatial interpolation is the prediction of a given phenomenon in unmeasured locations. There are many reasons why we may wish to interpolate point data across a map. It could be because we are trying to predict a variable across space, including in areas where there are little to no data. We might also want to smooth the data across space so that we cannot interpret the results of individuals, but still identify the general trends from the data. This is particularly useful when the data corresponds to individual persons and disclosing their locations is unethical.  -->
-<!-- To predict the values of the cells of our resulting raster, we need to determine how to interpolate between our points, i.e. develop a set of procedures that enable us to calculate predicted values of the variable of interest with confidence     and, of course, repetitively. -->
-<!-- We will put some techniques into action by interpolating our air quality point data into a raster surface to understand further how air pollution varies across London. -->
-<!-- ### Loading data {#loading-data-w09-2} -->
-<!-- Before we get going within interpolating our pollution dataset, let's first take a look at the distribution of the London Air monitoring sites in London. What are your thoughts about the distribution of the sites? Do you think they will provide enough data for an accurate enough interpolation?  -->
-<!-- ```{r 09-monitoring-in-london, out.width="550pt", echo=FALSE, fig.align='center', fig.cap='Locations of the London Air monitoring sites in London. Source: [Londonair 2020](https://www.londonair.org.uk/london/asp/publicdetails.asp).'} -->
-<!-- knitr::include_graphics('images/w09/london_air.png') -->
-<!-- ``` -->
-<!-- Ultimately, monitoring sites and the sensor stations present at them can be expensive to install and run, therefore, identifying the most important places for data collection will somewhat determine their location, alongside trying to create a somewhat even distribution over London. As we can see in the locations of the stations above, there are certainly some areas in London that do not have a station nearby, whilst others (such as central London) where there are many stations available. -->
-<!-- When using interpolation, the distribution and density of our data points will impact the accuracy of our final raster and we may end up with a level of uncertainty in the areas where data is more sparse, such as the north-west and the south-east of London. Despite this, we can still create an interpolated surface for our pollutant of interest, we just need to interpret our final raster with acknowledgement of these limitations. For this week's practical, we will go ahead and use the Londonair's data to study the levels of **Nitrogen Dioxide (NO~2~) in London for 2019**. Once we have our data loaded and processed in the right format, we will start interpolating our data using at first two models: Thiessen Polygons and Inverse Distance Weighting. -->
-<!-- ```{r 09-get-data-from-zip, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # read in downloaded data  -->
-<!-- # as the file is quite large, we will read it directly from zip -->
-<!-- pollution <- read_csv("data/raw/pollution/no2_london_2019.zip") -->
-<!-- # pollution dataframe dimensions -->
-<!-- dim(pollution) -->
-<!-- ``` -->
-<!-- Reading in the `csv` might take a little time: we have 1,596,509 observations with 7 variables. -->
-<!-- ### Analysing air pollution -->
-<!-- Let's take a look at why it's so large and inspect the first five rows of our dataframe: -->
-<!-- ```{r 09-inspect-inspect, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # return first five rows of our pollution dataframe -->
-<!-- head(pollution) -->
-<!-- ``` -->
-<!-- We can see that in our first five rows we have data for the **same site** and if we look at the **date** field, we can see we have a reading observation for every hour. With 24 hours in the day, 365 days in a year and potentially hundreds of sites, it should therefore be of no surprise that we have such a big `csv`. In the end, for this practical, we only want to create one raster, so to make our data more useable we will go ahead and aggregate the data and get the average NO~2~ value for each monitoring site over 2019.  -->
-<!-- Use the `dplyr` library functions to return the mean NO~2~ value for each monitoring site over 2019. Let's also make sure that we retain the latitude and longitude of our monitoring sites: -->
-<!-- ```{r 09-that-is-mean, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # aggregate data to unique latitude and longitude combinations, remove monitoring sites without coordinates, summarise the no2 by the mean -->
-<!-- avg_pollution <- pollution %>% group_by(latitude,longitude) %>%  -->
-<!--                          summarise(no2=mean(no2)) %>%  -->
-<!--                          filter(!is.na(latitude | longitude)) -->
-<!-- # return the first five rows of our new dataframe -->
-<!-- head(avg_pollution) -->
-<!-- # return the histogram of our no2 values -->
-<!-- hist(avg_pollution$no2) -->
-<!-- ``` -->
-<!-- We should now see that we only have our latitude and longitude coordinates and the average NO~2~ value associated with each. Our histogram also shows us the general distribution of our values: we can see that we have a slight positive skew to our dataset. To use this data within our different interpolation methods, we will need to transform our data into a point spatial dataframe using the `st_as_sf()` function that we have come across before. One thing you should notice is that the latitude and longitude are projected in WGS84 and, therefore, we need to reproject our resulting spatial dataframe into British National Grid. We will also make sure that all of our points are within our London ward extent, using the `st_intersection()` function. -->
-<!-- Create a spatial dataframe containing our London monitoring sites and their average NO~2~ reading: -->
-<!-- ``` {r 09-prepare-air-pol-data-further, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # load London wards for reference map -->
-<!-- london_ward <- read_sf("data/raw/boundaries/2018/London_Ward.shp") -->
-<!-- # create a point spatial dataframe, project -->
-<!-- pollution_points <- st_as_sf(avg_pollution,coords=c('longitude','latitude'), crs=4326)[,1] %>% st_transform(27700) -->
-<!-- # ensure all points are within the boundaries of Greater London -->
-<!-- lonpollution_points <- pollution_points %>% st_intersection(london_ward) -->
-<!-- ```    -->
-<!-- Let's create a **proportional symbol** map to visualise these points: -->
-<!-- ``` {r 09-those-symbols-are-in-proportion, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # ensure tmap mode is set to plot  -->
-<!-- tmap_mode("plot") -->
-<!-- # plot our London wards in grey -->
-<!-- tm_shape(london_ward) +  -->
-<!--   tm_polygons(palette = "grey", border.col = "white") + -->
-<!-- # plot our pollution_points as bubbles, using the NO2 field to determine size -->
-<!-- tm_shape(lonpollution_points) +  -->
-<!--   tm_bubbles(size = "no2", col = "mediumorchid", style = "pretty",  -->
-<!--              scale =1, border.col = "white",  -->
-<!--              title.size="Average NO2 ug/m3 reading in 2019") + -->
-<!--   # set legend -->
-<!--   tm_layout(legend.position = c("left", "top")) + -->
-<!--   # add a north arrow -->
-<!--   tm_compass(type = "arrow", position = c("right", "top")) +  -->
-<!--   # add a scale bar -->
-<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) + -->
-<!--   # add a data statement -->
-<!--   tm_credits("Air quality data from London Air.")  -->
-<!-- ``` -->
-<!-- Our proportional symbols map already tells us a little about our dataset - we can see that NO~2~ levels are much higher towards the centre of London, although we can see some anomalies in the south-west, for example. But we can also see how and why a smoothed surface of our data **could** be really useful for further interpretation - and this is where interpolating our data comes in. -->
-<!-- #### Thiessen polygons -->
-<!-- The first step we can take to interpolate the data across space is to create Thiessen polygons. Thiessen polygons are formed to assign boundaries of the areas closest to each unique point. Therefore, for every point in a dataset, it has a corresponding Thiessen polygon.  -->
-<!-- ```{r 09-thiessen, echo=FALSE, fig.align='center', out.width = "550pt", fig.cap='Creating a set of Thiessen polygons. Source: Esri 2020.'} -->
-<!-- knitr::include_graphics('images/w09/thiessen.jpg') -->
-<!-- ``` -->
-<!-- :::note -->
-<!-- **Note** <br /> -->
-<!-- You may come across the term Voronoi polygons: these are the same thing as Thiessen polygons. Both terms are used interchangeably to describe this type of geometry created from point data. In the field of GIS we tend to refer to them as Thiessen polygons, after the American meteorologist who frequented their use. In other fields, particularly mathematics and computer science, they are generally referred to as Voronoi diagrams, in honour of the mathematician Georgy Voronoy. -->
-<!-- ::: -->
-<!-- We can create Thiessen polygons using the `sf` library with a bit of code: we will create a simple function called `st_thiessen_point()` that we can use to generate Thiessen polygons directly from a point dataset. -->
-<!-- :::tip -->
-<!-- **Tip** <br/> -->
-<!-- Do not worry about fully understanding the code behind the function, but simply understand what input (a point spatial dataframe) and output (a Thiessen polygon spatial dataframe) it will provide. -->
-<!-- ::: -->
-<!-- You need to copy over both the function and the code underneath. Copying the function stores this function in your computer's memory for this R session and means the function itself can be used time and time again within the same session or script. -->
-<!-- The first of the two lines of code below the function then "call" this function on our `lonpollutions_points` spatial dataframe. The second essentially joins the attribute fields of our `lonpollutions_points` spatial dataframe to our new Thiessen polygon spatial dataframe and stores this as a new variable.  -->
-<!-- ```{r 09-thiessen-pols, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # function to create Thiessen polygons from point input -->
-<!-- st_thiessen_point <- function(points){ -->
-<!--     # input check -->
-<!--     if(!all(st_geometry_type(points) == "POINT")){ -->
-<!--         stop("Input not POINT geometries") -->
-<!--     } -->
-<!--     # make multipoint -->
-<!--     g = st_combine(st_geometry(points))  -->
-<!--     # create thiessen polygons -->
-<!--     v = st_voronoi(g) -->
-<!--     v = st_collection_extract(v) -->
-<!--     # return -->
-<!--     return(v[unlist(st_intersects(points, v))]) -->
-<!-- } -->
-<!-- # call function -->
-<!-- lon_points_voronoi = st_thiessen_point(lonpollution_points) -->
-<!-- # add attribute data  -->
-<!-- lonpollution_tv = st_set_geometry(lonpollution_points, lon_points_voronoi) -->
-<!-- # inspect -->
-<!-- lonpollution_tv -->
-<!-- ``` -->
-<!-- We can now visualise these Thiessen polygons with their associated NO~2~ value: -->
-<!-- ```{r 09-visualise-those-thiessen-pols, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # visualise thiessen polygons -->
-<!-- tm_shape(lonpollution_tv) +  -->
-<!--   tm_fill(col = 'no2', palette = "Purples") -->
-<!-- ``` -->
-<!-- We can go ahead tidy this up further by clipping our Thiessen polygons to the extent of London: -->
-<!-- ```{r 09-thiessen-pols-map-after-crop, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # generate London outline through st_union -->
-<!-- london_outline <- london_ward %>%  -->
-<!--   st_union() -->
-<!-- # clip our thiessen polygons to our london outline -->
-<!-- lonpollution_tv <- st_intersection(lonpollution_tv, london_outline) -->
-<!-- # visualise thiessen polygons -->
-<!-- tm_shape(lonpollution_tv) +  -->
-<!--   tm_fill(col = 'no2', palette = "Purples") -->
-<!-- ``` -->
-<!-- And that's it! We now have our values interpolated using our Thiessen polygon approach. However, as you can see, our approach is quite coarse. Whilst we, of course, can see areas of high and low pollution, it really does not offer us as much spatial detail as we would like, particularly when we know there are better methods out there to use. -->
-<!-- #### Inverse Distance Weighting -->
-<!-- A second method to interpolate point data is **Inverse Distance Weighting** (IDW). An IDW is a means of converting point data of numerical values into a continuous surface to visualise how the data may be distributed across space. The technique interpolates point data by using a weighted average of a variable from nearby points to predict the value of that variable for each location. The weighting of the points is determined by their inverse distances drawing on [Tobler’s first law of geography](https://en.wikipedia.org/wiki/Tobler%27s_first_law_of_geography#:~:text=The%20First%20Law%20of%20Geography,specifically%20for%20the%20inverse%20distance) that "*everything is related to everything else, but near things are more related than distant thing*".  -->
-<!-- The distance weighting is done by a power function: the larger the power coefficient, the stronger the weight of nearby point. The output is most commonly represented as a raster surface. We will use the `idw()` function within the `gstat` library to conduct an IDW on our `lonpollution_points` spatial dataframe. -->
-<!-- Before we can run IDW, we must first generate an empty grid within which to store our data. To do so, we can use the `spsample()` function from the `sp` library. We will go ahead and create a grid that covers the entirety of our `london_outline`, which we will transform into the `sp` format using the `as()` function. We then run the `gstat` `idw()` function on an `sp` version of our `lonpollution_points` dataset, specifying the cell size. We then specify that our IDW result is a gridded format that we then coerce into a raster. Once we have our raster, we can reset its CRS and of course utilise other functions from the `raster` library to process (e.g. the `mask` function) and then visualise our dat aset within `tmap`. -->
-<!-- :::note -->
-<!-- **Note** <br /> -->
-<!-- Some of the following code will unfortunately not work as intended for some of you due to changes in underlying libraries. If the `gsat` below does not work for you, you can try to conduct the interpolation using the`spatstat` library instead.  -->
-<!-- ::: -->
-<!-- ```{r 09-inverse-distance-weights, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # convert our lonpollution_points into the sp format -->
-<!-- lonpollution_pointsSP <- lonpollution_points %>% as(., 'Spatial') -->
-<!-- # convert our london_outline into the sp format -->
-<!-- london_outlineSP <- london_outline %>% as(., 'Spatial') -->
-<!-- # create an empty raster grid the size for our london_outline over which to interpolate the pollution values   -->
-<!-- grid <-spsample(lonpollution_pointsSP, type ='regular', cellsize=450, bb=bbox(london_outlineSP)) -->
-<!-- # run an IDW for the NO2 value with a power value of 2 -->
-<!-- idw <- gstat::idw(lonpollution_pointsSP$no2 ~ 1, lonpollution_pointsSP, newdata = grid, idp = 2) -->
-<!-- # specify idw spatial data as being gridded -->
-<!-- gridded(idw) <- TRUE -->
-<!-- # coerce to our gridded idw to the raster format -->
-<!-- lon_poll_raster_idw <- raster(idw) -->
-<!-- # set our raster CRS to BNG -->
-<!-- crs(lon_poll_raster_idw) <- CRS("epsg:27700") -->
-<!-- # mask our raster to only the london outline -->
-<!-- lon_idw_gstat <- rasterize(london_ward, lon_poll_raster_idw, mask=TRUE)  -->
-<!-- # plot the resulting raster -->
-<!-- plot(lon_idw_gstat) -->
-<!-- ``` -->
-<!-- Great. Ff this code has worked for you and you have generated an IDW raster, you can move onto the next task which is to create a proper map of our resulting IDW. -->
-<!-- #### Alternative: IDW with spatstat [Optional] -->
-<!-- For those of you that cannot run the code above, we can look to `spatstat` as an alternative option although it just brings with it its few complications in terms of converting our datasets into our `ppp` object: we will first have to convert our data to the `ppp` object type and then use this within the `idw()` function `spatstat` offers. -->
-<!-- ```{r 09-inverse-distance-weights-spatstat, warnings=FALSE, message=FALSE, cache=TRUE, eval=TRUE, tidy=TRUE} -->
-<!-- # set our window of observation to London -->
-<!-- window <- as.owin(london_outline) -->
-<!-- # extract the coordinates of our pollution points sdf -->
-<!-- points_xy <- lonpollution_points %>% st_coordinates() -->
-<!-- # create a ppp object, setting x and y equal to the respective columns in our matrix -->
-<!-- # set the window equal to our window variable -->
-<!-- # set our 'marks' equal to the NO2 column in our points -->
-<!-- pollution_ppp <- ppp(x=points_xy[,1], y= points_xy[,2], marks=lonpollution_points$no2, window=window) -->
-<!-- # run the IDW  -->
-<!-- ss_idw <- spatstat.core::idw(pollution_ppp, power = 2, at="pixels") -->
-<!-- # coerce our im output to raster -->
-<!-- lon_idw_sp <- raster(ss_idw) -->
-<!-- # set our raster CRS to BNG -->
-<!-- crs(lon_idw_sp) <- CRS("epsg:27700") -->
-<!-- # plot the resulting raster -->
-<!-- plot(lon_idw_sp) -->
-<!-- ``` -->
-<!-- You should see we actually get a similar result to the IDW of the `gstat` library. This is because our cell sizes resolutions are similar in both cases. We set our cell resolution as 450 x 450m above and we can check the cell size of our `spatstat` IDW raster using a very simple command: `res(lon_idw)`. You will see that the IDW `spatstat` auto-generated a 456m cell size. -->
-<!-- ##### Mapping the IDW raster -->
-<!-- We now have our final predicted raster surface. To map it, we can again use the `tm_raster()` as we have done previously. For our raster, the name of the layer we need to provide is `var1.pred` for those using the `gstat` result and simply `layer` for those using the `spatstat` result. -->
-<!-- ```{r 09-idw-map-2, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler', echo=TRUE} -->
-<!-- # plot the gstat raster -->
-<!-- tm_shape(lon_idw_gstat) +  -->
-<!--   tm_raster("var1.pred", style = "quantile", n = 100, palette = "Reds", -->
-<!--             legend.show = FALSE) +  -->
-<!-- tm_shape(london_ward) +  -->
-<!--   tm_borders(col = "white", lwd = 0.1) -->
-<!-- ```   -->
-<!-- ```{r 09-idw-map, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler', eval=TRUE} -->
-<!-- # plot the spatstat raster -->
-<!-- tm_shape(lon_idw_sp) +  -->
-<!--   tm_raster("layer", style = "quantile", n = 100, palette = "Reds", -->
-<!--             legend.show = FALSE) +  -->
-<!-- tm_shape(london_ward) +  -->
-<!--   tm_borders(col = "white", lwd = 0.1) -->
-<!-- ``` -->
-<!-- And that's it. For those of you able to use the `gstat` code, it is highly worth playing around with the cell size to look at how it changes the smoothness of our resulting IDW. A smaller cell size will create a smoother IDW output, but it does add uncertainty to these estimates as we do not exactly have a substantial amount of data points to interpolate from. -->
-<!-- To help with minimising this uncertainty, there are two additional steps you can take with your IDW output: -->
-<!-- 1) Testing and fine-tuning the power function you have used to ensure it is a valid parameter by using something known as the *Leave One Out Cross Validation*. -->
-<!-- 2) Generating a 95% confidence interval map of our interpolation mode using cross-validation methods. -->
-<!-- This is beyond the scope of this module, but if you would like to explore this you can found details on this in Manuel Gimond's tutorial on interpolation available here: [Link](https://mgimond.github.io/Spatial/interpolation-in-r.html) -->
-<!-- :::tip -->
-<!-- **Tip** <br/> -->
-<!-- A raster dataset normally only contains one layer, i.e. one variable. Hence when we want to map a raster, we use the `tm_raster()` and provide the layer name for mapping. In our examples, this has been `layer` and `var1.pred`, for example. However, in some circumstances, such as with satellite imagery we will want to use the `tm_rgb()` function instead. This is because these types of rasters, instead of having a single layer, actually consist of **three** bands: a band with a red value, a band with a green value and a band with a blue value. This is known as **multi-band** imagery. -->
-<!-- To visualise multiband images correctly, we need to use the `tm_rgb()` function in order to stack our three bands together to create the appropriate visualisation. We can visualise each band independently of one another, however, you would see that you end up with either a nearly all red, green or blue image. This is also out of scope of this module, but if you are interested to learn more about [using satellite imagery with R](https://andrewmaclachlan.github.io/CASA0005repo/advanced-raster-analysis.html) this CASA tutorial is good place to start. Alternatively, you can also check Esri's help information on [Rasters and Raster Bands here](https://desktop.arcgis.com/en/arcmap/10.3/manage-data/raster-and-images/raster-bands.html). -->
-<!-- Learning how to use satellite imagery can be a really useful skill set, particularly as this type of data is being increasingly used human geography applications - as well as, of course, its more traditional applications in physical and environmental geography. -->
-<!-- ::: -->
-<!-- ## Assignment 2 {#assignment-w09-02} -->
-<!-- For your final assignment this week, we want you to redo the IDW interpolation of the London pollution data for the months of **June** and **December** and see to what extent there are differences between these months. In order to do this you will, at least, need to: -->
-<!-- 1. Create monthly averages for the pollution data. This will involve quite some data wrangling. Keep in mind that [Google is your friend](https://lmgtfy.app/?q=google+is+your+friend)! -->
-<!-- 2. For both the month of **June** and **December** create a spatial dataframe containing the London monitoring sites and their average NO~2~ reading. -->
-<!-- 3. Conduct an Inverse Distance Weighting interpolation for both months of data. -->
-<!-- 4. Execute some map algebra to identify the areas where the results of the interpolation differ. -->
-<!-- ## Before you leave {#byl-w09} -->
-<!-- This week, we've looked at raster datasets and how we use the `raster` library to manage and process them. Specifically, we looked at using **map algebra** to apply mathematical operations to rasters, using local, global, focal and zonal approaches and how we use map algebra on either an individual or combination of rasters. -->
-<!-- We then looked at how we can use two different interpolation methods to generate raster data from point data. Understanding how to interpolate data correctly is incredibly important. Whilst in most instances you will be working with vector data, especially where government statistics and administrative boundaries are involved, there are also plenty of use cases in which you will need to generate raster data from point data, as we have done today. With that being said: [that is it for our final-to-last week in Geocomputation](https://www.youtube.com/watch?v=8iwBM_YB1sE). -->
+<section id="inverse-distance-weighting" class="level4">
+<h4 class="anchored" data-anchor-id="inverse-distance-weighting">Inverse Distance Weighting</h4>
+<p>A second method to interpolate point data is <strong>Inverse Distance Weighting</strong> (IDW). An IDW is a means of converting point data of numerical values into a continuous surface to visualise how the data may be distributed across space. The technique interpolates point data by using a weighted average of a variable from nearby points to predict the value of that variable for each location. The weighting of the points is determined by their inverse distances, essentially drawing on <a href="https://en.wikipedia.org/wiki/Tobler%27s_first_law_of_geography#:~:text=The%20First%20Law%20of%20Geography,specifically%20for%20the%20inverse%20distance">Tobler’s first law of geography</a>.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The distance weighting is done by a power function: the larger the power coefficient, the stronger the weight of nearby point. The output is most commonly represented as a raster surface.</p>
+</div>
+</div>
+</div>
+<p>We will start by generating an empty grid to store the predicted values before executing a simple the IDW.</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-idw_de59dc116e944a4009c89f09b17be915">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create regular output grid from London outline</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>output_grid <span class="ot">&lt;-</span> msoa_london <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_make_grid</span>(<span class="at">cellsize =</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">500</span>))</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># execute IDW</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>measurement_sites_idw <span class="ot">&lt;-</span> <span class="fu">idw</span>(<span class="at">formula =</span> no2 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">locations =</span> measurement_sites, <span class="at">newdata =</span> output_grid,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[inverse distance weighted interpolation]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clip to London outline</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>measurement_sites_idw <span class="ot">&lt;-</span> measurement_sites_idw <span class="sc">|&gt;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout all
+geometries</code></pre>
+</div>
+</div>
+<p>We now have our final predicted raster surface. To map it, we can again use the <code>tmap</code> as we have done previously. For our polygon raster, the name of the layer we need to provide is <code>var1.pred</code>.</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-idw_ee40b79ff507e8b767a99a2fd9f0f983">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add idw grid</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(measurement_sites_idw) <span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"var1.pred"</span>,</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="st">"quantile"</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="dv">100</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Reds"</span>,</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.show =</span> <span class="cn">FALSE</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add measurement sites</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(measurement_sites) <span class="sc">+</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-09-air-quality-idw" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-air-quality-idw-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;16: Interpolation of NO<sub>2</sub> measurements in London using Inverse Distance Weighting.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>We have used an output cell size of 500x500 metres. A smaller cell size will create a smoother IDW output, but it does add uncertainty to these estimates as we do not exactly have a substantial amount of data points to interpolate from. Keep in mind: reducing the cell size will also exponentially increase processing time.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="assignment-w09" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="assignment-w09"><span class="header-section-number">9.7</span> Assignment</h2>
+<p>For your final assignment this week, we want you to redo the IDW interpolation of the London pollution data for the months of <strong>June</strong> and <strong>December</strong> and see to what extent there are differences between these months. In order to do this you will, at least, need to:</p>
+<ol type="1">
+<li>Create monthly averages for the pollution data. This will involve some data wrangling.</li>
+<li>For both the months of <strong>June</strong> and <strong>December</strong> create a spatial dataframe containing the London monitoring sites and their average NO<sub>2</sub> reading.</li>
+<li>Conduct an Inverse Distance Weighting interpolation for both months of data.</li>
+<li>Combine the results to identify areas that might differ.</li>
+</ol>
+</section>
+<section id="wm-w09" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="wm-w09"><span class="header-section-number">9.8</span> Want more? [Optional]</h2>
+<section id="more-raster" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="more-raster">More raster</h3>
+<p>A raster dataset often only contains one layer, i.e.&nbsp;one variable. Hence when we want to map a raster, we use the <code>tm_raster()</code> and provide the layer name for mapping. However, satellite imagery, for instance, consists of <strong>three</strong> bands: a band with a red value, a band with a green value and a band with a blue value. This is known as <strong>multi-band</strong> imagery. We can visualise each band independently of one another, however, you would see that you end up with either a nearly all red, green or blue image. If you are interested to learn more about <a href="https://andrewmaclachlan.github.io/CASA0005repo/advanced-raster-analysis.html">using satellite imagery with R</a> and raster analysis in general, this is a good place to start. Alternatively, if you are interested in more advanced interpolation methods, <a href="https://mgimond.github.io/Spatial/interpolation-in-r.html">Manual Gimond’s</a> tutorial on spatial data interpolation will get you started.</p>
+</section>
+</section>
+<section id="byl-w09" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="byl-w09"><span class="header-section-number">9.9</span> Before you leave</h2>
+<p>This week, we’ve looked at raster datasets and how we use the <code>terra</code> library to manage and process them. Specifically, we looked at using <strong>map algebra</strong> to apply mathematical operations to rasters. We further looked at two different interpolation methods to generate raster data from point data. Understanding how to interpolate data correctly is incredibly important. Whilst in most instances you will be working with vector data, especially where government statistics and administrative boundaries are involved, there are also plenty of use cases in which you will need to generate raster data from point data, as we have done today. With that being said: <a href="https://www.youtube.com/watch?v=8iwBM_YB1sE">that is it for our final-to-last week in Geocomputation</a>. Suppose nothing left to do besides checking out that reading?</p>
 
 
 </section>

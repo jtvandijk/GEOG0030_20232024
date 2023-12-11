@@ -363,4 +363,4 @@ If you really want to take a deep dive into accessibility analysis, there is a g
 :::
 
 ## Before you leave {#byl-ntx}
-Having finished this tutorial on transport network analysis and, hopefully, having been able to independently conduct some further area-profiling using IMD deciles, [you have now reached the end of this week's content and the end of Geocomputation](https://www.youtube.com/watch?v=fFw7q-BLxLA)! 
+Having finished this tutorial on transport network analysis and, hopefully, having been able to independently conduct some further area-profiling using IMD deciles, [you have now reached the end of this week's content and the end of Geocomputation](https://www.youtube.com/watch?v=fFw7q-BLxLA)! It is now inevatible: time for that reading list.

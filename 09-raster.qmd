@@ -57,8 +57,9 @@ Now let us add all of the libraries we will be using today to the top of our scr
 library(tidyverse)
 library(sf)
 library(tmap)
-library(stars)
 library(terra)
+library(openair)
+library(gstat)
 ```
 
 ```{r}
@@ -70,8 +71,9 @@ library(terra)
 library(tidyverse)
 library(sf)
 library(tmap)
-library(stars)
 library(terra)
+library(openair)
+library(gstat)
 ```
 
 For the first part of this week's practical material we will be using raster datasets from [WorldPop](https://hub.worldpop.org/): 
@@ -80,14 +82,14 @@ For the first part of this week's practical material we will be using raster dat
 
 These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These surfaces can be used to explore, for example, changes in the demographic profiles of small areas, area deprivation, or country of birth.
 
-1. Navigate to the WorldPop Hub*: [[Link]](https://hub.worldpop.org/)
-2. Go to **Population Count** -> **Unconstrained individual countries 2000-2020 (1km resoultion)**.
+1. Navigate to the WorldPop Hub: [[Link]](https://hub.worldpop.org/)
+2. Go to **Population Count** -> **Unconstrained individual countries 2000-2020 (1km resolution)**.
 3. Type *United Kingdom* in the search bar.
 4. Download the [GeoTIFF](https://en.wikipedia.org/wiki/GeoTIFF) files for **2010** and **2020**: `gbr_ppp_2010_1km_Aggregated` and `gbr_ppp_2020_1km_Aggregated`.
-5. Save the file in your `population` folder.
+5. Save the files in your `population` folder.
 
-### Map algebra
-**Map algebra** is a set-based algebra for manipulating geographic data, coined by [Dana Tomlin](https://en.wikipedia.org/wiki/Dana_Tomlin) in the early 1980s. Map algebra uses maths-like operations, including addition, subtraction and multiplication to update raster cell values - depending on the output you're looking to achieve. The most common type of map algebra is to apply these operations using *a cell-by-cell function*. These operations might include:
+## Map algebra
+**Map algebra** is a set-based algebra for manipulating geographic data, coined by [Dana Tomlin](https://en.wikipedia.org/wiki/Dana_Tomlin) in the early 1980s. Map algebra uses maths-like operations, including addition, subtraction and multiplication to update raster cell values. The most common type of map algebra is to apply these operations using *a cell-by-cell function*. These operations might include:
 
 - **Arithmetic operations** that use basic mathematical functions like addition, subtraction, multiplication and division.
 - **Statistical operations** that use statistical operations such as minimum, maximum, average and median.
@@ -97,7 +99,7 @@ These population surfaces are estimates of counts of people, displayed within a 
 The utilisation of these functions can enable many different types of specialised raster analysis, such as recoding or reclassifying indivdual rasters to reduce complexity in their data values, generating the [Normalised Difference Vegetation Index](https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index) for a satellite imagery dataset or calculating [Least Cost Surfaces](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/creating-a-cost-surface-raster.htm) to find the most efficient path from one cell in a raster to another. Furthermore, using multiple raster datasets, it is possible to combine these data through mathematical overlays, from the basic mathematical operations mentioned above to more complex modelling..
 ::: 
 
-We will be using some simple map algebra to look at population change in London between 2010 and 2020. Let's get started and take a look at our data. First we need to load it into R (using the `terra` library) and then we can quickly plot it using the `base` plot function:
+We will be using some simple map algebra to look at population change in London between 2010 and 2020. Let's get started and take a look at our data. We can load raster data into R using the `terra` library:
 
 ```{r}
 #| label: 09-load-raster-data
@@ -147,7 +149,7 @@ The `terra` package does not take in `sf` objects, so once we have loaded the Lo
 ```{r}
 #| label: fig-rasterise-a-file
 #| echo: False
-#| fig-cap: "Rasterising a line geometry. Source: [Lovelace *et al*. 2023](https://r.geocompx.org/raster-vector#rasterization)."
+#| fig-cap: "Turning a line and polygon vector into a raster. Source: [Lovelace *et al*. 2023](https://r.geocompx.org/raster-vector#rasterization)."
 knitr::include_graphics('images/w09/rtovector.png')
 ```
 :::
@@ -213,7 +215,7 @@ lonpop_change <- pop2020_london - pop2010_london
 plot(lonpop_change)
 ```
 
-### Zonal statistics
+## Zonal statistics
 To further analyse our population change raster, we can create a smoothed version of our `lonpop_change` raster by using the `focal()` function. Using the `focal()` function, we generate a raster that summarises the average (mean) value of the **9** nearest neighbours for each cell, using a weight matrix defined in our `w` parameter and set to a `matrix`:
 
 ```{r}
@@ -265,6 +267,7 @@ lonpop_agg <- aggregate(lonpop_change, fact=2, fun=mean)
 # plot 
 plot(lonpop_agg)
 ```
+
 Where we transformed a vector dataset into a raster dataset earlier, in some cases you would want to aggregate move from raster to vector. For example, in our case, we can aggregate the `lonpop_change` raster to our actual London MSOA boundaries, i.e. calculate for each MSOA in our dataset the average (or other function) population change,. We can, of course, use other functions other than the `mean`. What function you use will simply depend on your application. 
 
 ```{r tidy="styler"}
@@ -295,313 +298,286 @@ Trying to calculate population change, particularly across decades as we have do
 :::
 
 ## Interpolation
-
-<!-- #### Pollution data -->
-<!-- For the second part of this week's practical material, we will explore several methods of interpolation by looking at air pollution in London by getting data from the [Londonair](https://www.londonair.org.uk/LondonAir/General/about.aspx) website. **Londonair** is the website of the London Air Quality Network (LAQN), and shows air pollution in London and south east England that is provided by the [Environmental Research Group](https://www.imperial.ac.uk/school-public-health/environmental-research-group/) of Imperial College London. The data are captured by hundreds of sensors at various continuous monitoring sites in London and the south east of England. The data are publicly available for download and we can use an R package to directly interact with the data without needing to download it. The `openair` [R package](https://davidcarslaw.github.io/openair/) enables us to import data directly form the Londonair website.  -->
-
-<!-- :::note -->
-<!-- **Note** <br /> -->
-<!-- The `openair` library can be a bit fiddly at times: to make things easy for us, you can simply download a copy of the data below. -->
-<!-- ::: -->
-
-<!-- | Pollution Data                            | Type         | Link | -->
-<!-- | :------                                   | :------      | :------ | -->
-<!-- | Air pollution in London for 2019 (NO~2~)  | `csv`        | [Download](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/no2_london_2019.zip) | -->
-
-<!-- Once downloaded, copy over these files into a `data/raw/pollution` folder. Please note that the file is rather larger (~170 MB) and it is best to keep it as `.zip` file. -->
-
-<!-- The second half of this week's tutorial focuses on interpolation. Spatial interpolation is the prediction of a given phenomenon in unmeasured locations. There are many reasons why we may wish to interpolate point data across a map. It could be because we are trying to predict a variable across space, including in areas where there are little to no data. We might also want to smooth the data across space so that we cannot interpret the results of individuals, but still identify the general trends from the data. This is particularly useful when the data corresponds to individual persons and disclosing their locations is unethical.  -->
-
-<!-- To predict the values of the cells of our resulting raster, we need to determine how to interpolate between our points, i.e. develop a set of procedures that enable us to calculate predicted values of the variable of interest with confidence     and, of course, repetitively. -->
-<!-- We will put some techniques into action by interpolating our air quality point data into a raster surface to understand further how air pollution varies across London. -->
-
-<!-- ### Loading data {#loading-data-w09-2} -->
-<!-- Before we get going within interpolating our pollution dataset, let's first take a look at the distribution of the London Air monitoring sites in London. What are your thoughts about the distribution of the sites? Do you think they will provide enough data for an accurate enough interpolation?  -->
-
-<!-- ```{r 09-monitoring-in-london, out.width="550pt", echo=FALSE, fig.align='center', fig.cap='Locations of the London Air monitoring sites in London. Source: [Londonair 2020](https://www.londonair.org.uk/london/asp/publicdetails.asp).'} -->
-<!-- knitr::include_graphics('images/w09/london_air.png') -->
-<!-- ``` -->
-
-<!-- Ultimately, monitoring sites and the sensor stations present at them can be expensive to install and run, therefore, identifying the most important places for data collection will somewhat determine their location, alongside trying to create a somewhat even distribution over London. As we can see in the locations of the stations above, there are certainly some areas in London that do not have a station nearby, whilst others (such as central London) where there are many stations available. -->
-
-<!-- When using interpolation, the distribution and density of our data points will impact the accuracy of our final raster and we may end up with a level of uncertainty in the areas where data is more sparse, such as the north-west and the south-east of London. Despite this, we can still create an interpolated surface for our pollutant of interest, we just need to interpret our final raster with acknowledgement of these limitations. For this week's practical, we will go ahead and use the Londonair's data to study the levels of **Nitrogen Dioxide (NO~2~) in London for 2019**. Once we have our data loaded and processed in the right format, we will start interpolating our data using at first two models: Thiessen Polygons and Inverse Distance Weighting. -->
-
-<!-- ```{r 09-get-data-from-zip, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # read in downloaded data  -->
-<!-- # as the file is quite large, we will read it directly from zip -->
-<!-- pollution <- read_csv("data/raw/pollution/no2_london_2019.zip") -->
-
-<!-- # pollution dataframe dimensions -->
-<!-- dim(pollution) -->
-<!-- ``` -->
-
-<!-- Reading in the `csv` might take a little time: we have 1,596,509 observations with 7 variables. -->
-
-<!-- ### Analysing air pollution -->
-<!-- Let's take a look at why it's so large and inspect the first five rows of our dataframe: -->
-
-<!-- ```{r 09-inspect-inspect, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # return first five rows of our pollution dataframe -->
-<!-- head(pollution) -->
-<!-- ``` -->
-
-<!-- We can see that in our first five rows we have data for the **same site** and if we look at the **date** field, we can see we have a reading observation for every hour. With 24 hours in the day, 365 days in a year and potentially hundreds of sites, it should therefore be of no surprise that we have such a big `csv`. In the end, for this practical, we only want to create one raster, so to make our data more useable we will go ahead and aggregate the data and get the average NO~2~ value for each monitoring site over 2019.  -->
-
-<!-- Use the `dplyr` library functions to return the mean NO~2~ value for each monitoring site over 2019. Let's also make sure that we retain the latitude and longitude of our monitoring sites: -->
-
-<!-- ```{r 09-that-is-mean, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # aggregate data to unique latitude and longitude combinations, remove monitoring sites without coordinates, summarise the no2 by the mean -->
-<!-- avg_pollution <- pollution %>% group_by(latitude,longitude) %>%  -->
-<!--                          summarise(no2=mean(no2)) %>%  -->
-<!--                          filter(!is.na(latitude | longitude)) -->
-
-<!-- # return the first five rows of our new dataframe -->
-<!-- head(avg_pollution) -->
-
-<!-- # return the histogram of our no2 values -->
-<!-- hist(avg_pollution$no2) -->
-<!-- ``` -->
-
-<!-- We should now see that we only have our latitude and longitude coordinates and the average NO~2~ value associated with each. Our histogram also shows us the general distribution of our values: we can see that we have a slight positive skew to our dataset. To use this data within our different interpolation methods, we will need to transform our data into a point spatial dataframe using the `st_as_sf()` function that we have come across before. One thing you should notice is that the latitude and longitude are projected in WGS84 and, therefore, we need to reproject our resulting spatial dataframe into British National Grid. We will also make sure that all of our points are within our London ward extent, using the `st_intersection()` function. -->
-
-<!-- Create a spatial dataframe containing our London monitoring sites and their average NO~2~ reading: -->
-
-<!-- ``` {r 09-prepare-air-pol-data-further, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # load London wards for reference map -->
-<!-- london_ward <- read_sf("data/raw/boundaries/2018/London_Ward.shp") -->
-
-<!-- # create a point spatial dataframe, project -->
-<!-- pollution_points <- st_as_sf(avg_pollution,coords=c('longitude','latitude'), crs=4326)[,1] %>% st_transform(27700) -->
-
-<!-- # ensure all points are within the boundaries of Greater London -->
-<!-- lonpollution_points <- pollution_points %>% st_intersection(london_ward) -->
-<!-- ```    -->
-
-<!-- Let's create a **proportional symbol** map to visualise these points: -->
-
-<!-- ``` {r 09-those-symbols-are-in-proportion, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # ensure tmap mode is set to plot  -->
-<!-- tmap_mode("plot") -->
-
-<!-- # plot our London wards in grey -->
-<!-- tm_shape(london_ward) +  -->
-<!--   tm_polygons(palette = "grey", border.col = "white") + -->
-<!-- # plot our pollution_points as bubbles, using the NO2 field to determine size -->
-<!-- tm_shape(lonpollution_points) +  -->
-<!--   tm_bubbles(size = "no2", col = "mediumorchid", style = "pretty",  -->
-<!--              scale =1, border.col = "white",  -->
-<!--              title.size="Average NO2 ug/m3 reading in 2019") + -->
-<!--   # set legend -->
-<!--   tm_layout(legend.position = c("left", "top")) + -->
-<!--   # add a north arrow -->
-<!--   tm_compass(type = "arrow", position = c("right", "top")) +  -->
-<!--   # add a scale bar -->
-<!--   tm_scale_bar(breaks = c(0, 5, 10, 15, 20), position = c("left", "bottom")) + -->
-<!--   # add a data statement -->
-<!--   tm_credits("Air quality data from London Air.")  -->
-<!-- ``` -->
-
-<!-- Our proportional symbols map already tells us a little about our dataset - we can see that NO~2~ levels are much higher towards the centre of London, although we can see some anomalies in the south-west, for example. But we can also see how and why a smoothed surface of our data **could** be really useful for further interpretation - and this is where interpolating our data comes in. -->
-
-<!-- #### Thiessen polygons -->
-<!-- The first step we can take to interpolate the data across space is to create Thiessen polygons. Thiessen polygons are formed to assign boundaries of the areas closest to each unique point. Therefore, for every point in a dataset, it has a corresponding Thiessen polygon.  -->
-
-<!-- ```{r 09-thiessen, echo=FALSE, fig.align='center', out.width = "550pt", fig.cap='Creating a set of Thiessen polygons. Source: Esri 2020.'} -->
-<!-- knitr::include_graphics('images/w09/thiessen.jpg') -->
-<!-- ``` -->
-
-<!-- :::note -->
-<!-- **Note** <br /> -->
-<!-- You may come across the term Voronoi polygons: these are the same thing as Thiessen polygons. Both terms are used interchangeably to describe this type of geometry created from point data. In the field of GIS we tend to refer to them as Thiessen polygons, after the American meteorologist who frequented their use. In other fields, particularly mathematics and computer science, they are generally referred to as Voronoi diagrams, in honour of the mathematician Georgy Voronoy. -->
-<!-- ::: -->
-
-<!-- We can create Thiessen polygons using the `sf` library with a bit of code: we will create a simple function called `st_thiessen_point()` that we can use to generate Thiessen polygons directly from a point dataset. -->
-
-<!-- :::tip -->
-<!-- **Tip** <br/> -->
-<!-- Do not worry about fully understanding the code behind the function, but simply understand what input (a point spatial dataframe) and output (a Thiessen polygon spatial dataframe) it will provide. -->
-<!-- ::: -->
-
-<!-- You need to copy over both the function and the code underneath. Copying the function stores this function in your computer's memory for this R session and means the function itself can be used time and time again within the same session or script. -->
-
-<!-- The first of the two lines of code below the function then "call" this function on our `lonpollutions_points` spatial dataframe. The second essentially joins the attribute fields of our `lonpollutions_points` spatial dataframe to our new Thiessen polygon spatial dataframe and stores this as a new variable.  -->
-
-<!-- ```{r 09-thiessen-pols, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # function to create Thiessen polygons from point input -->
-<!-- st_thiessen_point <- function(points){ -->
-<!--     # input check -->
-<!--     if(!all(st_geometry_type(points) == "POINT")){ -->
-<!--         stop("Input not POINT geometries") -->
-<!--     } -->
-
-<!--     # make multipoint -->
-<!--     g = st_combine(st_geometry(points))  -->
-
-<!--     # create thiessen polygons -->
-<!--     v = st_voronoi(g) -->
-<!--     v = st_collection_extract(v) -->
-
-<!--     # return -->
-<!--     return(v[unlist(st_intersects(points, v))]) -->
-<!-- } -->
-
-<!-- # call function -->
-<!-- lon_points_voronoi = st_thiessen_point(lonpollution_points) -->
-
-<!-- # add attribute data  -->
-<!-- lonpollution_tv = st_set_geometry(lonpollution_points, lon_points_voronoi) -->
-
-<!-- # inspect -->
-<!-- lonpollution_tv -->
-<!-- ``` -->
-
-<!-- We can now visualise these Thiessen polygons with their associated NO~2~ value: -->
-
-<!-- ```{r 09-visualise-those-thiessen-pols, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # visualise thiessen polygons -->
-<!-- tm_shape(lonpollution_tv) +  -->
-<!--   tm_fill(col = 'no2', palette = "Purples") -->
-<!-- ``` -->
-
-<!-- We can go ahead tidy this up further by clipping our Thiessen polygons to the extent of London: -->
-
-<!-- ```{r 09-thiessen-pols-map-after-crop, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler'} -->
-<!-- # generate London outline through st_union -->
-<!-- london_outline <- london_ward %>%  -->
-<!--   st_union() -->
-
-<!-- # clip our thiessen polygons to our london outline -->
-<!-- lonpollution_tv <- st_intersection(lonpollution_tv, london_outline) -->
-
-<!-- # visualise thiessen polygons -->
-<!-- tm_shape(lonpollution_tv) +  -->
-<!--   tm_fill(col = 'no2', palette = "Purples") -->
-<!-- ``` -->
-
-<!-- And that's it! We now have our values interpolated using our Thiessen polygon approach. However, as you can see, our approach is quite coarse. Whilst we, of course, can see areas of high and low pollution, it really does not offer us as much spatial detail as we would like, particularly when we know there are better methods out there to use. -->
-
-<!-- #### Inverse Distance Weighting -->
-<!-- A second method to interpolate point data is **Inverse Distance Weighting** (IDW). An IDW is a means of converting point data of numerical values into a continuous surface to visualise how the data may be distributed across space. The technique interpolates point data by using a weighted average of a variable from nearby points to predict the value of that variable for each location. The weighting of the points is determined by their inverse distances drawing on [Tobler’s first law of geography](https://en.wikipedia.org/wiki/Tobler%27s_first_law_of_geography#:~:text=The%20First%20Law%20of%20Geography,specifically%20for%20the%20inverse%20distance) that "*everything is related to everything else, but near things are more related than distant thing*".  -->
-
-<!-- The distance weighting is done by a power function: the larger the power coefficient, the stronger the weight of nearby point. The output is most commonly represented as a raster surface. We will use the `idw()` function within the `gstat` library to conduct an IDW on our `lonpollution_points` spatial dataframe. -->
-
-<!-- Before we can run IDW, we must first generate an empty grid within which to store our data. To do so, we can use the `spsample()` function from the `sp` library. We will go ahead and create a grid that covers the entirety of our `london_outline`, which we will transform into the `sp` format using the `as()` function. We then run the `gstat` `idw()` function on an `sp` version of our `lonpollution_points` dataset, specifying the cell size. We then specify that our IDW result is a gridded format that we then coerce into a raster. Once we have our raster, we can reset its CRS and of course utilise other functions from the `raster` library to process (e.g. the `mask` function) and then visualise our dat aset within `tmap`. -->
-
-<!-- :::note -->
-<!-- **Note** <br /> -->
-<!-- Some of the following code will unfortunately not work as intended for some of you due to changes in underlying libraries. If the `gsat` below does not work for you, you can try to conduct the interpolation using the`spatstat` library instead.  -->
-<!-- ::: -->
-
-<!-- ```{r 09-inverse-distance-weights, warnings=FALSE, message=FALSE, cache=TRUE, tidy=TRUE} -->
-<!-- # convert our lonpollution_points into the sp format -->
-<!-- lonpollution_pointsSP <- lonpollution_points %>% as(., 'Spatial') -->
-
-<!-- # convert our london_outline into the sp format -->
-<!-- london_outlineSP <- london_outline %>% as(., 'Spatial') -->
-
-<!-- # create an empty raster grid the size for our london_outline over which to interpolate the pollution values   -->
-<!-- grid <-spsample(lonpollution_pointsSP, type ='regular', cellsize=450, bb=bbox(london_outlineSP)) -->
-
-<!-- # run an IDW for the NO2 value with a power value of 2 -->
-<!-- idw <- gstat::idw(lonpollution_pointsSP$no2 ~ 1, lonpollution_pointsSP, newdata = grid, idp = 2) -->
-
-<!-- # specify idw spatial data as being gridded -->
-<!-- gridded(idw) <- TRUE -->
-
-<!-- # coerce to our gridded idw to the raster format -->
-<!-- lon_poll_raster_idw <- raster(idw) -->
-
-<!-- # set our raster CRS to BNG -->
-<!-- crs(lon_poll_raster_idw) <- CRS("epsg:27700") -->
-
-<!-- # mask our raster to only the london outline -->
-<!-- lon_idw_gstat <- rasterize(london_ward, lon_poll_raster_idw, mask=TRUE)  -->
-
-<!-- # plot the resulting raster -->
-<!-- plot(lon_idw_gstat) -->
-<!-- ``` -->
-
-<!-- Great. Ff this code has worked for you and you have generated an IDW raster, you can move onto the next task which is to create a proper map of our resulting IDW. -->
-
-<!-- #### Alternative: IDW with spatstat [Optional] -->
-<!-- For those of you that cannot run the code above, we can look to `spatstat` as an alternative option although it just brings with it its few complications in terms of converting our datasets into our `ppp` object: we will first have to convert our data to the `ppp` object type and then use this within the `idw()` function `spatstat` offers. -->
-
-<!-- ```{r 09-inverse-distance-weights-spatstat, warnings=FALSE, message=FALSE, cache=TRUE, eval=TRUE, tidy=TRUE} -->
-<!-- # set our window of observation to London -->
-<!-- window <- as.owin(london_outline) -->
-
-<!-- # extract the coordinates of our pollution points sdf -->
-<!-- points_xy <- lonpollution_points %>% st_coordinates() -->
-
-<!-- # create a ppp object, setting x and y equal to the respective columns in our matrix -->
-<!-- # set the window equal to our window variable -->
-<!-- # set our 'marks' equal to the NO2 column in our points -->
-<!-- pollution_ppp <- ppp(x=points_xy[,1], y= points_xy[,2], marks=lonpollution_points$no2, window=window) -->
-
-<!-- # run the IDW  -->
-<!-- ss_idw <- spatstat.core::idw(pollution_ppp, power = 2, at="pixels") -->
-
-<!-- # coerce our im output to raster -->
-<!-- lon_idw_sp <- raster(ss_idw) -->
-
-<!-- # set our raster CRS to BNG -->
-<!-- crs(lon_idw_sp) <- CRS("epsg:27700") -->
-
-<!-- # plot the resulting raster -->
-<!-- plot(lon_idw_sp) -->
-<!-- ``` -->
-
-<!-- You should see we actually get a similar result to the IDW of the `gstat` library. This is because our cell sizes resolutions are similar in both cases. We set our cell resolution as 450 x 450m above and we can check the cell size of our `spatstat` IDW raster using a very simple command: `res(lon_idw)`. You will see that the IDW `spatstat` auto-generated a 456m cell size. -->
-
-<!-- ##### Mapping the IDW raster -->
-<!-- We now have our final predicted raster surface. To map it, we can again use the `tm_raster()` as we have done previously. For our raster, the name of the layer we need to provide is `var1.pred` for those using the `gstat` result and simply `layer` for those using the `spatstat` result. -->
-
-<!-- ```{r 09-idw-map-2, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler', echo=TRUE} -->
-<!-- # plot the gstat raster -->
-<!-- tm_shape(lon_idw_gstat) +  -->
-<!--   tm_raster("var1.pred", style = "quantile", n = 100, palette = "Reds", -->
-<!--             legend.show = FALSE) +  -->
-<!-- tm_shape(london_ward) +  -->
-<!--   tm_borders(col = "white", lwd = 0.1) -->
-<!-- ```   -->
-<!-- ```{r 09-idw-map, warnings=FALSE, message=FALSE, cache=TRUE, tidy='styler', eval=TRUE} -->
-<!-- # plot the spatstat raster -->
-<!-- tm_shape(lon_idw_sp) +  -->
-<!--   tm_raster("layer", style = "quantile", n = 100, palette = "Reds", -->
-<!--             legend.show = FALSE) +  -->
-<!-- tm_shape(london_ward) +  -->
-<!--   tm_borders(col = "white", lwd = 0.1) -->
-
-<!-- ``` -->
-
-<!-- And that's it. For those of you able to use the `gstat` code, it is highly worth playing around with the cell size to look at how it changes the smoothness of our resulting IDW. A smaller cell size will create a smoother IDW output, but it does add uncertainty to these estimates as we do not exactly have a substantial amount of data points to interpolate from. -->
-
-<!-- To help with minimising this uncertainty, there are two additional steps you can take with your IDW output: -->
-
-<!-- 1) Testing and fine-tuning the power function you have used to ensure it is a valid parameter by using something known as the *Leave One Out Cross Validation*. -->
-
-<!-- 2) Generating a 95% confidence interval map of our interpolation mode using cross-validation methods. -->
-
-<!-- This is beyond the scope of this module, but if you would like to explore this you can found details on this in Manuel Gimond's tutorial on interpolation available here: [Link](https://mgimond.github.io/Spatial/interpolation-in-r.html) -->
-
-<!-- :::tip -->
-<!-- **Tip** <br/> -->
-<!-- A raster dataset normally only contains one layer, i.e. one variable. Hence when we want to map a raster, we use the `tm_raster()` and provide the layer name for mapping. In our examples, this has been `layer` and `var1.pred`, for example. However, in some circumstances, such as with satellite imagery we will want to use the `tm_rgb()` function instead. This is because these types of rasters, instead of having a single layer, actually consist of **three** bands: a band with a red value, a band with a green value and a band with a blue value. This is known as **multi-band** imagery. -->
-
-<!-- To visualise multiband images correctly, we need to use the `tm_rgb()` function in order to stack our three bands together to create the appropriate visualisation. We can visualise each band independently of one another, however, you would see that you end up with either a nearly all red, green or blue image. This is also out of scope of this module, but if you are interested to learn more about [using satellite imagery with R](https://andrewmaclachlan.github.io/CASA0005repo/advanced-raster-analysis.html) this CASA tutorial is good place to start. Alternatively, you can also check Esri's help information on [Rasters and Raster Bands here](https://desktop.arcgis.com/en/arcmap/10.3/manage-data/raster-and-images/raster-bands.html). -->
-
-<!-- Learning how to use satellite imagery can be a really useful skill set, particularly as this type of data is being increasingly used human geography applications - as well as, of course, its more traditional applications in physical and environmental geography. -->
-<!-- ::: -->
-
-<!-- ## Assignment 2 {#assignment-w09-02} -->
-<!-- For your final assignment this week, we want you to redo the IDW interpolation of the London pollution data for the months of **June** and **December** and see to what extent there are differences between these months. In order to do this you will, at least, need to: -->
-
-<!-- 1. Create monthly averages for the pollution data. This will involve quite some data wrangling. Keep in mind that [Google is your friend](https://lmgtfy.app/?q=google+is+your+friend)! -->
-<!-- 2. For both the month of **June** and **December** create a spatial dataframe containing the London monitoring sites and their average NO~2~ reading. -->
-<!-- 3. Conduct an Inverse Distance Weighting interpolation for both months of data. -->
-<!-- 4. Execute some map algebra to identify the areas where the results of the interpolation differ. -->
-
-<!-- ## Before you leave {#byl-w09} -->
-<!-- This week, we've looked at raster datasets and how we use the `raster` library to manage and process them. Specifically, we looked at using **map algebra** to apply mathematical operations to rasters, using local, global, focal and zonal approaches and how we use map algebra on either an individual or combination of rasters. -->
-
-<!-- We then looked at how we can use two different interpolation methods to generate raster data from point data. Understanding how to interpolate data correctly is incredibly important. Whilst in most instances you will be working with vector data, especially where government statistics and administrative boundaries are involved, there are also plenty of use cases in which you will need to generate raster data from point data, as we have done today. With that being said: [that is it for our final-to-last week in Geocomputation](https://www.youtube.com/watch?v=8iwBM_YB1sE). -->
+For the second part of this week's practical material, we will explore several methods of spatial data interpolation by looking at air pollution in London using [Londonair](https://www.londonair.org.uk/) data. Londonair is the website of the London Air Quality Network (LAQN), and shows air pollution in London and southeast England that is provided by the [Environmental Research Group](https://www.imperial.ac.uk/school-public-health/environmental-research-group/) of Imperial College London. The data are publicly available for download and we can use an R package to directly interact with the data without needing to download it. The `openair` [R package](https://davidcarslaw.github.io/openair/) enables us to import data directly from the Londonair website. We will focus on Nitrogen Dioxide (NO~2~) measurements.
+
+::: {.callout-note}
+Spatial interpolation is the prediction of a given phenomenon in unmeasured locations. There are many reasons why we may wish to interpolate point data across a map. It could be because we are trying to predict a variable across space, including in areas where there are little to no data.
+::: 
+
+```{r}
+#| label: 09-get-air-pollution-data
+#| classes: styled-output
+#| echo: True
+#| eval: False
+#| tidy: True
+#| filename: "R code"
+# get list of all measurement sites operated by Imperial College#
+# limit to sties 
+site_meta <- importMeta(source = "kcl", all=TRUE, year=2022:2022)
+
+# download all data pertaining to these sites
+pollution <- importKCL(site=c(measurement_sites$code), year=2022:2022, pollutant='no2',meta=TRUE)
+```
+
+::: {.callout-warning}
+This second part of the code might take some time to run as it will try to download the data for all sites for an entire year --- and in many cases data is measured hourly. Despite us limiting our data download, not all measurements sites collect data on NO~2~ so you will get some warnings along the lines of `404 Not Found`. In case you run into too many errors or it is just taking too long, you can download a copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/london-no2-2022.zip). Once downloaded, copy over the `zip` and put this into a `data/raw/pollution` folder. The file is rather large, so you can leave it unzipped.
+:::
+
+Let's inspect the data:
+
+```{r}
+#| label: 09-inspect-air-pollution-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# load from zip if not downloaded through the Open Air library
+pollution <- read_csv("data/raw/pollution/london_no2_2022.zip")
+
+# inspect
+head(pollution)
+```
+
+We can see that in our first five rows we have data for the **same site** and if we look at the **date** field, we can see we have a reading observation for every hour. With 24 hours in the day, 365 days in a year and hundreds of sites, it should therefore be of no surprise that we have such a large `csv`. Let's summarise the values by site to make the dataset a bit more workable:
+
+```{r}
+#| label: 09-mean-air-pollution-data
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# calculate mean no2 values
+pollution_avg <- pollution |>
+  filter(!is.na(latitude) & !is.na(no2)) |>
+  group_by(code, latitude, longitude) |>
+  summarise(no2 = mean(no2))
+
+# inspect
+head(pollution_avg)
+```
+We are now left with only **45** measurement sites --- with only the latitudes, longitudes, and the average NO~2~ values associated with each. When using interpolation, the distribution and density of our data points will impact the accuracy of our final raster and we may end up with a level of uncertainty in the areas where measurements are more sparse. Let's have a look at the spatial distribution of the measurement sites.
+
+```{r tidy="styler"}
+#| label: fig-09-air-quality-measurement-sites
+#| fig-cap: "NO~2~ measurement sites in London."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+# load MSOAs for reference
+msoa_london <- st_read('data/raw/boundaries/MSOA2021_London.gpkg') |>
+  st_union()
+
+# create a point spatial dataframe
+measurement_sites <- pollution_avg |>
+  st_as_sf(coords=c('longitude','latitude'), crs=4326) |>
+  st_transform(27700)
+
+# ensure all points within London
+measurement_sites <- measurement_sites |>
+  st_intersection(msoa_london)
+
+# plot
+tm_shape(msoa_london) +
+  tm_polygons(
+    col = 'grey'
+  ) +
+  tm_shape(measurement_sites) +
+  tm_dots()
+```
+
+Let's also have a look whether measurements differ across London:
+
+```{r tidy="styler"}
+#| label: fig-09-air-quality-measurement-sites-proportional-symbol
+#| fig-cap: "Proportional symbol map on NO~2~ measurements in London."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+# add London outline
+tm_shape(msoa_london) +
+  tm_polygons(
+    cols = 'grey'
+  ) +
+# add proportional symbol
+tm_shape(measurement_sites) +
+  tm_bubbles(
+    size = "no2", 
+    col = "blue", 
+    style = "pretty",
+    border.col = "white",
+    title.size="Average NO2 ug/m3 reading in 2020"
+    ) +
+  # add legend
+  tm_layout(
+    legend.position = c("left", "top")
+    ) +
+  # add north arrow
+  tm_compass(
+    type = "arrow", 
+    position = c("right", "top")
+    ) +
+  # add scale bar
+  tm_scale_bar(
+    breaks = c(0, 5, 10, 15, 20), 
+    position = c("left", "bottom")
+    ) +
+  # add credits
+  tm_credits("NO~2~ measurements from London Air (2022).")
+```
+
+Our proportional symbols shows that there is some heterogeneity in NO~2~ measurements across London --- both in terms of coverage and in terms of NO~2~ levels. This means that if we want to make a reasonable assumptions about NO~2~ levels in an area where no measurement was taking, we need to interpolate the missing values.
+
+#### Thiessen polygons
+The first step we can take to interpolate the data across space is to create Thiessen polygons. Thiessen polygons are formed to assign boundaries of the areas closest to each unique point. Therefore, for every point in a dataset, it has a corresponding Thiessen polygon.
+
+```{r}
+#| label: fig-thiessen
+#| echo: False
+#| fig-cap: "Thiessen polygons. [[Enlarge image]](https://jtvandijk.github.io/GEOG0030/images/w09/thiessen.png){target='_blank'}"
+knitr::include_graphics('images/w09/thiessen.png')
+```
+
+::: {.callout-tip}
+Besides Thiessen you may also come across the term Voronoi polygons. Both terms are used interchangeably to describe this type of geometry created from point data. In the field of GIS we tend to refer to them as Thiessen polygons, but in other fields they are often referred to as Voronoi diagrams, in honour of the mathematician Georgy Voronoy.
+:::
+
+We can create Thiessen polygons using the `sf` library with a bit of code: we will create a simple function called `st_thiessen_point()` that we can use to generate Thiessen polygons directly from a point dataset. 
+
+::: {.callout-warning}
+Do not worry about fully understanding the code behind the function, but simply understand what input (a point spatial dataframe) and output (a Thiessen polygon spatial dataframe) it will provide.
+:::
+
+``` {r}
+#| label: 09-create-thiessen-polygons
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# function 
+st_thiessen_point <- function(points){
+    
+  # input check
+    if(!all(st_geometry_type(points) == "POINT")){
+        stop("Input not POINT geometries")
+    }
+
+    # to multipoint
+    g = st_combine(st_geometry(points))
+
+    # to thiessen
+    v = st_voronoi(g)
+    v = st_collection_extract(v)
+
+    # return
+    return(v[unlist(st_intersects(points, v))])
+}
+
+# call function
+measurement_sites_thiessen <- st_thiessen_point(measurement_sites)
+
+# force thiessen polygons to measurement sites dataframe
+measurement_sites_thiessen_df <- measurement_sites |>
+  st_set_geometry(measurement_sites_thiessen) |>
+  st_intersection(msoa_london)
+
+# inspect
+measurement_sites_thiessen_df
+```
+
+We can now visualise these Thiessen polygons with their associated NO~2~ value:
+
+```{r tidy="styler"}
+#| label: fig-09-air-quality-london-thiessen
+#| fig-cap: "Interpolation of NO~2~ measurements in London using Thiessen polygons."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+# add thiessen polygons
+tm_shape(measurement_sites_thiessen_df) +
+  tm_polygons(
+    col = 'no2',
+    palette = 'Blues'
+  ) +
+  # add legend
+  tm_layout(
+    legend.show = TRUE
+  )
+```
+
+And that's it! We now have our values interpolated using our Thiessen polygon approach. However, as you can see, our approach is quite coarse. Whilst we, of course, can see areas of high and low pollution, it really does not offer us as much spatial detail as we would like, particularly when we know there are better methods out there to use.
+
+#### Inverse Distance Weighting
+A second method to interpolate point data is **Inverse Distance Weighting** (IDW). An IDW is a means of converting point data of numerical values into a continuous surface to visualise how the data may be distributed across space. The technique interpolates point data by using a weighted average of a variable from nearby points to predict the value of that variable for each location. The weighting of the points is determined by their inverse distances, essentially drawing on [Tobler’s first law of geography](https://en.wikipedia.org/wiki/Tobler%27s_first_law_of_geography#:~:text=The%20First%20Law%20of%20Geography,specifically%20for%20the%20inverse%20distance).
+
+::: {.callout-tip}
+The distance weighting is done by a power function: the larger the power coefficient, the stronger the weight of nearby point. The output is most commonly represented as a raster surface. 
+:::
+
+We will start by generating an empty grid to store the predicted values before executing a simple the IDW.
+
+``` {r}
+#| label: 09-idw
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| tidy: True
+#| filename: "R code"
+# create regular output grid from London outline
+output_grid <- msoa_london |>
+  st_make_grid(cellsize = c(500,500))
+
+# execute IDW
+measurement_sites_idw <- idw(formula = no2 ~ 1,
+                             locations = measurement_sites,
+                             newdata = output_grid,
+                             beta = 2)
+
+# clip to London outline
+measurement_sites_idw <- measurement_sites_idw |>
+  st_intersection(msoa_london)
+```
+
+We now have our final predicted raster surface. To map it, we can again use the `tmap` as we have done previously. For our polygon raster, the name of the layer we need to provide is `var1.pred`.
+  
+```{r tidy="styler"}
+#| label: fig-09-air-quality-idw
+#| fig-cap: "Interpolation of NO~2~ measurements in London using Inverse Distance Weighting."
+#| classes: styled-output
+#| echo: True
+#| eval: True
+#| cache: True
+# add idw grid
+tm_shape(measurement_sites_idw) +
+  tm_fill(
+    col = "var1.pred", 
+    style = "quantile", 
+    n = 100, 
+    palette = "Reds",
+    legend.show = FALSE
+    ) +
+  # add measurement sites
+  tm_shape(measurement_sites) +
+  tm_dots()
+```
+
+::: {.callout-note}
+We have used an output cell size of 500x500 metres. A smaller cell size will create a smoother IDW output, but it does add uncertainty to these estimates as we do not exactly have a substantial amount of data points to interpolate from. Keep in mind: reducing the cell size will also exponentially increase processing time.
+:::
+
+## Assignment {#assignment-w09}
+For your final assignment this week, we want you to redo the IDW interpolation of the London pollution data for the months of **June** and **December** and see to what extent there are differences between these months. In order to do this you will, at least, need to:
+
+1. Create monthly averages for the pollution data. This will involve some data wrangling.
+2. For both the months of **June** and **December** create a spatial dataframe containing the London monitoring sites and their average NO~2~ reading.
+3. Conduct an Inverse Distance Weighting interpolation for both months of data.
+4. Combine the results to identify areas that might differ.
+
+## Want more? [Optional] {#wm-w09}
+### More raster {.unnumbered}
+A raster dataset often only contains one layer, i.e. one variable. Hence when we want to map a raster, we use the `tm_raster()` and provide the layer name for mapping. However, satellite imagery, for instance, consists of **three** bands: a band with a red value, a band with a green value and a band with a blue value. This is known as **multi-band** imagery. We can visualise each band independently of one another, however, you would see that you end up with either a nearly all red, green or blue image. If you are interested to learn more about [using satellite imagery with R](https://andrewmaclachlan.github.io/CASA0005repo/advanced-raster-analysis.html) and raster analysis in general, this is a good place to start. Alternatively, if you are interested in more advanced interpolation methods, [Manual Gimond's](https://mgimond.github.io/Spatial/interpolation-in-r.html) tutorial on spatial data interpolation will get you started.
+
+## Before you leave {#byl-w09}
+This week, we've looked at raster datasets and how we use the `terra` library to manage and process them. Specifically, we looked at using **map algebra** to apply mathematical operations to rasters. We further looked at two different interpolation methods to generate raster data from point data. Understanding how to interpolate data correctly is incredibly important. Whilst in most instances you will be working with vector data, especially where government statistics and administrative boundaries are involved, there are also plenty of use cases in which you will need to generate raster data from point data, as we have done today. With that being said: [that is it for our final-to-last week in Geocomputation](https://www.youtube.com/watch?v=8iwBM_YB1sE). Suppose nothing left to do besides checking out that reading?

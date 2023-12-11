@@ -9,6 +9,6 @@ stringr
 forcats
 sf
 tmap
-abind
-stars
 terra
+openair
+gstat
