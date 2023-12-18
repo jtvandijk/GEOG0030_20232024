@@ -1010,7 +1010,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <p>Now we have out snapped geometry, we can look to compare our two datasets to calculate whether or not our <code>london_stations_osm</code> spatial dataframe is missing any data from our <code>london_stations_snap</code> spatial dataframe. To do so, we will use the <code>st_difference()</code> function which will return us the geometries of those points in our <code>london_stations_snap</code> spatial dataframe that are missing in our our <code>london_stations_osm</code> spatial dataframe. However, to use this function successfully we need to convert our our <code>london_stations_osm</code> spatial dataframe into a single geometry first. To simplify our <code>london_stations_osm</code> spatial dataframe into a single geometry, we simply use the <code>st_union()</code> code we used with our London outline above:</p>
-<div class="cell styled-output" data-hash="06-operations_cache/html/06-single-geometry_dff2abc19e36b88492cd8185f820c026">
+<div class="cell styled-output" data-hash="06-operations_cache/html/06-single-geometry_1f456a9fbfb3cfc5e1458cd688af3e26">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1019,7 +1019,7 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>london_stations_osm_compare <span class="ot">&lt;-</span> london_stations_osm <span class="sc">|&gt;</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_union</span>()</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># compare the geometriess</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># compare the geometries</span></span>
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>missing_stations <span class="ot">&lt;-</span> <span class="fu">st_difference</span>(london_stations_snap, london_stations_osm_compare)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">

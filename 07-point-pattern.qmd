@@ -81,7 +81,7 @@ msoa_london <- st_read("data/raw/boundaries/MSOA2021_London.gpkg")
 outline_london <- msoa_london |>
   st_union()
 
-# read in OSM tube and trains tations
+# read in OSM tube and trains stations
 stations_london <- st_read("data/data/LondonStations.gpkg")
 
 # read in bike theft
@@ -289,7 +289,7 @@ The Poisson Distribution can be used when:
 Point data that contains a random distribution of points is said to follow a Poisson distribution. The Poisson distribution is very useful as it allows us to compare a random expected model to our observations. Essentially, if our data's distribution does not fit the Poisson distribution, then we can infer that something interesting might be going on and our events might not actually be independent of each other. Instead, they might be clustered or dispersed and there is likely to be underlying processes influencing these patterns.
 :::
 
-We can use a Poisson distribution to generate a randomly generated point pattern dataset with the same number of points and the same observation window. We then can compare our quadrat analysis with the theorethical quadrat analysis using a [chi-squared test](https://en.wikipedia.org/wiki/Chi-squared_test), with the null hypotheses that our point data are randomly distributed. 
+We can use a Poisson distribution to generate a randomly generated point pattern dataset with the same number of points and the same observation window. We then can compare our quadrat analysis with the theoretical quadrat analysis using a [chi-squared test](https://en.wikipedia.org/wiki/Chi-squared_test), with the null hypotheses that our point data are randomly distributed. 
 
 ```{r}
 #| label: 07-quadrat-test
@@ -524,7 +524,7 @@ bike_theft_ann <- apply(nndist(bike_theft_ppp_jitter, k=1:100),2,FUN=mean)
 plot(bike_theft_ann ~ seq(1:100))
 ```
 
-In our case, the plot does not reveal anything interesting in particular except that higher order points seem to be slightly closer than lower order points. Overall, the ANN is a good approach to conduct statistical tests on large datasets (e.g. if we were to compare the result to a theorethical distribution), but visually it does not tell us a huge amount about our dataset!
+In our case, the plot does not reveal anything interesting in particular except that higher order points seem to be slightly closer than lower order points. Overall, the ANN is a good approach to conduct statistical tests on large datasets (e.g. if we were to compare the result to a theoretical distribution), but visually it does not tell us a huge amount about our dataset!
 
 ### DBSCAN
 The techniques above are useful exploratory techniques for telling us if we have spatial clusters present in our point data, but they are not able to tell us precisely *where* in our area of interest the clusters are occurring. One popular technique for discovering precise clusters in space is an algorithm known as **DBSCAN**, an algorithm that incorporates both distance and density. 
@@ -660,7 +660,7 @@ We have conducted a lot of analysis today. What we have failed to do, however, i
 
 ## Want more? [Optional] {#wm-w07}
 ### Reproducible research {.unnumbered}
-Last week you might have had a look at the book [Data Skills for Reproducible Research](https://psyteachr.github.io/reprores-v3/index.html). A great tool that can be used to create reproducible workflos is found in the `targets` package. The targets package is a [Make](https://www.gnu.org/software/make/)-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the [Walkthrough](https://books.ropensci.org/targets/walkthrough.html) chapter to see `targets` in action. 
+Last week you might have had a look at the book [Data Skills for Reproducible Research](https://psyteachr.github.io/reprores-v3/index.html). A great tool that can be used to create reproducible workflows is found in the `targets` package. The targets package is a [Make](https://www.gnu.org/software/make/)-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the [Walkthrough](https://books.ropensci.org/targets/walkthrough.html) chapter to see `targets` in action. 
 
 ## Before you leave {#byl-w07}
 As geographers we are keen to understand our point data's distribution and understand whether are our points clustered, randomly distributed, uniform or dispersed. We have looked at various techniques that enable us to statistically and visually assess our data's distribution and understand whether our data is randomly distributed or clustered in space. And that is [us done for this week](https://www.youtube.com/watch?v=-zxtbwGogyY). Reading list anyone?

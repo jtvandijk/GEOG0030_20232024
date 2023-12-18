@@ -372,7 +372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="data-preparation-w07" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="data-preparation-w07"><span class="header-section-number">7.3.2</span> Data preparation</h3>
 <p>This week, we will continue to use the data we extracted from OpenStreetMap <a href="06-operations.html#data-preparation-w06">last week</a> as well as the 2021 bike theft data that we prepared. Let’s go ahead and load all of our data at once. We will also load the MSOA</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-load-all-files_b260dc2ae43d3f0e35f4dad7d028181a">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-load-all-files_2f6aa9255b0a525665426e3e28d03ebf">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -393,7 +393,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>outline_london <span class="ot">&lt;-</span> msoa_london <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_union</span>()</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read in OSM tube and trains tations</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read in OSM tube and trains stations</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>stations_london <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/data/LondonStations.gpkg"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reading layer `LondonStations' from data source 
@@ -663,7 +663,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 </div>
-<p>We can use a Poisson distribution to generate a randomly generated point pattern dataset with the same number of points and the same observation window. We then can compare our quadrat analysis with the theorethical quadrat analysis using a <a href="https://en.wikipedia.org/wiki/Chi-squared_test">chi-squared test</a>, with the null hypotheses that our point data are randomly distributed.</p>
+<p>We can use a Poisson distribution to generate a randomly generated point pattern dataset with the same number of points and the same observation window. We then can compare our quadrat analysis with the theoretical quadrat analysis using a <a href="https://en.wikipedia.org/wiki/Chi-squared_test">chi-squared test</a>, with the null hypotheses that our point data are randomly distributed.</p>
 <div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-quadrat-test_4d475c2b5a8f2b6419df37b184c775e1">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -680,7 +680,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
     Chi-squared test of CSR using quadrat counts
 
 data:  bike_theft_ppp_jitter
-X2 = 55561, df = 80, p-value &lt; 2.2e-16
+X2 = 55590, df = 80, p-value &lt; 2.2e-16
 alternative hypothesis: two.sided
 
 Quadrats: 81 tiles (irregular windows)</code></pre>
@@ -969,7 +969,7 @@ PROJCRS["OSGB36 / British National Grid",
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">nndist</span>(bike_theft_ppp_jitter, <span class="at">k =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 53.41504</code></pre>
+<pre><code>[1] 53.44164</code></pre>
 </div>
 </div>
 <p>We can see that the average nearest neighbour for all points is 53.5 metres. To get an insight into the spatial ordering of all our points relative to one another we can plot the ANN values for different order neighbours (i.e.&nbsp;first closest point, second closest point, etc. For point patterns that are highly clustered, we would expect the average distances between points to be very small.</p>
@@ -994,7 +994,7 @@ PROJCRS["OSGB36 / British National Grid",
 </div>
 </div>
 </div>
-<p>In our case, the plot does not reveal anything interesting in particular except that higher order points seem to be slightly closer than lower order points. Overall, the ANN is a good approach to conduct statistical tests on large datasets (e.g.&nbsp;if we were to compare the result to a theorethical distribution), but visually it does not tell us a huge amount about our dataset!</p>
+<p>In our case, the plot does not reveal anything interesting in particular except that higher order points seem to be slightly closer than lower order points. Overall, the ANN is a good approach to conduct statistical tests on large datasets (e.g.&nbsp;if we were to compare the result to a theoretical distribution), but visually it does not tell us a huge amount about our dataset!</p>
 </section>
 <section id="dbscan" class="level3" data-number="1.6.2">
 <h3 data-number="1.6.2" class="anchored" data-anchor-id="dbscan"><span class="header-section-number">7.6.2</span> DBSCAN</h3>
@@ -1153,7 +1153,7 @@ PROJCRS["OSGB36 / British National Grid",
 <h2 data-number="1.8" class="anchored" data-anchor-id="wm-w07"><span class="header-section-number">7.8</span> Want more? [Optional]</h2>
 <section id="reproducible-research" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="reproducible-research">Reproducible research</h3>
-<p>Last week you might have had a look at the book <a href="https://psyteachr.github.io/reprores-v3/index.html">Data Skills for Reproducible Research</a>. A great tool that can be used to create reproducible workflos is found in the <code>targets</code> package. The targets package is a <a href="https://www.gnu.org/software/make/">Make</a>-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the <a href="https://books.ropensci.org/targets/walkthrough.html">Walkthrough</a> chapter to see <code>targets</code> in action.</p>
+<p>Last week you might have had a look at the book <a href="https://psyteachr.github.io/reprores-v3/index.html">Data Skills for Reproducible Research</a>. A great tool that can be used to create reproducible workflows is found in the <code>targets</code> package. The targets package is a <a href="https://www.gnu.org/software/make/">Make</a>-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the <a href="https://books.ropensci.org/targets/walkthrough.html">Walkthrough</a> chapter to see <code>targets</code> in action.</p>
 </section>
 </section>
 <section id="byl-w07" class="level2" data-number="1.9">

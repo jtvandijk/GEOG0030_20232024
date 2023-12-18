@@ -341,7 +341,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>OAs, LSOAs and MSOAs make up the different levels of the census statistical geographies. Middle layer Super Output Areas (MSOAs) are made up of groups of LSOAs, usually four or five. They comprise between 2,000 and 6,000 households and have a usually resident population between 5,000 and 15,000 persons. For details see the explanation on the webapge of the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies#middle-layer-super-output-areas-msoas">Office for National Statistics</a></p>
+<p>OAs, LSOAs and MSOAs make up the different levels of the census statistical geographies. Middle layer Super Output Areas (MSOAs) are made up of groups of LSOAs, usually four or five. They comprise between 2,000 and 6,000 households and have a usually resident population between 5,000 and 15,000 persons. For details see the explanation on the webpage of the <a href="https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies#middle-layer-super-output-areas-msoas">Office for National Statistics</a></p>
 </div>
 </div>
 </div>
@@ -457,7 +457,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </section>
 <section id="spatial-data" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="spatial-data"><span class="header-section-number">5.3.2</span> Spatial data</h3>
-<p>As this is the first time we have loaded spatial data into R, let’s go for a little exploration of how we can interact with our spatial dataframe. The first thing we want to do when we load spatial data is, of course, map it to confirm if everything is in order. To do this, we can use a really simple command from R’s <code>base</code> library: <code>plot()</code>. As we do not necessarily want to plot this data everytime we run this script in the future, we can type this command into the console:</p>
+<p>As this is the first time we have loaded spatial data into R, let’s go for a little exploration of how we can interact with our spatial dataframe. The first thing we want to do when we load spatial data is, of course, map it to confirm if everything is in order. To do this, we can use a really simple command from R’s <code>base</code> library: <code>plot()</code>. As we do not necessarily want to plot this data every time we run this script in the future, we can type this command into the console:</p>
 <div class="cell styled-output" data-hash="05-spatial_cache/html/05-plot-msoapop_d2481fb78f3924d2aa86ef1ee01f503c">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -568,7 +568,7 @@ First 5 geometries:</code></pre>
 <li>dimension</li>
 <li><code>bbox</code> (bounding box)</li>
 <li>CRS (coordinate reference system)</li>
-<li>partia; definition of the first five geometries of the dataset</li>
+<li>partial; definition of the first five geometries of the dataset</li>
 </ul>
 <p>This is really useful as one of the first things we want to know about our spatial data is what coordinate system it is projected with. Just like our <code>lsoa_population</code> dataset that we used in previous weeks, the <code>msoa_population</code> data was created and exported within the <strong>British National Grid</strong>.</p>
 <p>We can also find out this information, but with more details, with the <code>st_crs()</code> function from the <code>sf</code> library.</p>
@@ -868,7 +868,7 @@ dbl (1): ObjectId
 </div>
 </div>
 </div>
-<p>You should be able to determine that <code>all_theft_df_join</code> contains <strong>20</strong> variables: <strong>12</strong> from <code>all_theft_df</code>, plus <strong>8</strong> from <code>lsoa_lookup.</code> This seems to suggest the join was succesful. However, if we were to count the number of rows in our original <code>all_theft_df</code> dataframe and compare it to our <code>all_theft_df_join</code> dataframe, we would notice something strange: our number of crimes have increased somehow.</p>
+<p>You should be able to determine that <code>all_theft_df_join</code> contains <strong>20</strong> variables: <strong>12</strong> from <code>all_theft_df</code>, plus <strong>8</strong> from <code>lsoa_lookup.</code> This seems to suggest the join was successful. However, if we were to count the number of rows in our original <code>all_theft_df</code> dataframe and compare it to our <code>all_theft_df_join</code> dataframe, we would notice something strange: our number of crimes have increased somehow.</p>
 <div class="cell styled-output" data-hash="05-spatial_cache/html/05-crime-increase_05319db31285286b4b8c2cdbc6c03033">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -1427,7 +1427,7 @@ chr (2): lsoa21cd, msoa21cd
 <span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>    n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>You should now see that your <code>all_theft_df_join</code> dataframe should only contain four variables. You can go and view this dataframe or call the <code>head()</code> function on the data in the console if youlike to check out this new formatting.</p>
+<p>You should now see that your <code>all_theft_df_join</code> dataframe should only contain four variables. You can go and view this dataframe or call the <code>head()</code> function on the data in the console if you like to check out this new formatting.</p>
 </section>
 </section>
 <section id="aggregating-data" class="level3" data-number="1.3.5">
@@ -1468,12 +1468,12 @@ chr (2): lsoa21cd, msoa21cd
 <section id="joining-data" class="level3" data-number="1.3.6">
 <h3 data-number="1.3.6" class="anchored" data-anchor-id="joining-data"><span class="header-section-number">5.3.6</span> Joining data</h3>
 <p>We are now getting to the final stages of our data processing, we just need to join our completed theft table, <code>all_theft_df_msoa</code> to our <code>msoa_population</code> spatial dataframe and then compute a theft crime rate. This will then allow us to map our crime rates by MSOA, exactly what we set to achieve within this practical.</p>
-<div class="cell styled-output" data-hash="05-spatial_cache/html/05-join-sdf_86056096420953ce2120a306a0b0b888">
+<div class="cell styled-output" data-hash="05-spatial_cache/html/05-join-sdf_37585e7a90faf512b5d2716950a62fcf">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join theft to the MSOA popoulation dataset</span></span>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># join theft to the MSOA population dataset</span></span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>theft_msoa_sdf <span class="ot">&lt;-</span> msoa_population <span class="sc">|&gt;</span></span>
 <span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(all_theft_df_msoa, <span class="at">by =</span> <span class="st">"msoa21cd"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

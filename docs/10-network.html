@@ -375,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dodgr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>To create our network and Origin-Destination dataset, we will need data on schools, fast-food outlets, and a streetnetwork. One data sources that contains probably information on all three topics is <a href="https://www.openstreetmap.org">OpenStreetMap</a>.</p>
+<p>To create our network and Origin-Destination dataset, we will need data on schools, fast-food outlets, and a street network. One data sources that contains probably information on all three topics is <a href="https://www.openstreetmap.org">OpenStreetMap</a>.</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -435,11 +435,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the `p`oints, with their osm_id.</span></span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the points, with their osm_id.</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ports_roads_nodes <span class="ot">&lt;-</span> osmdata<span class="sc">$</span>osm_points[, <span class="st">"osm_id"</span>]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract the lines, with their osm_id, name, type of highway, max speed and</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># oneway attributes</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># one-way attributes</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>ports_roads_edges <span class="ot">&lt;-</span> osmdata<span class="sc">$</span>osm_lines[, <span class="fu">c</span>(<span class="st">"osm_id"</span>, <span class="st">"name"</span>, <span class="st">"highway"</span>, <span class="st">"maxspeed"</span>,</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"oneway"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -551,7 +551,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(graph_connected)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 56866</code></pre>
+<pre><code>[1] 56876</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">dodgr_to_sf</span>(graph_connected), <span class="at">max.plot =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -570,7 +570,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>OpenStreetMap is a living dataset, meaning that changes are made on a continuous basis; as such it may very well possible that the number of remaining road segments as shown above may be slighlty different when you run this analysis.</p>
+<p>OpenStreetMap is a living dataset, meaning that changes are made on a continuous basis; as such it may very well possible that the number of remaining road segments as shown above may be slightly different when you run this analysis.</p>
 </div>
 </div>
 </div>
@@ -760,7 +760,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="byl-ntx" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="byl-ntx"><span class="header-section-number">10.6</span> Before you leave</h2>
-<p>Having finished this tutorial on transport network analysis and, hopefully, having been able to independently conduct some further area-profiling using IMD deciles, <a href="https://www.youtube.com/watch?v=fFw7q-BLxLA">you have now reached the end of this week’s content and the end of Geocomputation</a>! It is now inevatible: time for that reading list.</p>
+<p>Having finished this tutorial on transport network analysis and, hopefully, having been able to independently conduct some further area-profiling using IMD deciles, <a href="https://www.youtube.com/watch?v=fFw7q-BLxLA">you have now reached the end of this week’s content and the end of Geocomputation</a>! It is now inevitable: time for that reading list.</p>
 
 
 </section>

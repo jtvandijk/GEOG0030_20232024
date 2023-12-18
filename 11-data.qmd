@@ -46,6 +46,7 @@ The following websites contain Open Data or link to Open Data from several respe
 - [US Census Data](https://www.census.gov/data.html)
 - [US City Open Data Census](http://us-cities.survey.okfn.org/)
 - [USGS Earth Explorer](https://earthexplorer.usgs.gov/)
+- [UTD19 Multi-City Traffic Dataset](https://utd19.ethz.ch/)
 - [WorldPop GitHub](https://github.com/wpgp)
 - [WorldPop](https://www.worldpop.org/)
 

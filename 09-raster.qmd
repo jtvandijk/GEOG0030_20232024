@@ -78,7 +78,7 @@ library(gstat)
 
 For the first part of this week's practical material we will be using raster datasets from [WorldPop](https://hub.worldpop.org/): 
 
-> "*WorldPop develops peer-reviewed research and methods for the contstruction of open and high-resolution geosapatial data on population distributions, demogrpaphics and dynamics, with a focus on low and middle income countries.*"
+> "*WorldPop develops peer-reviewed research and methods for the construction of open and high-resolution geospatial data on population distributions, demographics and dynamics, with a focus on low and middle income countries.*"
 
 These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These surfaces can be used to explore, for example, changes in the demographic profiles of small areas, area deprivation, or country of birth.
 
@@ -96,7 +96,7 @@ These population surfaces are estimates of counts of people, displayed within a 
 - **Relational operations** which compare cells using functions such as greater than, smaller than or equal to.
 
 ::: {.callout-note}
-The utilisation of these functions can enable many different types of specialised raster analysis, such as recoding or reclassifying indivdual rasters to reduce complexity in their data values, generating the [Normalised Difference Vegetation Index](https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index) for a satellite imagery dataset or calculating [Least Cost Surfaces](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/creating-a-cost-surface-raster.htm) to find the most efficient path from one cell in a raster to another. Furthermore, using multiple raster datasets, it is possible to combine these data through mathematical overlays, from the basic mathematical operations mentioned above to more complex modelling..
+The utilisation of these functions can enable many different types of specialised raster analysis, such as recoding or reclassifying individual rasters to reduce complexity in their data values, generating the [Normalised Difference Vegetation Index](https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index) for a satellite imagery dataset or calculating [Least Cost Surfaces](https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/creating-a-cost-surface-raster.htm) to find the most efficient path from one cell in a raster to another. Furthermore, using multiple raster datasets, it is possible to combine these data through mathematical overlays, from the basic mathematical operations mentioned above to more complex modelling..
 ::: 
 
 We will be using some simple map algebra to look at population change in London between 2010 and 2020. Let's get started and take a look at our data. We can load raster data into R using the `terra` library:
@@ -198,10 +198,10 @@ plot(pop2010_london)
 plot(pop2020_london)
 ```
 
-Now we have our two London population rasters, we can calculate population change between the two timeperiods by subtracting our 2010 population raster from our 2020 population raster:
+Now we have our two London population rasters, we can calculate population change between the two time periods by subtracting our 2010 population raster from our 2020 population raster:
 
 ```{r}
-#| label: fig-09-substract-london
+#| label: fig-09-subtract-london
 #| fig-cap: "Population change in London 2010-2020."
 #| classes: styled-output
 #| echo: True

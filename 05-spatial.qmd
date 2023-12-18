@@ -20,7 +20,7 @@ The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var sl
 To analyse crime over space, we will go through several steps of data preparation and data linkage to ultimately aggregate our data to the **Middle layer Super Output Area** (MSOA) level. After this, we will map the crime rate for 2021 using the `tmap` library.
 
 ::: {.callout-note}
-OAs, LSOAs and MSOAs make up the different levels of the census statistical geographies. Middle layer Super Output Areas (MSOAs) are made up of groups of LSOAs, usually four or five. They comprise between 2,000 and 6,000 households and have a usually resident population between 5,000 and 15,000 persons. For details see the explanation on the webapge of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies#middle-layer-super-output-areas-msoas)
+OAs, LSOAs and MSOAs make up the different levels of the census statistical geographies. Middle layer Super Output Areas (MSOAs) are made up of groups of LSOAs, usually four or five. They comprise between 2,000 and 6,000 households and have a usually resident population between 5,000 and 15,000 persons. For details see the explanation on the webpage of the [Office for National Statistics](https://www.ons.gov.uk/methodology/geography/ukgeographies/censusgeographies/census2021geographies#middle-layer-super-output-areas-msoas)
 :::
 
 ### Getting started {#setup-w05}
@@ -125,7 +125,7 @@ msoa_population <- st_read("data/raw/boundaries/MSOA2021_London.gpkg")
 You should also see the `msoa_population` variable appear in your environment window.
 
 ### Spatial data
-As this is the first time we have loaded spatial data into R, let's go for a little exploration of how we can interact with our spatial dataframe. The first thing we want to do when we load spatial data is, of course, map it to confirm if everything is in order. To do this, we can use a really simple command from R’s `base` library: `plot()`. As we do not necessarily want to plot this data everytime we run this script in the future, we can type this command into the console:
+As this is the first time we have loaded spatial data into R, let's go for a little exploration of how we can interact with our spatial dataframe. The first thing we want to do when we load spatial data is, of course, map it to confirm if everything is in order. To do this, we can use a really simple command from R’s `base` library: `plot()`. As we do not necessarily want to plot this data every time we run this script in the future, we can type this command into the console:
 
 ```{r}
 #| label: 05-plot-msoapop
@@ -199,7 +199,7 @@ You should see new information about our `geom` column display in your console. 
 - dimension
 - `bbox` (bounding box)
 - CRS (coordinate reference system)
-- partia; definition of the first five geometries of the dataset
+- partial; definition of the first five geometries of the dataset
 
 This is really useful as one of the first things we want to know about our spatial data is what coordinate system it is projected with. Just like our `lsoa_population` dataset that we used in previous weeks, the `msoa_population` data was created and exported within the **British National Grid**.
 
@@ -366,7 +366,7 @@ all_theft_df_join <- all_theft_df |>
 Besides joining our LSOA lookup table to our data, we also filter effectively out all crime records that still not have not been assigned a 2021 LSOA code.
 :::
 
-You should be able to determine that `all_theft_df_join` contains **20** variables: **12** from `all_theft_df`, plus **8** from `lsoa_lookup.` This seems to suggest the join was succesful. However, if we were to count the number of rows in our original `all_theft_df` dataframe and compare it to our `all_theft_df_join` dataframe, we would notice something strange: our number of crimes have increased somehow.
+You should be able to determine that `all_theft_df_join` contains **20** variables: **12** from `all_theft_df`, plus **8** from `lsoa_lookup.` This seems to suggest the join was successful. However, if we were to count the number of rows in our original `all_theft_df` dataframe and compare it to our `all_theft_df_join` dataframe, we would notice something strange: our number of crimes have increased somehow.
 
 ```{r}
 #| label: 05-crime-increase
@@ -698,7 +698,7 @@ In your script, add the following code to extract only the relevant columns we n
 all_theft_df_join <- dplyr::select(all_theft_df_join, crime_id, LSOA21CD, msoa21cd, n)
 ``` 
 
-You should now see that your `all_theft_df_join` dataframe should only contain four variables. You can go and view this dataframe or call the `head()` function on the data in the console if youlike to check out this new formatting.
+You should now see that your `all_theft_df_join` dataframe should only contain four variables. You can go and view this dataframe or call the `head()` function on the data in the console if you like to check out this new formatting.
 
 ### Aggregating data
 To aggregate our crime by MSOA, we need to use a combination of `dplyr` functions. First, we need to **group** our crime by each 2021 MSOA and then create a new variable that contains the sum of thefts occurring in each MSOA. To do so, we will use the `group_by()` function and the `mutate()` function. This is the same `group_by()` function we already used to adjust the LSOA weightings. The `group_by()` function creates a 'grouped' copy of the table (in memory), then any `dplyr` function used on this grouped table will manipulate each group separately (i.e. our weighted crime counts) and then **combine the results** to a single output:
@@ -752,7 +752,7 @@ We are now getting to the final stages of our data processing, we just need to j
 #| eval: True
 #| tidy: True
 #| filename: "R code"
-# join theft to the MSOA popoulation dataset
+# join theft to the MSOA population dataset
 theft_msoa_sdf <- msoa_population |>
   left_join(all_theft_df_msoa, by = 'msoa21cd')
 ``` 

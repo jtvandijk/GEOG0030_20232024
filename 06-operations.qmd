@@ -580,7 +580,7 @@ Now we have out snapped geometry, we can look to compare our two datasets to cal
 # create a single geometry 
 london_stations_osm_compare <- london_stations_osm |> st_union()
 
-# compare the geometriess
+# compare the geometries
 missing_stations <- st_difference(london_stations_snap, london_stations_osm_compare)
 ```
 

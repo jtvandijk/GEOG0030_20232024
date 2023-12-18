@@ -75,7 +75,7 @@ library(osmdata)
 library(dodgr)
 ```
 
-To create our network and Origin-Destination dataset, we will need data on schools, fast-food outlets, and a streetnetwork. One data sources that contains probably information on all three topics is [OpenStreetMap](https://www.openstreetmap.org). 
+To create our network and Origin-Destination dataset, we will need data on schools, fast-food outlets, and a street network. One data sources that contains probably information on all three topics is [OpenStreetMap](https://www.openstreetmap.org). 
 
 ::: {.callout-tip}
 Please refer back to [Week 6](06-operations.html#openstreetmap) if you have forgotten about using the [Overpass API](https://overpass-turbo.eu/) and `key` and `value` pairs.
@@ -136,10 +136,10 @@ Deciding what to extract is probably the more complicated aspect of this - mainl
 #| tidy: TRUE
 #| filename: "R code"
 
-# extract the `p`oints, with their osm_id.
+# extract the points, with their osm_id.
 ports_roads_nodes <- osmdata$osm_points[, "osm_id"]
 
-# extract the lines, with their osm_id, name, type of highway, max speed and oneway attributes 
+# extract the lines, with their osm_id, name, type of highway, max speed and one-way attributes 
 ports_roads_edges <- osmdata$osm_lines[, c("osm_id", "name", "highway", "maxspeed", "oneway")]
 ```
 
@@ -264,7 +264,7 @@ plot(dodgr_to_sf(graph_connected), max.plot=1)
 ```
 
 ::: {.callout-warning}
-OpenStreetMap is a living dataset, meaning that changes are made on a continuous basis; as such it may very well possible that the number of remaining road segments as shown above may be slighlty different when you run this analysis. 
+OpenStreetMap is a living dataset, meaning that changes are made on a continuous basis; as such it may very well possible that the number of remaining road segments as shown above may be slightly different when you run this analysis. 
 :::
 
 Now we have our connected subgraph, will can use the `dodgr_distances()` function to calculate the network distances between every possible Origin and Destination. In the `dodgr_distances()` function, we first pass our `graph`, then our Origin points (schools), in the `from` argument, and then our Destination points (fast-food outlets), in the `to` argument. One thing to note is our addition of the `st_coordinates()` function as we pass our two point data sets within the `from` and `to` functions as we need to supplement our Origins and Destinations in a matrix format. For all Origins and Destinations, `dodgr_distances()` will map the points to the **closest network points**, and return corresponding shortest-path distances. 
@@ -363,4 +363,4 @@ If you really want to take a deep dive into accessibility analysis, there is a g
 :::
 
 ## Before you leave {#byl-ntx}
-Having finished this tutorial on transport network analysis and, hopefully, having been able to independently conduct some further area-profiling using IMD deciles, [you have now reached the end of this week's content and the end of Geocomputation](https://www.youtube.com/watch?v=fFw7q-BLxLA)! It is now inevatible: time for that reading list.
+Having finished this tutorial on transport network analysis and, hopefully, having been able to independently conduct some further area-profiling using IMD deciles, [you have now reached the end of this week's content and the end of Geocomputation](https://www.youtube.com/watch?v=fFw7q-BLxLA)! It is now inevitable: time for that reading list.

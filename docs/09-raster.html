@@ -380,7 +380,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>For the first part of this week’s practical material we will be using raster datasets from <a href="https://hub.worldpop.org/">WorldPop</a>:</p>
 <blockquote class="blockquote">
-<p>“<em>WorldPop develops peer-reviewed research and methods for the contstruction of open and high-resolution geosapatial data on population distributions, demogrpaphics and dynamics, with a focus on low and middle income countries.</em>”</p>
+<p>“<em>WorldPop develops peer-reviewed research and methods for the construction of open and high-resolution geospatial data on population distributions, demographics and dynamics, with a focus on low and middle income countries.</em>”</p>
 </blockquote>
 <p>These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These surfaces can be used to explore, for example, changes in the demographic profiles of small areas, area deprivation, or country of birth.</p>
 <ol type="1">
@@ -406,7 +406,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>The utilisation of these functions can enable many different types of specialised raster analysis, such as recoding or reclassifying indivdual rasters to reduce complexity in their data values, generating the <a href="https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index">Normalised Difference Vegetation Index</a> for a satellite imagery dataset or calculating <a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/creating-a-cost-surface-raster.htm">Least Cost Surfaces</a> to find the most efficient path from one cell in a raster to another. Furthermore, using multiple raster datasets, it is possible to combine these data through mathematical overlays, from the basic mathematical operations mentioned above to more complex modelling..</p>
+<p>The utilisation of these functions can enable many different types of specialised raster analysis, such as recoding or reclassifying individual rasters to reduce complexity in their data values, generating the <a href="https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index">Normalised Difference Vegetation Index</a> for a satellite imagery dataset or calculating <a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/creating-a-cost-surface-raster.htm">Least Cost Surfaces</a> to find the most efficient path from one cell in a raster to another. Furthermore, using multiple raster datasets, it is possible to combine these data through mathematical overlays, from the basic mathematical operations mentioned above to more complex modelling..</p>
 </div>
 </div>
 </div>
@@ -543,8 +543,8 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 </div>
-<p>Now we have our two London population rasters, we can calculate population change between the two timeperiods by subtracting our 2010 population raster from our 2020 population raster:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-substract-london_856d5e771375b161fbf66f2ce11387bc">
+<p>Now we have our two London population rasters, we can calculate population change between the two time periods by subtracting our 2010 population raster from our 2020 population raster:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-subtract-london_2c7c9a9af380ce6309d7c0f245e90592">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -556,9 +556,9 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_change)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<div id="fig-09-substract-london" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-09-subtract-london" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="09-raster_files/figure-html/fig-09-substract-london-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="09-raster_files/figure-html/fig-09-subtract-london-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;7: Population change in London 2010-2020.</figcaption>
 </figure>
 </div>

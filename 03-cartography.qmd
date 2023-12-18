@@ -1,5 +1,5 @@
 # Cartography and Visualisation
-This week’s lecture has given you an introduction on how to create a successful map. We further talked about map projections, cartographic conventionsm, and issues faced with the analysis of aggregated data at areal units. The practical component of the week puts some of these learnings into practice as we analyse crime rates in London at two different scales.
+This week’s lecture has given you an introduction on how to create a successful map. We further talked about map projections, cartographic conventions, and issues faced with the analysis of aggregated data at areal units. The practical component of the week puts some of these learnings into practice as we analyse crime rates in London at two different scales.
 
 ## Lecture slides {#slides-w03}
 The slides for this week's lecture can be downloaded here: [\[Link\]]({{< var slides.week03 >}})
@@ -109,7 +109,7 @@ We will now load and map our crime data. We will load this data using the **Deli
     - Under **Geometry Definition**, select `Point coordinates` and set the **X field** to `Longitude` and the **Y field** to `Latitude`. The **Geometry CRS** should be: `EPSG:4326 - WGS84`. Click **Add**. 
 
 ::: {.callout-warning}
-When you click **Add**, you should have gotten a pop-up from QGIS asking about transformations. Transformations are algorithms that convert data from one CRS to another. QGIS knows that the **Project CRS** is **British National GRid** but the **Layer** you are trying to add has a **WGS84** CRS. QGIS is asking you what transformation it should use to project the Layer in the Project CRS. This is one of the key strengths of QGIS: it can project data 'on the fly'. What this means is that QGIS will automatically convert all Layers to the **Project CRS** once it knows which transformation you would like to use so that they will all be rendered in the correct position with respect to each other. More details on this can be found in QGIS' [user manual section on working with projections](https://docs.qgis.org/3.28/en/docs/user_manual/working_with_projections/working_with_projections.html).
+When you click **Add**, you should have gotten a pop-up from QGIS asking about transformations. Transformations are algorithms that convert data from one CRS to another. QGIS knows that the **Project CRS** is **British National Grid** but the **Layer** you are trying to add has a **WGS84** CRS. QGIS is asking you what transformation it should use to project the Layer in the Project CRS. This is one of the key strengths of QGIS: it can project data 'on the fly'. What this means is that QGIS will automatically convert all Layers to the **Project CRS** once it knows which transformation you would like to use so that they will all be rendered in the correct position with respect to each other. More details on this can be found in QGIS' [user manual section on working with projections](https://docs.qgis.org/3.28/en/docs/user_manual/working_with_projections/working_with_projections.html).
 :::
 
 2. Click **OK** to accept QGIS' suggested on-the-fly projection. You should now see your crime dataset displayed on the map canvas.
@@ -254,7 +254,7 @@ Now we are finished with the Borough map, we want to make sure we do not change 
 
 4. In the **Items** panel, click the **Lock** check box for both our map layer and legend.
 5. In the main QGIS window, uncheck your `borough-theft2021` layer and make sure your `lsoa-theft2021` layer is now visible.
-6. Return to the **Print Layout** window annd repeat the process above of adding a map to the window. This time you should see your LSOA map loaded in the box (and you should see **no** changes to your Borough map).
+6. Return to the **Print Layout** window and repeat the process above of adding a map to the window. This time you should see your LSOA map loaded in the box (and you should see **no** changes to your Borough map).
     - Place your LSOA map next to your LSOA map - use the snap grids to help.
     - Set your LSOA map to the **same zoom level** as your Borough map.
     - Make sure your LSOA map is the **same size** as your Borough map.

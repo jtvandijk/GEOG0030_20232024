@@ -27,7 +27,7 @@ We will be using R in this module as the main tool to complete specific tasks we
 What is important to understand is that R and RStudio are two different things:
 
 - R is our programming language, which we need to understand in terms of general principles, syntax and structure.
-- RStudio is our [Integrated Development Environment (IDE)](https://en.wikipedia.org/wiki/Integrated_development_environment), which we need to understand in terms of functionality and workflow. An IDE is simply software programme that makes creating and organising your code easier.
+- RStudio is our [Integrated Development Environment (IDE)](https://en.wikipedia.org/wiki/Integrated_development_environment), which we need to understand in terms of functionality and workflow. An IDE is simply a software programme that makes creating and organising your code easier.
 
 As you may know already, R is a free and open-source programming language, that originally was created to focus on statistical analysis. In conjunction with the development of R as a language, the same community created the RStudio IDE to execute this statistical programming. Together, R and RStudio have grown into an incredibly success partnership of analytical programming language and analysis software. As a result, it has a huge and active contributor community which constantly adds functionality to the language and software, making it an incredibly useful tool for many purposes and applications beyond statistical analysis.
 
@@ -646,7 +646,7 @@ Type and execute `edition <- c("1st", "2nd", "3rd", "4th")`. Then store this vec
 #| eval: True
 #| tidy: True
 #| filename: "R code"
-# create a vector witheditions
+# create a vector with editions
 edition <- c("1st", "2nd", "3rd", "4th")
 
 # add this vector as a new column to our dataframe
@@ -722,7 +722,7 @@ There are some specific functions in the `tidyverse` suite of packages that will
 These functions all complete very fundamental tasks that we need to manipulate and wrangle our data.
 
 ::: {.callout-note}
-The code you just ran asked **R** to load all functions of the `tidyverse`. However: these functions are only available for the duration of your R sessions. When you restart your R session, you will have to load these functions again if you want to use them. Another thing to be aware of when loading libraries is that sometimes these functions share a name with aniother function from one of the `base` **R** packages. For instance, there is a `select()` function in the `stats` package that conducts linear filtering on a time series. However, after we load the `tidyverse` package and we would type `select()` this function will select columns from a dataframe. We therefore sometimes need to specify which function exactly we want. This can be done with a simple command (`library::function`): `stats::select` to filter on a time series and `dplyr::select` to select columns in a dataframe.
+The code you just ran asked **R** to load all functions of the `tidyverse`. However: these functions are only available for the duration of your R sessions. When you restart your R session, you will have to load these functions again if you want to use them. Another thing to be aware of when loading libraries is that sometimes these functions share a name with another function from one of the `base` **R** packages. For instance, there is a `select()` function in the `stats` package that conducts linear filtering on a time series. However, after we load the `tidyverse` package and we would type `select()` this function will select columns from a dataframe. We therefore sometimes need to specify which function exactly we want. This can be done with a simple command (`library::function`): `stats::select` to filter on a time series and `dplyr::select` to select columns in a dataframe.
 :::
 
 ### Starting a project

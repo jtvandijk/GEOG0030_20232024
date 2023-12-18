@@ -389,7 +389,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Type <em>2021 census Wards ethnicity</em> into the search field.</li>
 <li>Download the <code>Ethnic group.xlsx</code> file containing Ward codes and counts of number of individuals who self-identify with a particular population group.</li>
 </ol>
-<p>Open de file in Excel, and look at the first tab (<strong>Front Page</strong>). You will notice that under 2022 Wards are listed as the administrative geography the data have been aggregated to. Coincidentally we just donwloaded the 2022 Ward boundaries. The actual data that we want to use can be found in the <strong>2021</strong> tab, which contains the 2021 Census results on ethnicity.</p>
+<p>Open de file in Excel, and look at the first tab (<strong>Front Page</strong>). You will notice that under 2022 Wards are listed as the administrative geography the data have been aggregated to. Coincidentally we just downloaded the 2022 Ward boundaries. The actual data that we want to use can be found in the <strong>2021</strong> tab, which contains the 2021 Census results on ethnicity.</p>
 <div class="cell" data-hash="08-autocorrelation_cache/html/fig-ethnic-excel_42d192cbbe5b31e0d7f7814301f1e888">
 <div class="cell-output-display">
 <div id="fig-ethnic-excel" class="quarto-figure quarto-figure-center anchored">
@@ -573,7 +573,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(LAD22NM <span class="sc">==</span> <span class="st">"City of London"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<p>We have now effectively filtered out the 25 2022 Wards that fall with in the City of London Local Authority District. We now need to assign our ethnic group data to this. We will first add the data and subsequentially divide the overall counts equally across the Wards.</p>
+<p>We have now effectively filtered out the 25 2022 Wards that fall with in the City of London Local Authority District. We now need to assign our ethnic group data to this. We will first add the data and subsequently divide the overall counts equally across the Wards.</p>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -906,7 +906,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 </div>
-<p>Again, it is clear that the majority of Wards have a relatively low number of individuals that self-identify as Asian-Bangladeshi, but there is a good number of outliers. This raises the question whether these outliers are random or also clustered in spac — and this brings us to spatial autocorrelation.</p>
+<p>Again, it is clear that the majority of Wards have a relatively low number of individuals that self-identify as Asian-Bangladeshi, but there is a good number of outliers. This raises the question whether these outliers are random or also clustered in space — and this brings us to spatial autocorrelation.</p>
 <div class="callout callout-style-simple callout-tip">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -1142,7 +1142,7 @@ Projected CRS: OSGB36 / British National Grid
 <li>Creating a Fixed Distance <span class="math inline">\(W_{ij}\)</span> spatial weights matrix</li>
 </ol>
 <p>For either approach, we use a single line of code to create the relevant <span class="math inline">\(W_{ij}\)</span> spatial weights matrix:</p>
-<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-who-is-your-neighbour_8b1e3fdf49ab04f4f74ddff590544a34">
+<div class="cell styled-output" data-hash="08-autocorrelation_cache/html/08-who-is-your-neighbour_3f39650684515c42f7fd8c7b16546bb9">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1151,7 +1151,7 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>ward_neighbours_queen <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">poly2nb</span>(<span class="at">queen =</span> T)</span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Rook neigbhours</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Rook neighbours</span></span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>ward_neighbours_rook <span class="ot">&lt;-</span> ethnicity_london_sdf <span class="sc">|&gt;</span></span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">poly2nb</span>(<span class="at">queen =</span> F)</span>
 <span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
@@ -1425,7 +1425,7 @@ Moran I statistic       Expectation          Variance
 6 33.215970 -0.065154746 10.6742781 10.186588   2.276128e-24</code></pre>
 </div>
 </div>
-<p>As you should see, we ae not given a single statistic as we did with our global test, but rather a table of different statistics that are all related back to each of the Wards in our dataset. If we look at the help page for the <code>localmoran</code> function we can find out what each of these statistics mean:</p>
+<p>As you should see, we are not given a single statistic as we did with our global test, but rather a table of different statistics that are all related back to each of the Wards in our dataset. If we look at the help page for the <code>localmoran</code> function we can find out what each of these statistics mean:</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -1515,7 +1515,7 @@ Moran I statistic       Expectation          Variance
 </div>
 </div>
 </div>
-<p>From the map, it is possible to observe the variations in autocorrelation across space. We can interpret that there seems to be a geographic pattern to the autocorrelation. However, it is not possible to understand if these are clusters of high or low values or which ones are statistically signficant. To be able to interpret this confidently, we also need to know the significance of the patterns we see in our map and therefore need to map the <span class="math inline">\(p\)</span>-value of local Moran’s I statistic.</p>
+<p>From the map, it is possible to observe the variations in autocorrelation across space. We can interpret that there seems to be a geographic pattern to the autocorrelation. However, it is not possible to understand if these are clusters of high or low values or which ones are statistically significant. To be able to interpret this confidently, we also need to know the significance of the patterns we see in our map and therefore need to map the <span class="math inline">\(p\)</span>-value of local Moran’s I statistic.</p>
 <div class="cell styled-output" data-hash="08-autocorrelation_cache/html/fig-08-map-local-moran-significance_b12faace138bbfdcfebbe554e70067c6">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
@@ -1567,8 +1567,8 @@ Moran I statistic       Expectation          Variance
 <p>Ideally we would combine these two outputs to see what values cluster together as well as which clusters are significant. We can do this with a cluster map of our local Moran’s I statistic (<code>Ii</code>) which will show areas of different types of clusters, including:</p>
 <ul>
 <li><strong>HIGH-HIGH</strong>: A Ward with a relatively high proportion of residents that self-identify as Asian-Bangladeshi that is also surrounded by other Wards with a relatively high proportion of residents that self-identify as Asian-Bangladeshi.</li>
-<li><strong>HIGH-LOW</strong>: A Ward with a relativley high proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively low proportion of residents that self-identify as Asian-Bangladeshi.</li>
-<li><strong>LOW-HIGH</strong>: A Ward with a relativley low proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively high proportion of residents that self-identify as Asian-Bangladeshi.</li>
+<li><strong>HIGH-LOW</strong>: A Ward with a relatively high proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively low proportion of residents that self-identify as Asian-Bangladeshi.</li>
+<li><strong>LOW-HIGH</strong>: A Ward with a relatively low proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively high proportion of residents that self-identify as Asian-Bangladeshi.</li>
 <li><strong>LOW-LOW</strong>: A Ward with a relatively low proportion of residents that self-identify as Asian-Bangladeshi that is also surrounded by other Wards with a relatively low proportion of residents that self-identify as Asian-Bangladeshi.</li>
 </ul>
 <p>Our HIGH-HIGH and LOW-LOW will show our clusters, whereas the other two cluster types reveal anomalies in our variable. To create a map that shows this, we need to quantify the relationship each of our Wards have with the Wards around them to determine their cluster type. We do this using their observed value and their local Moran’s I statistic and their deviation around their respective means:</p>

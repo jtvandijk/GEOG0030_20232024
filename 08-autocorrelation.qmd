@@ -78,7 +78,7 @@ For the data on ethnic groups we turn to the [London Datastore](https://data.lon
 3. Type *2021 census Wards ethnicity* into the search field.
 4. Download the `Ethnic group.xlsx` file containing Ward codes and counts of number of individuals who self-identify with a particular population group.
 
-Open de file in Excel, and look at the first tab (**Front Page**). You will notice that under 2022 Wards are listed as the administrative geography the data have been aggregated to. Coincidentally we just donwloaded the 2022 Ward boundaries. The actual data that we want to use can be found in the **2021** tab, which contains the 2021 Census results on ethnicity.
+Open de file in Excel, and look at the first tab (**Front Page**). You will notice that under 2022 Wards are listed as the administrative geography the data have been aggregated to. Coincidentally we just downloaded the 2022 Ward boundaries. The actual data that we want to use can be found in the **2021** tab, which contains the 2021 Census results on ethnicity.
 
 ```{r}
 #| label: fig-ethnic-excel
@@ -201,7 +201,7 @@ city_of_london_sdf <- ward_gb |>
   filter(LAD22NM == 'City of London')
 ```
 
-We have now effectively filtered out the 25 2022 Wards that fall with in the City of London Local Authority District. We now need to assign our ethnic group data to this. We will first add the data and subsequentially divide the overall counts equally across the Wards.
+We have now effectively filtered out the 25 2022 Wards that fall with in the City of London Local Authority District. We now need to assign our ethnic group data to this. We will first add the data and subsequently divide the overall counts equally across the Wards.
 
 ::: {.callout-warning}
 This is a bit of a lazy approach. Much better would be to actually try and find the actual Ward counts from the 2021 Census. 
@@ -341,7 +341,7 @@ Plot the boxplot of our `asian_bangladeshi` variable:
 boxplot(ethnicity_london_sdf$asian_bangladeshi, horizontal = TRUE)
 ```
 
-Again, it is clear that the majority of Wards have a relatively low number of individuals that self-identify as Asian-Bangladeshi, but there is a good number of outliers. This raises the question whether these outliers are random or also clustered in spac --- and this brings us to spatial autocorrelation.
+Again, it is clear that the majority of Wards have a relatively low number of individuals that self-identify as Asian-Bangladeshi, but there is a good number of outliers. This raises the question whether these outliers are random or also clustered in space --- and this brings us to spatial autocorrelation.
 
 ::: {.callout-tip}
 There is actually a lot more we can do in terms of visualising our data's distribution and the best way forward would be to become more familiar with the `ggplot2` library. `ggplot2` is the main visualisation for both statistical and, increasingly, spatial graphs, charts and maps. Refer back to [Week 4's optional suggestions](04-statistics.html#wm-w04) on how to get started with `ggplot2`.
@@ -523,7 +523,7 @@ For either approach, we use a single line of code to create the relevant $W_{ij}
 # Queens neighbours
 ward_neighbours_queen <- ethnicity_london_sdf |> poly2nb(queen=T)
 
-# Rook neigbhours
+# Rook neighbours
 ward_neighbours_rook <- ethnicity_london_sdf |> poly2nb(queen=F)
 
 # Fixed distance neighbours
@@ -709,7 +709,7 @@ local_moran_queen <- ethnicity_london_sdf |>
 head(local_moran_queen)
 ```
 
-As you should see, we ae not given a single statistic as we did with our global test, but rather a table of different statistics that are all related back to each of the Wards in our dataset. If we look at the help page for the `localmoran` function we can find out what each of these statistics mean:
+As you should see, we are not given a single statistic as we did with our global test, but rather a table of different statistics that are all related back to each of the Wards in our dataset. If we look at the help page for the `localmoran` function we can find out what each of these statistics mean:
 
 | Name    | Description |
 | :-----  | :---------------|
@@ -777,7 +777,7 @@ tm_shape(ethnicity_london_sdf) +
     )
 ```
 
-From the map, it is possible to observe the variations in autocorrelation across space. We can interpret that there seems to be a geographic pattern to the autocorrelation. However, it is not possible to understand if these are clusters of high or low values or which ones are statistically signficant. To be able to interpret this confidently, we also need to know the significance of the patterns we see in our map and therefore need to map the $p$-value of local Moran's I statistic.
+From the map, it is possible to observe the variations in autocorrelation across space. We can interpret that there seems to be a geographic pattern to the autocorrelation. However, it is not possible to understand if these are clusters of high or low values or which ones are statistically significant. To be able to interpret this confidently, we also need to know the significance of the patterns we see in our map and therefore need to map the $p$-value of local Moran's I statistic.
 
 ```{r tidy='styler'}
 #| label: fig-08-map-local-moran-significance
@@ -823,8 +823,8 @@ Using our significance map, we can interpret the above clusters present in our l
 Ideally we would combine these two outputs to see what values cluster together as well as which clusters are significant. We can do this with a cluster map of our local Moran's I statistic (`Ii`) which will show areas of different types of clusters, including:
 
 - **HIGH-HIGH**: A Ward with a relatively high proportion of residents that self-identify as Asian-Bangladeshi that is also surrounded by other Wards with a relatively high proportion of residents that self-identify as Asian-Bangladeshi.
-- **HIGH-LOW**: A Ward with a relativley high proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively low proportion of residents that self-identify as Asian-Bangladeshi.
-- **LOW-HIGH**: A Ward with a relativley low proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively high proportion of residents that self-identify as Asian-Bangladeshi.
+- **HIGH-LOW**: A Ward with a relatively high proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively low proportion of residents that self-identify as Asian-Bangladeshi.
+- **LOW-HIGH**: A Ward with a relatively low proportion of residents that self-identify as Asian-Bangladeshi that is surrounded by Wards with a relatively high proportion of residents that self-identify as Asian-Bangladeshi.
 - **LOW-LOW**: A Ward with a relatively low proportion of residents that self-identify as Asian-Bangladeshi that is also surrounded by other Wards with a relatively low proportion of residents that self-identify as Asian-Bangladeshi.
 
 Our HIGH-HIGH and LOW-LOW will show our clusters, whereas the other two cluster types reveal anomalies in our variable. To create a map that shows this, we need to quantify the relationship each of our Wards have with the Wards around them to determine their cluster type. We do this using their observed value and their local Moran's I statistic and their deviation around their respective means:
