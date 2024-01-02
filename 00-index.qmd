@@ -8,10 +8,6 @@
 knitr::include_graphics('images/w00/geocomputation-welcome.png') 
 ```
 
-::: {.callout-warning}
-This page is currently unfinished and receiving updates for the 2023-2024 academic year. Refer to the [GEOG0030: Geocomputation 2022-2023](https://jtvandijk.github.io/GEOG0030_20222023/) workbook for the 2022-2023 content.
-:::
-
 ## Welcome {.unnumbered}
 Welcome to **Geocomputation**. This module will introduce you both to the principles of spatial analysis as well as provide you with a comprehensive introduction to the use of programming. Over the next ten weeks, you will learn about the theory, methods and tools of spatial analysis through relevant case studies. We will start by using QGIS before moving to the R programming language. You will learn how to find, manage and clean spatial, demographic and socioeconomic datasets, and then analyse them using core spatial analysis techniques. 
 
