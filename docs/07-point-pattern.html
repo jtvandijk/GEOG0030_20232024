@@ -323,18 +323,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="essential-readings" class="level4">
 <h4 class="anchored" data-anchor-id="essential-readings">Essential readings</h4>
 <ul>
+<li>Arribas-Bel, D., Garcia-López, M.-À., Viladecans-Marsal, E. 2021. Building(s and) cities: Delineating urban areas with a machine learning algorithm. <em>Journal of Urban Economics</em> 125: 103217. <a href="https://doi.org/10.1016/j.jue.2019.103217">[Link]</a></li>
+<li>Cheshire, J. and Longley, P. 2011. Identifying spatial concentrations of surnames. <em>International Journal of Geographical Information Science</em> 26(2), pp.309-325. <a href="https://doi.org/10.1080/13658816.2011.591291">[Link]</a></li>
 <li>Longley, P. <em>et al.</em> 2015. Geographic Information Science &amp; systems, <strong>Chapter 12</strong>: <em>Geovisualization</em>. <a href="https://ucl.rl.talis.com/link?url=https%3A%2F%2Fapp.knovel.com%2Fhotlink%2Ftoc%2Fid%3AkpGISSE001%2Fgeographic-information-science%3Fkpromoter%3Dmarc&amp;sig=e437927b963cc591dcb65491eccdd3869cc31aef80e1443cb2ba12d8f3bb031a">[Link]</a></li>
-<li>Yin, P. 2020. <em>Kernels and density estimation</em>. The Geographic Information Science &amp; Technology Body of Knowledge. <a href="https://doi.org/10.22224/gistbok/2020.1.12">[Link]</a></li>
-<li>Yuan, Y. <em>et al.</em> 2020. <em>Point Pattern Analysis</em>. The Geographic Information Science &amp; Technology Body of Knowledge. <a href="https://doi.org/10.22224/gistbok/2020.1.13">[Link]</a></li>
 </ul>
 </section>
 <section id="suggested-readings" class="level4">
 <h4 class="anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
 <ul>
-<li>Arribas-Bel, D., Garcia-López, M.-À., Viladecans-Marsal, E. 2021. Building(s and) cities: Delineating urban areas with a machine learning algorithm. <em>Journal of Urban Economics</em> 125: 103217. <a href="https://doi.org/10.1016/j.jue.2019.103217">[Link]</a></li>
-<li>Cheshire, J. and Longley, P. 2011. Identifying spatial concentrations of surnames. <em>International Journal of Geographical Information Science</em> 26(2), pp.309-325. <a href="https://doi.org/10.1080/13658816.2011.591291">[Link]</a></li>
 <li>Van Dijk, J. and Longley, P. 2020. Interactive display of surnames distributions in historic and contemporary Great Britain. <em>Journal of Maps</em> 16, pp.58-76. <a href="https://doi.org/10.1080/17445647.2020.1746418">[Link]</a></li>
 <li>Shi, X. 2010. Selection of bandwidth type and adjustment side in kernel density estimation over inhomogeneous backgrounds. <em>International Journal of Geographical Information Science</em> 24(5), pp.643-660. <a href="https://doi.org/10.1080/13658810902950625">[Link]</a></li>
+<li>Yin, P. 2020. <em>Kernels and density estimation</em>. The Geographic Information Science &amp; Technology Body of Knowledge. <a href="https://doi.org/10.22224/gistbok/2020.1.12">[Link]</a></li>
 </ul>
 </section>
 </section>
@@ -680,7 +679,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
     Chi-squared test of CSR using quadrat counts
 
 data:  bike_theft_ppp_jitter
-X2 = 55577, df = 80, p-value &lt; 2.2e-16
+X2 = 55582, df = 80, p-value &lt; 2.2e-16
 alternative hypothesis: two.sided
 
 Quadrats: 81 tiles (irregular windows)</code></pre>
@@ -969,7 +968,7 @@ PROJCRS["OSGB36 / British National Grid",
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">nndist</span>(bike_theft_ppp_jitter, <span class="at">k =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 53.38906</code></pre>
+<pre><code>[1] 53.43432</code></pre>
 </div>
 </div>
 <p>We can see that the average nearest neighbour for all points is 53.5 metres. To get an insight into the spatial ordering of all our points relative to one another we can plot the ANN values for different order neighbours (i.e.&nbsp;first closest point, second closest point, etc. For point patterns that are highly clustered, we would expect the average distances between points to be very small.</p>
