@@ -488,7 +488,7 @@ What we can see is that it looks like our OSM data actual does a much better job
 #| message: False
 #| filename: "R code"
 # change tmap mode to interactive 
-tmap_mode("plot")
+tmap_mode("view")
 
 # add London outline
 tm_shape(london_outline) + 
@@ -865,8 +865,6 @@ Now we worked through all this, for this week's assignment:
 ## Want more? [Optional] {#wm-w06}
 ### Reproducible research {.unnumbered}
 The book [Data Skills for Reproducible Research](https://psyteachr.github.io/reprores-v3/index.html) provides an excellent overview of skills needed for reproducible and open research using R and the `tidyverse` packages. To get started: have a look at [Chapter 2: Reproducible Workflows](https://psyteachr.github.io/reprores-v3/repro.html), [Chapter 7: Data Wrangling](https://psyteachr.github.io/reprores-v3/dplyr.html), and [Chapter 8: Iterations and Functions](https://psyteachr.github.io/reprores-v3/func.html). 
-
-Another great tool can be found in the `targets` package. The targets package is a [Make](https://www.gnu.org/software/make/)-like pipeline tool for Statistics and data science in R. With targets, you can maintain a reproducible workflow without repeating yourself. To get started: have a look at the [Walkthrough](https://books.ropensci.org/targets/walkthrough.html) chapter to see `targets` in action. 
 
 ## Before you leave {#byl-w06}
 And that is how you can conduct basic geometric operations and spatial queries using R and `sf`. More RGIS coming in the next few weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Ydg4T2MP7Z8). Time to check out that reading list?
