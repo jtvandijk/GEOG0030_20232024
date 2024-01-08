@@ -22,6 +22,7 @@ The following websites contain Open Data or link to Open Data from several respe
 - [Global Weather Data](https://rp5.ru/Weather_in_the_world)
 - [Google Dataset Search](https://datasetsearch.research.google.com/)
 - [Google Open Buildings](https://sites.research.google/open-buildings/)
+- [Kaggle Public Datasets](https://www.kaggle.com/datasets)
 - [King's College Data on Air Pollution](https://www.londonair.org.uk/LondonAir/Default.aspx)
 - [London Data Store](https://data.london.gov.uk/)
 - [London Local Authority Maintained Trees](https://data.london.gov.uk/dataset/local-authority-maintained-trees)
