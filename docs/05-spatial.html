@@ -883,7 +883,7 @@ dbl (1): ObjectId
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of crimes joint dataset</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(all_theft_df_join)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 46666</code></pre>
+<pre><code>[1] 46661</code></pre>
 </div>
 </div>
 <p>The change in number of crimes is caused by our <strong>one-to-many</strong> relationships: one 2011 LSOA can relate to multiple 2021 LSOAs and therewith this one row of data gets duplicated. Fortunately, we saw this coming and we already adjusted the weightings:</p>
@@ -901,7 +901,7 @@ dbl (1): ObjectId
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># number of actual crimes joint dataset</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(all_theft_df_join<span class="sc">$</span>n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 37010</code></pre>
+<pre><code>[1] 37005</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-warning">
@@ -910,7 +910,17 @@ dbl (1): ObjectId
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Whereas the number of crimes is very similar, there is still a difference of <strong>5</strong> crimes. This difference is caused by our last <code>filter()</code>, where 2011 LSOAs that have not been assigned a 2021 LSOA code are filtered out. In these cases there is actually a recording error and no valid 2011 LSOA code is used. We therefore choose to ignore these 5 data points.</p>
+<p>There may be some small differences between the numbers in your output and the numbers shown here. If so, this is due to retrospective updates made to the police data (e.g.&nbsp;updates to attribute information, corrections) that were made after the data was downloaded for the generation of this year’s Geocomputation workbook.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Whereas the number of crimes is very similar in the above example, there is still a difference of <strong>10</strong> crimes. This difference is caused by our last <code>filter()</code>, where 2011 LSOAs that have not been assigned a 2021 LSOA code are filtered out. In these cases there is actually a recording error and no valid 2011 LSOA code is used. We therefore choose to ignore these data points.</p>
 </div>
 </div>
 </div>

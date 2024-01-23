@@ -400,7 +400,11 @@ sum(all_theft_df_join$n)
 ```
 
 ::: {.callout-warning}
-Whereas the number of crimes is very similar, there is still a difference of **5** crimes. This difference is caused by our last `filter()`, where 2011 LSOAs that have not been assigned a 2021 LSOA code are filtered out. In these cases there is actually a recording error and no valid 2011 LSOA code is used. We therefore choose to ignore these 5 data points. 
+There may be some small differences between the numbers in your output and the numbers shown here. If so, this is due to retrospective updates made to the police data (e.g. updates to attribute information, corrections) that were made after the data was downloaded for the generation of this year's Geocomputation workbook.
+:::
+
+::: {.callout-warning}
+Whereas the number of crimes is very similar in the above example, there is still a difference of **10** crimes. This difference is caused by our last `filter()`, where 2011 LSOAs that have not been assigned a 2021 LSOA code are filtered out. In these cases there is actually a recording error and no valid 2011 LSOA code is used. We therefore choose to ignore these data points. 
 :::
 
 We are getting there, we just need to aggregate our LSOAs to their parent MSOA. Download the ONS lookup table. Subsequently, unzip and move this file to your **data** -> **raw** -> **boundaries** folder.
