@@ -400,7 +400,7 @@ sum(all_theft_df_join$n)
 ```
 
 ::: {.callout-warning}
-There may be some small differences between the numbers in your output and the numbers shown here. If so, this is due to retrospective updates made to the police data (e.g. updates to attribute information, corrections) that were made after the data was downloaded for the generation of this year's Geocomputation workbook.
+There may be some small differences between the numbers in your output and the numbers shown here. If so, this is due to retrospective updates made to the police data after the data was downloaded for the generation of this year's Geocomputation workbook. These updates could include corrections to the crime's attribute information or LSOA assignment.
 :::
 
 ::: {.callout-warning}
@@ -1034,5 +1034,3 @@ Now we have prepared our dataset and made our first maps in R, we can play with 
 
 ## Before you leave {#byl-w05}
 And that is how you use R as a GIS in its most basic form. More RGIS in the coming weeks, but [this concludes the tutorial for this week](https://www.youtube.com/watch?v=Ydg4T2MP7Z8). As it is reading week next week, it is probably a good idea to turn your attention to the articles and chapters on the reading list!
-
-

@@ -1160,8 +1160,7 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>, <span class="dv">4000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in st_centroid.sf(ethnicity_london_sdf): st_centroid assumes attributes
-are constant over geometries of x</code></pre>
+<pre><code>Warning: st_centroid assumes attributes are constant over geometries</code></pre>
 </div>
 </div>
 <p>Creating our neighbours list through a single line of code, as above, does not really tell us much about the differences between these different definitions. It would be useful to the links between neighbours for our three definitions and visualise their distribution across space. To be able to do this, we will use a few lines of code to generate a visualisation based on mapping the defined connections between the centroids of our Wards.</p>
@@ -1186,8 +1185,7 @@ are constant over geometries of x</code></pre>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_centroid</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in st_centroid.sf(ethnicity_london_sdf): st_centroid assumes attributes
-are constant over geometries of x</code></pre>
+<pre><code>Warning: st_centroid assumes attributes are constant over geometries</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note">

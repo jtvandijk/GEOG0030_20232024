@@ -1237,11 +1237,16 @@ $class
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.0      ✔ purrr   1.0.2 
-✔ tibble  3.1.8      ✔ dplyr   1.0.10
-✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-✔ readr   2.1.3      ✔ forcats 0.5.2 
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✔ ggplot2 3.4.0     ✔ purrr   1.0.2
+✔ tibble  3.2.1     ✔ dplyr   1.1.4
+✔ tidyr   1.2.1     ✔ stringr 1.5.0
+✔ readr   2.1.3     ✔ forcats 0.5.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
@@ -1318,8 +1323,8 @@ $class
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in a single csv from our crime data</span></span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>crime_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/crime/all-crime/2021-01/2021-01-metropolitan-street.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in a single csv from our crime data</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>crime_csv <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/crime/all-crime/2021-01/2021-01-metropolitan-street.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 84848 Columns: 12
@@ -1349,14 +1354,14 @@ lgl (1): Context
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect class</span></span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(crime_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect class</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(crime_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect dimensions</span></span>
-<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(crime_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect dimensions</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(crime_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 84848    12</code></pre>
 </div>
@@ -1368,12 +1373,12 @@ lgl (1): Context
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a list of all csv files in the crime folder</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>all_crime_df <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/raw/crime/all-crime/"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># apply the read_csv() function on each of these files</span></span>
-<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(read_csv) <span class="sc">|&gt;</span></span>
-<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># combine ('bind') them all together into one</span></span>
-<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a list of all csv files in the crime folder</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>all_crime_df <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">"data/raw/crime/all-crime/"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># apply the read_csv() function on each of these files</span></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>(read_csv) <span class="sc">|&gt;</span></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># combine ('bind') them all together into one</span></span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>Depending on your computer, this might take a little time to process because we have a lot of data to get through. You should see a new dataframe appear in your global environment called <code>all_crime_df</code>, for which we now have <strong>1,079,267</strong> observations.</p>
@@ -1402,30 +1407,29 @@ lgl (1): Context
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># full inspection of the dataframe</span></span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(all_crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># full inspection of the dataframe</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(all_crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 12</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(all_crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(all_crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1079267</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(all_crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(all_crime_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 12
-  Crime …¹ Month Repor…² Falls…³ Longi…⁴ Latit…⁵ Locat…⁶ LSOA …⁷ LSOA …⁸ Crime…⁹
-  &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
-1 &lt;NA&gt;     2021… City o… City o… -0.0976    51.5 On or … E01000… City o… Anti-s…
-2 &lt;NA&gt;     2021… City o… City o… -0.0986    51.5 On or … E01000… City o… Anti-s…
-3 455f0a5… 2021… City o… City o… -0.0973    51.5 On or … E01000… City o… Other …
-4 19f0605… 2021… City o… City o… -0.0986    51.5 On or … E01000… City o… Other …
-5 c1554ce… 2021… City o… City o… -0.0976    51.5 On or … E01000… City o… Shopli…
-6 fe0819e… 2021… City o… City o… -0.0976    51.5 On or … E01000… City o… Shopli…
-# … with 2 more variables: `Last outcome category` &lt;chr&gt;, Context &lt;lgl&gt;, and
-#   abbreviated variable names ¹​`Crime ID`, ²​`Reported by`, ³​`Falls within`,
-#   ⁴​Longitude, ⁵​Latitude, ⁶​Location, ⁷​`LSOA code`, ⁸​`LSOA name`, ⁹​`Crime type`</code></pre>
+  `Crime ID`      Month `Reported by` `Falls within` Longitude Latitude Location
+  &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;              &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;   
+1 &lt;NA&gt;            2021… City of Lond… City of Londo…   -0.0976     51.5 On or n…
+2 &lt;NA&gt;            2021… City of Lond… City of Londo…   -0.0986     51.5 On or n…
+3 455f0a5e2aa0b0… 2021… City of Lond… City of Londo…   -0.0973     51.5 On or n…
+4 19f06058a3b0aa… 2021… City of Lond… City of Londo…   -0.0986     51.5 On or n…
+5 c1554ced304129… 2021… City of Lond… City of Londo…   -0.0976     51.5 On or n…
+6 fe0819e6a82093… 2021… City of Lond… City of Londo…   -0.0976     51.5 On or n…
+# ℹ 5 more variables: `LSOA code` &lt;chr&gt;, `LSOA name` &lt;chr&gt;, `Crime type` &lt;chr&gt;,
+#   `Last outcome category` &lt;chr&gt;, Context &lt;lgl&gt;</code></pre>
 </div>
 </div>
 <p>You should now see with have the same number of columns as our previous single <code>csv</code>, but with many more rows. You can also see that the <code>head()</code> function provides us with the first <strong>five</strong> rows of our dataframe. You can conversely use <code>tail()</code> to provide the last five rows.</p>
@@ -1435,13 +1439,13 @@ lgl (1): Context
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new vector containing updated no space / no capital field names</span></span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>no_space_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"crime_id"</span>, <span class="st">"month"</span>, <span class="st">"reported_by"</span>, <span class="st">"falls_within"</span>, <span class="st">"longitude"</span>,</span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"latitude"</span>, <span class="st">"location"</span>, <span class="st">"lsoa_code"</span>, <span class="st">"lsoa_name"</span>, <span class="st">"crime_type"</span>, <span class="st">"last_outcome_category"</span>,</span>
-<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"context"</span>)</span>
-<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a><span class="co"># rename our df field names using these new names</span></span>
-<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(all_crime_df) <span class="ot">&lt;-</span> no_space_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new vector containing updated no space / no capital field names</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>no_space_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"crime_id"</span>, <span class="st">"month"</span>, <span class="st">"reported_by"</span>, <span class="st">"falls_within"</span>, <span class="st">"longitude"</span>,</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"latitude"</span>, <span class="st">"location"</span>, <span class="st">"lsoa_code"</span>, <span class="st">"lsoa_name"</span>, <span class="st">"crime_type"</span>, <span class="st">"last_outcome_category"</span>,</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"context"</span>)</span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a><span class="co"># rename our df field names using these new names</span></span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(all_crime_df) <span class="ot">&lt;-</span> no_space_names</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>We now have our dataframe ready for filtering. To do so, we will use the <code>filter()</code> function from the <code>dplyr</code> package:</p>
@@ -1450,8 +1454,8 @@ lgl (1): Context
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter all_crime_df to contain only theft</span></span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>all_theft_df <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(all_crime_df, crime_type <span class="sc">==</span> <span class="st">"Theft from the person"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter all_crime_df to contain only theft</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>all_theft_df <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(all_crime_df, crime_type <span class="sc">==</span> <span class="st">"Theft from the person"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note">
@@ -1470,8 +1474,8 @@ lgl (1): Context
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save all_crime_df as csv</span></span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(all_theft_df, <span class="st">"data/raw/crime/crime-theft-2021-london.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># save all_crime_df as csv</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(all_theft_df, <span class="st">"data/raw/crime/crime-theft-2021-london.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note">
@@ -1491,8 +1495,8 @@ lgl (1): Context
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count in the all_theft_df the number of crimes by month</span></span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>month_theft_df <span class="ot">&lt;-</span> <span class="fu">count</span>(all_theft_df, month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># count in the all_theft_df the number of crimes by month</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>month_theft_df <span class="ot">&lt;-</span> <span class="fu">count</span>(all_theft_df, month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>We have stored the output of our <code>count()</code> function to a new dataframe: <code>month_theft_df</code>. Go ahead and look at the dataframe to see the output: it is a very simple table containing simply the month and <code>n</code>, i.e.&nbsp;the number of thefts occurring per month. We can and should go ahead and rename this column to help with our interpretation of the dataframe. We will use a quick approach to do this, that uses <strong>selection</strong> of the precise column to rename only the second column:</p>
@@ -1501,8 +1505,8 @@ lgl (1): Context
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename the second column of our new dataframe to crime_totals</span></span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(month_theft_df)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"crime_totals"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename the second column of our new dataframe to crime_totals</span></span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(month_theft_df)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"crime_totals"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>This selection is made through the <code>[2]</code> element of code added after the <code>names()</code> function we have used earlier. We will look more at selection, slicing and indexing in next week’s tutorial.</p>

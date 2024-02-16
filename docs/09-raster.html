@@ -737,15 +737,14 @@ dttm (1): date
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pollution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 8
-  date                  no2 site            code  source latit…¹ longi…² site_…³
-  &lt;dttm&gt;              &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;  
-1 2022-01-01 00:00:00    NA City of London… CTA   kcl       51.5 -0.0921 Roadsi…
-2 2022-01-01 01:00:00    NA City of London… CTA   kcl       51.5 -0.0921 Roadsi…
-3 2022-01-01 02:00:00    NA City of London… CTA   kcl       51.5 -0.0921 Roadsi…
-4 2022-01-01 03:00:00    NA City of London… CTA   kcl       51.5 -0.0921 Roadsi…
-5 2022-01-01 04:00:00    NA City of London… CTA   kcl       51.5 -0.0921 Roadsi…
-6 2022-01-01 05:00:00    NA City of London… CTA   kcl       51.5 -0.0921 Roadsi…
-# … with abbreviated variable names ¹​latitude, ²​longitude, ³​site_type</code></pre>
+  date                  no2 site       code  source latitude longitude site_type
+  &lt;dttm&gt;              &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;    
+1 2022-01-01 00:00:00    NA City of L… CTA   kcl        51.5   -0.0921 Roadside 
+2 2022-01-01 01:00:00    NA City of L… CTA   kcl        51.5   -0.0921 Roadside 
+3 2022-01-01 02:00:00    NA City of L… CTA   kcl        51.5   -0.0921 Roadside 
+4 2022-01-01 03:00:00    NA City of L… CTA   kcl        51.5   -0.0921 Roadside 
+5 2022-01-01 04:00:00    NA City of L… CTA   kcl        51.5   -0.0921 Roadside 
+6 2022-01-01 05:00:00    NA City of L… CTA   kcl        51.5   -0.0921 Roadside </code></pre>
 </div>
 </div>
 <p>We can see that in our first five rows we have data for the <strong>same site</strong> and if we look at the <strong>date</strong> field, we can see we have a reading observation for every hour. With 24 hours in the day, 365 days in a year and hundreds of sites, it should therefore be of no surprise that we have such a large <code>csv</code>. Let’s summarise the values by site to make the dataset a bit more workable:</p>
@@ -956,7 +955,7 @@ Projected CRS: OSGB36 / British National Grid
  8 BT8    28.5 POLYGON ((522982.8 184472, 525686.9 187185.8, 526408.6 186420, 5…
  9 BX1    17.6 MULTIPOLYGON (((550063.2 169311.6, 550099.6 169246.6, 550115.1 1…
 10 BX2    15.9 MULTIPOLYGON (((548349.8 175998.9, 549623.4 180763, 550028.2 180…
-# … with 93 more rows</code></pre>
+# ℹ 93 more rows</code></pre>
 </div>
 </div>
 <p>We can now visualise these Thiessen polygons with their associated NO<sub>2</sub> value:</p>

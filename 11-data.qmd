@@ -40,7 +40,7 @@ The following websites contain Open Data or link to Open Data from several respe
 - [Open Topography](https://opentopography.org/)
 - [Planetary Computer Data Catalog](https://planetarycomputer.microsoft.com/catalog)
 - [pseudo Census Output Areas 2001-2011-2021](https://profrichharris.github.io/census/harmonised/)
-- [Public transport accessibility indicators Great Britain](https://www.nature.com/articles/s41597-023-02890-ww)
+- [Public transport accessibility indicators Great Britain](https://www.nature.com/articles/s41597-023-02890-w)
 - [Tesco Store Data (London)](https://www.nature.com/articles/s41597-020-0397-7)
 - [TfL Cycling Data](https://cycling.data.tfl.gov.uk/)
 - [TfL Open Data](https://tfl.gov.uk/info-for/open-data-users/our-open-data?intcmp=3671#on-this-page-2)
