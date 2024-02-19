@@ -254,10 +254,10 @@ To remove the bike data, simply comment out the (`#`) the relevant line of code:
 tm_shape(msoa_london) + 
   tm_fill() + 
 # then add bike crime 
-tm_shape(bike_theft) + 
-  tm_dots(
-    col = "blue"
-    ) + 
+# tm_shape(bike_theft) + 
+#  tm_dots(
+#    col = "blue"
+#    ) + 
 # then add stations 
 tm_shape(london_stations) + 
   tm_dots(
