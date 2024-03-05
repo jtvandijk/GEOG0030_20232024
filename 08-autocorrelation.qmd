@@ -132,11 +132,7 @@ This all looks good, so we can move to also load the `csv` we just created:
 ethnicity_london <- read_csv('data/data/WARD2021_ethnic_group.csv')
 ```
 
-Inspect the file by using the `View()` function. You will notice is that the column names are rather long. Second thing you will notice is that we probably do not need to keep all the columns. Let's drop the this column, and any other columns we do not need, and then rename the remaining columns for easier reference.
-
-::: {.callout-warning}
-If your conversion from Excel to `csv` did not result in an extra column, update the code below to reflect this so to avoid dropping a column that contains information.
-:::
+Inspect the file by using the `View()` function. You will notice is that the column names are rather long, so let's rename the columns for easier reference.
 
 ```{r}
 #| label: 08-drop-rename-cols
