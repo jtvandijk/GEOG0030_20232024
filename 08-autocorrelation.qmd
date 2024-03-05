@@ -987,7 +987,7 @@ tm_shape(ethnicity_london_sdf) +
 Our map shows quite clear hot spots of self-identified Asian-Bangladeshis across London: the higher the z-score, the stronger the clustering.
 
 ::: {.callout-warning}
-If we want to only map the statistically significant clusters, we need to use these [z-scores](https://en.wikipedia.org/wiki/Standard_score) to filter out only statistically significant clusters. When using a 95 percent confidence level your values should be between `-1.96` and `+1.96` standard deviations.
+If we want to only map the statistically significant clusters, we need to use these [z-scores](https://en.wikipedia.org/wiki/Standard_score) to filter out only statistically significant clusters. When using a 95 percent confidence level your values should fall outside `-1.96` and `+1.96` standard deviations.
 :::
 
 ## Assignment {#assignment-w08}
