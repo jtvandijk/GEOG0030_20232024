@@ -597,7 +597,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Cut all the data from the <code>pop2011</code> column that is stored in column <strong>B</strong> and paste these into column <strong>C</strong>. You now should have a column <em>without</em> any data sat between the <code>lsoa</code> and <code>pop2011</code> columns.</li>
 <li>Highlight the entire <code>lsoa</code> column and in the <strong>Data</strong> menu click on the <strong>Text to Columns</strong> menu button.</li>
 </ol>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-text-to-columns_71503eede84db16bc68b6f0c0bd6a134">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-text-to-columns_af0399bcc70c8223e467cdcd634cce72">
 <div class="cell-output-display">
 <div id="fig-text-to-columns" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -622,7 +622,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Uncheck the checkbox for <strong>Tab</strong> and put <code>:</code> (colon) into the <strong>Other</strong> box. Click <strong>Finish</strong>.</li>
 <li>Change the name of the <code>lsoa</code> column to <code>lsoa11_code</code> and change the name of the now populated column <strong>B</strong> to <code>lsoa11_name</code>.</li>
 </ol>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-almost-there_8fefaa2af6941f7fe3704379ff912b39">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-almost-there_26e4a00a77a27db03d5737ea407c4843">
 <div class="cell-output-display">
 <div id="fig-almost-there" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -635,7 +635,7 @@ ul.task-list li input[type="checkbox"] {
 <ol start="12" type="1">
 <li>One thing that might cause problems when we try to link the population data to the spatial data is that there are still spaces contained in the <code>lsoa11_code</code> column. This is not directly noticeable as these spaces are <code>white space</code> characters at the end of the LSOA codes without any other characters following it (i.e.&nbsp;<a href="https://stackoverflow.com/questions/22273233/what-is-meant-by-trailing-space-and-whats-the-difference-between-it-and-a-blank">trailing spaces</a>). This may seem trivial, but we need this column and we therefore need to remove these. We can do this by highlighting the entire <code>lsoa11_code</code> column and in the <strong>Home</strong> menu opting for <strong>Replace</strong> under the <strong>Find &amp; Select</strong> menu.</li>
 </ol>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-find-replace_fddda475374065c5a634b451c74a62b3">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-find-replace_e56482839c58fa6189dda51f20784bb0">
 <div class="cell-output-display">
 <div id="fig-find-replace" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -735,7 +735,7 @@ ul.task-list li input[type="checkbox"] {
 <li>With <strong>File</strong> as your source type, click on the small three dots button and navigate to your 2011 boundary files.</li>
 <li>Here, we will select the <code>LSOA2011.gpkg</code> dataset. Highlight the file and click <strong>Open</strong>. Then click <strong>Add</strong>. You may need to close the box after adding the layer. The 2011 LSOA geography for England and Wales should now be loaded.</li>
 </ol>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-england-wales_602fdbd99512fb775c82d626569b80e6">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-england-wales_5a152d9007cde7e2c4fce71956226eb4">
 <div class="cell-output-display">
 <div id="fig-england-wales" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -762,7 +762,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <div class="callout-body-container">
 <p>An <strong>Attribute Join</strong> is one of two types of data joins you will use in spatial analysis (the other is a <strong>Spatial join</strong>, which we will look at later on in the module). An attribute join essentially allows you to link two datasets together, as long as they share a common attribute to facilitate the ‘matching’ of rows:</p>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-join-those-attributes_47fe56706ac466a006b9f0f82991a60c">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-join-those-attributes_50c3ec5c0be8f0bd9049613c1342dcc5">
 <div class="cell-output-display">
 <div id="fig-join-those-attributes" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -806,7 +806,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-select-london_4f7d73f742097a383d8627e91334a251">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-select-london_7e12546088d54e83846aba9a085631df">
 <div class="cell-output-display">
 <div id="fig-select-london" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -820,7 +820,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Close the <strong>Attribute Table</strong>. <em>Right-click</em> on the <code>LSOA2011</code> layer and select <strong>Export</strong> -&gt; <strong>Save Selected Features As</strong>. Set <strong>Format</strong> to <code>GeoPackage</code> and click on the small three dots button next to <strong>File name</strong> and navigate to your <code>raw/boundaries</code> folder. Save the file as <code>LSOA2011_London.gpkg</code>.</li>
 <li>You can now untick the <code>LSOA2011</code> containing all the LSOAs for England and Wales. <em>Right-click</em> on the <code>LSOA2011_London</code> layer and click on <strong>Zoom to Layer(s)</strong>.</li>
 </ol>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-lsoa-london_8ec15c16ee1712d2fc5a618faf716899">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-lsoa-london_75c9a938f888618a3cd1ee766fab95f3">
 <div class="cell-output-display">
 <div id="fig-lsoa-london" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -862,7 +862,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>You should now be looking at something like this:</p>
-<div class="cell" data-hash="02-GIScience_cache/html/fig-lsoa-pop-2011_ff784f882bdce5ffdedf5d98a948dcaa">
+<div class="cell" data-hash="02-GIScience_cache/html/fig-lsoa-pop-2011_8e6e73c241c66fbe9299f6ed510df726">
 <div class="cell-output-display">
 <div id="fig-lsoa-pop-2011" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">

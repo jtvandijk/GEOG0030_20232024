@@ -331,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Population rasters for Great Britain</strong>: <a href="https://hub.worldpop.org/">WorldPop</a> raster on estimated population counts for Great Britain in 2010 and 2020 at a spatial resolution of 1km.</li>
 <li><strong>NO<sub>2</sub> readings across London</strong>: A dataset contain readings of NO<sub>2</sub> for individual air quality monitoring sites in London.</li>
 </ol>
-<div class="cell" data-hash="09-raster_cache/html/fig-raster-vector_8fdc487ea00c83e94b1dd41d62d58b03">
+<div class="cell" data-hash="09-raster_cache/html/fig-raster-vector_b7511fc57bb4842d79bd4b7c9081735e">
 <div class="cell-output-display">
 <div id="fig-raster-vector" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -354,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setup-w08" class="level3" data-number="1.3.1">
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="setup-w08"><span class="header-section-number">9.3.1</span> Getting started</h3>
 <p>Open a new script within your GEOG0030 project and save this script as <code>wk9-raster-analysis.r</code>. At the top of your script, add the following metadata:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/09-script-title_8edff1e9fc642db479e0b11e0f39ec26">
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-script-title_3c94d5628a9d60e84812a20f52e3a8be">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -364,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Now let us add all of the libraries we will be using today to the top of our script:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/09-load-libraries_b9f50e77c3737deb06821e60fb8940f8">
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-load-libraries_eda77015d504f394e633b1a0b43b99ba">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -411,7 +411,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We will be using some simple map algebra to look at population change in London between 2010 and 2020. Let’s get started and take a look at our data. We can load raster data into R using the <code>terra</code> library:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/09-load-raster-data_1a6eef198438f655808b8a9b7b3b5fd3">
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-load-raster-data_38df9192b9e2abcb47c8a0393a55a6ad">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -427,7 +427,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">project</span>(<span class="st">"epsg:27700"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2010_1a10a69f50efcc73a412ac13434f2c3b">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2010_969c965b1b4470e403c39f54fed0dd57">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -444,7 +444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2020_b987526a40659f75378dd7e38ccd5966">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2020_8c25dcab21749f543b5ac05c49f349fa">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -469,7 +469,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-body-container">
 <p>The <code>terra</code> package does not take in <code>sf</code> objects, so once we have loaded the London MSOA file we need to transform the file into a <code>SpatRaster</code> or <code>SpatVector</code>. The process of turning a vector dataset into a raster dataset is called rasterising.</p>
-<div class="cell" data-hash="09-raster_cache/html/fig-rasterise-a-file_8e6cdcbb846ca81a31334698bbab665c">
+<div class="cell" data-hash="09-raster_cache/html/fig-rasterise-a-file_64affd1faf35c35b0f3b403e8376f60f">
 <div class="cell-output-display">
 <div id="fig-rasterise-a-file" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -482,7 +482,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="09-raster_cache/html/09-confe-them-area_34784caaa9a1fed10b5626eb8ec9d8de">
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-confe-them-area_47cd46fb724804a207f78666988f576e">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -509,7 +509,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>pop2010_london <span class="ot">&lt;-</span> <span class="fu">mask</span>(pop2010_london, msoa_london)</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>pop2020_london <span class="ot">&lt;-</span> <span class="fu">mask</span>(pop2020_london, msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2010-lon_a66858dc5e88695943e21e7a05e7053c">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2010-lon_3ec36e1ef2d12b15a169c9cd6e27183b">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -526,7 +526,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2020-lon_40ea483a6b92a8230db4ce574a1dd7ad">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2020-lon_3cfa9cdd242b9ec1e6d0316db39fc695">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -544,7 +544,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 <p>Now we have our two London population rasters, we can calculate population change between the two time periods by subtracting our 2010 population raster from our 2020 population raster:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-subtract-london_2c7c9a9af380ce6309d7c0f245e90592">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-subtract-london_21c8d97b27218e7c388d674b86f0f36f">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -568,7 +568,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <section id="zonal-statistics" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="zonal-statistics"><span class="header-section-number">9.5</span> Zonal statistics</h2>
 <p>To further analyse our population change raster, we can create a smoothed version of our <code>lonpop_change</code> raster by using the <code>focal()</code> function. Using the <code>focal()</code> function, we generate a raster that summarises the average (mean) value of the <strong>9</strong> nearest neighbours for each cell, using a weight matrix defined in our <code>w</code> parameter and set to a <code>matrix</code>:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-focus-on-the-hood_527f4264c41ae5a64ec79b76578e4c9f">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-focus-on-the-hood_0ef754c9c7c0049b2ff2e2da8f7ff339">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -589,7 +589,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 <p>The differences are not very noticeable, but you were to subtract the smoothed raster from the original raster you will see that definitely something happened:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-focus-on-the-smooth_880fc7cdbca5e80a384c641eede31e49">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-focus-on-the-smooth_dde1f9ffdbb87016492a5fbd66104eff">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -617,7 +617,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-aggregate-the-raster_185ff2582940dda035aa4b5dfaaf700c">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-aggregate-the-raster_29aaf0eb6a066b6a394b6623efbf59c5">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -638,7 +638,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 <p>Where we transformed a vector dataset into a raster dataset earlier, in some cases you would want to aggregate move from raster to vector. For example, in our case, we can aggregate the <code>lonpop_change</code> raster to our actual London MSOA boundaries, i.e.&nbsp;calculate for each MSOA in our dataset the average (or other function) population change,. We can, of course, use other functions other than the <code>mean</code>. What function you use will simply depend on your application.</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-aggregate-the-raster-to-vector_98ba213b29162e153de8b2eb53df968e">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-aggregate-the-raster-to-vector_a0f3397f70a00ff668b8a460278320c3">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>london_msoa_pop <span class="ot">&lt;-</span> <span class="fu">extract</span>(lonpop_change, msoa_london, <span class="at">fun =</span> mean)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -689,7 +689,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="09-raster_cache/html/09-get-air-pollution-data_86a32ec2856a06a17a98aed0ab77fe73">
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-get-air-pollution-data_549b803e776cf1f4feaef9a70ab365a2">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -713,7 +713,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 <p>Let’s inspect the data:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/09-inspect-air-pollution-data_a03b3243aac48d16bc81f8ca34303998">
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-inspect-air-pollution-data_11d8cae53abce36408468f305b978f39">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -748,7 +748,7 @@ dttm (1): date
 </div>
 </div>
 <p>We can see that in our first five rows we have data for the <strong>same site</strong> and if we look at the <strong>date</strong> field, we can see we have a reading observation for every hour. With 24 hours in the day, 365 days in a year and hundreds of sites, it should therefore be of no surprise that we have such a large <code>csv</code>. Let’s summarise the values by site to make the dataset a bit more workable:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/09-mean-air-pollution-data_3db1658c7ab475ad00989e7b6fd98184">
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-mean-air-pollution-data_6f211028f029a6b12679ba9612517118">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -779,7 +779,7 @@ the `.groups` argument.</code></pre>
 </div>
 </div>
 <p>We are now left with only <strong>45</strong> measurement sites — with only the latitudes, longitudes, and the average NO<sub>2</sub> values associated with each. When using interpolation, the distribution and density of our data points will impact the accuracy of our final raster and we may end up with a level of uncertainty in the areas where measurements are more sparse. Let’s have a look at the spatial distribution of the measurement sites.</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-measurement-sites_13b850db42cb85ce4fcfbb6e1785ff97">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-measurement-sites_48d8ec94145742f8fafb9f11a1aabb6c">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load MSOAs for reference</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>msoa_london <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/raw/boundaries/MSOA2021_London.gpkg"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_union</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -802,8 +802,8 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>measurement_sites <span class="ot">&lt;-</span> measurement_sites <span class="sc">|&gt;</span></span>
 <span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_intersection</span>(msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: attribute variables are assumed to be spatially constant throughout all
-geometries</code></pre>
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout
+all geometries</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add London outline</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa_london) <span class="sc">+</span></span>
@@ -823,7 +823,7 @@ geometries</code></pre>
 </div>
 </div>
 <p>Let’s also have a look whether measurements differ across London:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-measurement-sites-proportional-symbol_88a9195307a48638f80548188ca107f6">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-measurement-sites-proportional-symbol_eb308dc7635fe908f7e877eebbeab10e">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add London outline</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa_london) <span class="sc">+</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
@@ -867,7 +867,7 @@ geometries</code></pre>
 <section id="thiessen-polygons" class="level4">
 <h4 class="anchored" data-anchor-id="thiessen-polygons">Thiessen polygons</h4>
 <p>The first step we can take to interpolate the data across space is to create Thiessen polygons. Thiessen polygons are formed to assign boundaries of the areas closest to each unique point. Therefore, for every point in a dataset, it has a corresponding Thiessen polygon.</p>
-<div class="cell" data-hash="09-raster_cache/html/fig-thiessen_0037564e44c78b2e6e35874cf728c10c">
+<div class="cell" data-hash="09-raster_cache/html/fig-thiessen_da6f1719d94cbe5e7c65f94769a7ad39">
 <div class="cell-output-display">
 <div id="fig-thiessen" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -898,7 +898,7 @@ geometries</code></pre>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="09-raster_cache/html/09-create-thiessen-polygons_e0c7d1f1ba89acfac6ece23babdc21d8">
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-create-thiessen-polygons_7a01718a23648bda98c50d2b679ee3d7">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -931,8 +931,8 @@ geometries</code></pre>
 <span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: attribute variables are assumed to be spatially constant throughout all
-geometries</code></pre>
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout
+all geometries</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>measurement_sites_thiessen_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -959,7 +959,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <p>We can now visualise these Thiessen polygons with their associated NO<sub>2</sub> value:</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-london-thiessen_7f25aa194dbc9f91ebd59f02213cd8ab">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-london-thiessen_9375b935d18b1a3f010d3705ac571e16">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add thiessen polygons</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(measurement_sites_thiessen_df) <span class="sc">+</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
@@ -995,7 +995,7 @@ Projected CRS: OSGB36 / British National Grid
 </div>
 </div>
 <p>We will start by generating an empty grid to store the predicted values before executing a simple the IDW.</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/09-idw_de59dc116e944a4009c89f09b17be915">
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-idw_ecafdab71b33f585fac17747c0d038f6">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1015,12 +1015,12 @@ Projected CRS: OSGB36 / British National Grid
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>measurement_sites_idw <span class="ot">&lt;-</span> measurement_sites_idw <span class="sc">|&gt;</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: attribute variables are assumed to be spatially constant throughout all
-geometries</code></pre>
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout
+all geometries</code></pre>
 </div>
 </div>
 <p>We now have our final predicted raster surface. To map it, we can again use the <code>tmap</code> as we have done previously. For our polygon raster, the name of the layer we need to provide is <code>var1.pred</code>.</p>
-<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-idw_ee40b79ff507e8b767a99a2fd9f0f983">
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-idw_cb468ffbf1b87f2b530be6a23a0d64b1">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add idw grid</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(measurement_sites_idw) <span class="sc">+</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(</span>
@@ -1068,7 +1068,7 @@ geometries</code></pre>
 <h2 data-number="1.8" class="anchored" data-anchor-id="wm-w09"><span class="header-section-number">9.8</span> Want more? [Optional]</h2>
 <section id="more-raster" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="more-raster">More raster</h3>
-<p>A raster dataset often only contains one layer, i.e.&nbsp;one variable. Hence when we want to map a raster, we use the <code>tm_raster()</code> and provide the layer name for mapping. However, satellite imagery, for instance, consists of <strong>three</strong> bands: a band with a red value, a band with a green value and a band with a blue value. This is known as <strong>multi-band</strong> imagery. We can visualise each band independently of one another, however, you would see that you end up with either a nearly all red, green or blue image. If you are interested to learn more about <a href="https://andrewmaclachlan.github.io/CASA0005repo/advanced-raster-analysis.html">using satellite imagery with R</a> and raster analysis in general, this is a good place to start. Alternatively, if you are interested in more advanced interpolation methods, <a href="https://mgimond.github.io/Spatial/interpolation-in-r.html">Manual Gimond’s</a> tutorial on spatial data interpolation will get you started.</p>
+<p>A raster dataset often only contains one layer, i.e.&nbsp;one variable. Hence when we want to map a raster, we use the <code>tm_raster()</code> and provide the layer name for mapping. However, satellite imagery, for instance, consists of <strong>three</strong> bands: a band with a red value, a band with a green value and a band with a blue value. This is known as <strong>multi-band</strong> imagery. We can visualise each band independently of one another, however, you would see that you end up with either a nearly all red, green or blue image. If you are interested to learn more about <a href="https://andrewmaclachlan.github.io/CASA0005repo/advanced-raster-analysis.html">using satellite imagery with R</a> and raster analysis in general, this is a good place to start. Alternatively, if you are interested in more advanced interpolation methods, <a href="https://mgimond.github.io/Spatial/interpolation-in-r.html">Manual Gimond’s</a> tutorial on spatial data interpolation or <a href="https://www.paulamoraga.com/book-spatial/index.html">Paula Moraga’s</a> online book on <em>Spatial Statistics for Data Science: Theory and Practice with R</em> (particularly Chapters 12-16) will get you started.</p>
 </section>
 </section>
 <section id="byl-w09" class="level2" data-number="1.9">

@@ -343,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="setup-w07" class="level3" data-number="1.3.1">
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="setup-w07"><span class="header-section-number">7.3.1</span> Getting started</h3>
 <p>Open a new script within your GEOG0030 project and save this script as <code>wk7-bike-theft-ppa.r</code>. At the top of your script, add the following metadata:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-script-title_2e2479f649db56a78f68a740e6b80bb1">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-script-title_0d8b3295aaa3ed6090071a5c613e3ad9">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -353,7 +353,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>All of the geometric operations and spatial queries we will use are contained within the <code>sf</code> library. For our Point Pattern Analysis, we will be using the <code>spatstat</code> library (“spatial statistics”). The <code>spatstat</code> library contains the different Point Pattern Analysis techniques we will want to use in this practical. We will also need the <code>terra</code> library, which provides classes and functions to manipulate geographic (spatial) data in raster format. We will use this package briefly today, but look into it in more detail in <a href="09-raster.html">Week 9</a>. Lastly, you will also need to load the <code>dbscan</code> package. Now let us add all of the libraries we will be using today to the top of our script:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-load-libraries_cde87d53931b237e5422a225527ae273">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-load-libraries_e39a879cfb6bf2b658e878f6a8f90f12">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -371,7 +371,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="data-preparation-w07" class="level3" data-number="1.3.2">
 <h3 data-number="1.3.2" class="anchored" data-anchor-id="data-preparation-w07"><span class="header-section-number">7.3.2</span> Data preparation</h3>
 <p>This week, we will continue to use the data we extracted from OpenStreetMap <a href="06-operations.html#data-preparation-w06">last week</a> as well as the 2021 bike theft data that we prepared. Let’s go ahead and load all of our data at once. We will also load the MSOA</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-load-all-files_2f6aa9255b0a525665426e3e28d03ebf">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-load-all-files_48b62bd57ff766057b75fc02fc961d33">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -418,7 +418,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 <p>Let’s create a quick map of our data to check it loaded correctly:</p>
-<div class="cell" data-hash="07-point-pattern_cache/html/fig-07-check-data_4d933cde0ac10aeb7fba20475aa4ea5e">
+<div class="cell" data-hash="07-point-pattern_cache/html/fig-07-check-data_c8aa8a7f71dfebf087e1bfb23ce9e301">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -496,7 +496,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 <p>Let’s turn our <code>bike_theft_london</code> dataframe into a <code>ppp</code> object:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-to-ppp_92e8b55340755a9e7839fdb50dc658a8">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-to-ppp_021182fd4c10904db0d6b6581e085518">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -526,7 +526,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 <p>Our plot shows us our <code>bike_theft_ppp</code> object, which includes both the coordinate points of our bike theft data and our observation window. You should also see your <code>bike_theft_ppp</code> object variable appear in your <strong>Environment</strong> window. You should also see a message stating that our data contains duplicated points.</p>
 <p>One of the <strong>key assumptions</strong> underlying many analytical methods is that <strong>all events are unique</strong>. In fact, some statistical procedures actually may return very wrong results if duplicate points are found within the data. In terms of our bike theft data, it is likely that it contains duplicates. The Police service use <a href="https://data.police.uk/about/#anonymisation">snapping points</a>, to which crimes are snapped to in order to preserve the anonymity and privacy of those involved. This is an issue in spatial point pattern analysis as we need our <code>events</code>, i.e.&nbsp;each record of a theft and its respective location, to <strong>be unique</strong> in order for our analysis to be accurate. Let’s investigate by how many duplicated points we have:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-check-duplicates_11bf98b15e415c4508f8e478d6960818">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-check-duplicates_ab3e47c9c1f977cf6a1a16e4accc79d8">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -559,7 +559,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 <p>Each approach will have a specific compromise, which you will have to decide upon depending on the type of analysis you are completing. In our case, we will choose the jitter approach to keep all of our bike theft events. We know that already the location of our bike thefts are not precise locations of the original theft, therefore adding minimal (~5 metres) additional offset will not affect our analysis.</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-jitter-jitter-jitter_fdf208dad88acc79a2e1e09b48509af3">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-jitter-jitter-jitter_ae23e8361f55114644e194dcb329fafd">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -600,7 +600,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 <p>We can create a simple understanding of our data’s distribution by first understanding its <strong>global density</strong>. This is simply the ratio of the observed number of points <span class="math inline">\((n\)</span> to the study region’s surface area <span class="math inline">\(a\)</span>:</p>
 <p><span class="math display">\[\widehat{\lambda} =\frac{n}{a}\]</span></p>
 <p>Calculate the global density of our bike theft point data relative to London:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-global-density_52535a81d53aae887f4427849e7e90bc">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-global-density_62457db1ab9b5e61b3b12ab537c7eca2">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -624,7 +624,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 <p>We will start with a simple quadrat count by dividing the observation window into 10 x 10 sections and then counting the number of bicycle thefts:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-quadrat-count_1d23d06f0971b0d9cf654ff5a2accbfc">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-quadrat-count_d439775626b7d868fbd42911b60b026b">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -663,7 +663,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
 </div>
 </div>
 <p>We can use a Poisson distribution to generate a randomly generated point pattern dataset with the same number of points and the same observation window. We then can compare our quadrat analysis with the theoretical quadrat analysis using a <a href="https://en.wikipedia.org/wiki/Chi-squared_test">chi-squared test</a>, with the null hypotheses that our point data are randomly distributed.</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-quadrat-test_4d475c2b5a8f2b6419df37b184c775e1">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-quadrat-test_2a20b0163023d03f4ea75240903e1168">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -679,7 +679,7 @@ Projected CRS: OSGB36 / British National Grid</code></pre>
     Chi-squared test of CSR using quadrat counts
 
 data:  bike_theft_ppp_jitter
-X2 = 55589, df = 80, p-value &lt; 2.2e-16
+X2 = 55573, df = 80, p-value &lt; 2.2e-16
 alternative hypothesis: two.sided
 
 Quadrats: 81 tiles (irregular windows)</code></pre>
@@ -701,7 +701,7 @@ Quadrats: 81 tiles (irregular windows)</code></pre>
 </div>
 </div>
 <p>Producing a KDE in R is very straight-forward in <code>spatstat</code>, using your <code>ppp</code> object and the <code>density.ppp()</code> function. However, you will need to consider both the <strong>bandwidth</strong> or diameter of your Kernel (<code>sigma</code>) and whether you want to apply a weighting to your points using a function. First, let’s go ahead and create a simple KDE of bike theft with our bandwidth set to 100m:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-kde100_89f6a3c7ae9e17e907c16c5a994ed1b2">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-kde100_4716e9efe77f35a79434647712aa4a35">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -719,7 +719,7 @@ Quadrats: 81 tiles (irregular windows)</code></pre>
 </div>
 </div>
 <p>We can see from just our KDE that there are visible clusters present within our bike theft data, particularly in and around central London. We can go ahead and vary our bandwidth to to see how that affects the density estimate:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-kde500_fd99d0a3dfc5c0320f0d9c65e5714f10">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-kde500_5da7ba5eceff39df2b7023088eeef37e">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -748,7 +748,7 @@ Quadrats: 81 tiles (irregular windows)</code></pre>
 </div>
 </div>
 <p>Although bandwidth typically has a more pronounced effect upon the density estimation than the type of kernel used, kernel types can affect the result too. When we use a different kernel type, we are looking to weight the points within our kernel differently:</p>
-<div class="cell" data-hash="07-point-pattern_cache/html/fig-kernels_a7cbd05182ad7a477c351d63463d6662">
+<div class="cell" data-hash="07-point-pattern_cache/html/fig-kernels_a6526373f7b9b33f927694745f6e54fe">
 <div class="cell-output-display">
 <div id="fig-kernels" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -769,7 +769,7 @@ Quadrats: 81 tiles (irregular windows)</code></pre>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-kde500-gaussian_393a242a4460d3f58d96fe4e89b97be5">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-kde500-gaussian_89173dd13c70a73955ef41af7fd7a798">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -786,7 +786,7 @@ Quadrats: 81 tiles (irregular windows)</code></pre>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-kde500-epanechnikov_6ecca35fba3b2a98e4c8cb9113e76b30">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-kde500-epanechnikov_e7ca7eeab7c7ab67cf2b2043472c5a32">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -803,7 +803,7 @@ Quadrats: 81 tiles (irregular windows)</code></pre>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-kde500-quartic_59dbfd879a8d169f02a8c32c9d5e0874">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-kde500-quartic_76b6aeb3c71d406197a5e3f8f7bbd59a">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -820,7 +820,7 @@ Quadrats: 81 tiles (irregular windows)</code></pre>
 </div>
 </div>
 </div>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-kde500-disc_02029b1748c957e1cb4a48937c9e518b">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-bike-theft-kde500-disc_a9f337a2fb33d1e16cc08f80800ca9ef">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -838,7 +838,7 @@ Quadrats: 81 tiles (irregular windows)</code></pre>
 </div>
 </div>
 <p>We can be quite confident in stating that bike theft in London in 2021 is not a spatially random process and we can clearly see the areas where bicycle theft is most concentrated. How can we use this new data in our original analysis that looks to find out whether bike theft primarily occurs near tube and train stations? KDEs are primarily used for visual analysis of point data distribution. What we can do, however, is improve our visualisation and making it into a proper map using <code>tmap</code>.</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-to-raster_964b3bb2167e3671901dfc11695647cb">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-to-raster_a31914a56c58634c2eaa359fbe82bd32">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -849,7 +849,7 @@ Quadrats: 81 tiles (irregular windows)</code></pre>
 </div>
 </div>
 <p>We now have a standalone raster we can use with any function in the <code>tmap</code> library. Before we go ahead, one issue we will face is that our resulting raster does not have a Coordinate Reference System, so we need to manually add this information to the raster object:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-to-raster-crs_f38a50de59bbb4307b8bc205e50948b6">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-to-raster-crs_b36567eec15e0de6fb62a81f7be66a80">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -862,7 +862,7 @@ Quadrats: 81 tiles (irregular windows)</code></pre>
 </div>
 </div>
 <p>You should see an <code>NA</code> appear within our CRS arguments, so we need to fix this:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-to-raster-crs-set_162dae128a2afebab3ce7055e7d0d962">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-to-raster-crs-set_d627ac1bbaf6c4c4e56e649330ef582b">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -918,7 +918,7 @@ PROJCRS["OSGB36 / British National Grid",
 </div>
 </div>
 <p>Now we have our raster data ready to map:</p>
-<div class="cell" data-hash="07-point-pattern_cache/html/fig-kde-raster-map_17b53dc2d3f4e30cb55dfb8417061f66">
+<div class="cell" data-hash="07-point-pattern_cache/html/fig-kde-raster-map_105d1cd0f01662edbca0f03e0d20bf30">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -959,7 +959,7 @@ PROJCRS["OSGB36 / British National Grid",
 <h3 data-number="1.6.1" class="anchored" data-anchor-id="average-nearest-neighbour"><span class="header-section-number">7.6.1</span> Average Nearest Neighbour</h3>
 <p>Average Nearest Neighbour (ANN) is the average distance between all points within a dataset and their individual nearest point. ANN is used as a global indicator to measure the overall pattern of a point set. The ANN of a given point collection can be compared with the expected ANN from points following a random distribution to test whether our point data is clustered or dispersed. The approach is similar to that of the Quadrat Analysis simulation we saw above, but by using distance rather than density grouped to arbitrary quadrats, ANN is likely to be a more robust quantification of our point distribution.</p>
 <p>We can calculate the ANN for our dataset by using the <code>nndist()</code> function from the <code>spatstat</code> library:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-ann_db1a15083f495fb15b3bd5dc99442e7d">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-ann_95414b3ea84f26f32cdf208a07045b89">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -968,12 +968,12 @@ PROJCRS["OSGB36 / British National Grid",
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">nndist</span>(bike_theft_ppp_jitter, <span class="at">k =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 53.45112</code></pre>
+<pre><code>[1] 53.40705</code></pre>
 </div>
 </div>
 <p>We can see that the average nearest neighbour for all points is 53.5 metres. To get an insight into the spatial ordering of all our points relative to one another we can plot the ANN values for different order neighbours (i.e.&nbsp;first closest point, second closest point, etc. For point patterns that are highly clustered, we would expect the average distances between points to be very small.</p>
 <p>Calculate the average nearest neighbour to the <span class="math inline">\(k\)</span> nearest neighbours for our bike theft data:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-ann_8d62612920242c2ea0e83fc515af34f3">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/fig-07-ann_7cc0ec8609ac88662fc5bf8ce544ce4a">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1015,7 +1015,7 @@ PROJCRS["OSGB36 / British National Grid",
 </ul>
 <p>Across a set of points, DBSCAN will group together points that are close to each other based on a distance measurement and a minimum number of points. It also marks as outliers the points that are in low-density regions. The algorithm can be used to find associations and structures in data that are hard to find through visual observation alone, but that can be relevant and useful to find patterns and predict trends. However, DBSCAN will only work well if you are able to successfully define the distance and minimum points parameters and your clusters do not vary considerably in density.</p>
 <p>We can conduct a DBSCAN analysis using the <code>dbscan</code> library. For our analysis, we will set our <code>epsilon</code> to 200m and then set our minimum cluster size to 20 bike thefts.</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-dbscan_8ce899202d44872d92b632dc05a4ecd2">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-dbscan_3023db29a6c65bdab4d101cc052ca2c4">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1037,7 +1037,7 @@ PROJCRS["OSGB36 / British National Grid",
 </div>
 </div>
 <p>The DBSCAN output contains three objects, including a vector detailing the cluster for each of our bike theft observations. To be able to work with our DBSCAN output effectively and, for example, plot the clusters as individual polygons, we need to add our cluster groups back to into our original point dataset. Because the DBSCAN output does not change the order of points, we can simply stick the cluster output on the <code>bike_theft_london</code> spatial dataframe.</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-dbscan-add-clusters_63cbf74cc062f16c40f4b79ea13f99ef">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-dbscan-add-clusters_0d9235018550e8388e1ee16134a49209">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1066,7 +1066,7 @@ PROJCRS["OSGB36 / British National Grid",
 </div>
 </div>
 <p>Run a <code>for</code> loop to generate a polygon dataset that represents our bike theft clusters:</p>
-<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-dbscan-for-loop_bdd3de39ba467d983299e4b9e68cabb3">
+<div class="cell styled-output" data-hash="07-point-pattern_cache/html/07-dbscan-for-loop_0fed4942fdfd700d56cb11741238550f">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>
@@ -1102,7 +1102,7 @@ PROJCRS["OSGB36 / British National Grid",
 </div>
 </div>
 <p>We now have a polygon spatial dataframe, <code>bike_theft_clusters</code>, that show the general location and distribution of bike theft clusters in London. Let’s put them on a map:</p>
-<div class="cell" data-hash="07-point-pattern_cache/html/fig-07-map-clusters_08860508ee5514bdf2ca8ec017d3fcb1">
+<div class="cell" data-hash="07-point-pattern_cache/html/fig-07-map-clusters_33b22f7d2852dc1bfdb23fba46e9b380">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R code</strong></pre>

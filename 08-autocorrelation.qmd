@@ -67,7 +67,7 @@ We will start by downloading the 2022 Ward boundaries for Great Britain:
 
 1. Navigate to the *Open Geography Portal*: [[Link]](https://geoportal.statistics.gov.uk/)
 2. In the main menu go to **Boundaries** -> **Administrative Boundaries ** -> **Wards / Electoral Divisions** -> **2022 Boundaries**.
-3. Click on **Wards (December 2022) Boundaries GB GBC**.
+3. Click on **Wards (December 2022) Boundaries GB BGC**.
 4. Click on **Download** -> **Download GeoPackage**.
 5. Save the file as `WARDS2022.gpkg` in your `boundaries` folder.
 
@@ -132,7 +132,7 @@ This all looks good, so we can move to also load the `csv` we just created:
 ethnicity_london <- read_csv('data/data/WARD2021_ethnic_group.csv')
 ```
 
-Inspect the file by using the `View()` function. First thing you will notice is that the column names are rather long. Second thing you will notice is that one of the columns does not contain any information but `NA` values. It also does not have a meaningful name (`...9`). It seems that in the process of converting the Excel file into a `csv` an extra column was added in the process. Let's drop this column, and any other columns we do not need, and then rename the remaining columns for easier reference.
+Inspect the file by using the `View()` function. You will notice is that the column names are rather long. Second thing you will notice is that we probably do not need to keep all the columns. Let's drop the this column, and any other columns we do not need, and then rename the remaining columns for easier reference.
 
 ::: {.callout-warning}
 If your conversion from Excel to `csv` did not result in an extra column, update the code below to reflect this so to avoid dropping a column that contains information.
@@ -145,13 +145,9 @@ If your conversion from Excel to `csv` did not result in an extra column, update
 #| eval: True
 #| tidy: True
 #| filename: "R code"
-# drop columns by index
-ethnicity_london <- ethnicity_london |>
-  select(-3,-4,-9)
-
 # rename columns
-names(ethnicity_london) <- c('ward22cd','ward22nm','all_pop','white_british','white_irish',
-                             'white_gypsy','white_other','mixed_white_asian', 'mixed_white_african',
+names(ethnicity_london) <- c('ward22cd','ward22nm','ladcd','ladnm','all_pop','white_british','white_irish',
+                             'white_gypsy','white_roma','white_other','mixed_white_asian', 'mixed_white_african',
                              'mixed_white_caribbean','mixed_other','asian_bangladeshi',
                              'asian_chinese','asian_indian','asian_pakistani','asian_other',
                              'black_african','black_caribbean','black_other','other_arab','other')
@@ -238,7 +234,7 @@ Check the documentation of the `mutate_at()` function to see how it works in det
 #| filename: "R code"
 # divide counts by number of Wards
 city_of_london_sdf <- city_of_london_sdf |>
-  mutate_at(c(13:31), function(x) as.integer(x/nrow(city_of_london_sdf)))
+  mutate_at(c(15:34), function(x) as.integer(x/nrow(city_of_london_sdf)))
 
 # inspect
 head(city_of_london_sdf)
@@ -621,7 +617,7 @@ With our neighbours now defined, we will go ahead and create our final spatial w
 ward_spatial_weights_queen <- ward_neighbours_queen |> nb2listw(style = 'W' )
 
 # create a neighbours list - Rook
-ward_spatial_weights_queen <- ward_neighbours_rook |> nb2listw(style = 'W' )
+ward_spatial_weights_rook <- ward_neighbours_rook |> nb2listw(style = 'W' )
 
 # create a neighbours list
 ward_spatial_weights_fd <- ward_neighbours_fd |> nb2listw(style = 'W', zero.policy = TRUE)
