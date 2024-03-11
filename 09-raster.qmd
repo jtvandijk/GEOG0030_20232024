@@ -319,7 +319,7 @@ pollution <- importKCL(site=c(site_meta$code), year=2022:2022, pollutant='no2',m
 ```
 
 ::: {.callout-warning}
-This second part of the code might take some time to run as it will try to download the data for all sites for an entire year --- and in many cases data is measured hourly. Despite us limiting our data download, not all measurements sites collect data on NO~2~ so you will get some warnings along the lines of `404 Not Found`. In case you run into too many errors or it is just taking too long, you can download a copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/london-no2-2022.zip). Once downloaded, copy over the `zip` and put this into a `data/raw/pollution` folder. The file is rather large, so you can leave it unzipped.
+This second part of the code might take some time to run as it will try to download the data for all sites for an entire year --- and in many cases data is measured hourly. Despite us limiting our data download, not all measurements sites collect data on NO~2~ so you will get some warnings along the lines of `404 Not Found`. In case you run into too many errors or it is just taking too long, you can download a copy of the data here: [[Download]](https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/london_no2_2022.zip). Once downloaded, copy over the `zip` and put this into a `data/raw/pollution` folder. The file is rather large, so you can leave it unzipped.
 :::
 
 Let's inspect the data:
