@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>GEOG0030</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./10-network.html" rel="next">
+<link href="./08-autocorrelation.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./09-raster.html">Advanced Spatial Analysis</a></li><li class="breadcrumb-item"><a href="./09-raster.html">Rasters, Zonal Statistics, and Interpolation</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./assets/logo.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+      <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/jtvandijk/GEOG0030" rel="" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+    <div id="quarto-search" class="quarto-navigation-tool px-1" title="Search"></div>
+</div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Module overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Foundational Concepts</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 Geocomputation: An Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-GIScience.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 GIScience and GIS software</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-cartography.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 Cartography and Visualisation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 Programming for Data Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 Programming for Spatial Analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Core Spatial Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-operations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6 Analysing Spatial Patterns I: Geometric Operations and Spatial Queries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-point-pattern.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7 Analysing Spatial Patterns II: Point Pattern Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-autocorrelation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">8 Analysing Spatial Patterns III: Spatial Autocorrelation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Advanced Spatial Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-raster.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">9 Rasters, Zonal Statistics, and Interpolation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-network.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10 Transport Network Analysis</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Additional Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11 Data Sources</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#rasters-zonal-statistics-and-interpolation" id="toc-rasters-zonal-statistics-and-interpolation" class="nav-link active" data-scroll-target="#rasters-zonal-statistics-and-interpolation"><span class="header-section-number">9</span> Rasters, Zonal Statistics, and Interpolation</a>
+  <ul class="collapse">
+  <li><a href="#slides-w09" id="toc-slides-w09" class="nav-link" data-scroll-target="#slides-w09"><span class="header-section-number">9.1</span> Lecture slides</a></li>
+  <li><a href="#reading-w09" id="toc-reading-w09" class="nav-link" data-scroll-target="#reading-w09"><span class="header-section-number">9.2</span> Reading list</a></li>
+  <li><a href="#raster-data" id="toc-raster-data" class="nav-link" data-scroll-target="#raster-data"><span class="header-section-number">9.3</span> Raster data</a>
+  <ul class="collapse">
+  <li><a href="#setup-w08" id="toc-setup-w08" class="nav-link" data-scroll-target="#setup-w08"><span class="header-section-number">9.3.1</span> Getting started</a></li>
+  </ul></li>
+  <li><a href="#map-algebra" id="toc-map-algebra" class="nav-link" data-scroll-target="#map-algebra"><span class="header-section-number">9.4</span> Map algebra</a></li>
+  <li><a href="#zonal-statistics" id="toc-zonal-statistics" class="nav-link" data-scroll-target="#zonal-statistics"><span class="header-section-number">9.5</span> Zonal statistics</a></li>
+  <li><a href="#interpolation" id="toc-interpolation" class="nav-link" data-scroll-target="#interpolation"><span class="header-section-number">9.6</span> Interpolation</a></li>
+  <li><a href="#assignment-w09" id="toc-assignment-w09" class="nav-link" data-scroll-target="#assignment-w09"><span class="header-section-number">9.7</span> Assignment</a></li>
+  <li><a href="#wm-w09" id="toc-wm-w09" class="nav-link" data-scroll-target="#wm-w09"><span class="header-section-number">9.8</span> Want more? [Optional]</a>
+  <ul class="collapse">
+  <li><a href="#more-raster" id="toc-more-raster" class="nav-link" data-scroll-target="#more-raster">More raster</a></li>
+  </ul></li>
+  <li><a href="#byl-w09" id="toc-byl-w09" class="nav-link" data-scroll-target="#byl-w09"><span class="header-section-number">9.9</span> Before you leave</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/jtvandijk/GEOG0030/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="rasters-zonal-statistics-and-interpolation" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">9</span> Rasters, Zonal Statistics, and Interpolation</h1>
+<p>The majority of our module has focused on the use of vector data and tabular data. This week, we switch it up by focusing primarily on raster data and its analysis using map algebra and zonal statistics.</p>
+<section id="slides-w09" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="slides-w09"><span class="header-section-number">9.1</span> Lecture slides</h2>
+<p>The slides for this week’s lecture can be downloaded here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/slides/w09-geo.pdf">[Link]</a></p>
+</section>
+<section id="reading-w09" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="reading-w09"><span class="header-section-number">9.2</span> Reading list</h2>
+<section id="essential-readings" class="level4">
+<h4 class="anchored" data-anchor-id="essential-readings">Essential readings</h4>
+<ul>
+<li>Gimond, M. 2021. Intro to GIS and spatial analysis. <strong>Chapter 14</strong>: <em>Spatial Interpolation</em>. <a href="https://mgimond.github.io/Spatial/spatial-interpolation.html">[Link]</a></li>
+<li>Heris, M., Foks, N., Bagstad, K. 2020. A rasterized building footprint dataset for the United States. <em>Scientific Data</em> 7: 207. <a href="https://doi.org/10.1038/s41597-020-0542-3">[Link]</a></li>
+<li>Thomson, D., Leasure, D., Bird, T. <em>et al</em>. 2022. How accurate are WorldPop-Global-Unconstrained gridded population data at the cell-level? A simulation analysis in urban Namibia. <em>Plos ONE</em> 17:7: e0271504. <a href="https://doi.org/10.1371/journal.pone.0271504">[Link]</a></li>
+</ul>
+</section>
+<section id="suggested-readings" class="level4">
+<h4 class="anchored" data-anchor-id="suggested-readings">Suggested readings</h4>
+<ul>
+<li>Mellander, C., Lobo, J., Stolarick, K. <em>et al</em>. 2015. Night-time light data: a good proxy measure for economic activity? <em>PLoS ONE</em> 10(10): e0139779. <a href="https://doi.org/10.1371/journal.pone.0139779">[Link]</a></li>
+</ul>
+</section>
+</section>
+<section id="raster-data" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="raster-data"><span class="header-section-number">9.3</span> Raster data</h2>
+<p>In previous weeks, we have predominantly worked with <strong>vector data</strong> and/or <strong>tabular data</strong> that we then join to vector data for analysis. However, depending on the nature of your research problem, you may also encounter <strong>raster data</strong>. This week’s content introduces you to raster data, map algebra and interpolation. After first looking at population change in London using raster data, we will then look at generating pollution maps in London from individual point readings taken from air quality monitoring sites across London. To complete this analysis, we will be using several new datasets:</p>
+<ol type="1">
+<li><strong>Population rasters for Great Britain</strong>: <a href="https://hub.worldpop.org/">WorldPop</a> raster on estimated population counts for Great Britain in 2010 and 2020 at a spatial resolution of 1km.</li>
+<li><strong>NO<sub>2</sub> readings across London</strong>: A dataset contain readings of NO<sub>2</sub> for individual air quality monitoring sites in London.</li>
+</ol>
+<div class="cell" data-hash="09-raster_cache/html/fig-raster-vector_b7511fc57bb4842d79bd4b7c9081735e">
+<div class="cell-output-display">
+<div id="fig-raster-vector" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w09/raster-vector.png" class="img-fluid figure-img" width="464"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: A hypothetical raster and a vector model of landuse. <a href="https://jtvandijk.github.io/GEOG0030/images/w09/raster-vector.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The main difference between vector and raster models is how they are structured. Our vectors are represented by three different types of geometries: points, lines and polygons. We have used point data in the form of our stations and bike theft, and polygons in the form of our ward and borough boundaries. In comparison, our raster datasets are composed of pixels (or grid cells) — a bit like an image. This means that a raster dataset represents a geographic phenomenon by dividing the world into a set of rectangular cells that are laid out in a grid. Each cell holds one value that represents the value of that phenomena at the location, e.g.&nbsp;a population density at that grid cell location. In comparison to vector data, we do not have an <em>attribute table</em> containing fields to analyse. All analysis conducted on a raster dataset therefore is primarily conducted on the cell values of a raster, rather than on the attribute values of the observations contained within our dataset or the precise geometries of our dataset. Probably one of the most common or well-known types of raster data are those that we can derive from remote sensing, including satellite and RADAR/LIDAR imagery that we see used in many environmental modelling applications, such as land use and pollution monitoring.</p>
+</div>
+</div>
+</div>
+<section id="setup-w08" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="setup-w08"><span class="header-section-number">9.3.1</span> Getting started</h3>
+<p>Open a new script within your GEOG0030 project and save this script as <code>wk9-raster-analysis.r</code>. At the top of your script, add the following metadata:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-script-title_3c94d5628a9d60e84812a20f52e3a8be">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Raster analysis </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Date: January 2024</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>Now let us add all of the libraries we will be using today to the top of our script:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-load-libraries_eda77015d504f394e633b1a0b43b99ba">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openair)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gstat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p>For the first part of this week’s practical material we will be using raster datasets from <a href="https://hub.worldpop.org/">WorldPop</a>:</p>
+<blockquote class="blockquote">
+<p>“<em>WorldPop develops peer-reviewed research and methods for the construction of open and high-resolution geospatial data on population distributions, demographics and dynamics, with a focus on low and middle income countries.</em>”</p>
+</blockquote>
+<p>These population surfaces are estimates of counts of people, displayed within a regular grid raster of a spatial resolution of up to 100m. These surfaces can be used to explore, for example, changes in the demographic profiles of small areas, area deprivation, or country of birth.</p>
+<ol type="1">
+<li>Navigate to the WorldPop Hub: <a href="https://hub.worldpop.org/">[Link]</a></li>
+<li>Go to <strong>Population Count</strong> -&gt; <strong>Unconstrained individual countries 2000-2020 (1km resolution)</strong>.</li>
+<li>Type <em>United Kingdom</em> in the search bar.</li>
+<li>Download the <a href="https://en.wikipedia.org/wiki/GeoTIFF">GeoTIFF</a> files for <strong>2010</strong> and <strong>2020</strong>: <code>gbr_ppp_2010_1km_Aggregated</code> and <code>gbr_ppp_2020_1km_Aggregated</code>.</li>
+<li>Save the files in your <code>population</code> folder.</li>
+</ol>
+</section>
+</section>
+<section id="map-algebra" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="map-algebra"><span class="header-section-number">9.4</span> Map algebra</h2>
+<p><strong>Map algebra</strong> is a set-based algebra for manipulating geographic data, coined by <a href="https://en.wikipedia.org/wiki/Dana_Tomlin">Dana Tomlin</a> in the early 1980s. Map algebra uses maths-like operations, including addition, subtraction and multiplication to update raster cell values. The most common type of map algebra is to apply these operations using <em>a cell-by-cell function</em>. These operations might include:</p>
+<ul>
+<li><strong>Arithmetic operations</strong> that use basic mathematical functions like addition, subtraction, multiplication and division.</li>
+<li><strong>Statistical operations</strong> that use statistical operations such as minimum, maximum, average and median.</li>
+<li><strong>Relational operations</strong> which compare cells using functions such as greater than, smaller than or equal to.</li>
+</ul>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The utilisation of these functions can enable many different types of specialised raster analysis, such as recoding or reclassifying individual rasters to reduce complexity in their data values, generating the <a href="https://en.wikipedia.org/wiki/Normalized_difference_vegetation_index">Normalised Difference Vegetation Index</a> for a satellite imagery dataset or calculating <a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-analyst/creating-a-cost-surface-raster.htm">Least Cost Surfaces</a> to find the most efficient path from one cell in a raster to another. Furthermore, using multiple raster datasets, it is possible to combine these data through mathematical overlays, from the basic mathematical operations mentioned above to more complex modelling..</p>
+</div>
+</div>
+</div>
+<p>We will be using some simple map algebra to look at population change in London between 2010 and 2020. Let’s get started and take a look at our data. We can load raster data into R using the <code>terra</code> library:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-load-raster-data_38df9192b9e2abcb47c8a0393a55a6ad">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pop2010 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/raw/population/gbr_ppp_2010_1km_Aggregated.tif"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pop2020 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="st">"data/raw/population/gbr_ppp_2020_1km_Aggregated.tif"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># transform projection</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>pop2010 <span class="ot">&lt;-</span> pop2010 <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">project</span>(<span class="st">"epsg:27700"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>pop2020 <span class="ot">&lt;-</span> pop2020 <span class="sc">|&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">project</span>(<span class="st">"epsg:27700"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2010_969c965b1b4470e403c39f54fed0dd57">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot 2010</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pop2010)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-load-raster-data-2010" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-load-raster-data-2010-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: WorldPop 2010 population estimates for the UK.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2020_8c25dcab21749f543b5ac05c49f349fa">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot 2020</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pop2020)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-load-raster-data-2020" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-load-raster-data-2020-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: WorldPop 2020 population estimates for the UK.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>You should see that whilst your maps look very similar, the legend certainly shows that the values associated with each cell has grown over the 10 years between 2010 and 2021: we see our maximum increase from about 12,000 people per cell to well-over 14,000 people per cell. Now we have our raster data loaded, we want to reduce it to show only the extent of London.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The <code>terra</code> package does not take in <code>sf</code> objects, so once we have loaded the London MSOA file we need to transform the file into a <code>SpatRaster</code> or <code>SpatVector</code>. The process of turning a vector dataset into a raster dataset is called rasterising.</p>
+<div class="cell" data-hash="09-raster_cache/html/fig-rasterise-a-file_64affd1faf35c35b0f3b403e8376f60f">
+<div class="cell-output-display">
+<div id="fig-rasterise-a-file" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w09/rtovector.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Turning a line and polygon vector into a raster. Source: <a href="https://r.geocompx.org/raster-vector#rasterization">Lovelace <em>et al</em>. 2023</a>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-confe-them-area_47cd46fb724804a207f78666988f576e">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data, get outline, rasterise</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>msoa_london <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/raw/boundaries/MSOA2021_London.gpkg"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">vect</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `MSOA2021_London' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/raw/boundaries/MSOA2021_London.gpkg' 
+  using driver `GPKG'
+Simple feature collection with 1002 features and 4 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># crop</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>pop2010_london <span class="ot">&lt;-</span> <span class="fu">crop</span>(pop2010, msoa_london)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>pop2020_london <span class="ot">&lt;-</span> <span class="fu">crop</span>(pop2020, msoa_london)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># mask</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>pop2010_london <span class="ot">&lt;-</span> <span class="fu">mask</span>(pop2010_london, msoa_london)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>pop2020_london <span class="ot">&lt;-</span> <span class="fu">mask</span>(pop2020_london, msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2010-lon_3ec36e1ef2d12b15a169c9cd6e27183b">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot 2010</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pop2010_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-load-raster-data-2010-lon" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-load-raster-data-2010-lon-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: WorldPop 2010 population estimates for London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-load-raster-data-2020-lon_3cfa9cdd242b9ec1e6d0316db39fc695">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot 2020</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pop2020_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-load-raster-data-2020-lon" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-load-raster-data-2020-lon-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: WorldPop 2020 population estimates for London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Now we have our two London population rasters, we can calculate population change between the two time periods by subtracting our 2010 population raster from our 2020 population raster:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-subtract-london_21c8d97b27218e7c388d674b86f0f36f">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subtract</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>lonpop_change <span class="ot">&lt;-</span> pop2020_london <span class="sc">-</span> pop2010_london</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_change)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-subtract-london" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-subtract-london-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: Population change in London 2010-2020.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="zonal-statistics" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="zonal-statistics"><span class="header-section-number">9.5</span> Zonal statistics</h2>
+<p>To further analyse our population change raster, we can create a smoothed version of our <code>lonpop_change</code> raster by using the <code>focal()</code> function. Using the <code>focal()</code> function, we generate a raster that summarises the average (mean) value of the <strong>9</strong> nearest neighbours for each cell, using a weight matrix defined in our <code>w</code> parameter and set to a <code>matrix</code>:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-focus-on-the-hood_0ef754c9c7c0049b2ff2e2da8f7ff339">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># subtract</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>lonpop_smooth <span class="ot">&lt;-</span> <span class="fu">focal</span>(lonpop_change, <span class="at">w =</span> <span class="fu">matrix</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">3</span>), <span class="at">fun =</span> mean)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_change)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-focus-on-the-hood" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-focus-on-the-hood-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: Smoothed version of population change in London 2010-2020.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The differences are not very noticeable, but you were to subtract the smoothed raster from the original raster you will see that definitely something happened:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-focus-on-the-smooth_dde1f9ffdbb87016492a5fbd66104eff">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the results</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_change <span class="sc">-</span> lonpop_smooth)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-focus-on-the-smooth" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-focus-on-the-smooth-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;9: Difference smoothed population change with original population change raster.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can also look to use zonal functions to better represent our population change by aggregating our data to coarser resolutions. For example, we can resize our raster’s spatial resolution to contain larger grid cells which will, of course, simplify our data, making larger trends more visible in our data but may similarly end up obfuscating smaller trends.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>We can resize our <code>lonpop_change</code> raster by using the <code>aggregate()</code> function and setting the <code>fact</code> (factor) parameter to the <em>order</em> of rescaling we would like (e.g.&nbsp;increase both the width and height of a cell by a factor of two). We then provide the <code>fun</code> (function) by which to aggregate our data, in this case, we will continue to use the <code>mean</code> but we could also use the <code>min</code> or <code>max</code> depending on our application.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-aggregate-the-raster_29aaf0eb6a066b6a394b6623efbf59c5">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>lonpop_agg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(lonpop_change, <span class="at">fact =</span> <span class="dv">2</span>, <span class="at">fun =</span> mean)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lonpop_agg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-aggregate-the-raster" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-aggregate-the-raster-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;10: Aggregated cell values.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Where we transformed a vector dataset into a raster dataset earlier, in some cases you would want to aggregate move from raster to vector. For example, in our case, we can aggregate the <code>lonpop_change</code> raster to our actual London MSOA boundaries, i.e.&nbsp;calculate for each MSOA in our dataset the average (or other function) population change,. We can, of course, use other functions other than the <code>mean</code>. What function you use will simply depend on your application.</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-aggregate-the-raster-to-vector_a0f3397f70a00ff668b8a460278320c3">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aggregate</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>london_msoa_pop <span class="ot">&lt;-</span> <span class="fu">extract</span>(lonpop_change, msoa_london, <span class="at">fun =</span> mean)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add to spatial dataframe</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>msoa_london <span class="ot">&lt;-</span> msoa_london <span class="sc">|&gt;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>() <span class="sc">|&gt;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pop_change =</span> london_msoa_pop<span class="sc">$</span>gbr_ppp_2020_1km_Aggregated)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa_london) <span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"pop_change"</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Variable(s) "pop_change" contains positive and negative values, so midpoint is set to 0. Set midpoint = NA to show the full spectrum of the color palette.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-09-aggregate-the-raster-to-vector" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-aggregate-the-raster-to-vector-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;11: Aggregating raster values to a vector geography.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We now have a vector dataset that we could go ahead and run many of the analyses that we have completed in previous weeks. Furthermore, we can use this data within other analyses we might want to complete.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Trying to calculate population change, particularly across decades as we have done here, can be quite challenging with changing administrative boundaries. Using raster data can be a good workaround to these issues, provided that the different rasters are of same size and extent.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="interpolation" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="interpolation"><span class="header-section-number">9.6</span> Interpolation</h2>
+<p>For the second part of this week’s practical material, we will explore several methods of spatial data interpolation by looking at air pollution in London using <a href="https://www.londonair.org.uk/">Londonair</a> data. Londonair is the website of the London Air Quality Network (LAQN), and shows air pollution in London and southeast England that is provided by the <a href="https://www.imperial.ac.uk/school-public-health/environmental-research-group/">Environmental Research Group</a> of Imperial College London. The data are publicly available for download and we can use an R package to directly interact with the data without needing to download it. The <code>openair</code> <a href="https://davidcarslaw.github.io/openair/">R package</a> enables us to import data directly from the Londonair website. We will focus on Nitrogen Dioxide (NO<sub>2</sub>) measurements.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Spatial interpolation is the prediction of a given phenomenon in unmeasured locations. There are many reasons why we may wish to interpolate point data across a map. It could be because we are trying to predict a variable across space, including in areas where there are little to no data.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-get-air-pollution-data_549b803e776cf1f4feaef9a70ab365a2">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get list of all measurement sites operated by Imperial College</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># limit to sites with data for 2022</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>site_meta <span class="ot">&lt;-</span> <span class="fu">importMeta</span>(<span class="at">source =</span> <span class="st">"kcl"</span>, <span class="at">all =</span> <span class="cn">TRUE</span>, <span class="at">year =</span> <span class="dv">2022</span><span class="sc">:</span><span class="dv">2022</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># download all data pertaining to these sites</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>pollution <span class="ot">&lt;-</span> <span class="fu">importKCL</span>(<span class="at">site =</span> <span class="fu">c</span>(site_meta<span class="sc">$</span>code), <span class="at">year =</span> <span class="dv">2022</span><span class="sc">:</span><span class="dv">2022</span>, <span class="at">pollutant =</span> <span class="st">"no2"</span>, <span class="at">meta =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This second part of the code might take some time to run as it will try to download the data for all sites for an entire year — and in many cases data is measured hourly. Despite us limiting our data download, not all measurements sites collect data on NO<sub>2</sub> so you will get some warnings along the lines of <code>404 Not Found</code>. In case you run into too many errors or it is just taking too long, you can download a copy of the data here: <a href="https://github.com/jtvandijk/GEOG0030/tree/master/data/zip/london_no2_2022.zip">[Download]</a>. Once downloaded, copy over the <code>zip</code> and put this into a <code>data/raw/pollution</code> folder. The file is rather large, so you can leave it unzipped.</p>
+</div>
+</div>
+</div>
+<p>Let’s inspect the data:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-inspect-air-pollution-data_11d8cae53abce36408468f305b978f39">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load from zip if not downloaded through the Open Air library</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>pollution <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/pollution/london_no2_2022.zip"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Multiple files in zip: reading 'london_no2_2022.csv'
+Rows: 1624324 Columns: 8
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (4): site, code, source, site_type
+dbl  (3): no2, latitude, longitude
+dttm (1): date
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pollution)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+  date                  no2 site       code  source latitude longitude site_type
+  &lt;dttm&gt;              &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;    
+1 2022-01-01 00:00:00    NA City of L… CTA   kcl        51.5   -0.0921 Roadside 
+2 2022-01-01 01:00:00    NA City of L… CTA   kcl        51.5   -0.0921 Roadside 
+3 2022-01-01 02:00:00    NA City of L… CTA   kcl        51.5   -0.0921 Roadside 
+4 2022-01-01 03:00:00    NA City of L… CTA   kcl        51.5   -0.0921 Roadside 
+5 2022-01-01 04:00:00    NA City of L… CTA   kcl        51.5   -0.0921 Roadside 
+6 2022-01-01 05:00:00    NA City of L… CTA   kcl        51.5   -0.0921 Roadside </code></pre>
+</div>
+</div>
+<p>We can see that in our first five rows we have data for the <strong>same site</strong> and if we look at the <strong>date</strong> field, we can see we have a reading observation for every hour. With 24 hours in the day, 365 days in a year and hundreds of sites, it should therefore be of no surprise that we have such a large <code>csv</code>. Let’s summarise the values by site to make the dataset a bit more workable:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-mean-air-pollution-data_6f211028f029a6b12679ba9612517118">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate mean no2 values</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>pollution_avg <span class="ot">&lt;-</span> pollution <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(latitude) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(no2)) <span class="sc">|&gt;</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(code, latitude, longitude) <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">no2 =</span> <span class="fu">mean</span>(no2))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'code', 'latitude'. You can override using
+the `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pollution_avg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+# Groups:   code, latitude [6]
+  code  latitude longitude   no2
+  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1 AH0       49.8    -7.56   1.82
+2 BE1       54.6    -5.93   5.05
+3 BG1       51.6     0.178 16.8 
+4 BG2       51.5     0.133 20.6 
+5 BH0       50.8    -0.148 11.6 
+6 BK0       53.8    -3.01   6.11</code></pre>
+</div>
+</div>
+<p>We are now left with only <strong>45</strong> measurement sites — with only the latitudes, longitudes, and the average NO<sub>2</sub> values associated with each. When using interpolation, the distribution and density of our data points will impact the accuracy of our final raster and we may end up with a level of uncertainty in the areas where measurements are more sparse. Let’s have a look at the spatial distribution of the measurement sites.</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-measurement-sites_48d8ec94145742f8fafb9f11a1aabb6c">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load MSOAs for reference</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>msoa_london <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"data/raw/boundaries/MSOA2021_London.gpkg"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_union</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Reading layer `MSOA2021_London' from data source 
+  `/Users/justinvandijk/Library/CloudStorage/Dropbox/UCL/Web/jtvandijk.github.io/GEOG0030/data/raw/boundaries/MSOA2021_London.gpkg' 
+  using driver `GPKG'
+Simple feature collection with 1002 features and 4 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a point spatial dataframe</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>measurement_sites <span class="ot">&lt;-</span> pollution_avg <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"longitude"</span>, <span class="st">"latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">27700</span>)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ensure all points within London</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>measurement_sites <span class="ot">&lt;-</span> measurement_sites <span class="sc">|&gt;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_intersection</span>(msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout
+all geometries</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add London outline</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa_london) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"grey"</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add measurement sites</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(measurement_sites) <span class="sc">+</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-09-air-quality-measurement-sites" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-air-quality-measurement-sites-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;12: NO<sub>2</sub> measurement sites in London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Let’s also have a look whether measurements differ across London:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-measurement-sites-proportional-symbol_eb308dc7635fe908f7e877eebbeab10e">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add London outline</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(msoa_london) <span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="st">"grey"</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add proportional symbol</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(measurement_sites) <span class="sc">+</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_bubbles</span>(</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="st">"no2"</span>,</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"blue"</span>,</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="st">"pretty"</span>,</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">border.col =</span> <span class="st">"white"</span>,</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title.size =</span> <span class="st">"Average NO2 ug/m3 reading in 2022"</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add legend</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"top"</span>)</span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add north arrow</span></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"arrow"</span>,</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"right"</span>, <span class="st">"top"</span>)</span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add scale bar</span></span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>),</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>)</span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add credits</span></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_credits</span>(<span class="st">"NO~2~ measurements from London Air (2022)."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-09-air-quality-measurement-sites-proportional-symbol" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-air-quality-measurement-sites-proportional-symbol-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;13: Proportional symbol map on NO<sub>2</sub> measurements in London.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Our proportional symbols shows that there is some heterogeneity in NO<sub>2</sub> measurements across London — both in terms of coverage and in terms of NO<sub>2</sub> levels. This means that if we want to make a reasonable assumptions about NO<sub>2</sub> levels in an area where no measurement was taking, we need to interpolate the missing values.</p>
+<section id="thiessen-polygons" class="level4">
+<h4 class="anchored" data-anchor-id="thiessen-polygons">Thiessen polygons</h4>
+<p>The first step we can take to interpolate the data across space is to create Thiessen polygons. Thiessen polygons are formed to assign boundaries of the areas closest to each unique point. Therefore, for every point in a dataset, it has a corresponding Thiessen polygon.</p>
+<div class="cell" data-hash="09-raster_cache/html/fig-thiessen_da6f1719d94cbe5e7c65f94769a7ad39">
+<div class="cell-output-display">
+<div id="fig-thiessen" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/w09/thiessen.png" class="img-fluid figure-img" width="376"></p>
+<figcaption class="figure-caption">Figure&nbsp;14: Thiessen polygons. <a href="https://jtvandijk.github.io/GEOG0030/images/w09/thiessen.png" target="_blank">[Enlarge image]</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Besides Thiessen you may also come across the term Voronoi polygons. Both terms are used interchangeably to describe this type of geometry created from point data. In the field of GIS we tend to refer to them as Thiessen polygons, but in other fields they are often referred to as Voronoi diagrams, in honour of the mathematician Georgy Voronoy.</p>
+</div>
+</div>
+</div>
+<p>We can create Thiessen polygons using the <code>sf</code> library with a bit of code: we will create a simple function called <code>st_thiessen_point()</code> that we can use to generate Thiessen polygons directly from a point dataset.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Do not worry about fully understanding the code behind the function, but simply understand what input (a point spatial dataframe) and output (a Thiessen polygon spatial dataframe) it will provide.</p>
+</div>
+</div>
+</div>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-create-thiessen-polygons_7a01718a23648bda98c50d2b679ee3d7">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>st_thiessen_point <span class="ot">&lt;-</span> <span class="cf">function</span>(points) {</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># input check</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">all</span>(<span class="fu">st_geometry_type</span>(points) <span class="sc">==</span> <span class="st">"POINT"</span>)) {</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">stop</span>(<span class="st">"Input not POINT geometries"</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># to multipoint</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    g <span class="ot">=</span> <span class="fu">st_combine</span>(<span class="fu">st_geometry</span>(points))</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># to thiessen</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    v <span class="ot">=</span> <span class="fu">st_voronoi</span>(g)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    v <span class="ot">=</span> <span class="fu">st_collection_extract</span>(v)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># return</span></span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(v[<span class="fu">unlist</span>(<span class="fu">st_intersects</span>(points, v))])</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="co"># call function</span></span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>measurement_sites_thiessen <span class="ot">&lt;-</span> <span class="fu">st_thiessen_point</span>(measurement_sites)</span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="co"># force thiessen polygons to measurement sites dataframe</span></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>measurement_sites_thiessen_df <span class="ot">&lt;-</span> measurement_sites <span class="sc">|&gt;</span></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_set_geometry</span>(measurement_sites_thiessen) <span class="sc">|&gt;</span></span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout
+all geometries</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>measurement_sites_thiessen_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple feature collection with 103 features and 2 fields
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: 503574.2 ymin: 155850.8 xmax: 561956.7 ymax: 200933.6
+Projected CRS: OSGB36 / British National Grid
+# A tibble: 103 × 3
+   code    no2                                                          geometry
+ * &lt;chr&gt; &lt;dbl&gt;                                                    &lt;GEOMETRY [m]&gt;
+ 1 BG1    16.8 POLYGON ((547785.5 187913.4, 557897 187404.3, 550800.7 184315.1,…
+ 2 BG2    20.6 MULTIPOLYGON (((543729.1 183422.7, 543923.7 183583, 543960.2 183…
+ 3 BL0    25.7 POLYGON ((529120.3 182395, 529101.2 184092.5, 531261 183754.7, 5…
+ 4 BQ7    16.1 MULTIPOLYGON (((546347 181055.1, 546593.8 181106.4, 546697.1 181…
+ 5 BT4    43.1 POLYGON ((516082 187365.6, 520958.9 189405.3, 521236.1 184358.2,…
+ 6 BT5    28.0 POLYGON ((523877.3 190896.9, 524273.2 190424, 525686.9 187185.8,…
+ 7 BT6    27.7 POLYGON ((522237.8 181852.6, 519969.8 183532.7, 519912.6 183741.…
+ 8 BT8    28.5 POLYGON ((522982.8 184472, 525686.9 187185.8, 526408.6 186420, 5…
+ 9 BX1    17.6 MULTIPOLYGON (((550063.2 169311.6, 550099.6 169246.6, 550115.1 1…
+10 BX2    15.9 MULTIPOLYGON (((548349.8 175998.9, 549623.4 180763, 550028.2 180…
+# ℹ 93 more rows</code></pre>
+</div>
+</div>
+<p>We can now visualise these Thiessen polygons with their associated NO<sub>2</sub> value:</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-london-thiessen_9375b935d18b1a3f010d3705ac571e16">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add thiessen polygons</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(measurement_sites_thiessen_df) <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"no2"</span>,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Blues"</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add legend</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.show =</span> <span class="cn">TRUE</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-09-air-quality-london-thiessen" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-air-quality-london-thiessen-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;15: Interpolation of NO<sub>2</sub> measurements in London using Thiessen polygons.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>And that’s it! We now have our values interpolated using our Thiessen polygon approach. However, as you can see, our approach is quite coarse. Whilst we, of course, can see areas of high and low pollution, it really does not offer us as much spatial detail as we would like, particularly when we know there are better methods out there to use.</p>
+</section>
+<section id="inverse-distance-weighting" class="level4">
+<h4 class="anchored" data-anchor-id="inverse-distance-weighting">Inverse Distance Weighting</h4>
+<p>A second method to interpolate point data is <strong>Inverse Distance Weighting</strong> (IDW). An IDW is a means of converting point data of numerical values into a continuous surface to visualise how the data may be distributed across space. The technique interpolates point data by using a weighted average of a variable from nearby points to predict the value of that variable for each location. The weighting of the points is determined by their inverse distances, essentially drawing on <a href="https://en.wikipedia.org/wiki/Tobler%27s_first_law_of_geography#:~:text=The%20First%20Law%20of%20Geography,specifically%20for%20the%20inverse%20distance">Tobler’s first law of geography</a>.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>The distance weighting is done by a power function: the larger the power coefficient, the stronger the weight of nearby point. The output is most commonly represented as a raster surface.</p>
+</div>
+</div>
+</div>
+<p>We will start by generating an empty grid to store the predicted values before executing a simple the IDW.</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/09-idw_ecafdab71b33f585fac17747c0d038f6">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R code</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create regular output grid from London outline</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>output_grid <span class="ot">&lt;-</span> msoa_london <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_make_grid</span>(<span class="at">cellsize =</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">500</span>))</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co"># execute IDW</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>measurement_sites_idw <span class="ot">&lt;-</span> <span class="fu">idw</span>(<span class="at">formula =</span> no2 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">locations =</span> measurement_sites, <span class="at">newdata =</span> output_grid,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">beta =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[inverse distance weighted interpolation]</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># clip to London outline</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>measurement_sites_idw <span class="ot">&lt;-</span> measurement_sites_idw <span class="sc">|&gt;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">st_intersection</span>(msoa_london)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: attribute variables are assumed to be spatially constant throughout
+all geometries</code></pre>
+</div>
+</div>
+<p>We now have our final predicted raster surface. To map it, we can again use the <code>tmap</code> as we have done previously. For our polygon raster, the name of the layer we need to provide is <code>var1.pred</code>.</p>
+<div class="cell styled-output" data-hash="09-raster_cache/html/fig-09-air-quality-idw_cb468ffbf1b87f2b530be6a23a0d64b1">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add idw grid</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(measurement_sites_idw) <span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"var1.pred"</span>,</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="st">"quantile"</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="dv">100</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">"Reds"</span>,</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.show =</span> <span class="cn">FALSE</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add measurement sites</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(measurement_sites) <span class="sc">+</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-09-air-quality-idw" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="09-raster_files/figure-html/fig-09-air-quality-idw-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;16: Interpolation of NO<sub>2</sub> measurements in London using Inverse Distance Weighting.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>We have used an output cell size of 500x500 metres. A smaller cell size will create a smoother IDW output, but it does add uncertainty to these estimates as we do not exactly have a substantial amount of data points to interpolate from. Keep in mind: reducing the cell size will also exponentially increase processing time.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="assignment-w09" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="assignment-w09"><span class="header-section-number">9.7</span> Assignment</h2>
+<p>For your final assignment this week, we want you to redo the IDW interpolation of the London pollution data for the months of <strong>June</strong> and <strong>December</strong> and see to what extent there are differences between these months. In order to do this you will, at least, need to:</p>
+<ol type="1">
+<li>Create monthly averages for the pollution data. This will involve some data wrangling.</li>
+<li>For both the months of <strong>June</strong> and <strong>December</strong> create a spatial dataframe containing the London monitoring sites and their average NO<sub>2</sub> reading.</li>
+<li>Conduct an Inverse Distance Weighting interpolation for both months of data.</li>
+<li>Combine the results to identify areas that might differ.</li>
+</ol>
+</section>
+<section id="wm-w09" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="wm-w09"><span class="header-section-number">9.8</span> Want more? [Optional]</h2>
+<section id="more-raster" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="more-raster">More raster</h3>
+<p>A raster dataset often only contains one layer, i.e.&nbsp;one variable. Hence when we want to map a raster, we use the <code>tm_raster()</code> and provide the layer name for mapping. However, satellite imagery, for instance, consists of <strong>three</strong> bands: a band with a red value, a band with a green value and a band with a blue value. This is known as <strong>multi-band</strong> imagery. We can visualise each band independently of one another, however, you would see that you end up with either a nearly all red, green or blue image. If you are interested to learn more about <a href="https://andrewmaclachlan.github.io/CASA0005repo/advanced-raster-analysis.html">using satellite imagery with R</a> and raster analysis in general, this is a good place to start. Alternatively, if you are interested in more advanced interpolation methods, <a href="https://mgimond.github.io/Spatial/interpolation-in-r.html">Manual Gimond’s</a> tutorial on spatial data interpolation or <a href="https://www.paulamoraga.com/book-spatial/index.html">Paula Moraga’s</a> online book on <em>Spatial Statistics for Data Science: Theory and Practice with R</em> (particularly Chapters 12-16) will get you started.</p>
+</section>
+</section>
+<section id="byl-w09" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="byl-w09"><span class="header-section-number">9.9</span> Before you leave</h2>
+<p>This week, we’ve looked at raster datasets and how we use the <code>terra</code> library to manage and process them. Specifically, we looked at using <strong>map algebra</strong> to apply mathematical operations to rasters. We further looked at two different interpolation methods to generate raster data from point data. Understanding how to interpolate data correctly is incredibly important. Whilst in most instances you will be working with vector data, especially where government statistics and administrative boundaries are involved, there are also plenty of use cases in which you will need to generate raster data from point data, as we have done today. With that being said: <a href="https://www.youtube.com/watch?v=8iwBM_YB1sE">that is it for our penultimate week</a>. Suppose nothing left to do besides checking out that reading?</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./08-autocorrelation.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Analysing Spatial Patterns III: Spatial Autocorrelation</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./10-network.html" class="pagination-link">
+        <span class="nav-page-text">Transport Network Analysis</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">Course material by <a href="https://www.mappingdutchman.com">Justin van Dijk</a>. Available under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
