@@ -23,7 +23,7 @@ format:
     pagetitle: "{{< var meta.title >}}"
 
 website:
-  repo-url: https://github.com/jtvandijk/GEOG0030
+  repo-url: https://github.com/jtvandijk/GEOG0030_20232024
   repo-actions: [issue]
   page-navigation: true
   page-footer:
@@ -37,7 +37,7 @@ website:
     logo: assets/logo.svg
     tools:
       - icon: github
-        href: https://github.com/jtvandijk/GEOG0030
+        href: https://github.com/jtvandijk/GEOG0030_20232024
     contents:
       - section: "Module overview"
         contents:

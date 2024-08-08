@@ -1,6 +1,6 @@
 # GEOG0030 Geocomputation
 
-This GitHub repository generates the GEOG0030 Geocomputation handbook for the 2023-2024 academic year which can be found at: https://jtvandijk.github.io/GEOG0030/
+This GitHub repository generates the GEOG0030 Geocomputation handbook for the 2023-2024 academic year which can be found at: https://jtvandijk.github.io/GEOG0030_20232024/
 
 This work is licensed under a
 [Creative Commons Attribution-ShareAlike 4.0 International License][cc-by-sa].
